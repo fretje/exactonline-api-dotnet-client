@@ -13,7 +13,7 @@
 		<copyright>Exact</copyright>
 		<tags>Exact Online Client SDK</tags>
 		<dependencies>
-			<group targetFramework=".NETFramework4.7.1">
+			<group targetFramework=".NETFramework4.7.2">
 				<dependency id="Newtonsoft.Json" version="12.0.1" />
 				<dependency id="DotNetOpenAuth.Core" version="4.3.4.13329" />
 				<dependency id="DotNetOpenAuth.OAuth2.Client" version="4.3.4.13329" />
@@ -25,7 +25,7 @@
 			</group>
 		</dependencies>
 		<references>
-			<group targetFramework=".NETFramework4.7.1">
+			<group targetFramework=".NETFramework4.7.2">
 				<reference file="ExactOnline.Client.Models.dll" />
 				<reference file="ExactOnline.Client.OAuth.dll" />
 				<reference file="ExactOnline.Client.Sdk.dll" />				
