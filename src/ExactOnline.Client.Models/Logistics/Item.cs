@@ -2,7 +2,7 @@ using System;
 
 namespace ExactOnline.Client.Models.Logistics
 {
-    [SupportedActionsSDK(true, true, true, true)]
+    [SupportedActionsSDK(true, true, true, true, true)]
     [DataServiceKey("ID")]
     public class Item
     {
