@@ -18,7 +18,11 @@ namespace ExactOnline.Client.Sdk.UnitTests.MockObjects
         }
 
         string IApiConnection.Get(string parameters)
-		{
+        {
+            return (this as IApiConnection).Get(parameters, false);
+        }
+        string IApiConnection.Get(string parameters, bool useBulkEndpoint)
+        {
 			const string correctJsonArray = @"{
 			""d"": {
 				""results"": [
@@ -293,7 +297,11 @@ namespace ExactOnline.Client.Sdk.UnitTests.MockObjects
 
         Task<string> IApiConnection.GetAsync(string parameters)
         {
-            return Task.FromResult((this as IApiConnection).Get(parameters));
+            return (this as IApiConnection).GetAsync(parameters, false);
+        }
+        Task<string> IApiConnection.GetAsync(string parameters, bool useBulkEndpoint)
+        {
+            return Task.FromResult((this as IApiConnection).Get(parameters, useBulkEndpoint));
         }
 
         string IApiConnection.GetEntity(string keyname, string guid, string parameters)

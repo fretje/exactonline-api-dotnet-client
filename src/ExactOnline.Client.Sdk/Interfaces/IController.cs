@@ -6,7 +6,8 @@ namespace ExactOnline.Client.Sdk.Interfaces
 {
 	public interface IController<T>
 	{
-		List<T> Get(string query);
+        List<T> Get(string query);
+        List<T> Get(string query, bool useBulkEndpoint);
 
         T GetEntity(string guid, string parameters);
         Task<T> GetEntityAsync(string guid, string parameters);
@@ -25,7 +26,9 @@ namespace ExactOnline.Client.Sdk.Interfaces
 
         void RegistrateLinkedEntityField(string fieldname);
 
-		List<T> Get(string query, ref string skipToken);
-        Task<Models.ApiList<T>> GetAsync( string query );
+        List<T> Get(string query, ref string skipToken);
+        List<T> Get(string query, ref string skipToken, bool useBulkEndpoint);
+        Task<Models.ApiList<T>> GetAsync(string query);
+        Task<Models.ApiList<T>> GetAsync(string query, bool useBulkEndpoint);
     }
 }

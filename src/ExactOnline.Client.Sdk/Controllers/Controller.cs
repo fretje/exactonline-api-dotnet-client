@@ -82,24 +82,54 @@ namespace ExactOnline.Client.Sdk.Controllers
         /// <param name="query">oData query</param>
         /// <returns>List of entity Objects</returns>
         public List<T> Get(string query)
-		{
-			string skipToken = string.Empty;
-			return Get(query, ref skipToken);
-		}
+        {
+            return Get(query, false);
+        }
+        /// <summary>
+        /// Gets specific collection of entities.
+        /// This method will return at max 60 entities. When using the bulk
+        /// endpoint, this method will return the maximum page size of
+        /// the endpoint.
+        /// </summary>
+        /// <param name="query">oData query</param>
+        /// <param name="useBulkEndpoint">Read from bulk endpoint</param>
+        /// <returns>List of entity Objects</returns>
+        public List<T> Get(string query, bool useBulkEndpoint)
+        {
+            string skipToken = string.Empty;
+            return Get(query, ref skipToken, useBulkEndpoint);
+        }
 
-		/// <summary>
-		/// Gets specific collection of entities and return a skipToken if there are more than
-		/// 60 entities to be returned.
-		/// </summary>
-		/// <param name="query">oData query</param>
-		/// <param name="skipToken">The skip token to be used to get the next page of data.</param>
-		/// <returns>List of entity Objects</returns>
-		public List<T> Get(string query, ref string skipToken)
-		{
-			// Get the response and convert it to a list of entities of the specific type
-			string response = _conn.Get(query);
+        /// <summary>
+        /// Gets specific collection of entities and return a skipToken if there are more than
+        /// 60 entities to be returned.
+        /// </summary>
+        /// <param name="query">oData query</param>
+        /// <param name="skipToken">The skip token to be used to get the next page of data.</param>
+        /// <returns>List of entity Objects</returns>
+        public List<T> Get(string query, ref string skipToken)
+        {
+            return Get(query, ref skipToken);
+        }
+        /// <summary>
+        /// Gets specific collection of entities and return a skipToken if there are more records
+        /// than the maximum page size of the endpoint.
+        /// </summary>
+        /// <param name="query">oData query</param>
+        /// <param name="skipToken">The skip token to be used to get the next page of data.</param>
+        /// <param name="useBulkEndpoint">Read from bulk endpoint</param>
+        /// <returns>List of entity Objects</returns>
+        public List<T> Get(string query, ref string skipToken, bool useBulkEndpoint)
+        {
+            if (useBulkEndpoint && !SupportedActionsSDK.GetByType(typeof(T)).CanBulkRead)
+            {
+                throw new Exception("Cannot read from bulk endpoint. There is no bulk endpoint for this entity. Please see the Reference Documentation.");
+            }
 
-			skipToken = ApiResponseCleaner.GetSkipToken(response);
+            // Get the response and convert it to a list of entities of the specific type
+            string response = _conn.Get(query, useBulkEndpoint);
+
+            skipToken = ApiResponseCleaner.GetSkipToken(response);
 			response = ApiResponseCleaner.GetJsonArray(response);
 
 			var rc = new EntityConverter();
@@ -120,8 +150,19 @@ namespace ExactOnline.Client.Sdk.Controllers
         /// <returns>List of entity Objects</returns>
         public async Task<Models.ApiList<T>> GetAsync(string query)
         {
+            return await GetAsync(query, false);
+        }
+        /// <summary>
+        /// Gets specific collection of entities and return a skipToken if there are more records
+        /// than the maximum page size of the endpoint.
+        /// </summary>
+        /// <param name="query">oData query</param>
+        /// <param name="skipToken">The skip token to be used to get the next page of data.</param>
+        /// <param name="useBulkEndpoint">Read from bulk endpoint</param>
+        public async Task<Models.ApiList<T>> GetAsync(string query, bool useBulkEndpoint)
+        {
             // Get the response and convert it to a list of entities of the specific type
-            string response = await _conn.GetAsync(query).ConfigureAwait( false );
+            string response = await _conn.GetAsync(query, useBulkEndpoint).ConfigureAwait(false);
 
             string skipToken = ApiResponseCleaner.GetSkipToken(response);
             response = ApiResponseCleaner.GetJsonArray(response);
@@ -384,12 +425,7 @@ namespace ExactOnline.Client.Sdk.Controllers
 
 		private SupportedActionsSDK GetSupportedActions(T entity)
 		{
-			var actions = (SupportedActionsSDK)entity.GetType().GetCustomAttribute(typeof(SupportedActionsSDK));
-			if (actions == null)
-			{
-				actions = new SupportedActionsSDK(false, false, false, false);
-			}
-			return actions;
+            return SupportedActionsSDK.GetByType(entity.GetType());
 		}
 
 		/// <summary>

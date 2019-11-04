@@ -19,8 +19,8 @@ namespace ExactOnline.Client.Sdk.UnitTests
 		public void EntityController_Update_WithNewLinkedEntity_Succeeds()
 		{
 			var controllerMock = new ApiConnectionEntityControllerMock();
-			var apiConnectorMock = new ApiConnectorMock();
-			var controllerList = new ControllerList(apiConnectorMock, "https://start.exactonline.nl/api/v1/");
+            var apiConnectorMock = new ApiConnectorMock { BaseUrl = "https://start.exactonline.nl/api/v1/" };
+			var controllerList = new ControllerList(apiConnectorMock);
 
 			var controller = (Controller<SalesInvoice>)controllerList.GetController<SalesInvoice>();
 			var invoice = new SalesInvoice { Description = "New Description" };
@@ -43,8 +43,8 @@ namespace ExactOnline.Client.Sdk.UnitTests
         public async Task EntityController_Update_WithNewLinkedEntity_SucceedsAsync()
         {
             var controllerMock = new ApiConnectionEntityControllerMock();
-            var apiConnectorMock = new ApiConnectorMock();
-            var controllerList = new ControllerList(apiConnectorMock, "https://start.exactonline.nl/api/v1/");
+            var apiConnectorMock = new ApiConnectorMock { BaseUrl = "https://start.exactonline.nl/api/v1/" };
+            var controllerList = new ControllerList(apiConnectorMock);
 
             var controller = (Controller<SalesInvoice>)controllerList.GetController<SalesInvoice>();
             var invoice = new SalesInvoice { Description = "New Description" };
@@ -67,10 +67,10 @@ namespace ExactOnline.Client.Sdk.UnitTests
 		public void EntityController_Update_WithExistingLinkedEntity_Succeeds()
 		{
 			var controllerMock = new ApiConnectionEntityControllerMock();
-			var connector = new ApiConnectorMock();
-			var controllerList = new ControllerList(connector, "https://start.exactonline.nl/api/v1/");
+            var apiConnectorMock = new ApiConnectorMock { BaseUrl = "https://start.exactonline.nl/api/v1/" };
+            var controllerList = new ControllerList(apiConnectorMock);
 
-			var invoice = new SalesInvoice { Description = "New Description" };
+            var invoice = new SalesInvoice { Description = "New Description" };
 			var line = new SalesInvoiceLine { Description = "InvoiceLine" };
 			invoice.SalesInvoiceLines = new List<SalesInvoiceLine> { line };
 
@@ -92,8 +92,8 @@ namespace ExactOnline.Client.Sdk.UnitTests
         public async Task EntityController_Update_WithExistingLinkedEntity_SucceedsAsync()
         {
             var controllerMock = new ApiConnectionEntityControllerMock();
-            var connector = new ApiConnectorMock();
-            var controllerList = new ControllerList(connector, "https://start.exactonline.nl/api/v1/");
+            var apiConnectorMock = new ApiConnectorMock { BaseUrl = "https://start.exactonline.nl/api/v1/" };
+            var controllerList = new ControllerList(apiConnectorMock);
 
             var invoice = new SalesInvoice { Description = "New Description" };
             var line = new SalesInvoiceLine { Description = "InvoiceLine" };
@@ -117,10 +117,10 @@ namespace ExactOnline.Client.Sdk.UnitTests
 		public void EntityController_Update_WithNoFieldsAltered_Succeeds()
 		{
 			var controllerMock = new ApiConnectionEntityControllerMock();
-			var connector = new ApiConnectorMock();
-			var controllerList = new ControllerList(connector, "https://start.exactonline.nl/api/v1/");
+            var apiConnectorMock = new ApiConnectorMock { BaseUrl = "https://start.exactonline.nl/api/v1/" };
+            var controllerList = new ControllerList(apiConnectorMock);
 
-			var invoice = new SalesInvoice { Description = "New Description" };
+            var invoice = new SalesInvoice { Description = "New Description" };
 			var line = new SalesInvoiceLine { Description = "Invoice Line" };
 			invoice.SalesInvoiceLines = new List<SalesInvoiceLine> { line };
 
@@ -140,8 +140,8 @@ namespace ExactOnline.Client.Sdk.UnitTests
         public async Task EntityController_Update_WithNoFieldsAltered_SucceedsAsync()
         {
             var controllerMock = new ApiConnectionEntityControllerMock();
-            var connector = new ApiConnectorMock();
-            var controllerList = new ControllerList(connector, "https://start.exactonline.nl/api/v1/");
+            var apiConnectorMock = new ApiConnectorMock { BaseUrl = "https://start.exactonline.nl/api/v1/" };
+            var controllerList = new ControllerList(apiConnectorMock);
 
             var invoice = new SalesInvoice { Description = "New Description" };
             var line = new SalesInvoiceLine { Description = "Invoice Line" };
@@ -163,10 +163,10 @@ namespace ExactOnline.Client.Sdk.UnitTests
 		public void EntityController_Update_WithOnlyLinkedEntityFieldsAltered_Succeeds()
 		{
 			var controllerMock = new ApiConnectionEntityControllerMock();
-			var connector = new ApiConnectorMock();
-			var controllerList = new ControllerList(connector, "https://start.exactonline.nl/api/v1/");
+            var apiConnectorMock = new ApiConnectorMock { BaseUrl = "https://start.exactonline.nl/api/v1/" };
+            var controllerList = new ControllerList(apiConnectorMock);
 
-			var invoice = new SalesInvoice { Description = "New Description" };
+            var invoice = new SalesInvoice { Description = "New Description" };
 			var line = new SalesInvoiceLine { Description = "InvoiceLine" };
 			invoice.SalesInvoiceLines = new List<SalesInvoiceLine> { line };
 
@@ -188,8 +188,8 @@ namespace ExactOnline.Client.Sdk.UnitTests
         public async Task EntityController_Update_WithOnlyLinkedEntityFieldsAltered_SucceedsAsync()
         {
             var controllerMock = new ApiConnectionEntityControllerMock();
-            var connector = new ApiConnectorMock();
-            var controllerList = new ControllerList(connector, "https://start.exactonline.nl/api/v1/");
+            var apiConnectorMock = new ApiConnectorMock { BaseUrl = "https://start.exactonline.nl/api/v1/" };
+            var controllerList = new ControllerList(apiConnectorMock);
 
             var invoice = new SalesInvoice { Description = "New Description" };
             var line = new SalesInvoiceLine { Description = "InvoiceLine" };

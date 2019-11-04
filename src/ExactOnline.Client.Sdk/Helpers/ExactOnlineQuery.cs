@@ -251,18 +251,35 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// </summary>
         public List<T> Get()
         {
+            return Get(false);
+        }
+        /// <summary>
+        /// Returns a List of entities using the specified query
+        /// <param name="useBulkEndpoint">Read from bulk endpoint</param>
+        /// </summary>
+        public List<T> Get(bool useBulkEndpoint)
+        {
             string skipToken = string.Empty;
-            return Get(ref skipToken);
+            return Get(ref skipToken, useBulkEndpoint);
         }
 
         /// <summary>
         /// Returns a List of entities using the specified query.
         /// </summary>
         /// <param name="skipToken">The variable to store the skiptoken in</param>
-        public List<T> Get(ref string skiptoken)
+        public List<T> Get(ref string skipToken)
         {
-            FormulateSkipToken(skiptoken);
-            return _controller.Get(CreateODataQuery(true), ref skiptoken);
+            return Get(ref skipToken, false);
+        }
+        /// <summary>
+        /// Returns a List of entities using the specified query.
+        /// </summary>
+        /// <param name="skipToken">The variable to store the skiptoken in</param>
+        /// <param name="useBulkEndpoint">Read from bulk endpoint</param>
+        public List<T> Get(ref string skipToken, bool useBulkEndpoint)
+        {
+            FormulateSkipToken(skipToken);
+            return _controller.Get(CreateODataQuery(true), ref skipToken, useBulkEndpoint);
         }
 
         /// <summary>
@@ -271,7 +288,7 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <param name="skipToken">The variable to store the skiptoken in</param>
         public Task<Models.ApiList<T>> GetAsync(string skiptoken = "")
         {
-            FormulateSkipToken( skiptoken );
+            FormulateSkipToken(skiptoken);
             return _controller.GetAsync(CreateODataQuery(true));
         }
 
@@ -290,8 +307,8 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// </summary>
         public Task<T> GetEntityAsync(string identifier)
         {
-            if( string.IsNullOrEmpty( identifier ) ) throw new ArgumentException( "Get entity: Identifier cannot be empty" );
-            string query = CreateODataQuery( false );
+            if (string.IsNullOrEmpty(identifier)) throw new ArgumentException("Get entity: Identifier cannot be empty");
+            string query = CreateODataQuery(false);
             return _controller.GetEntityAsync(identifier, query);
         }
 
@@ -310,8 +327,8 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// </summary>
         public Task<T> GetEntityAsync(Guid identifier)
         {
-            if( identifier == Guid.Empty ) throw new ArgumentException( "Get entity: Identifier cannot be empty" );
-            string query = CreateODataQuery( false );
+            if (identifier == Guid.Empty) throw new ArgumentException("Get entity: Identifier cannot be empty");
+            string query = CreateODataQuery(false);
             return _controller.GetEntityAsync(identifier.ToString(), query);
         }
 
@@ -329,8 +346,8 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// </summary>
         public Task<T> GetEntityAsync(int identifier)
         {
-            string query = CreateODataQuery( false );
-            return _controller.GetEntityAsync(identifier.ToString( CultureInfo.InvariantCulture), query );
+            string query = CreateODataQuery(false);
+            return _controller.GetEntityAsync(identifier.ToString(CultureInfo.InvariantCulture), query);
         }
 
         /// <summary>
@@ -347,7 +364,7 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// </summary>
         public Task<Boolean> UpdateAsync(T entity)
         {
-            if( entity == null ) throw new ArgumentException( "Update entity: Entity cannot be null" );
+            if (entity == null) throw new ArgumentException("Update entity: Entity cannot be null");
             return _controller.UpdateAsync(entity);
         }
 
@@ -365,7 +382,7 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// </summary>
         public Task<Boolean> DeleteAsync(T entity)
         {
-            if( entity == null ) throw new ArgumentException( "Delete entity: Entity cannot be null" );
+            if (entity == null) throw new ArgumentException("Delete entity: Entity cannot be null");
             return _controller.DeleteAsync(entity);
         }
 
@@ -383,7 +400,7 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// </summary>
         public Task<T> InsertAsync(T entity)
         {
-            if( entity == null ) throw new ArgumentException( "Insert entity: Entity cannot be null" );
+            if (entity == null) throw new ArgumentException("Insert entity: Entity cannot be null");
             return _controller.CreateAsync(entity);
         }
 

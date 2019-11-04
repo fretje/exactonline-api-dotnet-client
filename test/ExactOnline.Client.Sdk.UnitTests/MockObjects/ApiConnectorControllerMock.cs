@@ -6,7 +6,10 @@ namespace ExactOnline.Client.Sdk.UnitTests.MockObjects
 {
 	class ApiConnectorControllerMock : IApiConnector
 	{
-		public int Count()
+        public string BaseUrl { get; private set; }
+        public string ServiceRoot { get; private set; }
+
+        public int Count()
 		{
 			return 0;
 		}

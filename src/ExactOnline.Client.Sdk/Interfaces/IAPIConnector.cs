@@ -5,6 +5,9 @@ namespace ExactOnline.Client.Sdk.Interfaces
 {
     public interface IApiConnector
     {
+        string BaseUrl { get; }
+        string ServiceRoot { get; }
+
         string DoGetRequest(string endpoint, string parameters);
         Task<string> DoGetRequestAsync(string endpoint, string parameters);
         Stream DoGetFileRequest(string endpoint);

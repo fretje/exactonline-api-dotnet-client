@@ -22,18 +22,31 @@ namespace ExactOnline.Client.Sdk.UnitTests.MockObjects
 
 		List<T> IController<T>.Get(string query)
 		{
-			ODataQuery = query;
-			return null;
+            return (this as IController<T>).Get(query, false);
 		}
+        List<T> IController<T>.Get(string query, bool useBulkEndpoint)
+        {
+            ODataQuery = query;
+            return null;
+        }
 
-		public List<T> Get(string query, ref string skipToken)
-		{
+
+        public List<T> Get(string query, ref string skipToken)
+        {
+            return Get(query, ref skipToken, false);
+        }
+        public List<T> Get(string query, ref string skipToken, bool useBulkEndpoint)
+        {
 			skipToken = null;
 			ODataQuery = query;
 			return null;
 		}
 
         public Task<Models.ApiList<T>> GetAsync(string query)
+        {
+            return GetAsync(query, false);
+        }
+        public Task<Models.ApiList<T>> GetAsync(string query, bool useBulkEndpoint)
         {
             ODataQuery = query;
             return Task.FromResult(new Models.ApiList<T>(null,null));

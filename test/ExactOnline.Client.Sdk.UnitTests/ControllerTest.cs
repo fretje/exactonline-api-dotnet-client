@@ -185,7 +185,7 @@ namespace ExactOnline.Client.Sdk.UnitTests
 		{
 			// Test if controller registrates linked entities
 			IApiConnector conn = new ApiConnectorControllerMock();
-			var controllerList = new ControllerList(conn, string.Empty);
+			var controllerList = new ControllerList(conn);
 
 			var salesinvoicecontroller = (Controller<SalesInvoice>)controllerList.GetController<SalesInvoice>();
 			var invoicelines = (Controller<SalesInvoiceLine>)controllerList.GetController<SalesInvoiceLine>();
@@ -203,7 +203,7 @@ namespace ExactOnline.Client.Sdk.UnitTests
         {
             // Test if controller registrates linked entities
             IApiConnector conn = new ApiConnectorControllerMock();
-            var controllerList = new ControllerList( conn, string.Empty );
+            var controllerList = new ControllerList(conn);
 
             var salesinvoicecontroller = ( Controller<SalesInvoice> )controllerList.GetController<SalesInvoice>();
             var invoicelines = ( Controller<SalesInvoiceLine> )controllerList.GetController<SalesInvoiceLine>();

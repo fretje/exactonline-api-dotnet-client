@@ -1,50 +1,35 @@
 using System;
+using System.Reflection;
 
 public class SupportedActionsSDK : Attribute
 {
-    private bool _canCreate;
-    private bool _canRead;
-    private bool _canUpdate;
-    private bool _canDelete;
+    public bool CanCreate { get; private set; }
+    public bool CanRead { get; private set; }
+    public bool CanUpdate { get; private set; }
+    public bool CanDelete { get; private set; }
+
+    public bool CanBulkRead { get; private set; }
 
     public SupportedActionsSDK(bool canCreate, bool canRead, bool canUpdate, bool canDelete)
     {
-        _canCreate = canCreate;
-        _canRead = canRead;
-        _canUpdate = canUpdate;
-        _canDelete = canDelete;
+        CanCreate = canCreate;
+        CanRead = canRead;
+        CanUpdate = canUpdate;
+        CanDelete = canDelete;
+    }
+    public SupportedActionsSDK(bool canCreate, bool canRead, bool canUpdate, bool canDelete, bool canBulkRead) : this(canCreate, canRead, canUpdate, canDelete)
+    {
+        CanBulkRead = CanBulkRead;
     }
 
-    public bool CanCreate
+    public static SupportedActionsSDK GetByType(Type type)
     {
-        get
+        var actions = (SupportedActionsSDK)type.GetCustomAttribute(typeof(SupportedActionsSDK));
+        if (actions == null)
         {
-            return _canCreate;
+            actions = new SupportedActionsSDK(false, false, false, false);
         }
-    }
-
-    public bool CanRead
-    {
-        get
-        {
-            return _canRead;
-        }
-    }
-
-    public bool CanUpdate
-    {
-        get
-        {
-            return _canUpdate;
-        }
-    }
-
-    public bool CanDelete
-    {
-        get
-        {
-            return _canDelete;
-        }
+        return actions;
     }
 }
 

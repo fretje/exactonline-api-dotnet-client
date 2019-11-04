@@ -11,7 +11,10 @@ namespace ExactOnline.Client.Sdk.UnitTests.MockObjects
 	/// </summary>
 	public class ApiConnectorMock : IApiConnector
 	{
-		public String Data { get; set; }
+        public string BaseUrl { get; set; }
+        public string ServiceRoot { get; set; }
+
+        public String Data { get; set; }
 
 		public string DoCleanRequest(string uri)
 		{

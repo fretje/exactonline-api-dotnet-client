@@ -21,30 +21,48 @@ namespace ExactOnline.Client.Sdk.Helpers
 		private readonly AccessTokenManagerDelegate _accessTokenDelegate;
         private readonly ExactOnlineClient _client;
 
-		#region Constructor
+        /// <summary>
+        /// Base URL of the API
+        /// </summary>
+        public string BaseUrl { get; private set; }
 
-		/// <summary>
-		/// Creates new instance of ApiConnector
-		/// </summary>
-		/// <param name="accessTokenDelegate">Valid oAuth Access Token</param>
-		public ApiConnector(AccessTokenManagerDelegate accessTokenDelegate, ExactOnlineClient client)
+        /// <summary>
+        /// Root URL of the service
+        /// </summary>
+        public string ServiceRoot { get; private set; }
+
+        #region Constructor
+
+        /// <summary>
+        /// Creates new instance of ApiConnector
+        /// </summary>
+        /// <param name="accessTokenDelegate">Valid oAuth Access Token</param>
+        public ApiConnector(AccessTokenManagerDelegate accessTokenDelegate, ExactOnlineClient client)
 		{
             _client = client;
 			if (accessTokenDelegate == null) throw new ArgumentException("accessTokenDelegate");
 			_accessTokenDelegate = accessTokenDelegate;
+
+            BaseUrl = client?.ExactOnlineApiUrl;
 		}
 
-		#endregion
+        #endregion
 
-		#region Public methods
+        #region Public methods
 
-		/// <summary>
-		/// Read Data: Perform a GET Request on the API
-		/// </summary>
-		/// <param name="endpoint">{URI}/{Division}/{Resource}/{Entity}</param>
-		/// <param name="oDataQuery">oData Querystring</param>
-		/// <returns>String with API Response in Json Format</returns>
-		public string DoGetRequest(string endpoint, string oDataQuery)
+        /// <summary>
+        /// Sets the service root URL. That should be the base URL of the API with the division number.
+        /// </summary>
+        /// <param name="serviceRoot">Root url of the service</param>
+        public void SetServiceRoot(string serviceRoot) { ServiceRoot = serviceRoot; }
+
+        /// <summary>
+        /// Read Data: Perform a GET Request on the API
+        /// </summary>
+        /// <param name="endpoint">{URI}/{Division}/{Resource}/{Entity}</param>
+        /// <param name="oDataQuery">oData Querystring</param>
+        /// <returns>String with API Response in Json Format</returns>
+        public string DoGetRequest(string endpoint, string oDataQuery)
 		{
 			if (string.IsNullOrEmpty(endpoint)) throw new ArgumentException("Cannot perform request with empty endpoint");
 

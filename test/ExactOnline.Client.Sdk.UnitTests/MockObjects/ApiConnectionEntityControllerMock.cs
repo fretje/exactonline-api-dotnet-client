@@ -24,8 +24,16 @@ namespace ExactOnline.Client.Sdk.UnitTests.MockObjects
 		{
 			throw new NotImplementedException();
 		}
+        string IApiConnection.Get(string parameters, bool useBulkEndpoint)
+        {
+            throw new NotImplementedException();
+        }
 
         Task<string> IApiConnection.GetAsync(string parameters)
+        {
+            throw new NotImplementedException();
+        }
+        Task<string> IApiConnection.GetAsync(string parameters, bool useBulkEndpoint)
         {
             throw new NotImplementedException();
         }
