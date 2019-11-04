@@ -278,8 +278,9 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <param name="useBulkEndpoint">Read from bulk endpoint</param>
         public List<T> Get(ref string skipToken, bool useBulkEndpoint)
         {
+            bool selectIsMandatory = !SupportedActionsSDK.GetByType(typeof(T)).AllowsEmptySelect;
             FormulateSkipToken(skipToken);
-            return _controller.Get(CreateODataQuery(true), ref skipToken, useBulkEndpoint);
+            return _controller.Get(CreateODataQuery(selectIsMandatory), ref skipToken, useBulkEndpoint);
         }
 
         /// <summary>
@@ -288,8 +289,9 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <param name="skipToken">The variable to store the skiptoken in</param>
         public Task<Models.ApiList<T>> GetAsync(string skiptoken = "")
         {
+            bool selectIsMandatory = !SupportedActionsSDK.GetByType(typeof(T)).AllowsEmptySelect;
             FormulateSkipToken(skiptoken);
-            return _controller.GetAsync(CreateODataQuery(true));
+            return _controller.GetAsync(CreateODataQuery(selectIsMandatory));
         }
 
         /// <summary>

@@ -10,16 +10,24 @@ public class SupportedActionsSDK : Attribute
 
     public bool CanBulkRead { get; private set; }
 
-    public SupportedActionsSDK(bool canCreate, bool canRead, bool canUpdate, bool canDelete)
+    public bool AllowsEmptySelect { get; private set; }
+
+    public SupportedActionsSDK(
+        bool canCreate,
+        bool canRead,
+        bool canUpdate,
+        bool canDelete,
+        bool canBulkRead = false,
+        bool allowsEmptySelect = false)
     {
         CanCreate = canCreate;
         CanRead = canRead;
         CanUpdate = canUpdate;
         CanDelete = canDelete;
-    }
-    public SupportedActionsSDK(bool canCreate, bool canRead, bool canUpdate, bool canDelete, bool canBulkRead) : this(canCreate, canRead, canUpdate, canDelete)
-    {
-        CanBulkRead = CanBulkRead;
+
+        CanBulkRead = canBulkRead;
+
+        AllowsEmptySelect = allowsEmptySelect;
     }
 
     public static SupportedActionsSDK GetByType(Type type)
