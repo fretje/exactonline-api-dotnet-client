@@ -54,7 +54,9 @@ namespace ExactOnline.Client.Sdk.Controllers
 		/// </summary>
 		public Boolean IsManagedEntity(object entity)
 		{
-			return _entityControllers.Contains(GetIdentifierValue(entity));
+            string identifierValue = GetIdentifierValue(entity);
+            if (identifierValue == null) return false;
+            return _entityControllers.Contains(identifierValue);
 		}
 
 		/// <summary>
@@ -103,11 +105,8 @@ namespace ExactOnline.Client.Sdk.Controllers
 			var rc = new EntityConverter();
 			var entities = rc.ConvertJsonArrayToObjectList<T>(response);
 
-			// If the entity isn't managed already, register to managed entity collection
-			foreach (var entity in entities)
-			{
-				AddEntityToManagedEntitiesCollection(entity);
-			}
+            // If the entity aren't managed already, register to managed entity collection
+            AddEntitiesToManagedEntitiesCollection(entities);
 
 			// Convert list
 			return entities.ConvertAll(x => x);
@@ -130,11 +129,8 @@ namespace ExactOnline.Client.Sdk.Controllers
             var rc = new EntityConverter();
             var entities = rc.ConvertJsonArrayToObjectList<T>(response);
 
-            // If the entity isn't managed already, register to managed entity collection
-            foreach(var entity in entities)
-            {
-                AddEntityToManagedEntitiesCollection(entity);
-            }
+            // If the entities aren't managed already, register to managed entity collection
+            AddEntitiesToManagedEntitiesCollection(entities);
 
             // Convert list
             return new Models.ApiList<T>(entities.ConvertAll(x => x), skipToken);
@@ -399,9 +395,12 @@ namespace ExactOnline.Client.Sdk.Controllers
 		/// <summary>
 		/// Get the unique value of the entity
 		/// </summary>
+        /// <returns>Identifier value of the entity. Null if the indicated keyname is set to null.</returns>
 		public string GetIdentifierValue(object entity)
 		{
-			if (_keyname.Contains(","))
+            if (_keyname == null) return null;
+
+            if (_keyname.Contains(","))
 			{
 				throw new Exception("Currently the SDK doesn't support entities with a compound key.");
 			}
@@ -409,6 +408,17 @@ namespace ExactOnline.Client.Sdk.Controllers
 			return entity.GetType().GetProperty(_keyname).GetValue(entity).ToString();
 		}
 
+        /// <summary>
+        /// Adds multiple entities to the managed entities collection.
+        /// Only adds the entities with an identifier value.
+        /// </summary>
+        public void AddEntitiesToManagedEntitiesCollection(IEnumerable<object> entities)
+        {
+            foreach(var entity in entities.Where(e=>GetIdentifierValue(e) != null))
+            {
+                AddEntityToManagedEntitiesCollection(entity);
+            }
+        }
 		/// <summary>
 		/// Adds an associated intance of the EntityController class to the _controllers if the entity is not yet managed 
 		/// </summary>
@@ -416,6 +426,8 @@ namespace ExactOnline.Client.Sdk.Controllers
 		{
 			var returnValue = false;
 			var entityIdentifier = GetIdentifierValue(entity);
+            if (entityIdentifier == null) throw new ArgumentException("Cannot add an entity without an entity identifier", nameof(entity));
+
 			if (!_entityControllers.Contains(entityIdentifier))
 			{
 				var newController = new EntityController(entity, _keyname, GetIdentifierValue(entity), _conn, _entityControllerDelegate);
