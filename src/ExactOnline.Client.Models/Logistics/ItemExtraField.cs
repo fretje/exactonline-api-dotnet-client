@@ -2,7 +2,7 @@
 
 namespace ExactOnline.Client.Models.Logistics
 {
-    [SupportedActionsSDK(false, true, false, false)]
+    [SupportedActionsSDK(false, true, false, false, allowsEmptySelect: true)]
     [DataServiceKey(null)]
     public class ItemExtraField
     {
