@@ -3,7 +3,7 @@ namespace ExactOnline.Client.Models.CRM
     using System;
     using System.Collections.Generic;
 
-    [SupportedActionsSDK(true, true, true, true)]
+    [SupportedActionsSDK(true, true, true, true, canBulkRead: true)]
     [DataServiceKey("ID")]
     public class Account
     {
