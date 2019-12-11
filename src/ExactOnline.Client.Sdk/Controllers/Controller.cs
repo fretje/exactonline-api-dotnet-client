@@ -225,7 +225,18 @@ namespace ExactOnline.Client.Sdk.Controllers
             return entity;
         }
 
-        
+        public T GetFunctionResult(string querystring)
+        {
+            var response = _conn.Get(querystring);
+
+            response = ApiResponseCleaner.GetJsonArray(response);
+
+            var rc = new EntityConverter();
+            var entities = rc.ConvertJsonArrayToObjectList<T>(response);
+
+            return entities.FirstOrDefault();
+        }
+
         /// <summary>
         /// Creates an entity in Exact Online
         /// </summary>
