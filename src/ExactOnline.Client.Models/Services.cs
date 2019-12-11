@@ -171,6 +171,7 @@ public class Services
         ServicesDictionary.Add(typeof(ItemGroup).FullName, "Logistics/ItemGroups");
         ServicesDictionary.Add(typeof(ItemVersion).FullName, "Logistics/ItemVersions");
         ServicesDictionary.Add(typeof(SalesItemPrice).FullName, "Logistics/SalesItemPrices");
+        ServicesDictionary.Add(typeof(StockPosition).FullName, "Read/Logistics/StockPosition");
         ServicesDictionary.Add(typeof(SupplierItem).FullName, "Logistics/SupplierItem");
         ServicesDictionary.Add(typeof(Unit).FullName, "Logistics/Units");
         ServicesDictionary.Add(typeof(DefaultMailbox).FullName, "Read/Mailbox/DefaultMailbox");

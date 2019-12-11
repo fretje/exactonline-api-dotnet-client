@@ -8438,6 +8438,18 @@
         <member name="P:ExactOnline.Client.Models.Logistics.SalesItemPrice.UnitDescription">
             <summary>Description of the price unit</summary>
         </member>
+        <member name="P:ExactOnline.Client.Models.Logistics.StockPosition.ItemId">
+            <summary>Primary key item</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Logistics.StockPosition.InStock">
+            <summary>Number of items in stock</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Logistics.StockPosition.PlanningIn">
+            <summary>Number of items that are planned to come ine</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Logistics.StockPosition.PlanningOut">
+            <summary>Number of items that are planned to go out</summary>
+        </member>
         <member name="P:ExactOnline.Client.Models.Logistics.SupplierItem.CopyRemarks">
             <summary>Copy purchase remarks to purchase lines</summary>
         </member>
