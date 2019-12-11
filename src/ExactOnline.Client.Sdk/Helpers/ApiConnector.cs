@@ -60,37 +60,26 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// Read Data: Perform a GET Request on the API
         /// </summary>
         /// <param name="endpoint">{URI}/{Division}/{Resource}/{Entity}</param>
-        /// <param name="oDataQuery">oData Querystring</param>
+        /// <param name="querystring">querystring</param>
         /// <returns>String with API Response in Json Format</returns>
-        public string DoGetRequest(string endpoint, string oDataQuery)
+        public string DoGetRequest(string endpoint, string querystring)
 		{
-			if (string.IsNullOrEmpty(endpoint)) throw new ArgumentException("Cannot perform request with empty endpoint");
-
-			var request = CreateRequest(endpoint, oDataQuery, RequestTypeEnum.GET);
-
-			Debug.Write("GET ");
-			Debug.WriteLine(request.RequestUri);
-
-			return GetResponse(request);
+            var request = CreateGetRequest(endpoint, querystring);
+            return GetResponse(request);
         }
 
         /// <summary>
         /// Read Data: Perform a GET Request on the API
         /// </summary>
         /// <param name="endpoint">{URI}/{Division}/{Resource}/{Entity}</param>
-        /// <param name="oDataQuery">oData Querystring</param>
+        /// <param name="querystring">querystring</param>
         /// <returns>String with API Response in Json Format</returns>
-        public Task<string> DoGetRequestAsync(string endpoint, string oDataQuery)
+        public Task<string> DoGetRequestAsync(string endpoint, string querystring)
         {
-            if(string.IsNullOrEmpty(endpoint)) throw new ArgumentException("Cannot perform request with empty endpoint");
-
-            var request = CreateRequest(endpoint, oDataQuery, RequestTypeEnum.GET);
-
-            Debug.Write("GET ");
-            Debug.WriteLine(request.RequestUri);
-
+            var request = CreateGetRequest(endpoint, querystring);
             return GetResponseAsync(request);
         }
+        
 
         /// <summary>
         /// Read Data: Perform a GET Request on the API
@@ -99,13 +88,7 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <returns>Stream </returns>
         public Stream DoGetFileRequest(string endpoint)
         {
-            if (string.IsNullOrEmpty(endpoint)) throw new ArgumentException("Cannot perform request with empty endpoint");
-
-            var request = CreateRequest(endpoint, null, RequestTypeEnum.GET);
-
-            Debug.Write("GET ");
-            Debug.WriteLine(request.RequestUri);
-
+            var request = CreateGetRequest(endpoint, null);
             return GetResponseFile(request);
         }
 
@@ -116,14 +99,20 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <returns>Stream </returns>
         public Task<Stream> DoGetFileRequestAsync(string endpoint)
         {
-            if(string.IsNullOrEmpty(endpoint)) throw new ArgumentException("Cannot perform request with empty endpoint");
+            var request = CreateGetRequest(endpoint, null);
+            return GetResponseFileAsync(request);
+        }
 
-            var request = CreateRequest(endpoint, null, RequestTypeEnum.GET);
+        private HttpWebRequest CreateGetRequest(string endpoint, string querystring)
+        {
+            if (string.IsNullOrEmpty(endpoint)) throw new ArgumentException("Cannot perform request with empty endpoint");
+
+            var request = CreateRequest(endpoint, querystring, RequestTypeEnum.GET);
 
             Debug.Write("GET ");
             Debug.WriteLine(request.RequestUri);
 
-            return GetResponseFileAsync(request);
+            return request;
         }
 
         /// <summary>
@@ -358,12 +347,9 @@ namespace ExactOnline.Client.Sdk.Helpers
 
         #region Private methods
 
-        private HttpWebRequest CreateRequest(string url, string oDataQuery, RequestTypeEnum method, string acceptContentType = "application/json")
+        private HttpWebRequest CreateRequest(string url, string querystring, RequestTypeEnum method, string acceptContentType = "application/json")
 		{
-			if (!string.IsNullOrEmpty(oDataQuery))
-			{
-				url += "?" + oDataQuery;
-			}
+			if (!string.IsNullOrEmpty(querystring)) url += "?" + querystring;
 
 			var request = (HttpWebRequest)WebRequest.Create(url);
 			request.ServicePoint.Expect100Continue = false;
