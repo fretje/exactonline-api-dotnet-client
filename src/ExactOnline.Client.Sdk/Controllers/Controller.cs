@@ -109,7 +109,7 @@ namespace ExactOnline.Client.Sdk.Controllers
         /// <returns>List of entity Objects</returns>
         public List<T> Get(string query, ref string skipToken)
         {
-            return Get(query, ref skipToken);
+            return Get(query, ref skipToken, false);
         }
         /// <summary>
         /// Gets specific collection of entities and return a skipToken if there are more records
@@ -225,6 +225,7 @@ namespace ExactOnline.Client.Sdk.Controllers
             return entity;
         }
 
+        
         /// <summary>
         /// Creates an entity in Exact Online
         /// </summary>
@@ -524,6 +525,5 @@ namespace ExactOnline.Client.Sdk.Controllers
 			EntityController ec = associatedController.GetEntityController(id);
 			return ec;
 		}
-
 	}
 }
