@@ -3,9 +3,11 @@ namespace ExactOnline.Client.Models.Inventory
     using System;
 
     [SupportedActionsSDK(false, true, false, false)]
-    [DataServiceKey("Item")]
+    [DataServiceKey("ID")]
     public class ItemWarehousePlanningDetail
     {
+        /// <summary>Primary key</summary>
+        public Guid ID { get; set; }
         /// <summary>ID of item</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public Guid Item { get; set; }

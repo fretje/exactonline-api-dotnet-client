@@ -7133,6 +7133,9 @@
         <member name="P:ExactOnline.Client.Models.Inventory.ItemWarehouse.WarehouseDescription">
             <summary>Description of warehouse</summary>
         </member>
+        <member name="P:ExactOnline.Client.Models.Inventory.ItemWarehousePlanningDetail.ID">
+            <summary>Primary key</summary>
+        </member>
         <member name="P:ExactOnline.Client.Models.Inventory.ItemWarehousePlanningDetail.Item">
             <summary>ID of item</summary>
         </member>
