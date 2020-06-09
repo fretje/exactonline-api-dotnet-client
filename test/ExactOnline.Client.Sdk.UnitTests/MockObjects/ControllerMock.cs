@@ -115,6 +115,11 @@ namespace ExactOnline.Client.Sdk.UnitTests.MockObjects
 		{
 		}
 
-		#endregion
-	}
+        public T GetFunctionResult(string querystring)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+    }
 }
