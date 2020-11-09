@@ -10,8 +10,10 @@ namespace ExactOnline.Client.Models.Sales
         public Guid? Account { get; set; }
         /// <summary>Customer account name</summary>
         public string AccountName { get; set; }
-        /// <summary>Standard price</summary>
+        /// <summary>ID of the base price</summary>
         public Guid? BasePrice { get; set; }
+        /// <summary>Amount of the base price</summary>
+        public double? BasePriceAmount { get; set; }
         /// <summary>Creation date</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public DateTime? Created { get; set; }
