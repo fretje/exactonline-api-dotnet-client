@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExactOnline.Client.Sdk.Enums;
+using System;
 using System.Threading.Tasks;
 
 namespace ExactOnline.Client.Sdk.Interfaces
@@ -6,9 +7,9 @@ namespace ExactOnline.Client.Sdk.Interfaces
 	public interface IApiConnection
 	{
         string Get(string parameters);
-        string Get(string parameters, bool useBulkEndpoint);
+        string Get(string parameters, EndpointTypeEnum endpointType);
         Task<string> GetAsync(string parameters);
-        Task<string> GetAsync(string parameters, bool useBulkEndpoint);
+        Task<string> GetAsync(string parameters, EndpointTypeEnum endpointType);
 
         string GetEntity(string keyname, string guid, string parameters);
         Task<string> GetEntityAsync(string keyname, string guid, string parameters);

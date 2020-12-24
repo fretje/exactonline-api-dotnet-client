@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using ExactOnline.Client.Sdk.Enums;
 using ExactOnline.Client.Sdk.Interfaces;
 
 namespace ExactOnline.Client.Sdk.Helpers
@@ -10,25 +11,23 @@ namespace ExactOnline.Client.Sdk.Helpers
     /// </summary>
     public class ApiConnection : IApiConnection
     {
-        private readonly IApiConnector _conn;
-        public IApiConnector Conn
-        {
-            get { return _conn; }
-        }
-
-        public string EndPoint { get; set; }
+        private readonly IApiConnector _connector;
+        private readonly string _endPoint;
+        private readonly string _baseUrl;
 
         /// <summary>
         /// Creates a new instance of APIConnection
         /// </summary>
         /// <param name="conn">Instance of APIConnector</param>
         /// <param name="endPoint">Specific endpoint of API</param>
-        public ApiConnection(IApiConnector conn, string endPoint)
+        /// <param name="baseUrl">The base url of the API (leave empty if included in the endpoint, but it's mandatory for connections to sync/bulk endpoints)</param>
+        public ApiConnection(IApiConnector conn, string endPoint, string baseUrl = default)
         {
             if (conn != null && endPoint != string.Empty)
             {
-                _conn = conn;
-                EndPoint = endPoint;
+                _connector = conn;
+                _endPoint = endPoint;
+                _baseUrl = baseUrl;
             }
             else
             {
@@ -43,17 +42,18 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <returns>Json String</returns>
         public string Get(string parameters)
         {
-            return Get(parameters, false);
+            return Get(parameters, EndpointTypeEnum.Single);
         }
+
         /// <summary>
         /// Perform a GET (Read) request on the API
         /// </summary>
         /// <param name="parameters">oData Parameters</param>
-        /// <param name="useBulkEndpoint">Get from bulk endpoint</param>
+        /// <param name="endpointType">Which EndpointType to use</param>
         /// <returns>Json String</returns>
-        public string Get(string parameters, bool useBulkEndpoint)
+        public string Get(string parameters, EndpointTypeEnum endpointType)
         {
-            string response = _conn.DoGetRequest(GetEndpointUrl(useBulkEndpoint), parameters);
+            string response = _connector.DoGetRequest(GetEndpointUrl(endpointType), parameters);
             if (response.Contains("Object moved"))
             {
                 throw new Exception("Invalid Access Token");
@@ -68,17 +68,18 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <returns>Json String</returns>
         public async Task<string> GetAsync(string parameters)
         {
-            return await GetAsync(parameters, false);
+            return await GetAsync(parameters, EndpointTypeEnum.Single);
         }
+
         /// <summary>
         /// Perform a GET (Read) request on the API
         /// </summary>
         /// <param name="parameters">oData Parameters</param>
-        /// <param name="useBulkEndpoint">Read from bulk endpoint</param>
+        /// <param name="endpointType">Which EndpointType to use</param>
         /// <returns>Json String</returns>
-        public async Task<string> GetAsync(string parameters, bool useBulkEndpoint)
+        public async Task<string> GetAsync(string parameters, EndpointTypeEnum endpointType)
         {
-            string response = await _conn.DoGetRequestAsync(GetEndpointUrl(useBulkEndpoint), parameters).ConfigureAwait(false);
+            string response = await _connector.DoGetRequestAsync(GetEndpointUrl(endpointType), parameters).ConfigureAwait(false);
             if (response.Contains("Object moved"))
             {
                 throw new Exception("Invalid Access Token");
@@ -92,7 +93,7 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <returns>Stream</returns>
         public Stream GetFile()
         {
-            Stream response = _conn.DoGetFileRequest(GetEndpointUrl());
+            Stream response = _connector.DoGetFileRequest(GetEndpointUrl());
             return response;
         }
 
@@ -102,7 +103,7 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <returns>Stream</returns>
         public Task<Stream> GetFileAsync()
         {
-            return _conn.DoGetFileRequestAsync(GetEndpointUrl());
+            return _connector.DoGetFileRequestAsync(GetEndpointUrl());
         }
 
         /// <summary>
@@ -130,7 +131,7 @@ namespace ExactOnline.Client.Sdk.Helpers
                 endpoint += "(" + guid + ")";
             }
 
-            string response = _conn.DoGetRequest(endpoint, parameters);
+            string response = _connector.DoGetRequest(endpoint, parameters);
             return response;
         }
 
@@ -159,7 +160,7 @@ namespace ExactOnline.Client.Sdk.Helpers
                 endpoint += "(" + guid + ")";
             }
 
-            return _conn.DoGetRequestAsync(endpoint, parameters);
+            return _connector.DoGetRequestAsync(endpoint, parameters);
         }
 
         /// <summary>
@@ -172,7 +173,7 @@ namespace ExactOnline.Client.Sdk.Helpers
             string response;
             if (data != string.Empty)
             {
-                response = _conn.DoPostRequest(GetEndpointUrl(), data);
+                response = _connector.DoPostRequest(GetEndpointUrl(), data);
             }
             else
             {
@@ -191,7 +192,7 @@ namespace ExactOnline.Client.Sdk.Helpers
             string response;
             if (data != string.Empty)
             {
-                response = await _conn.DoPostRequestAsync(GetEndpointUrl(), data).ConfigureAwait(false);
+                response = await _connector.DoPostRequestAsync(GetEndpointUrl(), data).ConfigureAwait(false);
             }
             else
             {
@@ -217,7 +218,7 @@ namespace ExactOnline.Client.Sdk.Helpers
                 if (keyName.Contains("ID")) endpoint += "(guid'" + guid + "')";
                 else endpoint += "(" + guid + ")";
 
-                string response = _conn.DoPutRequest(endpoint, data);
+                string response = _connector.DoPutRequest(endpoint, data);
 
                 // Reponse is empty on success
                 if (!response.Contains("error"))
@@ -249,7 +250,7 @@ namespace ExactOnline.Client.Sdk.Helpers
                 if (keyName.Contains("ID")) endpoint += "(guid'" + guid + "')";
                 else endpoint += "(" + guid + ")";
 
-                string response = await _conn.DoPutRequestAsync(endpoint, data).ConfigureAwait(false);
+                string response = await _connector.DoPutRequestAsync(endpoint, data).ConfigureAwait(false);
 
                 // Reponse is empty on success
                 if (!response.Contains("error"))
@@ -281,7 +282,7 @@ namespace ExactOnline.Client.Sdk.Helpers
                 else endpoint += "(" + guid + ")";
 
                 // Create endpoint and get response
-                string response = _conn.DoDeleteRequest(endpoint);
+                string response = _connector.DoDeleteRequest(endpoint);
 
                 // Reponse is empty on success
                 if (response == string.Empty)
@@ -313,7 +314,7 @@ namespace ExactOnline.Client.Sdk.Helpers
                 else endpoint += "(" + guid + ")";
 
                 // Create endpoint and get response
-                string response = await _conn.DoDeleteRequestAsync(endpoint).ConfigureAwait(false);
+                string response = await _connector.DoDeleteRequestAsync(endpoint).ConfigureAwait(false);
 
                 // Reponse is empty on success
                 if (response == string.Empty)
@@ -335,7 +336,7 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <returns></returns>
         public int Count(string parameters)
         {
-            string response = _conn.DoCleanRequest(GetEndpointUrl() + "/$count", parameters);
+            string response = _connector.DoCleanRequest(GetEndpointUrl() + "/$count", parameters);
             return int.Parse(response);
         }
 
@@ -346,13 +347,16 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <returns></returns>
         public async Task<int> CountAsync(string parameters)
         {
-            string response = await _conn.DoCleanRequestAsync(GetEndpointUrl() + "/$count", parameters).ConfigureAwait(false);
+            string response = await _connector.DoCleanRequestAsync(GetEndpointUrl() + "/$count", parameters).ConfigureAwait(false);
             return int.Parse(response);
         }
 
-        private string GetEndpointUrl(bool useBulkEndpoint = false)
+        private string GetEndpointUrl(EndpointTypeEnum endpointType = EndpointTypeEnum.Single)
         {
-            return _conn.ServiceRoot + (useBulkEndpoint ? "bulk/" : "") + EndPoint;
+            var typePart = endpointType == EndpointTypeEnum.Bulk ? "bulk/"
+                         : endpointType == EndpointTypeEnum.Sync ? "sync/"
+                         : "";
+            return _baseUrl + typePart + _endPoint;
         }
     }
 }

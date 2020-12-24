@@ -12,12 +12,14 @@ namespace ExactOnline.Client.Sdk.Helpers
     public class ControllerList
     {
         private readonly IApiConnector _connector;
+        private readonly string _baseUrl;
         private readonly Hashtable _controllers;
         private readonly Dictionary<string, string> _services;
 
-        public ControllerList(IApiConnector connector)
+        public ControllerList(IApiConnector connector, string baseurl)
         {
             _connector = connector;
+            _baseUrl = baseurl;
             _controllers = new Hashtable();
             _services = new Services().ServicesDictionary;
         }
@@ -48,11 +50,11 @@ namespace ExactOnline.Client.Sdk.Helpers
 
                 if (typename == typeof(ExactOnline.Client.Models.Current.Me).FullName)
                 {
-                    conn = new ApiConnection(_connector, "system/Me");
+                    conn = new ApiConnection(_connector, "system/Me", _baseUrl);
                 }
                 else if (_services.ContainsKey(typename))
                 {
-                    conn = new ApiConnection(_connector, _services[typename]);
+                    conn = new ApiConnection(_connector, _services[typename], _baseUrl);
                 }
                 else
                 {
@@ -68,6 +70,5 @@ namespace ExactOnline.Client.Sdk.Helpers
 
             return returncontroller;
         }
-
     }
 }

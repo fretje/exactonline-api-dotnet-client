@@ -16052,6 +16052,24 @@
         <member name="P:ExactOnline.Client.Models.Subscription.SubscriptionType.ModifierFullName">
             <summary>Name of the last modifier</summary>
         </member>
+        <member name="P:ExactOnline.Client.Models.SupportsSync.Timestamp">
+            <summary>Timestamp for use with the sync api</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Sync.Deleted.Division">
+            <summary>Division code</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Sync.Deleted.EntityKey">
+            <summary>Entity Key</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Sync.Deleted.EntityType">
+            <summary>Entity Type</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Sync.Deleted.ID">
+            <summary>Primary Key</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Sync.Deleted.Timestamp">
+            <summary>Timestamp for use with the sync service</summary>
+        </member>
         <member name="P:ExactOnline.Client.Models.SystemBase.AccountantInfo.AddressLine1">
             <summary>First address line.</summary>
         </member>

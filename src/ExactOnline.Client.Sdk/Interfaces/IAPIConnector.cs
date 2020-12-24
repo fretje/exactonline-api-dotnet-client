@@ -5,14 +5,11 @@ namespace ExactOnline.Client.Sdk.Interfaces
 {
     public interface IApiConnector
     {
-        string BaseUrl { get; }
-        string ServiceRoot { get; }
-
         string DoGetRequest(string endpoint, string parameters);
         Task<string> DoGetRequestAsync(string endpoint, string parameters);
+
         Stream DoGetFileRequest(string endpoint);
         Task<Stream> DoGetFileRequestAsync(string endpoint);
-
 
         string DoPostRequest(string endpoint, string postdata);
         Task<string> DoPostRequestAsync(string endpoint, string postdata);
@@ -25,6 +22,7 @@ namespace ExactOnline.Client.Sdk.Interfaces
 
         string DoCleanRequest(string uri); // Request without Content-Type for $count function
         Task<string> DoCleanRequestAsync(string uri); // Request without Content-Type for $count function
+
         string DoCleanRequest(string uri, string oDataQuery); // Request without Content-Type for $count function, including parameters
         Task<string> DoCleanRequestAsync(string uri, string oDataQuery); // Request without Content-Type for $count function, including parameters
 

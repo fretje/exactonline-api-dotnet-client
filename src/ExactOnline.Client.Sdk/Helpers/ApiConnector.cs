@@ -21,16 +21,6 @@ namespace ExactOnline.Client.Sdk.Helpers
 		private readonly AccessTokenManagerDelegate _accessTokenDelegate;
         private readonly ExactOnlineClient _client;
 
-        /// <summary>
-        /// Base URL of the API
-        /// </summary>
-        public string BaseUrl { get; private set; }
-
-        /// <summary>
-        /// Root URL of the service
-        /// </summary>
-        public string ServiceRoot { get; private set; }
-
         #region Constructor
 
         /// <summary>
@@ -42,19 +32,11 @@ namespace ExactOnline.Client.Sdk.Helpers
             _client = client;
 			if (accessTokenDelegate == null) throw new ArgumentException("accessTokenDelegate");
 			_accessTokenDelegate = accessTokenDelegate;
-
-            BaseUrl = client?.ExactOnlineApiUrl;
 		}
 
         #endregion
 
         #region Public methods
-
-        /// <summary>
-        /// Sets the service root URL. That should be the base URL of the API with the division number.
-        /// </summary>
-        /// <param name="serviceRoot">Root url of the service</param>
-        public void SetServiceRoot(string serviceRoot) { ServiceRoot = serviceRoot; }
 
         /// <summary>
         /// Read Data: Perform a GET Request on the API

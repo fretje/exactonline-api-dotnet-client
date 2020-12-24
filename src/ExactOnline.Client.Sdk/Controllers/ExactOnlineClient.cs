@@ -43,9 +43,10 @@ namespace ExactOnline.Client.Sdk.Controllers
             //Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
 
             _division = (division > 0) ? division : GetDivision();
-            _apiConnector.SetServiceRoot(ExactOnlineApiUrl + _division + "/");
 
-            _controllers = new ControllerList(_apiConnector);
+            var baseUrl = ExactOnlineApiUrl + _division + "/";
+
+            _controllers = new ControllerList(_apiConnector, baseUrl);
         }
 
         /// <summary>

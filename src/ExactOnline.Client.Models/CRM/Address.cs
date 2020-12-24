@@ -2,9 +2,9 @@ namespace ExactOnline.Client.Models.CRM
 {
     using System;
 
-    [SupportedActionsSDK(true, true, true, true)]
+    [SupportedActionsSDK(true, true, true, true, canBulkRead: true)]
     [DataServiceKey("ID")]
-    public class Address
+    public class Address : SupportsSync
     {
         /// <summary>Account linked to the address</summary>
         public Guid? Account { get; set; }

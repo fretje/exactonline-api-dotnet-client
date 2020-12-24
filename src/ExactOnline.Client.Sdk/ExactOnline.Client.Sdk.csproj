@@ -47,6 +47,7 @@
     <Compile Include="Delegates\AccessTokenManagerDelegate.cs" />
     <Compile Include="Delegates\GetEntityControllerDelegate.cs" />
     <Compile Include="Enums\OperatorEnum.cs" />
+    <Compile Include="Enums\EndpointTypeEnum.cs" />
     <Compile Include="Exceptions\TooManyRequestsException.cs" />
     <Compile Include="Helpers\ApiConnection.cs" />
     <Compile Include="Helpers\ApiConnector.cs" />

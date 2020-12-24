@@ -245,22 +245,22 @@ namespace ExactOnline.Client.Sdk.Helpers
             return _controller.CountAsync(CreateODataQuery(false));
         }
 
-
         /// <summary>
         /// Returns a List of entities using the specified query
         /// </summary>
         public List<T> Get()
         {
-            return Get(false);
+            return Get(EndpointTypeEnum.Single);
         }
+
         /// <summary>
         /// Returns a List of entities using the specified query
-        /// <param name="useBulkEndpoint">Read from bulk endpoint</param>
+        /// <param name="endpointType">Which endpoint type to use.</param>
         /// </summary>
-        public List<T> Get(bool useBulkEndpoint)
+        public List<T> Get(EndpointTypeEnum endpointType)
         {
             string skipToken = string.Empty;
-            return Get(ref skipToken, useBulkEndpoint);
+            return Get(ref skipToken, endpointType);
         }
 
         /// <summary>
@@ -269,18 +269,19 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <param name="skipToken">The variable to store the skiptoken in</param>
         public List<T> Get(ref string skipToken)
         {
-            return Get(ref skipToken, false);
+            return Get(ref skipToken, EndpointTypeEnum.Single);
         }
+
         /// <summary>
         /// Returns a List of entities using the specified query.
         /// </summary>
         /// <param name="skipToken">The variable to store the skiptoken in</param>
-        /// <param name="useBulkEndpoint">Read from bulk endpoint</param>
-        public List<T> Get(ref string skipToken, bool useBulkEndpoint)
+        /// <param name="endpointType">Which endpoint type to use.</param>
+        public List<T> Get(ref string skipToken, EndpointTypeEnum endpointType)
         {
             bool selectIsMandatory = !SupportedActionsSDK.GetByType(typeof(T)).AllowsEmptySelect;
             FormulateSkipToken(skipToken);
-            return _controller.Get(CreateODataQuery(selectIsMandatory), ref skipToken, useBulkEndpoint);
+            return _controller.Get(CreateODataQuery(selectIsMandatory), ref skipToken, endpointType);
         }
 
         /// <summary>
