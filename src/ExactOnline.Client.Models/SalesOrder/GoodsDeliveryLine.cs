@@ -1,8 +1,8 @@
+using System;
+using System.Collections.Generic;
+
 namespace ExactOnline.Client.Models.SalesOrder
 {
-    using System;
-    using System.Collections.Generic;
-
     [SupportedActionsSDK(true, true, true, false)]
     [DataServiceKey("ID")]
     public class GoodsDeliveryLine
@@ -25,7 +25,7 @@ namespace ExactOnline.Client.Models.SalesOrder
         public string Description { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>The EntryID identifies the goods delivery. All the lines of a goods delivery have the same EntryID</summary>
         public Guid? EntryID { get; set; }
         /// <summary>Primary key</summary>
@@ -41,7 +41,7 @@ namespace ExactOnline.Client.Models.SalesOrder
         public string ItemDescription { get; set; }
         /// <summary>Line number</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? LineNumber { get; set; }
+        public int? LineNumber { get; set; }
         /// <summary>Last modified date</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public DateTime? Modified { get; set; }
@@ -62,10 +62,10 @@ namespace ExactOnline.Client.Models.SalesOrder
         public Guid? SalesOrderLineID { get; set; }
         /// <summary>Sales order line number</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? SalesOrderLineNumber { get; set; }
+        public int? SalesOrderLineNumber { get; set; }
         /// <summary>Sales order number</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? SalesOrderNumber { get; set; }
+        public int? SalesOrderNumber { get; set; }
         /// <summary>Collection of serial numbers</summary>
         public IEnumerable<Inventory.StockSerialNumber> SerialNumbers { get; set; }
         /// <summary>Reference to storage location</summary>

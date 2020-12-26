@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-public class SupportedActionsSDK : Attribute
+public sealed class SupportedActionsSDK : Attribute
 {
     public bool CanCreate { get; private set; }
     public bool CanRead { get; private set; }
@@ -40,4 +40,3 @@ public class SupportedActionsSDK : Attribute
         return actions;
     }
 }
-

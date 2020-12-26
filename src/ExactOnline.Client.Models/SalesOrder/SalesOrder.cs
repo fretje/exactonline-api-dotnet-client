@@ -22,7 +22,7 @@ namespace ExactOnline.Client.Models.SalesOrder
         public double? AmountFCExclVat { get; set; }
         /// <summary>Shows if this sales order is approved</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int16 ApprovalStatus { get; set; }
+        public short ApprovalStatus { get; set; }
         /// <summary>Description of ApprovalStatus</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public string ApprovalStatusDescription { get; set; }
@@ -61,7 +61,7 @@ namespace ExactOnline.Client.Models.SalesOrder
         /// <summary>Delivery date</summary>
         public DateTime? DeliveryDate { get; set; }
         /// <summary>Shipping status</summary>
-        public Int16? DeliveryStatus { get; set; }
+        public short? DeliveryStatus { get; set; }
         /// <summary>Description of DeliveryStatus</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public string DeliveryStatusDescription { get; set; }
@@ -71,17 +71,17 @@ namespace ExactOnline.Client.Models.SalesOrder
         public double? Discount { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32 Division { get; set; }
+        public int Division { get; set; }
         /// <summary>Document that is manually linked to the sales order</summary>
         public Guid? Document { get; set; }
         /// <summary>Number of the document</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? DocumentNumber { get; set; }
+        public int? DocumentNumber { get; set; }
         /// <summary>Subject of the document</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public string DocumentSubject { get; set; }
         /// <summary>Invoice status</summary>
-        public Int16? InvoiceStatus { get; set; }
+        public short? InvoiceStatus { get; set; }
         /// <summary>Description of InvoiceStatus</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public string InvoiceStatusDescription { get; set; }
@@ -119,7 +119,7 @@ namespace ExactOnline.Client.Models.SalesOrder
         /// <summary>Primary key</summary>
         public Guid OrderID { get; set; }
         /// <summary>Number of sales order</summary>
-        public Int32 OrderNumber { get; set; }
+        public int OrderNumber { get; set; }
         /// <summary>The payment condition used for due date and discount calculation</summary>
         public string PaymentCondition { get; set; }
         /// <summary>Description of PaymentCondition</summary>
@@ -143,7 +143,7 @@ namespace ExactOnline.Client.Models.SalesOrder
         public string ShippingMethodDescription { get; set; }
         /// <summary>The status of the sales order. 12 = Open, 20 = Partial, 21 = Complete, 45 = Cancelled.</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int16? Status { get; set; }
+        public short? Status { get; set; }
         /// <summary>Description of Status</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public string StatusDescription { get; set; }

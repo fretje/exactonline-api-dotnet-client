@@ -1,13 +1,13 @@
+using System;
+
 namespace ExactOnline.Client.Models.HRM
 {
-    using System;
-
     [SupportedActionsSDK(false, true, false, false)]
     [DataServiceKey("Code")]
     public class Division
     {
         /// <summary>Values: 0 = Not blocked 1 = Backup 2 = Conversion busy 3 = Conversion shadow 4 = Conversion waiting 5 = Copy data waiting 6 = Copy data buzy 100 = Wait for deletion 101 = Deleted 102 = Deletion failed</summary>
-        public Int32? BlockingStatus { get; set; }
+        public int? BlockingStatus { get; set; }
         /// <summary>First division classification. User should have access rights to view division classifications.</summary>
         public DivisionClass Class_01 { get; set; }
         /// <summary>Second division classification. User should have access rights to view division classifications.</summary>
@@ -19,7 +19,7 @@ namespace ExactOnline.Client.Models.HRM
         /// <summary>Fifth division classification. User should have access rights to view division classifications.</summary>
         public DivisionClass Class_05 { get; set; }
         /// <summary>Primary key</summary>
-        public Int32 Code { get; set; }
+        public int Code { get; set; }
         /// <summary>Country of the division. Is used for determination of legislation</summary>
         public string Country { get; set; }
         /// <summary>Description of Country</summary>
@@ -48,7 +48,7 @@ namespace ExactOnline.Client.Models.HRM
         /// <summary>Description</summary>
         public string Description { get; set; }
         /// <summary>Number that customers give to the division</summary>
-        public Int64? HID { get; set; }
+        public long? HID { get; set; }
         /// <summary>True for the main (hosting) division</summary>
         public bool? Main { get; set; }
         /// <summary>Last modified date</summary>
@@ -65,7 +65,7 @@ namespace ExactOnline.Client.Models.HRM
         /// <summary>Date on which the division becomes active</summary>
         public DateTime? StartDate { get; set; }
         /// <summary>Regular administrations will have status 0.  Currently, the only other possibility is &apos;archived&apos; (1), which means the administration is not actively used, but still needs to be accessible for the customer/accountant to meet legal obligations</summary>
-        public Int16? Status { get; set; }
+        public short? Status { get; set; }
         /// <summary>Number of your local tax authority (Germany)</summary>
         public string TaxOfficeNumber { get; set; }
         /// <summary>Local tax reference number (Germany)</summary>

@@ -31,8 +31,7 @@ namespace ExactOnline.Client.Sdk.Helpers
         {
             var method = typeof(ControllerList).GetMethod("GetController");
             var genericMethod = method.MakeGenericMethod(new[] { type });
-            var controller = (IEntityManager)genericMethod.Invoke(this, null);
-            return controller;
+            return (IEntityManager)genericMethod.Invoke(this, null);
         }
 
         /// <summary>
@@ -46,25 +45,18 @@ namespace ExactOnline.Client.Sdk.Helpers
             // If not exists: create
             if (returncontroller == null)
             {
-                ApiConnection conn;
+                var connection =
+                    typename == typeof(Client.Models.Current.Me).FullName
+                        ? new ApiConnection(_connector, "system/Me", _baseUrl)
+                        : _services.ContainsKey(typename)
+                            ? new ApiConnection(_connector, _services[typename], _baseUrl)
+                            : throw new InvalidOperationException("Specified entity is not known in Exact Online. Please check the reference documentation");
 
-                if (typename == typeof(ExactOnline.Client.Models.Current.Me).FullName)
-                {
-                    conn = new ApiConnection(_connector, "system/Me", _baseUrl);
-                }
-                else if (_services.ContainsKey(typename))
-                {
-                    conn = new ApiConnection(_connector, _services[typename], _baseUrl);
-                }
-                else
-                {
-                    throw new InvalidOperationException("Specified entity is not known in Exact Online. Please check the reference documentation");
-                }
-
-                returncontroller = new Controller<T>(conn)
+                returncontroller = new Controller<T>(connection)
                 {
                     GetManagerForEntity = GetEntityManager
                 };
+
                 _controllers.Add(typename, returncontroller);
             }
 

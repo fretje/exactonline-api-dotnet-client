@@ -7,7 +7,7 @@ namespace ExactOnline.Client.Models.Current
     public class Me
     {
         /// <summary>Division number that is currently used in the API. You should use a division number in the url</summary>
-        public Int32 CurrentDivision { get; set; }
+        public int CurrentDivision { get; set; }
         /// <summary>Owner account of the division</summary>
         public Guid? DivisionCustomer { get; set; }
         /// <summary>Owner account code of the division</summary>
@@ -33,7 +33,7 @@ namespace ExactOnline.Client.Models.Current
         /// <summary>Last name</summary>
         public string LastName { get; set; }
         /// <summary>Legislation</summary>
-        public Int64 Legislation { get; set; }
+        public long Legislation { get; set; }
         /// <summary>Middle name</summary>
         public string MiddleName { get; set; }
         /// <summary>Mobile phone</summary>

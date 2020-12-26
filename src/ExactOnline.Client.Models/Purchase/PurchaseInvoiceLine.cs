@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.Purchase
 {
-    using System;
-
     [SupportedActionsSDK(true, true, false, false)]
     [DataServiceKey("ID")]
     public class PurchaseInvoiceLine
@@ -31,7 +31,7 @@ namespace ExactOnline.Client.Models.Purchase
         public string ItemUnit { get; set; }
         /// <summary>The sequence number of the line.</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32 LineNumber { get; set; }
+        public int LineNumber { get; set; }
         /// <summary>The date and time the invoice line was last modified.</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public DateTime Modified { get; set; }

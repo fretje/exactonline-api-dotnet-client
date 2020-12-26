@@ -23,12 +23,12 @@ namespace ExactOnline.Client.Models.Sales
         public string Description { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>Description of Division</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public string DivisionDescription { get; set; }
         /// <summary>Indicates the entity (Item, Item group, ..) on which this price list is based</summary>
-        public Int16? Entity { get; set; }
+        public short? Entity { get; set; }
         /// <summary>Primary key</summary>
         public Guid ID { get; set; }
         /// <summary>Last modified date</summary>

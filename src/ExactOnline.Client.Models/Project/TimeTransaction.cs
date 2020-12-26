@@ -10,16 +10,16 @@ namespace ExactOnline.Client.Models.Project
         public Guid? Account { get; set; }
         /// <summary>Name of Account</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String AccountName { get; set; }
+        public string AccountName { get; set; }
         /// <summary>Reference to ProjectWBS (work breakdown structure)</summary>
         public Guid? Activity { get; set; }
         /// <summary>Description of ProjectWBS</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String ActivityDescription { get; set; }
+        public string ActivityDescription { get; set; }
         /// <summary>This property is obsolete. Use property &apos;AmountFC&apos; instead.</summary>
-        public Double? Amount { get; set; }
+        public double? Amount { get; set; }
         /// <summary>Amount in the currency of the transaction of the transaction</summary>
-        public Double? AmountFC { get; set; }
+        public double? AmountFC { get; set; }
         /// <summary>Attachment linked to the transaction</summary>
         public Guid? Attachment { get; set; }
         /// <summary>Creation date</summary>
@@ -30,37 +30,37 @@ namespace ExactOnline.Client.Models.Project
         public Guid? Creator { get; set; }
         /// <summary>Name of creator</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String CreatorFullName { get; set; }
+        public string CreatorFullName { get; set; }
         /// <summary>Currency of the amount</summary>
-        public String Currency { get; set; }
+        public string Currency { get; set; }
         /// <summary>Date</summary>
         public DateTime? Date { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>Description of Division</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String DivisionDescription { get; set; }
+        public string DivisionDescription { get; set; }
         /// <summary>Employee linked to the transaction</summary>
         public Guid? Employee { get; set; }
         /// <summary>End time of the transaction</summary>
         public DateTime? EndTime { get; set; }
         /// <summary>Entrynumber</summary>
-        public Int32? EntryNumber { get; set; }
+        public int? EntryNumber { get; set; }
         /// <summary>Errortext, used for the backgroundjobs</summary>
-        public String ErrorText { get; set; }
+        public string ErrorText { get; set; }
         /// <summary>Status of the transaction</summary>
-        public Int16? HourStatus { get; set; }
+        public short? HourStatus { get; set; }
         /// <summary>Primary key</summary>
         public Guid ID { get; set; }
         /// <summary>Item linked to the transaction. Items of type &apos;time&apos; are linked to time transactions. Items of other types are linked to cost transactions</summary>
         public Guid? Item { get; set; }
         /// <summary>Description of Item</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String ItemDescription { get; set; }
+        public string ItemDescription { get; set; }
         /// <summary>True if you can use decimals for item quantity</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Boolean? ItemDivisable { get; set; }
+        public bool? ItemDivisable { get; set; }
         /// <summary>Last modified date</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public DateTime? Modified { get; set; }
@@ -69,13 +69,13 @@ namespace ExactOnline.Client.Models.Project
         public Guid? Modifier { get; set; }
         /// <summary>Name of modifier</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String ModifierFullName { get; set; }
+        public string ModifierFullName { get; set; }
         /// <summary>Notes linked to the transaction</summary>
-        public String Notes { get; set; }
+        public string Notes { get; set; }
         /// <summary>This property is obsolete. Use property &apos;PriceFC&apos; instead.</summary>
-        public Double? Price { get; set; }
+        public double? Price { get; set; }
         /// <summary>PriceFC (AmountFC = Quantity * PriceFC)</summary>
-        public Double? PriceFC { get; set; }
+        public double? PriceFC { get; set; }
         /// <summary>Project linked to the transaction</summary>
         public Guid? Project { get; set; }
         /// <summary>Reference to project account</summary>
@@ -83,20 +83,20 @@ namespace ExactOnline.Client.Models.Project
         public Guid? ProjectAccount { get; set; }
         /// <summary>Project account code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String ProjectAccountCode { get; set; }
+        public string ProjectAccountCode { get; set; }
         /// <summary>Project account name</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String ProjectAccountName { get; set; }
+        public string ProjectAccountName { get; set; }
         /// <summary>Code of Project</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String ProjectCode { get; set; }
+        public string ProjectCode { get; set; }
         /// <summary>Description of Project</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String ProjectDescription { get; set; }
+        public string ProjectDescription { get; set; }
         /// <summary>Quantity of the transaction</summary>
-        public Double? Quantity { get; set; }
+        public double? Quantity { get; set; }
         /// <summary>Skip validation</summary>
-        public Boolean SkipValidation { get; set; }
+        public bool SkipValidation { get; set; }
         /// <summary>Start time of the transaction</summary>
         public DateTime? StartTime { get; set; }
         /// <summary>Subscription linked to the transaction</summary>
@@ -105,18 +105,18 @@ namespace ExactOnline.Client.Models.Project
         public Guid? SubscriptionAccount { get; set; }
         /// <summary>Subscription account code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String SubscriptionAccountCode { get; set; }
+        public string SubscriptionAccountCode { get; set; }
         /// <summary>Subscription account name</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String SubscriptionAccountName { get; set; }
+        public string SubscriptionAccountName { get; set; }
         /// <summary>Description of the subscription</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String SubscriptionDescription { get; set; }
+        public string SubscriptionDescription { get; set; }
         /// <summary>Subscription number</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? SubscriptionNumber { get; set; }
+        public int? SubscriptionNumber { get; set; }
         /// <summary>Type of the transaction</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int16? Type { get; set; }
+        public short? Type { get; set; }
     }
 }

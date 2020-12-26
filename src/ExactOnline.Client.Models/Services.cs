@@ -33,7 +33,6 @@ using ExactOnline.Client.Models.Webhooks;
 using ExactOnline.Client.Models.Workflow;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using Bulk = ExactOnline.Client.Models.Bulk;
 using CRMDocument = ExactOnline.Client.Models.CRM.Document;
 using DocDocument = ExactOnline.Client.Models.Documents;
 using HRMDivision = ExactOnline.Client.Models.HRM.Division;
@@ -63,10 +62,6 @@ public class Services
         ServicesDictionary.Add(typeof(AssetGroup).FullName, "Assets/AssetGroups");
         ServicesDictionary.Add(typeof(DepreciationMethod).FullName, "Assets/DepreciationMethods");
         ServicesDictionary.Add(typeof(Budget).FullName, "Budget/Budgets");
-        ServicesDictionary.Add(typeof(Bulk.Document).FullName, "Bulk/Documents/Documents");
-        ServicesDictionary.Add(typeof(Bulk.DocumentAttachment).FullName, "Bulk/Documents/DocumentAttachments");
-        ServicesDictionary.Add(typeof(Bulk.FinancialTransactionLine).FullName, "Bulk/Financial/TransactionLines");
-        ServicesDictionary.Add(typeof(Bulk.SalesOrderLine).FullName, "Bulk/SalesOrder/SalesOrderLines");
         ServicesDictionary.Add(typeof(Bank).FullName, "Cashflow/Banks");
         ServicesDictionary.Add(typeof(DirectDebitMandate).FullName, "Cashflow/DirectDebitMandates");
         ServicesDictionary.Add(typeof(ImportNotification).FullName, "Cashflow/ImportNotifications");

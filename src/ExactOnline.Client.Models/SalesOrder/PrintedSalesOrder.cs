@@ -1,13 +1,13 @@
+using System;
+
 namespace ExactOnline.Client.Models.SalesOrder
 {
-    using System;
-
     [SupportedActionsSDK(true, false, false, false)]
     [DataServiceKey("OrderId")]
     public class PrintedSalesOrder
     {
         /// <summary>Division code</summary>
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>Contains the id of the document that was created</summary>
         public Guid? Document { get; set; }
         /// <summary>Contains the error message if an error occurred during the creation of the document</summary>

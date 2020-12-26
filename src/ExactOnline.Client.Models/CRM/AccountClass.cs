@@ -1,13 +1,13 @@
+using System;
+
 namespace ExactOnline.Client.Models.CRM
 {
-    using System;
-
     [SupportedActionsSDK(false, true, false, false)]
     [DataServiceKey("ID")]
     public class AccountClass
     {
         /// <summary>Classification code</summary>
-        public String Code { get; set; }
+        public string Code { get; set; }
         /// <summary>Creation date</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public DateTime? Created { get; set; }
@@ -16,14 +16,14 @@ namespace ExactOnline.Client.Models.CRM
         public Guid? Creator { get; set; }
         /// <summary>Name of creator</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String CreatorFullName { get; set; }
+        public string CreatorFullName { get; set; }
         /// <summary>Default credit management scenario to be used for new payment terms</summary>
         public Guid? CreditManagementScenario { get; set; }
         /// <summary>Description</summary>
-        public String Description { get; set; }
+        public string Description { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>Primary key</summary>
         public Guid ID { get; set; }
         /// <summary>Last modified date</summary>
@@ -34,6 +34,6 @@ namespace ExactOnline.Client.Models.CRM
         public Guid? Modifier { get; set; }
         /// <summary>Name of modifier</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String ModifierFullName { get; set; }
+        public string ModifierFullName { get; set; }
     }
 }

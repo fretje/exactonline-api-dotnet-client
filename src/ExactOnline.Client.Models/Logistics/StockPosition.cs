@@ -12,12 +12,12 @@ namespace ExactOnline.Client.Models.Logistics
 
         /// <summary>Number of items in stock</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Double? InStock { get; set; }
+        public double? InStock { get; set; }
         /// <summary>Number of items that are planned to come ine</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Double? PlanningIn { get; set; }
+        public double? PlanningIn { get; set; }
         /// <summary>Number of items that are planned to go out</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Double? PlanningOut { get; set; }
+        public double? PlanningOut { get; set; }
     }
 }

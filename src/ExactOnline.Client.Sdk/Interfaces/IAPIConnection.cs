@@ -1,11 +1,10 @@
 ﻿using ExactOnline.Client.Sdk.Enums;
-using System;
 using System.Threading.Tasks;
 
 namespace ExactOnline.Client.Sdk.Interfaces
 {
-	public interface IApiConnection
-	{
+    public interface IApiConnection
+    {
         string Get(string parameters);
         string Get(string parameters, EndpointTypeEnum endpointType);
         Task<string> GetAsync(string parameters);
@@ -17,14 +16,13 @@ namespace ExactOnline.Client.Sdk.Interfaces
         string Post(string data);
         Task<string> PostAsync(string data);
 
-        Boolean Put(string keyName, string guid, string data);
-        Task<Boolean> PutAsync(string keyName, string guid, string data);
+        bool Put(string keyName, string guid, string data);
+        Task<bool> PutAsync(string keyName, string guid, string data);
 
-        Boolean Delete(string keyName, string guid);
-        Task<Boolean> DeleteAsync(string keyName, string guid);
+        bool Delete(string keyName, string guid);
+        Task<bool> DeleteAsync(string keyName, string guid);
 
         int Count(string parameters);
         Task<int> CountAsync(string parameters);
-
     }
 }

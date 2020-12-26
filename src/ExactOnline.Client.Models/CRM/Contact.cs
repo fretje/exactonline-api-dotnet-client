@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.CRM
 {
-    using System;
-
     [SupportedActionsSDK(true, true, true, true)]
     [DataServiceKey("ID")]
     public class Contact
@@ -10,57 +10,57 @@ namespace ExactOnline.Client.Models.CRM
         public Guid? Account { get; set; }
         /// <summary>Indicates if account is a customer</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Boolean AccountIsCustomer { get; set; }
+        public bool AccountIsCustomer { get; set; }
         /// <summary>Indicates if account is a supplier</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Boolean? AccountIsSupplier { get; set; }
+        public bool? AccountIsSupplier { get; set; }
         /// <summary>Reference to the main contact of the account</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public Guid? AccountMainContact { get; set; }
         /// <summary>Name of the account</summary>
-        public String AccountName { get; set; }
+        public string AccountName { get; set; }
         /// <summary>Second address line</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String AddressLine2 { get; set; }
+        public string AddressLine2 { get; set; }
         /// <summary>Street name of the address</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String AddressStreet { get; set; }
+        public string AddressStreet { get; set; }
         /// <summary>Street number of the address</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String AddressStreetNumber { get; set; }
+        public string AddressStreetNumber { get; set; }
         /// <summary>Street number suffix of the address</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String AddressStreetNumberSuffix { get; set; }
+        public string AddressStreetNumberSuffix { get; set; }
         /// <summary>Obsolete</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? AllowMailing { get; set; }
+        public int? AllowMailing { get; set; }
         /// <summary>Birth date</summary>
         public DateTime? BirthDate { get; set; }
         /// <summary>Obsolete. Please don&apos;t use this field anymore as it may overwrite LastName.</summary>
-        public String BirthName { get; set; }
+        public string BirthName { get; set; }
         /// <summary>Obsolete. Please don&apos;t use this field anymore as it may overwrite MiddleName.</summary>
-        public String BirthNamePrefix { get; set; }
+        public string BirthNamePrefix { get; set; }
         /// <summary>Birth place</summary>
-        public String BirthPlace { get; set; }
+        public string BirthPlace { get; set; }
         /// <summary>Email address of the contact</summary>
-        public String BusinessEmail { get; set; }
+        public string BusinessEmail { get; set; }
         /// <summary>Fax of the contact</summary>
-        public String BusinessFax { get; set; }
+        public string BusinessFax { get; set; }
         /// <summary>Mobile of the contact</summary>
-        public String BusinessMobile { get; set; }
+        public string BusinessMobile { get; set; }
         /// <summary>Phone of the contact</summary>
-        public String BusinessPhone { get; set; }
+        public string BusinessPhone { get; set; }
         /// <summary>Phone extension of the contact</summary>
-        public String BusinessPhoneExtension { get; set; }
+        public string BusinessPhoneExtension { get; set; }
         /// <summary>City</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String City { get; set; }
+        public string City { get; set; }
         /// <summary>Code of the account</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String Code { get; set; }
+        public string Code { get; set; }
         /// <summary>Country code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String Country { get; set; }
+        public string Country { get; set; }
         /// <summary>Creation date</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public DateTime? Created { get; set; }
@@ -69,23 +69,23 @@ namespace ExactOnline.Client.Models.CRM
         public Guid? Creator { get; set; }
         /// <summary>Name of the creator</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String CreatorFullName { get; set; }
+        public string CreatorFullName { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>Email address of the contact</summary>
-        public String Email { get; set; }
+        public string Email { get; set; }
         /// <summary>End date</summary>
         public DateTime? EndDate { get; set; }
         /// <summary>First name. Provide at least first name or last name to create a new contact</summary>
-        public String FirstName { get; set; }
+        public string FirstName { get; set; }
         /// <summary>Full name (First name Middle name Last name)</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String FullName { get; set; }
+        public string FullName { get; set; }
         /// <summary>Gender</summary>
-        public String Gender { get; set; }
+        public string Gender { get; set; }
         /// <summary>Contact ID</summary>
-        public Int32? HID { get; set; }
+        public int? HID { get; set; }
         /// <summary>Primary key</summary>
         public Guid ID { get; set; }
         /// <summary>Identification date</summary>
@@ -95,31 +95,31 @@ namespace ExactOnline.Client.Models.CRM
         /// <summary>Reference to the user responsible for identification</summary>
         public Guid? IdentificationUser { get; set; }
         /// <summary>Initials</summary>
-        public String Initials { get; set; }
+        public string Initials { get; set; }
         /// <summary>Indicates whether the contact is anonymised.</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Byte IsAnonymised { get; set; }
+        public byte IsAnonymised { get; set; }
         /// <summary>Indicates whether contacts are excluded from the marketing list</summary>
-        public Boolean? IsMailingExcluded { get; set; }
+        public bool? IsMailingExcluded { get; set; }
         /// <summary>Indicates if this is the main contact of the linked account</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Boolean? IsMainContact { get; set; }
+        public bool? IsMainContact { get; set; }
         /// <summary>Jobtitle of the contact</summary>
-        public String JobTitleDescription { get; set; }
+        public string JobTitleDescription { get; set; }
         /// <summary>Language code</summary>
-        public String Language { get; set; }
+        public string Language { get; set; }
         /// <summary>Last name. Provide at least first name or last name to create a new contact</summary>
-        public String LastName { get; set; }
+        public string LastName { get; set; }
         /// <summary>Reference to purpose of an contact</summary>
         public Guid? LeadPurpose { get; set; }
         /// <summary>Reference to source of an contact</summary>
         public Guid? LeadSource { get; set; }
         /// <summary>The user should be able to do a full text search on these notes to gather contacts for a marketing campaign</summary>
-        public String MarketingNotes { get; set; }
+        public string MarketingNotes { get; set; }
         /// <summary>Middle name</summary>
-        public String MiddleName { get; set; }
+        public string MiddleName { get; set; }
         /// <summary>Business phone of the contact</summary>
-        public String Mobile { get; set; }
+        public string Mobile { get; set; }
         /// <summary>Last modified date</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public DateTime? Modified { get; set; }
@@ -128,45 +128,45 @@ namespace ExactOnline.Client.Models.CRM
         public Guid? Modifier { get; set; }
         /// <summary>Name of the last modifier</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String ModifierFullName { get; set; }
+        public string ModifierFullName { get; set; }
         /// <summary>Nationality</summary>
-        public String Nationality { get; set; }
+        public string Nationality { get; set; }
         /// <summary>Extra remarks</summary>
-        public String Notes { get; set; }
+        public string Notes { get; set; }
         /// <summary>Last name of partner</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String PartnerName { get; set; }
+        public string PartnerName { get; set; }
         /// <summary>Middlename of partner</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String PartnerNamePrefix { get; set; }
+        public string PartnerNamePrefix { get; set; }
         /// <summary>Reference to the personal information of this contact such as name, gender, address etc.</summary>
         public Guid? Person { get; set; }
         /// <summary>Phone of the contact</summary>
-        public String Phone { get; set; }
+        public string Phone { get; set; }
         /// <summary>Phone extension of the contact</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String PhoneExtension { get; set; }
+        public string PhoneExtension { get; set; }
         /// <summary>This field is write-only. The picture can be downloaded through PictureUrl and PictureThumbnailUrl.</summary>
-        public Byte[] Picture { get; set; }
+        public byte[] Picture { get; set; }
         /// <summary>Filename of the picture</summary>
-        public String PictureName { get; set; }
+        public string PictureName { get; set; }
         /// <summary>Url to retrieve the picture thumbnail</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String PictureThumbnailUrl { get; set; }
+        public string PictureThumbnailUrl { get; set; }
         /// <summary>Url to retrieve the picture</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String PictureUrl { get; set; }
+        public string PictureUrl { get; set; }
         /// <summary>Postcode</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String Postcode { get; set; }
+        public string Postcode { get; set; }
         /// <summary>Social security number</summary>
-        public String SocialSecurityNumber { get; set; }
+        public string SocialSecurityNumber { get; set; }
         /// <summary>Start date</summary>
         public DateTime? StartDate { get; set; }
         /// <summary>State</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String State { get; set; }
+        public string State { get; set; }
         /// <summary>Title</summary>
-        public String Title { get; set; }
+        public string Title { get; set; }
     }
 }

@@ -1,8 +1,8 @@
+using System;
+using System.Collections.Generic;
+
 namespace ExactOnline.Client.Models.SalesOrder
 {
-    using System;
-    using System.Collections.Generic;
-
     [SupportedActionsSDK(true, true, true, false)]
     [DataServiceKey("EntryID")]
     public class GoodsDelivery
@@ -38,12 +38,12 @@ namespace ExactOnline.Client.Models.SalesOrder
         public DateTime? DeliveryDate { get; set; }
         /// <summary>Delivery number</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? DeliveryNumber { get; set; }
+        public int? DeliveryNumber { get; set; }
         /// <summary>Header description</summary>
         public string Description { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>Document that is manually linked to the sales order delivery</summary>
         public Guid? Document { get; set; }
         /// <summary>Document Subject</summary>
@@ -53,7 +53,7 @@ namespace ExactOnline.Client.Models.SalesOrder
         public Guid EntryID { get; set; }
         /// <summary>Entry number</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? EntryNumber { get; set; }
+        public int? EntryNumber { get; set; }
         /// <summary>Collection of lines</summary>
         public IEnumerable<GoodsDeliveryLine> GoodsDeliveryLines { get; set; }
         /// <summary>Last modified date</summary>

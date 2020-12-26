@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace ExactOnline.Client.Sdk.Exceptions
 {
@@ -7,10 +8,9 @@ namespace ExactOnline.Client.Sdk.Exceptions
     {
         public BadRequestException() { }
         public BadRequestException(string message) : base(message) { }
-        public BadRequestException(string message, Exception inner) : base(message, inner) { }
-        protected BadRequestException(
-          System.Runtime.Serialization.SerializationInfo info,
-          System.Runtime.Serialization.StreamingContext context)
+        public BadRequestException(string message, Exception inner)
+            : base(message, inner) { }
+        protected BadRequestException(SerializationInfo info, StreamingContext context)
             : base(info, context) { }
     }
 }

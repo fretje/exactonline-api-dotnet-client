@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.Financial
 {
-    using System;
-
     [SupportedActionsSDK(false, true, false, false)]
     [DataServiceKey("ID")]
     public class ReportingBalance
@@ -23,9 +23,9 @@ namespace ExactOnline.Client.Models.Financial
         /// <summary>The description of the cost unit.</summary>
         public string CostUnitDescription { get; set; }
         /// <summary>The number of transactions in the grouping.</summary>
-        public Int32? Count { get; set; }
+        public int? Count { get; set; }
         /// <summary>Division code</summary>
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>G/L account</summary>
         public Guid? GLAccount { get; set; }
         /// <summary>The code of the G/L account.</summary>
@@ -33,14 +33,14 @@ namespace ExactOnline.Client.Models.Financial
         /// <summary>The description of the G/L account.</summary>
         public string GLAccountDescription { get; set; }
         /// <summary>Record ID</summary>
-        public Int64 ID { get; set; }
+        public long ID { get; set; }
         /// <summary>The reporting period of the transactions in the grouping.</summary>
-        public Int32? ReportingPeriod { get; set; }
+        public int? ReportingPeriod { get; set; }
         /// <summary>The reporting year of the transactions in the grouping.</summary>
-        public Int32? ReportingYear { get; set; }
+        public int? ReportingYear { get; set; }
         /// <summary>Status: 20 = Open, 50 = Processed. To get &apos;after entry&apos; results, both Open and Processed amounts have to be included. This is by default, so it requires no extra filtering.</summary>
-        public Int32? Status { get; set; }
+        public int? Status { get; set; }
         /// <summary>The type of the transactions in the grouping.</summary>
-        public Int32? Type { get; set; }
+        public int? Type { get; set; }
     }
 }

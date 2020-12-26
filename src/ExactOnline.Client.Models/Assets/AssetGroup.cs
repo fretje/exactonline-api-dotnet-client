@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.Assets
 {
-    using System;
-
     [SupportedActionsSDK(false, true, false, false)]
     [DataServiceKey("ID")]
     public class AssetGroup
@@ -26,7 +26,7 @@ namespace ExactOnline.Client.Models.Assets
         /// <summary>Description of the asset group</summary>
         public string Description { get; set; }
         /// <summary>Division code</summary>
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>GLAccount for the assets</summary>
         public Guid? GLAccountAssets { get; set; }
         /// <summary>Code of the GLAccount for the assets</summary>

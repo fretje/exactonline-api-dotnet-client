@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.Accountancy
 {
-    using System;
-
     [SupportedActionsSDK(true, true, true, true)]
     [DataServiceKey("ID")]
     public class InvolvedUser
@@ -36,7 +36,7 @@ namespace ExactOnline.Client.Models.Accountancy
         public string CreatorFullName { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>Primary key</summary>
         public Guid ID { get; set; }
         /// <summary>ID of the user role</summary>

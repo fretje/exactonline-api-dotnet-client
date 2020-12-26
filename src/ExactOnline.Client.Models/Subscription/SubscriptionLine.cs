@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.Subscription
 {
-    using System;
-
     [SupportedActionsSDK(true, true, true, true)]
     [DataServiceKey("ID")]
     public class SubscriptionLine
@@ -20,7 +20,7 @@ namespace ExactOnline.Client.Models.Subscription
         public double? Discount { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32 Division { get; set; }
+        public int Division { get; set; }
         /// <summary>Entry ID</summary>
         public Guid EntryID { get; set; }
         /// <summary>From date</summary>
@@ -33,9 +33,9 @@ namespace ExactOnline.Client.Models.Subscription
         [SDKFieldType(FieldType.ReadOnly)]
         public string ItemDescription { get; set; }
         /// <summary>Line number</summary>
-        public Int32 LineNumber { get; set; }
+        public int LineNumber { get; set; }
         /// <summary>Reference to LineType</summary>
-        public Int16? LineType { get; set; }
+        public short? LineType { get; set; }
         /// <summary>Description of LineType</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public string LineTypeDescription { get; set; }

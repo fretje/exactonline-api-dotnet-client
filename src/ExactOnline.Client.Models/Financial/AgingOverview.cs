@@ -1,5 +1,3 @@
-using System;
-
 namespace ExactOnline.Client.Models.Financial
 {
     [SupportedActionsSDK(false, true, false, false)]
@@ -7,7 +5,7 @@ namespace ExactOnline.Client.Models.Financial
     public class AgingOverview
     {
         /// <summary>Primary key</summary>
-        public Int32 AgeGroup { get; set; }
+        public int AgeGroup { get; set; }
         /// <summary>Description of AgeGroup</summary>
         public string AgeGroupDescription { get; set; }
         /// <summary>Amount payable</summary>

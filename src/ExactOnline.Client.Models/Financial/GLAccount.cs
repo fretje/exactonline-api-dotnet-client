@@ -1,19 +1,19 @@
+using System;
+
 namespace ExactOnline.Client.Models.Financial
 {
-    using System;
-
     [SupportedActionsSDK(true, true, true, true)]
     [DataServiceKey("ID")]
     public class GLAccount
     {
         /// <summary>AssimilatedVATBox (France)</summary>
-        public Int16? AssimilatedVATBox { get; set; }
+        public short? AssimilatedVATBox { get; set; }
         /// <summary>The following values are supported: D (Debit) C (Credit)</summary>
         public string BalanceSide { get; set; }
         /// <summary>The following values are supported: B (Balance Sheet) W (Profit &amp; Loss)</summary>
         public string BalanceType { get; set; }
         /// <summary>Indentify the kind of rewarding for the G/L account. This is used in the official document for the fiscal fiches Belcotax</summary>
-        public Int32? BelcotaxType { get; set; }
+        public int? BelcotaxType { get; set; }
         /// <summary>Unique Code of the G/L account</summary>
         public string Code { get; set; }
         /// <summary>Indicate if this G/L account should be shown as compressed without the details in the CRW report of G/L history</summary>
@@ -41,7 +41,7 @@ namespace ExactOnline.Client.Models.Financial
         public string Description { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32 Division { get; set; }
+        public int Division { get; set; }
         /// <summary>General ledger transactions on this G/L account should not appear on the VAT listing</summary>
         public byte ExcludeVATListing { get; set; }
         /// <summary>Expenses on this G/L account can not be used to reduce the incomes</summary>
@@ -72,7 +72,7 @@ namespace ExactOnline.Client.Models.Financial
         /// <summary>Search Code</summary>
         public string SearchCode { get; set; }
         /// <summary>The type of the G/L account. Supported values are:&lt;br&gt;10 = Cash&lt;br&gt;12 = Bank&lt;br&gt;14 = Credit card&lt;br&gt;16 = Payment services&lt;br&gt;20 = Accounts receivable&lt;br&gt;21 = Prepayment accounts receivable&lt;br&gt;22 = Accounts payable&lt;br&gt;24 = VAT&lt;br&gt;25 = Employees payable&lt;br&gt;26 = Prepaid expenses&lt;br&gt;27 = Accrued expenses&lt;br&gt;29 = Income taxes payable&lt;br&gt;30 = Fixed assets&lt;br&gt;32 = Other assets&lt;br&gt;35 = Accumulated depreciation&lt;br&gt;40 = Inventory&lt;br&gt;50 = Capital stock&lt;br&gt;52 = Retained earnings&lt;br&gt;55 = Long term debt&lt;br&gt;60 = Current portion of debt&lt;br&gt;90 = General&lt;br&gt;100 = Tax payable&lt;br&gt;110 = Revenue&lt;br&gt;111 = Cost of goods&lt;br&gt;120 = Other costs&lt;br&gt;121 = Sales, general administrative expenses&lt;br&gt;122 = Depreciation costs&lt;br&gt;123 = Research and development&lt;br&gt;125 = Employee costs&lt;br&gt;126 = Employment costs&lt;br&gt;130 = Exceptional costs&lt;br&gt;140 = Exceptional income&lt;br&gt;150 = Income taxes&lt;br&gt;160 = Interest income&lt;br&gt;300 = Year end reflection&lt;br&gt;301 = Indirect year end costing&lt;br&gt;302 = Direct year end costing&lt;br&gt;</summary>
-        public Int32? Type { get; set; }
+        public int? Type { get; set; }
         /// <summary>Description of Type</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public string TypeDescription { get; set; }

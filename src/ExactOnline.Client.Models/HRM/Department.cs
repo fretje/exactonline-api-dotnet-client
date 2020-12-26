@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.HRM
 {
-    using System;
-
     [SupportedActionsSDK(false, true, false, false)]
     [DataServiceKey("ID")]
     public class Department
@@ -21,7 +21,7 @@ namespace ExactOnline.Client.Models.HRM
         /// <summary>Department description</summary>
         public string Description { get; set; }
         /// <summary>Division code</summary>
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>Primary key</summary>
         public Guid ID { get; set; }
         /// <summary>Last modified date</summary>

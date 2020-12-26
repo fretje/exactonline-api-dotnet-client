@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.HRM
 {
-    using System;
-
     [SupportedActionsSDK(false, true, false, false)]
     [DataServiceKey("ID")]
     public class JobTitle
@@ -17,7 +17,7 @@ namespace ExactOnline.Client.Models.HRM
         /// <summary>Job title description</summary>
         public string Description { get; set; }
         /// <summary>Division code</summary>
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>Primary key</summary>
         public Guid ID { get; set; }
         /// <summary>Reference job code</summary>
@@ -29,9 +29,9 @@ namespace ExactOnline.Client.Models.HRM
         /// <summary>Job group description</summary>
         public string JobGroupDescription { get; set; }
         /// <summary>Job title represents job level from</summary>
-        public Int32? JobLevelFrom { get; set; }
+        public int? JobLevelFrom { get; set; }
         /// <summary>Job title represents job level to</summary>
-        public Int32? JobLevelTo { get; set; }
+        public int? JobLevelTo { get; set; }
         /// <summary>Last modified date</summary>
         public DateTime? Modified { get; set; }
         /// <summary>User ID of modifier</summary>

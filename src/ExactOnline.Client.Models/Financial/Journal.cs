@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.Financial
 {
-    using System;
-
     [SupportedActionsSDK(true, true, true, true)]
     [DataServiceKey("ID")]
     public class Journal
@@ -61,7 +61,7 @@ namespace ExactOnline.Client.Models.Financial
         public string Description { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>Suspense general ledger account</summary>
         public Guid? GLAccount { get; set; }
         /// <summary>Code of GLAccount</summary>
@@ -72,7 +72,7 @@ namespace ExactOnline.Client.Models.Financial
         public string GLAccountDescription { get; set; }
         /// <summary>Type of GLAccount</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? GLAccountType { get; set; }
+        public int? GLAccountType { get; set; }
         /// <summary>Primary Key</summary>
         public Guid ID { get; set; }
         /// <summary>Last modified date</summary>
@@ -89,11 +89,11 @@ namespace ExactOnline.Client.Models.Financial
         /// <summary>Identifier detail of the Payment service account. Ex. EmailID for Paypal type of Payment service account</summary>
         public string PaymentServiceAccountIdentifier { get; set; }
         /// <summary>Type of Payment service provider. The following values are supported: 1 (Adyen), 2 (Paypal), 3 (Stripe). Is mandatory for Journals of Type 16 (Payment service)</summary>
-        public Int32? PaymentServiceProvider { get; set; }
+        public int? PaymentServiceProvider { get; set; }
         /// <summary>Name of the Payment service provider</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public string PaymentServiceProviderName { get; set; }
         /// <summary>Type of Journal. The following values are supported: 10 (Cash) 12 (Bank) 16 (Payment service) 20 (Sales) 21 (Return invoice) 22 (Purchase) 23 (Received return invoice) 90 (General journal)</summary>
-        public Int32? Type { get; set; }
+        public int? Type { get; set; }
     }
 }

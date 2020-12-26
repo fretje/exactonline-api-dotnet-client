@@ -1,10 +1,10 @@
+using System;
+using System.Collections.Generic;
+
+using Newtonsoft.Json;
+
 namespace ExactOnline.Client.Models.Activities
 {
-    using System;
-    using System.Collections.Generic;
-
-    using Newtonsoft.Json;
-
     [SupportedActionsSDK(true, true, false, false)]
     [DataServiceKey("ID")]
     public class Complaint
@@ -40,13 +40,13 @@ namespace ExactOnline.Client.Models.Activities
         public string CreatorFullName { get; set; }
         /// <summary>The division</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>The document that is linked to the complaint</summary>
         public Guid? Document { get; set; }
         /// <summary>The subject of the document</summary>
         public string DocumentSubject { get; set; }
         /// <summary>The human readable key</summary>
-        public Int32? HID { get; set; }
+        public int? HID { get; set; }
         /// <summary>The Primary key</summary>
         public Guid ID { get; set; }
         /// <summary>Last modified date</summary>
@@ -66,7 +66,7 @@ namespace ExactOnline.Client.Models.Activities
         public DateTime? ReceiptDate { get; set; }
         /// <summary>Status: 0 = Void, 5 = Rejected, 10 = Draft, 20 = Open, 30 = Approved, 40 = Realized, 50 = Processed </summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? Status { get; set; }
+        public int? Status { get; set; }
         /// <summary>The description of the status</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public string StatusDescription { get; set; }

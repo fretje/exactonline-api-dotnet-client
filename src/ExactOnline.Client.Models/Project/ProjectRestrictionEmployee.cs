@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.Project
 {
-    using System;
-
     [SupportedActionsSDK(true, true, true, true)]
     [DataServiceKey("ID")]
     public class ProjectRestrictionEmployee
@@ -14,18 +14,18 @@ namespace ExactOnline.Client.Models.Project
         public Guid? Creator { get; set; }
         /// <summary>Creator name</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String CreatorFullName { get; set; }
+        public string CreatorFullName { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>Employee linked to the restriction</summary>
         public Guid? Employee { get; set; }
         /// <summary>Name of employee</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String EmployeeFullName { get; set; }
+        public string EmployeeFullName { get; set; }
         /// <summary>Readable ID of the employee</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? EmployeeHID { get; set; }
+        public int? EmployeeHID { get; set; }
         /// <summary>Primary key</summary>
         public Guid ID { get; set; }
         /// <summary>Date modified</summary>
@@ -36,14 +36,14 @@ namespace ExactOnline.Client.Models.Project
         public Guid? Modifier { get; set; }
         /// <summary>Modifier name</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String ModifierFullName { get; set; }
+        public string ModifierFullName { get; set; }
         /// <summary>Project linked to the restriction</summary>
         public Guid? Project { get; set; }
         /// <summary>Project code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String ProjectCode { get; set; }
+        public string ProjectCode { get; set; }
         /// <summary>Project description</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String ProjectDescription { get; set; }
+        public string ProjectDescription { get; set; }
     }
 }

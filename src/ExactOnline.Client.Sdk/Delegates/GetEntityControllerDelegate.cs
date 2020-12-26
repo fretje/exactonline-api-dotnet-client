@@ -2,5 +2,5 @@
 
 namespace ExactOnline.Client.Sdk.Delegates
 {
-	public delegate EntityController GetEntityController(object o);
+    public delegate EntityController GetEntityController(object o);
 }

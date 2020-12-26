@@ -1,25 +1,25 @@
+using System;
+
 namespace ExactOnline.Client.Models.Manufacturing
 {
-    using System;
-
     [SupportedActionsSDK(true, true, true, true)]
     [DataServiceKey("ID")]
     public class Workcenter
     {
         /// <summary>Capacity of the work center</summary>
-        public Int32? Capacity { get; set; }
+        public int? Capacity { get; set; }
         /// <summary>Code of the work center</summary>
-        public String Code { get; set; }
+        public string Code { get; set; }
         /// <summary>Reference to CostCenters</summary>
-        public String Costcenter { get; set; }
+        public string Costcenter { get; set; }
         /// <summary>Description of Costcenter</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String CostcenterDescription { get; set; }
+        public string CostcenterDescription { get; set; }
         /// <summary>Reference to CostUnits</summary>
-        public String Costunit { get; set; }
+        public string Costunit { get; set; }
         /// <summary>Description of Costunit</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String CostunitDescription { get; set; }
+        public string CostunitDescription { get; set; }
         /// <summary>Creation date</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public DateTime? Created { get; set; }
@@ -28,22 +28,22 @@ namespace ExactOnline.Client.Models.Manufacturing
         public Guid? Creator { get; set; }
         /// <summary>Name of creator</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String CreatorFullName { get; set; }
+        public string CreatorFullName { get; set; }
         /// <summary>Description of the work center</summary>
-        public String Description { get; set; }
+        public string Description { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>General burden rate</summary>
-        public Double? GeneralBurdenRate { get; set; }
+        public double? GeneralBurdenRate { get; set; }
         /// <summary>Primary key</summary>
         public Guid ID { get; set; }
         /// <summary>Indicates if labor burden is calculated as a percentage or amount</summary>
-        public Byte IsLaborBurdenPercent { get; set; }
+        public byte IsLaborBurdenPercent { get; set; }
         /// <summary>Labor burden rate</summary>
-        public Double? LaborBurdenRate { get; set; }
+        public double? LaborBurdenRate { get; set; }
         /// <summary>Machine burden rate</summary>
-        public Double? MachineBurdenRate { get; set; }
+        public double? MachineBurdenRate { get; set; }
         /// <summary>Last modified date</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public DateTime? Modified { get; set; }
@@ -52,20 +52,20 @@ namespace ExactOnline.Client.Models.Manufacturing
         public Guid? Modifier { get; set; }
         /// <summary>Name of modifier</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String ModifierFullName { get; set; }
+        public string ModifierFullName { get; set; }
         /// <summary>Remarks</summary>
-        public String Notes { get; set; }
+        public string Notes { get; set; }
         /// <summary>Area to which the work center belongs.</summary>
         public Guid? ProductionArea { get; set; }
         /// <summary>Run labor rate</summary>
-        public Double? RunLaborRate { get; set; }
+        public double? RunLaborRate { get; set; }
         /// <summary>Search code of the work center</summary>
-        public String SearchCode { get; set; }
+        public string SearchCode { get; set; }
         /// <summary>Setup labor rate</summary>
-        public Double? SetupLaborRate { get; set; }
+        public double? SetupLaborRate { get; set; }
         /// <summary>Reference to WorkcenterStatus</summary>
-        public Int32? Status { get; set; }
+        public int? Status { get; set; }
         /// <summary>Reference to WorkcenterTypes</summary>
-        public Int32? Type { get; set; }
+        public int? Type { get; set; }
     }
 }

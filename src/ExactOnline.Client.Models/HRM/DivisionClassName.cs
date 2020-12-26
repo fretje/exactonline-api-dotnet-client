@@ -1,8 +1,8 @@
+using System;
+using System.Collections.Generic;
+
 namespace ExactOnline.Client.Models.HRM
 {
-    using System;
-    using System.Collections.Generic;
-
     [SupportedActionsSDK(false, true, false, false)]
     [DataServiceKey("ID")]
     public class DivisionClassName
@@ -18,7 +18,7 @@ namespace ExactOnline.Client.Models.HRM
         /// <summary>Description of classification</summary>
         public string Description { get; set; }
         /// <summary>Term ID of the classification</summary>
-        public Int32? DescriptionTermID { get; set; }
+        public int? DescriptionTermID { get; set; }
         /// <summary>Collection of classification properties</summary>
         public IEnumerable<DivisionClass> DivisionClasses { get; set; }
         /// <summary>Primary key</summary>
@@ -30,6 +30,6 @@ namespace ExactOnline.Client.Models.HRM
         /// <summary>Name of modifier</summary>
         public string ModifierFullName { get; set; }
         /// <summary>Sequence number</summary>
-        public Int32 SequenceNr { get; set; }
+        public int SequenceNr { get; set; }
     }
 }

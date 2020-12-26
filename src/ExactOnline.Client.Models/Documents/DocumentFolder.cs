@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.Documents
 {
-    using System;
-
     [SupportedActionsSDK(true, true, true, true)]
     [DataServiceKey("ID")]
     public class DocumentFolder
@@ -21,7 +21,7 @@ namespace ExactOnline.Client.Models.Documents
         public string Description { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32 Division { get; set; }
+        public int Division { get; set; }
         /// <summary>Primary key</summary>
         public Guid ID { get; set; }
         /// <summary>Last modified date</summary>

@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.Logistics
 {
-    using System;
-
     [SupportedActionsSDK(true, true, true, true)]
     [DataServiceKey("ID")]
     public class SalesItemPrice
@@ -10,7 +10,7 @@ namespace ExactOnline.Client.Models.Logistics
         public Guid? Account { get; set; }
         /// <summary>Name of the customer account</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String AccountName { get; set; }
+        public string AccountName { get; set; }
         /// <summary>Creation date</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public DateTime? Created { get; set; }
@@ -19,18 +19,18 @@ namespace ExactOnline.Client.Models.Logistics
         public Guid? Creator { get; set; }
         /// <summary>Name of creator</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String CreatorFullName { get; set; }
+        public string CreatorFullName { get; set; }
         /// <summary>The currency of the price</summary>
-        public String Currency { get; set; }
+        public string Currency { get; set; }
         /// <summary>The default unit of the item</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String DefaultItemUnit { get; set; }
+        public string DefaultItemUnit { get; set; }
         /// <summary>The description of the default item unit</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String DefaultItemUnitDescription { get; set; }
+        public string DefaultItemUnitDescription { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>Together with StartDate this determines whether the price is active</summary>
         public DateTime? EndDate { get; set; }
         /// <summary>Primary key</summary>
@@ -39,10 +39,10 @@ namespace ExactOnline.Client.Models.Logistics
         public Guid? Item { get; set; }
         /// <summary>Code of Item</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String ItemCode { get; set; }
+        public string ItemCode { get; set; }
         /// <summary>Description of Item</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String ItemDescription { get; set; }
+        public string ItemDescription { get; set; }
         /// <summary>Last modified date</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public DateTime? Modified { get; set; }
@@ -51,19 +51,19 @@ namespace ExactOnline.Client.Models.Logistics
         public Guid? Modifier { get; set; }
         /// <summary>Name of modifier</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String ModifierFullName { get; set; }
+        public string ModifierFullName { get; set; }
         /// <summary>This is the multiplication factor when going from default item unit to the unit of this price.For example if the default item unit is &apos;gram&apos; and the price unit is &apos;kilogram&apos; then the value of this property is 1000.</summary>
-        public Double? NumberOfItemsPerUnit { get; set; }
+        public double? NumberOfItemsPerUnit { get; set; }
         /// <summary>The actual price of this sales item</summary>
-        public Double? Price { get; set; }
+        public double? Price { get; set; }
         /// <summary>Minimum quantity to which the price is applicable</summary>
-        public Double? Quantity { get; set; }
+        public double? Quantity { get; set; }
         /// <summary>Together with EndDate this determines whether the price is active</summary>
         public DateTime StartDate { get; set; }
         /// <summary>The unit code of the price</summary>
-        public String Unit { get; set; }
+        public string Unit { get; set; }
         /// <summary>Description of the price unit</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String UnitDescription { get; set; }
+        public string UnitDescription { get; set; }
     }
 }

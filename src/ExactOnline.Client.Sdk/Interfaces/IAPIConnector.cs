@@ -20,13 +20,10 @@ namespace ExactOnline.Client.Sdk.Interfaces
         string DoDeleteRequest(string endpoint);
         Task<string> DoDeleteRequestAsync(string endpoint);
 
-        string DoCleanRequest(string uri); // Request without Content-Type for $count function
-        Task<string> DoCleanRequestAsync(string uri); // Request without Content-Type for $count function
+        string DoCleanRequest(string endpoint, string parameters); // Request without Content-Type for $count function, including parameters
+        Task<string> DoCleanRequestAsync(string endpoint, string parameters); // Request without Content-Type for $count function, including parameters
 
-        string DoCleanRequest(string uri, string oDataQuery); // Request without Content-Type for $count function, including parameters
-        Task<string> DoCleanRequestAsync(string uri, string oDataQuery); // Request without Content-Type for $count function, including parameters
-
-        int GetCurrentDivision(string website);
-        Task<int> GetCurrentDivisionAsync(string website);
+        int GetCurrentDivision(string endpoint);
+        Task<int> GetCurrentDivisionAsync(string endpoint);
     }
 }

@@ -17,7 +17,7 @@ namespace ExactOnline.Client.Models.Accountancy
         /// <summary>Name of creator</summary>
         public string CreatorFullName { get; set; }
         /// <summary>Division code</summary>
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>Primary key</summary>
         public Guid ID { get; set; }
         /// <summary>ID of involved account</summary>
@@ -25,9 +25,9 @@ namespace ExactOnline.Client.Models.Accountancy
         /// <summary>Description of relation type</summary>
         public string InvolvedAccountRelationTypeDescription { get; set; }
         /// <summary>TermId of description of relation type</summary>
-        public Int32? InvolvedAccountRelationTypeDescriptionTermId { get; set; }
+        public int? InvolvedAccountRelationTypeDescriptionTermId { get; set; }
         /// <summary>ID of relation type</summary>
-        public Int16? InvolvedAccountRelationTypeId { get; set; }
+        public short? InvolvedAccountRelationTypeId { get; set; }
         /// <summary>Last modified date</summary>
         public DateTime? Modified { get; set; }
         /// <summary>User ID of modifier</summary>

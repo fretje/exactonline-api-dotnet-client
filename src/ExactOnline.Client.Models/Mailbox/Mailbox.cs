@@ -1,9 +1,8 @@
 using System;
+using Newtonsoft.Json;
 
 namespace ExactOnline.Client.Models.Mailbox
 {
-    using Newtonsoft.Json;
-
     [SupportedActionsSDK(true, true, true, true)]
     [DataServiceKey("ID")]
     public class Mailbox
@@ -25,7 +24,7 @@ namespace ExactOnline.Client.Models.Mailbox
         /// <summary>Extra description of the mailbox</summary>
         public string Description { get; set; }
         /// <summary>Only used when this mailbox is used for one specific administration, for example invoices to this mailbox will only be booked in this administration</summary>
-        public Int32? ForDivision { get; set; }
+        public int? ForDivision { get; set; }
         /// <summary>Description of ForDivision</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public string ForDivisionDescription { get; set; }
@@ -46,7 +45,7 @@ namespace ExactOnline.Client.Models.Mailbox
         /// <summary>Customers can decide if they want this mailbox to be visible by all. i.e. some other customer can see this in address maintenance for digital postbox of type Exact</summary>
         public byte Publish { get; set; }
         /// <summary>Type of mailbox. Exact / Government / Manual</summary>
-        public Int16? Type { get; set; }
+        public short? Type { get; set; }
         /// <summary>Date that this mailbox became valid</summary>
         public DateTime? ValidFrom { get; set; }
         /// <summary>Date that this mailbox will not be valid anymore</summary>

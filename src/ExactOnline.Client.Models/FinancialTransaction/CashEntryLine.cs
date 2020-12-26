@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.FinancialTransaction
 {
-    using System;
-
     [SupportedActionsSDK(true, true, false, false)]
     [DataServiceKey("ID")]
     public class CashEntryLine
@@ -53,12 +53,12 @@ namespace ExactOnline.Client.Models.FinancialTransaction
         public string Description { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>Reference to a document</summary>
         public Guid? Document { get; set; }
         /// <summary>Number of Document</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? DocumentNumber { get; set; }
+        public int? DocumentNumber { get; set; }
         /// <summary>Subject of Document</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public string DocumentSubject { get; set; }
@@ -66,7 +66,7 @@ namespace ExactOnline.Client.Models.FinancialTransaction
         public Guid? EntryID { get; set; }
         /// <summary>Entry number of the header</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? EntryNumber { get; set; }
+        public int? EntryNumber { get; set; }
         /// <summary>Exchange rate</summary>
         public double? ExchangeRate { get; set; }
         /// <summary>General ledger account</summary>
@@ -82,7 +82,7 @@ namespace ExactOnline.Client.Models.FinancialTransaction
         public Guid ID { get; set; }
         /// <summary>Line number</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? LineNumber { get; set; }
+        public int? LineNumber { get; set; }
         /// <summary>Last modified date</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public DateTime? Modified { get; set; }
@@ -97,7 +97,7 @@ namespace ExactOnline.Client.Models.FinancialTransaction
         /// <summary>Reference to offset line</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public Guid? OffsetID { get; set; }
-        public Int32? OurRef { get; set; }
+        public int? OurRef { get; set; }
         /// <summary>Reference to a project</summary>
         public Guid? Project { get; set; }
         /// <summary>Code of Project</summary>

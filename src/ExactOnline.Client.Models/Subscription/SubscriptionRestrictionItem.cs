@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.Subscription
 {
-    using System;
-
     [SupportedActionsSDK(true, true, false, true)]
     [DataServiceKey("ID")]
     public class SubscriptionRestrictionItem
@@ -17,7 +17,7 @@ namespace ExactOnline.Client.Models.Subscription
         public string CreatorFullName { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32 Division { get; set; }
+        public int Division { get; set; }
         /// <summary>Primary key</summary>
         public Guid ID { get; set; }
         /// <summary>Item linked to the restriction</summary>
@@ -44,6 +44,6 @@ namespace ExactOnline.Client.Models.Subscription
         public string SubscriptionDescription { get; set; }
         /// <summary>Number of subscription</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32 SubscriptionNumber { get; set; }
+        public int SubscriptionNumber { get; set; }
     }
 }

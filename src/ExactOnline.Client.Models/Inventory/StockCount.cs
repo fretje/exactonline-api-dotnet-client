@@ -1,5 +1,5 @@
-using global::System;
-using global::System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 
 namespace ExactOnline.Client.Models.Inventory
 {
@@ -17,15 +17,15 @@ namespace ExactOnline.Client.Models.Inventory
         public Guid? Creator { get; set; }
         /// <summary>Name of creator</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String CreatorFullName { get; set; }
+        public string CreatorFullName { get; set; }
         /// <summary>Description of the stock count</summary>
-        public String Description { get; set; }
+        public string Description { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>Entry number of the stock transaction</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? EntryNumber { get; set; }
+        public int? EntryNumber { get; set; }
         /// <summary>Last modified date</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public DateTime? Modified { get; set; }
@@ -34,36 +34,36 @@ namespace ExactOnline.Client.Models.Inventory
         public Guid? Modifier { get; set; }
         /// <summary>Name of modifier</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String ModifierFullName { get; set; }
+        public string ModifierFullName { get; set; }
         /// <summary>Offset GL account of inventory</summary>
         public Guid? OffsetGLInventory { get; set; }
         /// <summary>GLAccount code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String OffsetGLInventoryCode { get; set; }
+        public string OffsetGLInventoryCode { get; set; }
         /// <summary>GLAccount description</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String OffsetGLInventoryDescription { get; set; }
+        public string OffsetGLInventoryDescription { get; set; }
         /// <summary>Source of stock count entry: 1-Manual entry, 2-Import, 3-Stock count, 4-Web service</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int16? Source { get; set; }
+        public short? Source { get; set; }
         /// <summary>Stock count status: 12-Draft, 21-Processed</summary>
-        public Int16? Status { get; set; }
+        public short? Status { get; set; }
         /// <summary>Stock count date</summary>
         public DateTime? StockCountDate { get; set; }
         /// <summary>Primary key</summary>
         public Guid StockCountID { get; set; }
         /// <summary>Collection of stock count lines</summary>
-        public IEnumerable<ExactOnline.Client.Models.Inventory.StockCountLine> StockCountLines { get; set; }
+        public IEnumerable<StockCountLine> StockCountLines { get; set; }
         /// <summary>Human readable id of the stock count</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? StockCountNumber { get; set; }
+        public int? StockCountNumber { get; set; }
         /// <summary>Warehouse</summary>
         public Guid? Warehouse { get; set; }
         /// <summary>Code of Warehouse</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String WarehouseCode { get; set; }
+        public string WarehouseCode { get; set; }
         /// <summary>Description of Warehouse</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String WarehouseDescription { get; set; }
+        public string WarehouseDescription { get; set; }
     }
 }

@@ -10,13 +10,7 @@ namespace ConsoleApplication
 		private readonly Uri _callbackUrl;
 		private readonly UserAuthorization _authorization;
 
-		public string EndPoint
-		{
-			get
-			{
-				return "https://start.exactonline.nl";
-			}
-		}
+		public static string EndPoint => "https://start.exactonline.be";
 
 		public Connector(string clientId, string clientSecret, Uri callbackUrl)
 		{
@@ -32,6 +26,5 @@ namespace ConsoleApplication
 
 			return _authorization.AccessToken;
 		}
-
 	}
 }

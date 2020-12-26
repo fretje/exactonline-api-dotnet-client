@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.271
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication", "src\ConsoleApplication\ConsoleApplication.csproj", "{1BCFE70C-8B33-4FD2-9BBE-A7BD076282A8}"
 EndProject
@@ -10,6 +10,15 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExactOnline.Client.Sdk", "src\ExactOnline.Client.Sdk\ExactOnline.Client.Sdk.csproj", "{EE442AA1-C51A-4531-92DA-A7D9C7B73973}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExactOnline.Client.Models", "src\ExactOnline.Client.Models\ExactOnline.Client.Models.csproj", "{0FBE029A-DD5E-0A4A-3EE2-6F330EB60B7C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6BAE7F4B-7D83-4C77-99DE-80A4FB8D4A1C}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		LICENSE.txt = LICENSE.txt
+		README.md = README.md
+		testapp.config.example = testapp.config.example
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

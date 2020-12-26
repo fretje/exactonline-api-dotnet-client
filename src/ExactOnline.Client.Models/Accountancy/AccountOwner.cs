@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.Accountancy
 {
-    using System;
-
     [SupportedActionsSDK(true, true, true, true)]
     [DataServiceKey("ID")]
     public class AccountOwner
@@ -23,7 +23,7 @@ namespace ExactOnline.Client.Models.Accountancy
         [SDKFieldType(FieldType.ReadOnly)]
         public string CreatorFullName { get; set; }
         /// <summary>Division code</summary>
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>Primary key</summary>
         public Guid ID { get; set; }
         /// <summary>Last modified date</summary>

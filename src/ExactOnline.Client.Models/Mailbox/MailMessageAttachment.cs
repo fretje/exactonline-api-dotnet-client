@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.Mailbox
 {
-    using System;
-
     [SupportedActionsSDK(true, true, false, false)]
     [DataServiceKey("ID")]
     public class MailMessageAttachment
@@ -15,7 +15,7 @@ namespace ExactOnline.Client.Models.Mailbox
         public string AttachmentFileName { get; set; }
         /// <summary>File size</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int64 FileSize { get; set; }
+        public long FileSize { get; set; }
         /// <summary>Primary key</summary>
         public Guid ID { get; set; }
         /// <summary>Reference to Mail message</summary>
@@ -27,7 +27,7 @@ namespace ExactOnline.Client.Models.Mailbox
         [SDKFieldType(FieldType.ReadOnly)]
         public Guid? SenderAccount { get; set; }
         /// <summary>Type of mail message attachment</summary>
-        public Int32 Type { get; set; }
+        public int Type { get; set; }
         /// <summary>Description of Type</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public string TypeDescription { get; set; }

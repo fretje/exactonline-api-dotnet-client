@@ -1,125 +1,60 @@
-﻿using ExactOnline.Client.Sdk.Interfaces;
+﻿using ExactOnline.Client.Sdk.Enums;
+using ExactOnline.Client.Sdk.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ExactOnline.Client.Sdk.UnitTests.MockObjects
 {
-	public sealed class ControllerMock<T> : IController<T>
-	{
-
-		public int Count(string query)
-		{
-			return 0;
-		}
-
-        public Task<int> CountAsync(string query)
-        {
-            return Task.FromResult(Count(query));
-        }
-
+    public sealed class ControllerMock<T> : IController<T>
+    {
         public string ODataQuery { get; set; }
 
-		List<T> IController<T>.Get(string query)
-		{
-            return (this as IController<T>).Get(query, false);
-		}
-        List<T> IController<T>.Get(string query, bool useBulkEndpoint)
+        List<T> IController<T>.Get(string query) => (this as IController<T>).Get(query, EndpointTypeEnum.Single);
+        List<T> IController<T>.Get(string query, EndpointTypeEnum endpointType)
         {
             ODataQuery = query;
             return null;
         }
 
-
-        public List<T> Get(string query, ref string skipToken)
+        public List<T> Get(string query, ref string skipToken) => Get(query, ref skipToken, EndpointTypeEnum.Single);
+        public List<T> Get(string query, ref string skipToken, EndpointTypeEnum endpointType)
         {
-            return Get(query, ref skipToken, false);
+            skipToken = null;
+            ODataQuery = query;
+            return null;
         }
-        public List<T> Get(string query, ref string skipToken, bool useBulkEndpoint)
-        {
-			skipToken = null;
-			ODataQuery = query;
-			return null;
-		}
 
-        public Task<Models.ApiList<T>> GetAsync(string query)
-        {
-            return GetAsync(query, false);
-        }
-        public Task<Models.ApiList<T>> GetAsync(string query, bool useBulkEndpoint)
+        public Task<Models.ApiList<T>> GetAsync(string query) => GetAsync(query, EndpointTypeEnum.Single);
+        public Task<Models.ApiList<T>> GetAsync(string query, EndpointTypeEnum endpointType)
         {
             ODataQuery = query;
-            return Task.FromResult(new Models.ApiList<T>(null,null));
+            return Task.FromResult(new Models.ApiList<T>(null, null));
         }
 
-        T IController<T>.GetEntity(string guid, string parameters)
-		{
+        T IController<T>.GetEntity(string guid, string parameters) => throw new NotImplementedException();
+        public Task<T> GetEntityAsync(string guid, string parameters) => Task.FromResult(GetEntity(guid, parameters));
 
-			throw new NotImplementedException();
-		}
+        bool IController<T>.Create(ref T entity) => true;
+        Task<T> IController<T>.CreateAsync(T entity) => Task.FromResult(entity);
 
-        public Task<T> GetEntityAsync(string guid, string parameters)
+        bool IController<T>.Update(T entity) => true;
+        Task<bool> IController<T>.UpdateAsync(T entity) => Task.FromResult((this as IController<T>).Update(entity));
+
+        bool IController<T>.Delete(T entity) => true;
+        Task<bool> IController<T>.DeleteAsync(T entity) => Task.FromResult((this as IController<T>).Delete(entity));
+
+        public int Count(string query) => 0;
+        public Task<int> CountAsync(string query) => Task.FromResult(Count(query));
+
+        public bool IsManagedEntity(T entity) => true;
+
+        public T GetEntity(string guid, string parameters) => throw new NotImplementedException();
+
+        public void RegistrateLinkedEntityField(string fieldname)
         {
-            return Task.FromResult(GetEntity(guid,parameters));
         }
 
-        bool IController<T>.Create(ref T entity)
-		{
-			return true;
-		}
-
-        Task<T> IController<T>.CreateAsync(T entity)
-        {
-            return Task.FromResult(entity);
-        }
-
-        bool IController<T>.Update(T entity)
-		{
-			return true;
-		}
-
-        Task<bool> IController<T>.UpdateAsync(T entity)
-        {
-            return Task.FromResult((this as IController<T>).Update(entity));
-        }
-
-        bool IController<T>.Delete(T entity)
-		{
-			return true;
-		}
-
-        Task<bool> IController<T>.DeleteAsync(T entity)
-        {
-            return Task.FromResult((this as IController<T>).Delete(entity));
-        }
-
-        #region IController<T> Members
-
-
-        public bool IsManagedEntity(T entity)
-		{
-			return true;
-		}
-
-		#endregion
-
-		#region IController<T> Members
-
-
-		public T GetEntity(string guid, string parameters)
-		{
-			throw new NotImplementedException();
-		}
-
-		public void RegistrateLinkedEntityField(string fieldname)
-		{
-		}
-
-        public T GetFunctionResult(string querystring)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
+        public T GetFunctionResult(string querystring) => throw new NotImplementedException();
     }
 }

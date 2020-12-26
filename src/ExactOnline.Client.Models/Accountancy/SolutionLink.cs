@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.Accountancy
 {
-    using System;
-
     [SupportedActionsSDK(true, true, true, true)]
     [DataServiceKey("ID")]
     public class SolutionLink
@@ -16,9 +16,9 @@ namespace ExactOnline.Client.Models.Accountancy
         public Guid? Creator { get; set; }
         /// <summary>Accountant main division</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32 Division { get; set; }
+        public int Division { get; set; }
         /// <summary>If type is external predefined, represents ID of PracticeManagementExternalSolutions (mandatory for External solution)</summary>
-        public Int32? ExternalSolutionCode { get; set; }
+        public int? ExternalSolutionCode { get; set; }
         /// <summary>Name of the external solution</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public string ExternalSolutionName { get; set; }
@@ -28,7 +28,7 @@ namespace ExactOnline.Client.Models.Accountancy
         [SDKFieldType(FieldType.ReadOnly)]
         public Guid ID { get; set; }
         /// <summary>Division code of linked internal solution (mandatory for Internal solution)</summary>
-        public Int32? InternalSolutionDivision { get; set; }
+        public int? InternalSolutionDivision { get; set; }
         /// <summary>Last modified date</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public DateTime Modified { get; set; }
@@ -40,9 +40,9 @@ namespace ExactOnline.Client.Models.Accountancy
         /// <summary>Name of the custom external solution (mandatory for ExternalOther solution)</summary>
         public string OtherExternalSolutionName { get; set; }
         /// <summary>Type of solution: 0 - Internal(EOL), 1 - External(Wellknown solution), 2 - ExternalOther</summary>
-        public Int32 SolutionType { get; set; }
+        public int SolutionType { get; set; }
         /// <summary>Link status: 0 - Active, 1 - Inactive, 2 -Archived</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32 Status { get; set; }
+        public int Status { get; set; }
     }
 }

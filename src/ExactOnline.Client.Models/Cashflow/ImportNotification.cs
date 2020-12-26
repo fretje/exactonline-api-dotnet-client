@@ -8,7 +8,7 @@ namespace ExactOnline.Client.Models.Cashflow
     {
         /// <summary>Number of the bank account related to the notification.</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String BankAccount { get; set; }
+        public string BankAccount { get; set; }
         /// <summary>ID of the bank account related to the notification.</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public Guid? BankAccountID { get; set; }
@@ -17,7 +17,7 @@ namespace ExactOnline.Client.Models.Cashflow
         public DateTime? Created { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>ID of the document related to the notification.</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public Guid? Document { get; set; }
@@ -25,10 +25,10 @@ namespace ExactOnline.Client.Models.Cashflow
         public Guid ID { get; set; }
         /// <summary>Code of the import result</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int16? Result { get; set; }
+        public short? Result { get; set; }
         /// <summary>Description of the import result</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String ResultDescription { get; set; }
+        public string ResultDescription { get; set; }
         /// <summary>ID of the user that requested a retry of the import.</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public Guid? RetriedBy { get; set; }

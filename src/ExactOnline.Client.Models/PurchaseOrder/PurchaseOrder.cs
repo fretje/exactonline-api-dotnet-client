@@ -45,7 +45,7 @@ namespace ExactOnline.Client.Models.PurchaseOrder
         public string Description { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>Document that is manually linked to the purchase order</summary>
         public Guid? Document { get; set; }
         /// <summary>Subject of the document</summary>
@@ -57,7 +57,7 @@ namespace ExactOnline.Client.Models.PurchaseOrder
         public double? ExchangeRate { get; set; }
         /// <summary>Invoice status of purchase order: 10-Open, 20-Partial, 30-Complete, 40-Canceled</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? InvoiceStatus { get; set; }
+        public int? InvoiceStatus { get; set; }
         /// <summary>Last modified date</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public DateTime? Modified { get; set; }
@@ -70,10 +70,10 @@ namespace ExactOnline.Client.Models.PurchaseOrder
         /// <summary>Order date</summary>
         public DateTime? OrderDate { get; set; }
         /// <summary>Human readable id of the purchase order</summary>
-        public Int32? OrderNumber { get; set; }
+        public int? OrderNumber { get; set; }
         /// <summary>Purchase order status: 10-Open, 20-Partial, 30-Complete, 40-Canceled</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? OrderStatus { get; set; }
+        public int? OrderStatus { get; set; }
         /// <summary>The payment condition code used for due date and discount calculation</summary>
         public string PaymentCondition { get; set; }
         /// <summary>Description of payment condition</summary>
@@ -92,7 +92,7 @@ namespace ExactOnline.Client.Models.PurchaseOrder
         public DateTime? ReceiptDate { get; set; }
         /// <summary>Receipt status of purchase order: 10-Open, 20-Partial, 30-Complete, 40-Canceled</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? ReceiptStatus { get; set; }
+        public int? ReceiptStatus { get; set; }
         /// <summary>Include any relevant remarks regarding the purchase order.</summary>
         public string Remarks { get; set; }
         /// <summary>Reference to sales order when purchase order generated via back to back sales order</summary>
@@ -100,7 +100,7 @@ namespace ExactOnline.Client.Models.PurchaseOrder
         public Guid? SalesOrder { get; set; }
         /// <summary>Number of the sales order</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? SalesOrderNumber { get; set; }
+        public int? SalesOrderNumber { get; set; }
         /// <summary>ShippingMethod</summary>
         public Guid? ShippingMethod { get; set; }
         /// <summary>Description of ShippingMethod</summary>
@@ -108,7 +108,7 @@ namespace ExactOnline.Client.Models.PurchaseOrder
         public string ShippingMethodDescription { get; set; }
         /// <summary>This shows how the purchase order was created: 1-Manual entry, 2-Import, 3-Other, 4-Purchase order, 5-Sales order, 6-Supplier&apos;s items, 7-Subcontract, 8-Purchase order advice, 9-Shop order, 10-MRP calculation</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int16? Source { get; set; }
+        public short? Source { get; set; }
         /// <summary>Reference to supplier account</summary>
         public Guid? Supplier { get; set; }
         /// <summary>Code of supplier</summary>

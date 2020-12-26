@@ -14,25 +14,25 @@ namespace ExactOnline.Client.Models.Inventory
         public Guid? Creator { get; set; }
         /// <summary>Name of creator</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String CreatorFullName { get; set; }
+        public string CreatorFullName { get; set; }
         /// <summary>Description</summary>
-        public String Description { get; set; }
+        public string Description { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>Primary key</summary>
         public Guid ID { get; set; }
         /// <summary>Item ID</summary>
         public Guid? Item { get; set; }
         /// <summary>Code of item</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String ItemCode { get; set; }
+        public string ItemCode { get; set; }
         /// <summary>Description of item</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String ItemDescription { get; set; }
+        public string ItemDescription { get; set; }
         /// <summary>Line number</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? LineNumber { get; set; }
+        public int? LineNumber { get; set; }
         /// <summary>Last modified date</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public DateTime? Modified { get; set; }
@@ -41,32 +41,32 @@ namespace ExactOnline.Client.Models.Inventory
         public Guid? Modifier { get; set; }
         /// <summary>Name of modifier</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String ModifierFullName { get; set; }
+        public string ModifierFullName { get; set; }
         /// <summary>Quantity of transfer</summary>
-        public Double? Quantity { get; set; }
+        public double? Quantity { get; set; }
         /// <summary>ID of storage location to transfer item from (Premium Only)</summary>
         public Guid? StorageLocationFrom { get; set; }
         /// <summary>Code of storage location to transfer item from</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String StorageLocationFromCode { get; set; }
+        public string StorageLocationFromCode { get; set; }
         /// <summary>Description of storage location to transfer item from</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String StorageLocationFromDescription { get; set; }
+        public string StorageLocationFromDescription { get; set; }
         /// <summary>ID of storage location to transfer item to (Premium Only)</summary>
         public Guid? StorageLocationTo { get; set; }
         /// <summary>Code of storage location to transfer item to</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String StorageLocationToCode { get; set; }
+        public string StorageLocationToCode { get; set; }
         /// <summary>Description of storage location to transfer item to</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String StorageLocationToDescription { get; set; }
+        public string StorageLocationToDescription { get; set; }
         /// <summary>Entry number of the stock transaction</summary>
         public Guid? TransferID { get; set; }
         /// <summary>The standard unit code of this item</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String UnitCode { get; set; }
+        public string UnitCode { get; set; }
         /// <summary>Description of item&apos;s unit</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String UnitDescription { get; set; }
+        public string UnitDescription { get; set; }
     }
 }

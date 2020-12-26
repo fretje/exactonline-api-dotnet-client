@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.Project
 {
-    using System;
-
     [SupportedActionsSDK(false, true, false, false)]
     [DataServiceKey("AccountId")]
     public class TimeAndBillingEntryAccount

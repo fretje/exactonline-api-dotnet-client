@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.Financial
 {
-    using System;
-
     [SupportedActionsSDK(false, true, false, false)]
     [DataServiceKey("ID")]
     public class FinancialPeriod
@@ -17,13 +17,13 @@ namespace ExactOnline.Client.Models.Financial
         public string CreatorFullName { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>The end date of the period</summary>
         public DateTime? EndDate { get; set; }
         /// <summary>The financial period. Usually the period is a month or quarter with period 1 starting on the first of January.</summary>
-        public Int16? FinPeriod { get; set; }
+        public short? FinPeriod { get; set; }
         /// <summary>The financial year. The financial year and calendar year are not always aligned.</summary>
-        public Int16? FinYear { get; set; }
+        public short? FinYear { get; set; }
         /// <summary>Primary key</summary>
         public Guid ID { get; set; }
         /// <summary>Last modified date</summary>

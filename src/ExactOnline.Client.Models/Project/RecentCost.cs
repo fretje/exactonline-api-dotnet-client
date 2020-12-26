@@ -1,27 +1,27 @@
+using System;
+
 namespace ExactOnline.Client.Models.Project
 {
-    using System;
-
     [SupportedActionsSDK(false, true, false, false)]
     [DataServiceKey("Id")]
     public class RecentCost
     {
         /// <summary>Code of Account</summary>
-        public String AccountCode { get; set; }
+        public string AccountCode { get; set; }
         /// <summary>Reference to Account</summary>
         public Guid? AccountId { get; set; }
         /// <summary>Name of Account</summary>
-        public String AccountName { get; set; }
+        public string AccountName { get; set; }
         /// <summary>Amount approved</summary>
-        public Double AmountApproved { get; set; }
+        public double AmountApproved { get; set; }
         /// <summary>Amount draft</summary>
-        public Double AmountDraft { get; set; }
+        public double AmountDraft { get; set; }
         /// <summary>Amount rejected</summary>
-        public Double AmountRejected { get; set; }
+        public double AmountRejected { get; set; }
         /// <summary>Amount submitted</summary>
-        public Double AmountSubmitted { get; set; }
+        public double AmountSubmitted { get; set; }
         /// <summary>Code of Currency</summary>
-        public String CurrencyCode { get; set; }
+        public string CurrencyCode { get; set; }
         /// <summary>Date</summary>
         public DateTime Date { get; set; }
         /// <summary>Entry ID</summary>
@@ -29,32 +29,32 @@ namespace ExactOnline.Client.Models.Project
         /// <summary>Reference to Expense</summary>
         public Guid? Expense { get; set; }
         /// <summary>Description of Expense</summary>
-        public String ExpenseDescription { get; set; }
+        public string ExpenseDescription { get; set; }
         /// <summary>Primary key</summary>
-        public Int32 Id { get; set; }
+        public int Id { get; set; }
         /// <summary>Code of Item</summary>
-        public String ItemCode { get; set; }
+        public string ItemCode { get; set; }
         /// <summary>Description of Item</summary>
-        public String ItemDescription { get; set; }
+        public string ItemDescription { get; set; }
         /// <summary>Reference to Item</summary>
         public Guid? ItemId { get; set; }
         /// <summary>Remarks</summary>
-        public String Notes { get; set; }
+        public string Notes { get; set; }
         /// <summary>Code of Project</summary>
-        public String ProjectCode { get; set; }
+        public string ProjectCode { get; set; }
         /// <summary>Description of Project</summary>
-        public String ProjectDescription { get; set; }
+        public string ProjectDescription { get; set; }
         /// <summary>Reference to Project</summary>
         public Guid? ProjectId { get; set; }
         /// <summary>Quantity approved</summary>
-        public Double QuantityApproved { get; set; }
+        public double QuantityApproved { get; set; }
         /// <summary>Quantity draft</summary>
-        public Double QuantityDraft { get; set; }
+        public double QuantityDraft { get; set; }
         /// <summary>Quantity rejected</summary>
-        public Double QuantityRejected { get; set; }
+        public double QuantityRejected { get; set; }
         /// <summary>Quantity submitted</summary>
-        public Double QuantitySubmitted { get; set; }
+        public double QuantitySubmitted { get; set; }
         /// <summary>Week number</summary>
-        public Int32 WeekNumber { get; set; }
+        public int WeekNumber { get; set; }
     }
 }

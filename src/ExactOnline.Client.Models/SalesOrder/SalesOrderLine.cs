@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.SalesOrder
 {
-    using System;
-
     [SupportedActionsSDK(true, true, true, true)]
     [DataServiceKey("ID")]
     public class SalesOrderLine
@@ -32,7 +32,7 @@ namespace ExactOnline.Client.Models.SalesOrder
         public double? Discount { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32 Division { get; set; }
+        public int Division { get; set; }
         /// <summary>Primary key</summary>
         public Guid ID { get; set; }
         /// <summary>Reference to the item that is sold in this sales order line</summary>
@@ -50,7 +50,7 @@ namespace ExactOnline.Client.Models.SalesOrder
         public string ItemVersionDescription { get; set; }
         /// <summary>Line number</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32 LineNumber { get; set; }
+        public int LineNumber { get; set; }
         /// <summary>Sales margin of the sales order line</summary>
         public double? Margin { get; set; }
         /// <summary>Net price of the sales order line</summary>
@@ -60,7 +60,7 @@ namespace ExactOnline.Client.Models.SalesOrder
         /// <summary>The OrderID identifies the sales order. All the lines of a sales order have the same OrderID</summary>
         public Guid OrderID { get; set; }
         /// <summary>Number of sales order</summary>
-        public Int32 OrderNumber { get; set; }
+        public int OrderNumber { get; set; }
         /// <summary>Price list</summary>
         public Guid? Pricelist { get; set; }
         /// <summary>Description of Pricelist</summary>
@@ -79,10 +79,10 @@ namespace ExactOnline.Client.Models.SalesOrder
         public Guid? PurchaseOrderLine { get; set; }
         /// <summary>Number of the purchase order line</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? PurchaseOrderLineNumber { get; set; }
+        public int? PurchaseOrderLineNumber { get; set; }
         /// <summary>Number of the purchase order</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? PurchaseOrderNumber { get; set; }
+        public int? PurchaseOrderNumber { get; set; }
         /// <summary>The number of items sold in default units. The quantity shown in the entry screen is Quantity * UnitFactor</summary>
         public double? Quantity { get; set; }
         /// <summary>The number of items delivered</summary>

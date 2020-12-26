@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using ExactOnline.Client.Models.Current;
 using ExactOnline.Client.Sdk.Delegates;
 using ExactOnline.Client.Sdk.Helpers;
-using ExactOnline.Client.Sdk.Interfaces;
 using ExactOnline.Client.Sdk.Models;
 
 namespace ExactOnline.Client.Sdk.Controllers
@@ -25,8 +24,6 @@ namespace ExactOnline.Client.Sdk.Controllers
 
         public EolResponseHeader EolResponseHeader { get; internal set; }
 
-        #region Constructors
-
         /// <summary>
         /// Create instance of ExactClient
         /// </summary>
@@ -35,7 +32,11 @@ namespace ExactOnline.Client.Sdk.Controllers
         /// <param name="accesstokenDelegate">Delegate that will be executed the access token is expired</param>
         public ExactOnlineClient(string exactOnlineUrl, int division, AccessTokenManagerDelegate accesstokenDelegate)
         {
-            if (!exactOnlineUrl.EndsWith("/")) exactOnlineUrl += "/";
+            if (!exactOnlineUrl.EndsWith("/"))
+            {
+                exactOnlineUrl += "/";
+            }
+
             ExactOnlineApiUrl = exactOnlineUrl + "api/v1/";
 
             // Set culture for correct deserializing of API Response (comma and points)
@@ -59,10 +60,6 @@ namespace ExactOnline.Client.Sdk.Controllers
         {
         }
 
-        #endregion
-
-        #region Public methods
-
         /// <summary>
         /// Returns the current user data
         /// </summary>
@@ -70,10 +67,9 @@ namespace ExactOnline.Client.Sdk.Controllers
         public Me CurrentMe()
         {
             var conn = new ApiConnection(_apiConnector, ExactOnlineApiUrl + "current/Me");
-            string response = conn.Get("$select=CurrentDivision");
+            var response = conn.Get("$select=CurrentDivision");
             response = ApiResponseCleaner.GetJsonArray(response);
-            var converter = new EntityConverter();
-            var currentMe = converter.ConvertJsonArrayToObjectList<Me>(response);
+            var currentMe = EntityConverter.ConvertJsonArrayToObjectList<Me>(response);
             return currentMe.FirstOrDefault();
         }
 
@@ -84,10 +80,9 @@ namespace ExactOnline.Client.Sdk.Controllers
         public async Task<Me> CurrentMeAsync()
         {
             var conn = new ApiConnection(_apiConnector, ExactOnlineApiUrl + "current/Me");
-            string response = await conn.GetAsync("$select=CurrentDivision").ConfigureAwait(false);
+            var response = await conn.GetAsync("$select=CurrentDivision").ConfigureAwait(false);
             response = ApiResponseCleaner.GetJsonArray(response);
-            var converter = new EntityConverter();
-            var currentMe = converter.ConvertJsonArrayToObjectList<Me>(response);
+            var currentMe = EntityConverter.ConvertJsonArrayToObjectList<Me>(response);
             return currentMe.FirstOrDefault();
         }
 
@@ -161,12 +156,5 @@ namespace ExactOnline.Client.Sdk.Controllers
             var controller = _controllers.GetController<T>();
             return new ExactOnlineQuery<T>(controller);
         }
-
-        public IController<T> ControllerFor<T>() where T : class
-        {
-            return _controllers.GetController<T>();
-        }
-
-        #endregion
     }
 }

@@ -81,7 +81,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include=".editorconfig" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

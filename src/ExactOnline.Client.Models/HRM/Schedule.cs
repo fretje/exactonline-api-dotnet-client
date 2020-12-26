@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.HRM
 {
-    using System;
-
     [SupportedActionsSDK(false, true, false, false)]
     [DataServiceKey("ID")]
     public class Schedule
@@ -23,11 +23,11 @@ namespace ExactOnline.Client.Models.HRM
         /// <summary>Description of the schedule</summary>
         public string Description { get; set; }
         /// <summary>Division code</summary>
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>Employment ID for schedule</summary>
         public Guid? Employment { get; set; }
         /// <summary>Employment number</summary>
-        public Int32? EmploymentHID { get; set; }
+        public int? EmploymentHID { get; set; }
         /// <summary>End date of the schedule</summary>
         public DateTime? EndDate { get; set; }
         /// <summary>Number of hours per week in a CLA for which the schedule is built</summary>
@@ -47,12 +47,12 @@ namespace ExactOnline.Client.Models.HRM
         /// <summary>Part-time factor for payroll calculation. Value between 0 and 1</summary>
         public double? PaymentParttimeFactor { get; set; }
         /// <summary>Type of schedule. 1 = Hours and average days, 2 = Hours and specific days, 3 = Hours per day, 4 = Time frames per day</summary>
-        public Int32? ScheduleType { get; set; }
+        public int? ScheduleType { get; set; }
         /// <summary>Description of the schedule type</summary>
         public string ScheduleTypeDescription { get; set; }
         /// <summary>Week in the schedule which is used to start with. By default the number will be 1.</summary>
         public DateTime? StartDate { get; set; }
         /// <summary>Week to start the schedule from for an employee</summary>
-        public Int32? StartWeek { get; set; }
+        public int? StartWeek { get; set; }
     }
 }

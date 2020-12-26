@@ -4,44 +4,9 @@ using ExactOnline.Client.Sdk.Interfaces;
 
 namespace ExactOnline.Client.Sdk.UnitTests.MockObjects
 {
-	class ApiConnectorControllerMock : IApiConnector
-	{
-        public string BaseUrl { get; private set; }
-        public string ServiceRoot { get; private set; }
-
-        public int Count()
-		{
-			return 0;
-		}
-
-        Task<int> CountAsync()
-        {
-            return Task.FromResult(Count());
-        }
-
-        public string DoCleanRequest(string uri)
-		{
-			return "";
-		}
-
-        public Task<string> DoCleanRequestAsync(string uri)
-        {
-            return Task.FromResult(DoCleanRequest(uri));
-        }
-
-        public string DoCleanRequest(string uri, string oDataQuery)
-		{
-			return "";
-		}
-
-        public Task<string> DoCleanRequestAsync(string uri, string oDataQuery)
-        {
-            return Task.FromResult(DoCleanRequest(uri,oDataQuery));
-        }
-
-        public string DoGetRequest(string endpoint, string parameters)
-		{
-			return @"{
+    class ApiConnectorControllerMock : IApiConnector
+    {
+        public string DoGetRequest(string endpoint, string parameters) => @"{
 	""d"": {
 		""results"": [
 			{
@@ -142,61 +107,24 @@ namespace ExactOnline.Client.Sdk.UnitTests.MockObjects
 		]
 	}
 }";
-		}
+        public Task<string> DoGetRequestAsync(string endpoint, string parameters) => Task.FromResult(DoGetRequest(endpoint, parameters));
 
-        public Task<string> DoGetRequestAsync(string endpoint, string parameters)
-        {
-            return Task.FromResult(DoGetRequest(endpoint, parameters));
-        }
+		public Stream DoGetFileRequest(string endpoint) => Stream.Null;
+		public Task<Stream> DoGetFileRequestAsync(string endpoint) => Task.FromResult(DoGetFileRequest(endpoint));
 
-        public string DoPostRequest(string endpoint, string postdata)
-		{
-			return string.Empty;
-		}
+		public string DoPostRequest(string endpoint, string postdata) => string.Empty;
+        public Task<string> DoPostRequestAsync(string endpoint, string postdata) => Task.FromResult(DoPostRequest(endpoint, postdata));
 
-        public Task<string> DoPostRequestAsync(string endpoint, string postdata)
-        {
-            return Task.FromResult(DoPostRequest(endpoint, postdata));
-        }
+        public string DoPutRequest(string endpoint, string putData) => string.Empty;
+        public Task<string> DoPutRequestAsync(string endpoint, string putData) => Task.FromResult(DoPutRequest(endpoint, putData));
 
-        public string DoPutRequest(string endpoint, string putData)
-		{
-			return string.Empty;
-		}
+        public string DoDeleteRequest(string endpoint) => string.Empty;
+        public Task<string> DoDeleteRequestAsync(string endpoint) => Task.FromResult(DoDeleteRequest(endpoint));
 
-        public Task<string> DoPutRequestAsync(string endpoint, string putData)
-        {
-            return Task.FromResult(DoPutRequest(endpoint, putData));
-        }
+		public string DoCleanRequest(string uri, string oDataQuery) => "";
+		public Task<string> DoCleanRequestAsync(string uri, string oDataQuery) => Task.FromResult(DoCleanRequest(uri, oDataQuery));
 
-        public string DoDeleteRequest(string endpoint)
-		{
-			return string.Empty;
-		}
-
-        public Task<string> DoDeleteRequestAsync(string endpoint)
-        {
-            return Task.FromResult(DoDeleteRequest(endpoint));
-        }
-
-        public int GetCurrentDivision(string website)
-		{
-			return -1;
-		}
-
-        public Task<int> GetCurrentDivisionAsync(string website)
-        {
-            return Task.FromResult(GetCurrentDivision(website));
-        }
-
-        public Stream DoGetFileRequest(string endpoint)
-	    {
-	        return Stream.Null;
-	    }
-
-        public Task<Stream> DoGetFileRequestAsync(string endpoint)
-        {
-            return Task.FromResult(DoGetFileRequest(endpoint));
-        }
-    }
+		public int GetCurrentDivision(string website) => -1;
+        public Task<int> GetCurrentDivisionAsync(string website) => Task.FromResult(GetCurrentDivision(website));
+	}
 }

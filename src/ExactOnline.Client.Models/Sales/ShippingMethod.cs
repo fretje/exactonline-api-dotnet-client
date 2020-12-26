@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.Sales
 {
-    using System;
-
     [SupportedActionsSDK(false, true, false, false)]
     [DataServiceKey("ID")]
     public class ShippingMethod
@@ -23,7 +23,7 @@ namespace ExactOnline.Client.Models.Sales
         public string Description { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>Primary key</summary>
         public Guid ID { get; set; }
         /// <summary>Last modified date</summary>

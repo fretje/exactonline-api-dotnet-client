@@ -1,14 +1,14 @@
+using System;
+using System.Collections.Generic;
+
 namespace ExactOnline.Client.Models.FinancialTransaction
 {
-    using System;
-    using System.Collections.Generic;
-
     [SupportedActionsSDK(true, true, false, false)]
     [DataServiceKey("EntryID")]
     public class CashEntry
     {
         /// <summary>Collection of lines</summary>
-        public IEnumerable<FinancialTransaction.CashEntryLine> CashEntryLines { get; set; }
+        public IEnumerable<CashEntryLine> CashEntryLines { get; set; }
         /// <summary>Closing balance in the currency of the transaction</summary>
         public double? ClosingBalanceFC { get; set; }
         /// <summary>Creation date</summary>
@@ -18,16 +18,16 @@ namespace ExactOnline.Client.Models.FinancialTransaction
         public string Currency { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>Primary key</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public Guid EntryID { get; set; }
         /// <summary>Entry number</summary>
-        public Int32? EntryNumber { get; set; }
+        public int? EntryNumber { get; set; }
         /// <summary>Fiancial period</summary>
-        public Int16? FinancialPeriod { get; set; }
+        public short? FinancialPeriod { get; set; }
         /// <summary>Fiancial year</summary>
-        public Int16? FinancialYear { get; set; }
+        public short? FinancialYear { get; set; }
         /// <summary>Code of Journal</summary>
         public string JournalCode { get; set; }
         /// <summary>Description of Journal</summary>
@@ -40,7 +40,7 @@ namespace ExactOnline.Client.Models.FinancialTransaction
         public double? OpeningBalanceFC { get; set; }
         /// <summary>Status: 5 = Rejected, 20 = Open, 50 = Processed</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int16? Status { get; set; }
+        public short? Status { get; set; }
         /// <summary>Description of Status</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public string StatusDescription { get; set; }

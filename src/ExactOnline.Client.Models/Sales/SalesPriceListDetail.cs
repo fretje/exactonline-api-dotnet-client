@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.Sales
 {
-    using System;
-
     [SupportedActionsSDK(false, true, false, false)]
     [DataServiceKey("ID")]
     public class SalesPriceListDetail
@@ -29,11 +29,11 @@ namespace ExactOnline.Client.Models.Sales
         public double? Discount { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>End date</summary>
         public DateTime? EndDate { get; set; }
         /// <summary>Indicates whether discount or the new price is leading : 1-Discount, 2-New price. &lt;br&gt;&lt;br&gt; Scenario &lt;br&gt;&lt;br&gt; 1. When entry method is Discount and use base price, Discounted price = (1- SalesPriceListDetails.Discount) * SalesPriceListDetails.BasePrice &lt;br&gt;&lt;br&gt; 2. When entry method is Discount and use Item&apos;s standard sales price, Discounted price = (1- SalesPriceListDetails.Discount) * SalesItemPrices.Price &lt;br&gt;&lt;br&gt; 3. When entry method is New price, Discounted price = SalesPriceListDetails.NewPrice</summary>
-        public Int16 EntryMethod { get; set; }
+        public short EntryMethod { get; set; }
         /// <summary>Primary key</summary>
         public Guid ID { get; set; }
         /// <summary>Item</summary>

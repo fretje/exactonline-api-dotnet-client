@@ -1,58 +1,28 @@
 ﻿using System;
 using System.Threading.Tasks;
+using ExactOnline.Client.Sdk.Enums;
 using ExactOnline.Client.Sdk.Interfaces;
 
 namespace ExactOnline.Client.Sdk.UnitTests.MockObjects
 {
-	public sealed class ApiConnectionEntityControllerMock : IApiConnection
-	{
-		public int Count(string parameters)
-		{
-			return 0;
-		}
-
-        public Task<int> CountAsync(string parameters)
-        {
-            return Task.FromResult(Count(parameters));
-        }
-
+    public sealed class ApiConnectionEntityControllerMock : IApiConnection
+    {
         public string Data { get; set; }
 
-		#region IApiConnection Members
+        string IApiConnection.Get(string parameters) => throw new NotImplementedException();
+        string IApiConnection.Get(string parameters, EndpointTypeEnum endpointType) => throw new NotImplementedException();
 
-		string IApiConnection.Get(string parameters)
-		{
-			throw new NotImplementedException();
-		}
-        string IApiConnection.Get(string parameters, bool useBulkEndpoint)
-        {
-            throw new NotImplementedException();
-        }
+        Task<string> IApiConnection.GetAsync(string parameters) => throw new NotImplementedException();
+        Task<string> IApiConnection.GetAsync(string parameters, EndpointTypeEnum endpointType) => throw new NotImplementedException();
 
-        Task<string> IApiConnection.GetAsync(string parameters)
-        {
-            throw new NotImplementedException();
-        }
-        Task<string> IApiConnection.GetAsync(string parameters, bool useBulkEndpoint)
-        {
-            throw new NotImplementedException();
-        }
-
-        string IApiConnection.GetEntity(string keyname, string guid, string parameters)
-		{
-			throw new NotImplementedException();
-		}
-
-        Task<string> IApiConnection.GetEntityAsync(string keyname, string guid, string parameters)
-        {
-            throw new NotImplementedException();
-        }
+        string IApiConnection.GetEntity(string keyname, string guid, string parameters) => throw new NotImplementedException();
+        Task<string> IApiConnection.GetEntityAsync(string keyname, string guid, string parameters) => throw new NotImplementedException();
 
         string IApiConnection.Post(string data)
-		{
-			Data = data;
+        {
+            Data = data;
 
-			return @"{
+            return @"{
 				""d"": {
 					""__metadata"": {
 						""uri"": ""https://start.exactonline.nl/api/v1/{CurrentDivision}/salesinvoice/SalesInvoices(guid'0f8f1d9d-8a1e-49a2-b3ad-6664f58b4982')"",
@@ -107,49 +77,20 @@ namespace ExactOnline.Client.Sdk.UnitTests.MockObjects
 					}
 				}
 			}";
-		}
-
-        Task<string> IApiConnection.PostAsync(string data)
-        {
-            return Task.FromResult((this as IApiConnection).Post(data));
         }
+        Task<string> IApiConnection.PostAsync(string data) => Task.FromResult((this as IApiConnection).Post(data));
 
         bool IApiConnection.Put(string keyName, string guid, string data)
-		{
-			Data = data;
-			return true;
-		}
-
-        Task<bool> IApiConnection.PutAsync(string keyName, string guid, string data)
         {
-            return Task.FromResult((this as IApiConnection).Put(keyName,guid,data));
+            Data = data;
+            return true;
         }
+        Task<bool> IApiConnection.PutAsync(string keyName, string guid, string data) => Task.FromResult((this as IApiConnection).Put(keyName, guid, data));
 
-        bool IApiConnection.Delete(string keyName, string guid)
-		{
-			return (keyName.Equals("ID") && guid.Equals("c931ef6c-ecdf-40db-87de-0d2c629ef322"));
-		}
+        bool IApiConnection.Delete(string keyName, string guid) => (keyName.Equals("ID") && guid.Equals("c931ef6c-ecdf-40db-87de-0d2c629ef322"));
+        Task<bool> IApiConnection.DeleteAsync(string keyName, string guid) => Task.FromResult((this as IApiConnection).Delete(keyName, guid));
 
-        Task<bool> IApiConnection.DeleteAsync(string keyName, string guid)
-        {
-            return Task.FromResult((this as IApiConnection).Delete(keyName, guid));
-        }
-
-        #endregion
-
-        #region IApiConnection Members
-
-
-        public string GetEntity(string keyname, string guid, string parameters)
-		{
-			throw new NotImplementedException();
-		}
-
-        public Task<string> GetEntityAsync(string keyname, string guid, string parameters)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
+        int IApiConnection.Count(string parameters) => 0;
+        Task<int> IApiConnection.CountAsync(string parameters) => Task.FromResult((this as IApiConnection).Count(parameters));
     }
 }

@@ -8,11 +8,11 @@ namespace ExactOnline.Client.Models.Logistics
     public class ItemAssortment
     {
         /// <summary>Code of ItemAssortment</summary>
-        public Int32 Code { get; set; }
+        public int Code { get; set; }
         /// <summary>Description of ItemAssortment</summary>
-        public String Description { get; set; }
+        public string Description { get; set; }
         /// <summary>Division</summary>
-        public Int32 Division { get; set; }
+        public int Division { get; set; }
         /// <summary>ID of ItemAssortment</summary>
         public Guid ID { get; set; }
         /// <summary>Properties of this ItemAssortment</summary>

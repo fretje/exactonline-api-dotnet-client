@@ -37,7 +37,7 @@ namespace ExactOnline.Client.Models.Budget
         public string CreatorFullName { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>G/L account</summary>
         public Guid? GLAccount { get; set; }
         /// <summary>Code of GLAccount</summary>
@@ -47,7 +47,7 @@ namespace ExactOnline.Client.Models.Budget
         [SDKFieldType(FieldType.ReadOnly)]
         public string GLAccountDescription { get; set; }
         /// <summary>Numerical ID. Never displayed to the user, but it may have its use for performance reasons</summary>
-        public Int64? HID { get; set; }
+        public long? HID { get; set; }
         /// <summary>Primary key</summary>
         public Guid ID { get; set; }
         /// <summary>Used for item-specific budgets - NULL otherwise</summary>
@@ -68,8 +68,8 @@ namespace ExactOnline.Client.Models.Budget
         [SDKFieldType(FieldType.ReadOnly)]
         public string ModifierFullName { get; set; }
         /// <summary>Period (combined with financial year)</summary>
-        public Int16? ReportingPeriod { get; set; }
+        public short? ReportingPeriod { get; set; }
         /// <summary>Financial year</summary>
-        public Int16? ReportingYear { get; set; }
+        public short? ReportingYear { get; set; }
     }
 }

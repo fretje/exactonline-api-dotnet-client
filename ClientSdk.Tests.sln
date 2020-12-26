@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.271
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExactOnline.Client.Sdk", "src\ExactOnline.Client.Sdk\ExactOnline.Client.Sdk.csproj", "{EE442AA1-C51A-4531-92DA-A7D9C7B73973}"
 EndProject
@@ -20,6 +20,15 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExactOnline.Client.Sdk.UserAcceptanceTests", "test\ExactOnline.Client.Sdk.UserAcceptanceTests\ExactOnline.Client.Sdk.UserAcceptanceTests.csproj", "{6ECE490A-620B-4AED-986E-456038B1FBFF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExactOnline.Client.Models", "src\ExactOnline.Client.Models\ExactOnline.Client.Models.csproj", "{0FBE029A-DD5E-0A4A-3EE2-6F330EB60B7C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{764D1743-07C9-41B5-BAAC-62B5755155D1}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		LICENSE.txt = LICENSE.txt
+		README.md = README.md
+		testapp.config.example = testapp.config.example
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

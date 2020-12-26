@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.Inventory
 {
-    using System;
-
     [SupportedActionsSDK(false, false, false, false)]
     [DataServiceKey("BatchNumberId")]
     public class BatchQuantitiesPerWarehouse

@@ -1,10 +1,9 @@
-﻿
-namespace ExactOnline.Client.Sdk.Enums
+﻿namespace ExactOnline.Client.Sdk.Enums
 {
-	public enum EndpointTypeEnum
-	{
-		Single,
-		Bulk,
-		Sync
-	}
+    public enum EndpointTypeEnum
+    {
+        Single,
+        Bulk,
+        Sync
+    }
 }
