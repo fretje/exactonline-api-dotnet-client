@@ -2,12 +2,13 @@
 
 	<PropertyGroup>
 		<TargetFramework>net472</TargetFramework>
-		<EnableNETAnalyzers>true</EnableNETAnalyzers>
-		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 	</PropertyGroup>
+
+	<Import Project="..\SharedProjectProperties.proj" />
 
 	<ItemGroup>
 	  <PackageReference Include="DotNetOpenAuth.OAuth2.Client" Version="4.3.4.13329" />
+	  <PackageReference Include="Microsoft.Net.Http" Version="2.2.29" />
 	</ItemGroup>
 
 	<ItemGroup>
