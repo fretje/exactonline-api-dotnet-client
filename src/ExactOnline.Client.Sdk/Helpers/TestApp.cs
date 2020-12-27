@@ -22,7 +22,7 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// </summary>
         public TestApp()
         {
-            var details = System.IO.File.ReadAllLines(@"..\..\..\..\testapp.config");
+            var details = System.IO.File.ReadAllLines(@"..\..\..\..\..\testapp.config");
 
             ClientId = new Guid(details[0]);
             ClientSecret = details[1];

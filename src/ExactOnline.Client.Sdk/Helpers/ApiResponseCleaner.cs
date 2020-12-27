@@ -1,20 +1,17 @@
 ﻿using ExactOnline.Client.Sdk.Exceptions;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Web.Script.Serialization;
 
 namespace ExactOnline.Client.Sdk.Helpers
 {
-    /// <summary>
-    /// Class for stripping unnecessary Json tags from API Response
-    /// </summary>
-    public static class ApiResponseCleaner
+	/// <summary>
+	/// Class for stripping unnecessary Json tags from API Response
+	/// </summary>
+	public static class ApiResponseCleaner
     {
         /// <summary>
         /// Fetch Json Object (Json within ['d'] name/value pair) from response
@@ -23,20 +20,21 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <returns></returns>
         public static string GetJsonObject(string response)
         {
-            var serializer = new JavaScriptSerializer();
-            serializer.RegisterConverters(new JavaScriptConverter[] { new JssDateTimeConverter() });
             var oldCulture = Thread.CurrentThread.CurrentCulture;
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
             string output;
             try
             {
-                var dict = (Dictionary<string, object>)serializer.Deserialize<object>(response);
-                var d = (Dictionary<string, object>)dict["d"];
-                output = GetJsonFromDictionary(d);
+                var jtoken = JsonConvert.DeserializeObject(response, new JsonSerializerSettings { DateFormatHandling = DateFormatHandling.MicrosoftDateFormat }) as JToken;
+                output = GetJsonFromObject(jtoken["d"] as JObject);
             }
-            finally
-            {
+			catch (Exception e)
+			{
+				throw new IncorrectJsonException(e.Message);
+			}
+			finally
+			{
                 Thread.CurrentThread.CurrentCulture = oldCulture;
             }
             return output;
@@ -44,21 +42,17 @@ namespace ExactOnline.Client.Sdk.Helpers
 
         public static string GetSkipToken(string response)
         {
-            var serializer = new JavaScriptSerializer();
-            serializer.RegisterConverters(new JavaScriptConverter[] { new JssDateTimeConverter() });
             var oldCulture = Thread.CurrentThread.CurrentCulture;
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             var token = string.Empty;
             try
             {
-                var dict = (Dictionary<string, object>)serializer.Deserialize<object>(response);
-                var innerPart = dict["d"];
-                if (innerPart.GetType() == typeof(Dictionary<string, object>))
+				var jtoken = JsonConvert.DeserializeObject(response, new JsonSerializerSettings { DateFormatHandling = DateFormatHandling.MicrosoftDateFormat }) as JToken;
+                if (jtoken["d"] is JObject dObject)
                 {
-                    var d = (Dictionary<string, object>)dict["d"];
-                    if (d.ContainsKey("__next"))
+                    if (dObject.ContainsKey("__next"))
                     {
-                        var next = (string)d["__next"];
+                        var next = dObject["__next"].ToString();
 
                         // Skiptoken has format "$skiptoken=xyz" in the url and we want to extract xyz.
                         var match = Regex.Match(next ?? "", @"\$skiptoken=([^&#]*)");
@@ -84,26 +78,25 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// </summary>
         public static string GetJsonArray(string response)
         {
-            var serializer = new JavaScriptSerializer();
-            serializer.RegisterConverters(new JavaScriptConverter[] { new JssDateTimeConverter() });
-
             var oldCulture = Thread.CurrentThread.CurrentCulture;
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             try
             {
-                ArrayList results;
-                var dict = (Dictionary<string, object>)serializer.Deserialize<object>(response);
-                var innerPart = dict["d"];
-                if (innerPart.GetType() == typeof(Dictionary<string, object>))
+                var results = default(JArray);
+				var jtoken = JsonConvert.DeserializeObject(response, new JsonSerializerSettings { DateFormatHandling = DateFormatHandling.MicrosoftDateFormat }) as JToken;
+                if (jtoken["d"] is JObject dObject && dObject["results"] is JArray resultsArray)
                 {
-                    var d = (Dictionary<string, object>)dict["d"];
-                    results = (ArrayList)d["results"];
+					results = resultsArray;
                 }
-                else
+                else if (jtoken["d"] is JArray dArray)
                 {
-                    results = (ArrayList)innerPart;
+					results = dArray;
                 }
-                return GetJsonFromResultDictionary(results);
+				else
+				{
+					throw new Exception("No ['d']['results'] token found in response");
+				}
+                return GetJsonFromArray(results);
             }
             catch (Exception e)
             {
@@ -119,58 +112,54 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <summary>
         /// Converts key/value pairs to json
         /// </summary>
-        private static string GetJsonFromDictionary(Dictionary<string, object> dictionary)
+        private static string GetJsonFromObject(JObject jObject)
         {
             var json = "{";
 
-            foreach (var entry in dictionary)
+            foreach (var entry in jObject)
             {
-                if (entry.Value == null || entry.Value.GetType() != typeof(Dictionary<string, object>))
-                {
-                    // Entry is of type keyvaluepair
-                    json += "\"" + entry.Key + "\":";
-                    if (entry.Value == null)
-                    {
-                        json += "null";
-                    }
-                    else
-                    {
-                        json += JsonConvert.ToString(entry.Value.ToString());
-                    }
-                    json += ",";
-                }
-                else
-                {
-                    // Create linked entities json
-                    var subcollection = (Dictionary<string, object>)entry.Value;
-                    if (subcollection.Keys.Contains("results"))
-                    {
-                        var results = (ArrayList)subcollection["results"];
-                        var subjson = GetJsonFromResultDictionary(results);
-                        if (subjson.Length > 0)
-                        {
-                            json += "\"" + entry.Key + "\":";
-                            json += subjson;
-                            json += ",";
-                        }
-                    }
-                }
-            }
+				if (entry.Value is JValue jValue)
+				{
+					// Entry is of type keyvaluepair
+					json += "\"" + entry.Key + "\":";
+					if (jValue.Value == null)
+					{
+						json += "null";
+					}
+					else
+					{
+						json += JsonConvert.ToString(jValue.Value);
+					}
+					json += ",";
+				}
+				else if (entry.Value is JObject subcollection && subcollection.ContainsKey("results") && subcollection["results"] is JArray results)
+				{
+					// Create linked entities json
+					var subjson = GetJsonFromArray(results);
 
-            json = json.Remove(json.Length - 1, 1); // Remove last comma
+					if (subjson.Length > 0)
+					{
+						json += "\"" + entry.Key + "\":";
+						json += subjson;
+						json += ",";
+					}
+				}
+			}
+
+			json = json.Remove(json.Length - 1, 1); // Remove last comma
             json += "}";
 
             return json;
-        }
+		}
 
-        private static string GetJsonFromResultDictionary(ArrayList results)
+		private static string GetJsonFromArray(JArray results)
         {
             var json = "[";
             if (results != null && results.Count > 0)
             {
-                foreach (Dictionary<string, object> entity in results)
+                foreach (var entity in results)
                 {
-                    json += GetJsonFromDictionary(entity) + ",";
+                    json += GetJsonFromObject(entity as JObject) + ",";
                 }
 
                 json = json.Remove(json.Length - 1, 1); // Remove last comma
@@ -178,5 +167,5 @@ namespace ExactOnline.Client.Sdk.Helpers
             json += "]";
             return json;
         }
-    }
+	}
 }

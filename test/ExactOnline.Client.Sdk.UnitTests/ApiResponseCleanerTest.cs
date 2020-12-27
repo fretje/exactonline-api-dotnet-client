@@ -54,7 +54,7 @@ namespace ExactOnline.Client.Sdk.UnitTests
         }
 
         [TestCategory("Unit Test")]
-        [TestMethod, ExpectedException(typeof(ArgumentException))]
+        [TestMethod, ExpectedException(typeof(IncorrectJsonException))]
         public void ApiResponseCleaner_FetchJsonObject_WithoutDKeyValuePair_Fails() => 
             ApiResponseCleaner.GetJsonObject(JsonFileReader.GetJsonFromFile("ApiResponse_Json_Object_WithoutD.txt"));
     }
