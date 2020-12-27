@@ -1,4 +1,5 @@
-﻿using ExactOnline.Client.Sdk.Controllers;
+﻿using ExactOnline.Client.Models;
+using ExactOnline.Client.Sdk.Controllers;
 using ExactOnline.Client.Sdk.Delegates;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;

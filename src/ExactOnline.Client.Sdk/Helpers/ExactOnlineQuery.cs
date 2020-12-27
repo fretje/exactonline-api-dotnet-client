@@ -1,4 +1,5 @@
-﻿using ExactOnline.Client.Sdk.Enums;
+﻿using ExactOnline.Client.Models;
+using ExactOnline.Client.Sdk.Enums;
 using ExactOnline.Client.Sdk.Interfaces;
 using System;
 using System.Collections.Generic;
