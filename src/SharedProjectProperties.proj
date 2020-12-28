@@ -6,15 +6,20 @@
 		<Authors>Exact,fretje</Authors>
 		<Copyright>Exact</Copyright>
 		<Description>The Exact Online Client SDK provides a rich application framework and simplifies the interconnection with the Exact Online RESTful API</Description>
-		<RepositoryUrl>https://github.com/fretje/exactonline-api-dotnet-client.git</RepositoryUrl>
 
-		<Version>4.0.0-beta1</Version>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+
+		<Version>4.0.0-beta2</Version>
 
 		<PackageIcon>exact.png</PackageIcon>
 		<PackageIconUrl>https://avatars0.githubusercontent.com/u/4112611?v=3&amp;s=200</PackageIconUrl>
 		<PackageProjectUrl>https://github.com/fretje/exactonline-api-dotnet-client</PackageProjectUrl>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<PackageTags>Exact Online Client SDK</PackageTags>
+		<PackageTags>Exact Online Client SDK API</PackageTags>
 
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
 		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
@@ -25,4 +30,8 @@
 		<None Include="..\exact.png" Pack="true" PackagePath="\" Visible="false" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+	</ItemGroup>
+	
 </Project>
