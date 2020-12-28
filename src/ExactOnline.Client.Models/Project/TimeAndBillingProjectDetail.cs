@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.Project
 {
-    using System;
-
     [SupportedActionsSDK(false, true, false, false)]
     [DataServiceKey("ID")]
     public class TimeAndBillingProjectDetail
@@ -16,6 +16,6 @@ namespace ExactOnline.Client.Models.Project
         /// <summary>Primary key</summary>
         public Guid ID { get; set; }
         /// <summary>Reference to ProjectTypes</summary>
-        public Int32 Type { get; set; }
+        public int Type { get; set; }
     }
 }

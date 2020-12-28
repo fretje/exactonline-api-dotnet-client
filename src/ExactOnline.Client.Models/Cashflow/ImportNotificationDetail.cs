@@ -17,17 +17,17 @@ namespace ExactOnline.Client.Models.Cashflow
         public DateTime Created { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32 Division { get; set; }
+        public int Division { get; set; }
         /// <summary>Primary key</summary>
         public Guid ID { get; set; }
         /// <summary>Termed message</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String Message { get; set; }
+        public string Message { get; set; }
         /// <summary>Response code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int16 ResponseCode { get; set; }
+        public short ResponseCode { get; set; }
         /// <summary>Additional information about the response</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String ResponseCodeArguments { get; set; }
+        public string ResponseCodeArguments { get; set; }
     }
 }

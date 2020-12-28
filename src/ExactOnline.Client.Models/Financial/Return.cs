@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.Financial
 {
-    using System;
-
     [SupportedActionsSDK(false, true, false, false)]
     [DataServiceKey("DocumentID")]
     public class Return
@@ -27,16 +27,16 @@ namespace ExactOnline.Client.Models.Financial
         /// <summary>Payroll declaration type</summary>
         public string PayrollDeclarationType { get; set; }
         /// <summary>Period</summary>
-        public Int32 Period { get; set; }
+        public int Period { get; set; }
         /// <summary>Description of Period</summary>
         public string PeriodDescription { get; set; }
         /// <summary>Reference to request</summary>
         public Guid? Request { get; set; }
         /// <summary>Status</summary>
-        public Int32 Status { get; set; }
+        public int Status { get; set; }
         /// <summary>Type</summary>
-        public Int32 Type { get; set; }
+        public int Type { get; set; }
         /// <summary>Year</summary>
-        public Int32 Year { get; set; }
+        public int Year { get; set; }
     }
 }

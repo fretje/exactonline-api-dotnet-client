@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.Cashflow
 {
-    using System;
-
     [SupportedActionsSDK(false, true, false, false)]
     [DataServiceKey("ID")]
     public class Payment
@@ -50,11 +50,11 @@ namespace ExactOnline.Client.Models.Cashflow
         public DateTime? DiscountDueDate { get; set; }
         /// <summary>Division code.</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32 Division { get; set; }
+        public int Division { get; set; }
         /// <summary>Document that is created when processing payments.  The bank export file is attached to the document.</summary>
         public Guid? Document { get; set; }
         /// <summary>Number of the document.</summary>
-        public Int32? DocumentNumber { get; set; }
+        public int? DocumentNumber { get; set; }
         /// <summary>Subject of the document.</summary>
         public string DocumentSubject { get; set; }
         /// <summary>Date before which the payment must be done.</summary>
@@ -62,15 +62,15 @@ namespace ExactOnline.Client.Models.Cashflow
         /// <summary>Date since when the payment is no longer an outstanding item. This is the highest invoice date of all matched payments.</summary>
         public DateTime? EndDate { get; set; }
         /// <summary>Period since when the payment is no longer an outstanding item. This is the highest period of all matched payments.</summary>
-        public Int16? EndPeriod { get; set; }
+        public short? EndPeriod { get; set; }
         /// <summary>Year (of period) since when the payment is no longer an outstanding item. This is the highest year of all matched payments. Used in combination with EndPeriod.</summary>
-        public Int16? EndYear { get; set; }
+        public short? EndYear { get; set; }
         /// <summary>Processing date of the payment.</summary>
         public DateTime? EntryDate { get; set; }
         /// <summary>The unique identifier for a set of payments. A payment can be split so that one part is paid on a different date. In that case the two records get a different EntryID.</summary>
         public Guid? EntryID { get; set; }
         /// <summary>Entry number of the linked transaction.</summary>
-        public Int32? EntryNumber { get; set; }
+        public int? EntryNumber { get; set; }
         /// <summary>G/L account of the payment. Must be of type 22 (Accounts payable).</summary>
         public Guid? GLAccount { get; set; }
         /// <summary>Code of the G/L account.</summary>
@@ -82,7 +82,7 @@ namespace ExactOnline.Client.Models.Cashflow
         /// <summary>Invoice date of the linked transaction.</summary>
         public DateTime? InvoiceDate { get; set; }
         /// <summary>Invoice number of the linked transaction.</summary>
-        public Int32? InvoiceNumber { get; set; }
+        public int? InvoiceNumber { get; set; }
         /// <summary>Boolean indicating whether the payment is part of a batch booking.</summary>
         public byte? IsBatchBooking { get; set; }
         /// <summary>Journal of the linked transaction.</summary>
@@ -99,15 +99,15 @@ namespace ExactOnline.Client.Models.Cashflow
         [SDKFieldType(FieldType.ReadOnly)]
         public string ModifierFullName { get; set; }
         /// <summary>Number assigned during the of processing payments. When payments are processed a bank export file is created. This file contains one or more batches that contain one or more payments. Each batch gets a sequence number that is stored for each payment in that batch.</summary>
-        public Int32? PaymentBatchNumber { get; set; }
+        public int? PaymentBatchNumber { get; set; }
         /// <summary>Payment condition of the linked transaction.</summary>
         public string PaymentCondition { get; set; }
         /// <summary>Description of the payment condition.</summary>
         public string PaymentConditionDescription { get; set; }
         /// <summary>Number of days between invoice date and due date.</summary>
-        public Int32? PaymentDays { get; set; }
+        public int? PaymentDays { get; set; }
         /// <summary>Number of days between invoice date and due date of the discount.</summary>
-        public Int32? PaymentDaysDiscount { get; set; }
+        public int? PaymentDaysDiscount { get; set; }
         /// <summary>Payment discount percentage.</summary>
         public double? PaymentDiscountPercentage { get; set; }
         /// <summary>Method of payment.&lt;br&gt; B = On credit (default)&lt;br&gt; I = Collection&lt;br&gt; K = Cash&lt;br&gt; V = Credit card.</summary>
@@ -123,9 +123,9 @@ namespace ExactOnline.Client.Models.Cashflow
         /// <summary>Exchange rate from payment currency to division currency. AmountFC * RateFC = AmountDC.</summary>
         public double? RateFC { get; set; }
         /// <summary>The source of the payment.&lt;br&gt; 1 = manual&lt;br&gt; 2 = reconcile&lt;br&gt; 3 = match&lt;br&gt; 4 = import&lt;br&gt; 5 = process</summary>
-        public Int32 Source { get; set; }
+        public int Source { get; set; }
         /// <summary>The status of the payment.&lt;br&gt; 20 = open&lt;br&gt; 30 = selected - payment is selected to be paid&lt;br&gt; 40 = processed - payment has been done&lt;br&gt; 50 = matched - payment is matched with one or more other outstanding items or financial statement lines</summary>
-        public Int16? Status { get; set; }
+        public short? Status { get; set; }
         /// <summary>Total amount of the linked transaction in default currency (division currency).</summary>
         public double TransactionAmountDC { get; set; }
         /// <summary>Total amount of the linked transaction in the selected currency.</summary>
@@ -139,13 +139,13 @@ namespace ExactOnline.Client.Models.Cashflow
         /// <summary>Indicates if the linked transaction is a reversal entry.</summary>
         public bool TransactionIsReversal { get; set; }
         /// <summary>Period of the linked transaction.</summary>
-        public Int16? TransactionReportingPeriod { get; set; }
+        public short? TransactionReportingPeriod { get; set; }
         /// <summary>Year of the linked transaction.</summary>
-        public Int16? TransactionReportingYear { get; set; }
+        public short? TransactionReportingYear { get; set; }
         /// <summary>Status of the linked transaction.</summary>
-        public Int16? TransactionStatus { get; set; }
+        public short? TransactionStatus { get; set; }
         /// <summary>Type of the linked transaction.</summary>
-        public Int32? TransactionType { get; set; }
+        public int? TransactionType { get; set; }
         /// <summary>Invoice number of the supplier. In case the payment belongs to a bank entry line and is matched with one invoice, YourRef is filled with the YourRef of this invoice.</summary>
         public string YourRef { get; set; }
     }

@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.Accountancy
 {
-    using System;
-
     [SupportedActionsSDK(true, true, true, true)]
     [DataServiceKey("ID")]
     public class TaskType
@@ -17,9 +17,9 @@ namespace ExactOnline.Client.Models.Accountancy
         /// <summary>Name of the task type</summary>
         public string Description { get; set; }
         /// <summary>Term ID of the task type</summary>
-        public Int32? DescriptionTermID { get; set; }
+        public int? DescriptionTermID { get; set; }
         /// <summary>Division code</summary>
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>Primary key</summary>
         public Guid ID { get; set; }
         /// <summary>Last modified date</summary>

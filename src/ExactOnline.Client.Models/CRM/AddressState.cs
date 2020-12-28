@@ -1,24 +1,24 @@
+using System;
+
 namespace ExactOnline.Client.Models.CRM
 {
-    using System;
-
     [SupportedActionsSDK(false, true, false, false)]
     [DataServiceKey("ID")]
     public class AddressState
     {
         /// <summary>Country code</summary>
-        public String Country { get; set; }
+        public string Country { get; set; }
         /// <summary>Description of state prefixed with the code</summary>
-        public String DisplayValue { get; set; }
+        public string DisplayValue { get; set; }
         /// <summary>Primary key</summary>
         public Guid ID { get; set; }
         /// <summary>Latitude</summary>
-        public Double? Latitude { get; set; }
+        public double? Latitude { get; set; }
         /// <summary>Longitude</summary>
-        public Double? Longitude { get; set; }
+        public double? Longitude { get; set; }
         /// <summary>State name</summary>
-        public String Name { get; set; }
+        public string Name { get; set; }
         /// <summary>State code</summary>
-        public String State { get; set; }
+        public string State { get; set; }
     }
 }

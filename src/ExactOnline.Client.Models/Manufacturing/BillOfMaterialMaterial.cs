@@ -8,34 +8,34 @@ namespace ExactOnline.Client.Models.Manufacturing
     {
         /// <summary>Item average cost available when average cost method is used</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Double? AverageCost { get; set; }
+        public double? AverageCost { get; set; }
         /// <summary>Indicates if this is a backflush item</summary>
-        public Byte? Backflush { get; set; }
+        public byte? Backflush { get; set; }
         /// <summary>Calculator type</summary>
-        public Int32? CalculatorType { get; set; }
+        public int? CalculatorType { get; set; }
         /// <summary>Cost batch</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Double? CostBatch { get; set; }
+        public double? CostBatch { get; set; }
         /// <summary>Cost center</summary>
-        public String CostCenter { get; set; }
+        public string CostCenter { get; set; }
         /// <summary>Cost center description</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String CostCenterDescription { get; set; }
+        public string CostCenterDescription { get; set; }
         /// <summary>Cost unit</summary>
-        public String CostUnit { get; set; }
+        public string CostUnit { get; set; }
         /// <summary>Cost unit description</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String CostUnitDescription { get; set; }
+        public string CostUnitDescription { get; set; }
         /// <summary>Name of creator</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String CreatorFullName { get; set; }
+        public string CreatorFullName { get; set; }
         /// <summary>Description of the material</summary>
-        public String Description { get; set; }
+        public string Description { get; set; }
         /// <summary>Detail drawing reference</summary>
-        public String DetailDrawing { get; set; }
+        public string DetailDrawing { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>Primary key</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public Guid ID { get; set; }
@@ -43,30 +43,30 @@ namespace ExactOnline.Client.Models.Manufacturing
         public Guid? ItemVersion { get; set; }
         /// <summary>Line number</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? LineNumber { get; set; }
+        public int? LineNumber { get; set; }
         /// <summary>Net weight</summary>
-        public Double? NetWeight { get; set; }
+        public double? NetWeight { get; set; }
         /// <summary>Net weight unit of measure</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String NetWeightUnit { get; set; }
+        public string NetWeightUnit { get; set; }
         /// <summary>Notes</summary>
-        public String Notes { get; set; }
+        public string Notes { get; set; }
         /// <summary>Key of part item</summary>
         public Guid? PartItem { get; set; }
         /// <summary>Part item code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String PartItemCode { get; set; }
+        public string PartItemCode { get; set; }
         /// <summary>Item standard cost available when standard cost method is used</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Double? PartItemCostPriceStandard { get; set; }
+        public double? PartItemCostPriceStandard { get; set; }
         /// <summary>Part item description</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String PartItemDescription { get; set; }
+        public string PartItemDescription { get; set; }
         /// <summary>Quantity</summary>
-        public Double? Quantity { get; set; }
+        public double? Quantity { get; set; }
         /// <summary>Quantity batch</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Double? QuantityBatch { get; set; }
+        public double? QuantityBatch { get; set; }
         /// <summary>Creation date</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public DateTime? syscreated { get; set; }
@@ -80,6 +80,6 @@ namespace ExactOnline.Client.Models.Manufacturing
         [SDKFieldType(FieldType.ReadOnly)]
         public Guid? sysmodifier { get; set; }
         /// <summary>Material type 1 indicates material, 2 indicates byproduct</summary>
-        public Int32? Type { get; set; }
+        public int? Type { get; set; }
     }
 }

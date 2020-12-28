@@ -1,25 +1,15 @@
-﻿using ExactOnline.Client.Sdk.Interfaces;
+﻿using ExactOnline.Client.Sdk.Enums;
+using ExactOnline.Client.Sdk.Interfaces;
 using System.Threading.Tasks;
 
 namespace ExactOnline.Client.Sdk.UnitTests.MockObjects
 {
-	public sealed class ApiConnectionMock : IApiConnection
-	{
-		#region IApiConnection Members
-
-		int IApiConnection.Count(string parameters)
-		{
-			return 0;
-		}
-
-        Task<int> IApiConnection.CountAsync(string parameters)
+    public sealed class ApiConnectionMock : IApiConnection
+    {
+        string IApiConnection.Get(string parameters) => (this as IApiConnection).Get(parameters, EndpointTypeEnum.Single);
+        string IApiConnection.Get(string parameters, EndpointTypeEnum endpointType)
         {
-            return Task.FromResult((this as IApiConnection).Count(parameters));
-        }
-
-        string IApiConnection.Get(string parameters)
-		{
-			const string correctJsonArray = @"{
+            const string correctJsonArray = @"{
 			""d"": {
 				""results"": [
 					{
@@ -288,17 +278,15 @@ namespace ExactOnline.Client.Sdk.UnitTests.MockObjects
 			}
 		}";
 
-			return correctJsonArray;
-		}
-
-        Task<string> IApiConnection.GetAsync(string parameters)
-        {
-            return Task.FromResult((this as IApiConnection).Get(parameters));
+            return correctJsonArray;
         }
 
+        Task<string> IApiConnection.GetAsync(string parameters) => (this as IApiConnection).GetAsync(parameters, EndpointTypeEnum.Single);
+        Task<string> IApiConnection.GetAsync(string parameters, EndpointTypeEnum endpointType) => Task.FromResult((this as IApiConnection).Get(parameters, endpointType));
+
         string IApiConnection.GetEntity(string keyname, string guid, string parameters)
-		{
-			const string correctJsonObject = @"{
+        {
+            const string correctJsonObject = @"{
 	""d"": {
 		""__metadata"": {
 			""uri"": ""https://start.exactonline.nl/api/v1/499156/crm/Accounts(guid'71b961de-b9f3-49fe-883d-0f46c7e0e89b')"",
@@ -431,45 +419,20 @@ namespace ExactOnline.Client.Sdk.UnitTests.MockObjects
 		""Website"": null
 	}
 }";
-			return correctJsonObject;
-		}
-
-        Task<string> IApiConnection.GetEntityAsync(string keyname, string guid, string parameters)
-        {
-            return Task.FromResult((this as IApiConnection).GetEntity(keyname, guid, parameters));
+            return correctJsonObject;
         }
+        Task<string> IApiConnection.GetEntityAsync(string keyname, string guid, string parameters) => Task.FromResult((this as IApiConnection).GetEntity(keyname, guid, parameters));
 
-        string IApiConnection.Post(string data)
-		{
-            return "";
-		}
+        string IApiConnection.Post(string data) => "";
+        Task<string> IApiConnection.PostAsync(string data) => Task.FromResult((this as IApiConnection).Post(data));
 
-        Task<string> IApiConnection.PostAsync(string data)
-        {
-            return Task.FromResult((this as IApiConnection).Post(data));
-        }
+        bool IApiConnection.Put(string keyName, string guid, string data) => true;
+        Task<bool> IApiConnection.PutAsync(string keyName, string guid, string data) => Task.FromResult((this as IApiConnection).Put(keyName, guid, data));
 
-        bool IApiConnection.Put(string keyName, string guid, string data)
-		{
-			return true;
-		}
+        bool IApiConnection.Delete(string keyName, string guid) => true;
+        Task<bool> IApiConnection.DeleteAsync(string keyName, string guid) => Task.FromResult((this as IApiConnection).Delete(keyName, guid));
 
-        Task<bool> IApiConnection.PutAsync(string keyName, string guid, string data)
-        {
-            return Task.FromResult((this as IApiConnection).Put(keyName, guid,data));
-        }
-
-        bool IApiConnection.Delete(string keyName, string guid)
-		{
-			return true;
-		}
-
-        Task<bool> IApiConnection.DeleteAsync(string keyName, string guid)
-        {
-            return Task.FromResult((this as IApiConnection).Delete(keyName, guid));
-        }
-
-        #endregion
-
+        int IApiConnection.Count(string parameters) => 0;
+        Task<int> IApiConnection.CountAsync(string parameters) => Task.FromResult((this as IApiConnection).Count(parameters));
     }
 }

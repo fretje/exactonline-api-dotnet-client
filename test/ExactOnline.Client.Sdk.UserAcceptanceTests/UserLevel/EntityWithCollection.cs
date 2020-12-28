@@ -10,59 +10,58 @@ using System.Linq;
 
 namespace ExactOnline.Client.Sdk.UserAcceptanceTests.UserLevel
 {
-	[TestClass]
-	public class EntityWithCollection
-	{
-		[TestMethod]
-		[TestCategory("User Acceptance Tests")]
-		public void CreateSalesInvoiceWithLine()
-		{
-			var toc = new TestObjectsCreator();
-			var client = new ExactOnlineClient(toc.EndPoint, toc.GetOAuthAuthenticationToken);
-			var customerId = GetCustomerId(client);
-			var itemId = GetItemId(client);
+    [TestClass]
+    public class EntityWithCollection
+    {
+        [TestMethod]
+        [TestCategory("User Acceptance Tests")]
+        public void CreateSalesInvoiceWithLine()
+        {
+            var client = new TestObjectsCreator().GetClient();
 
-			var newInvoice = new SalesInvoice
-			{
-				Currency = "EUR",
-				OrderDate = new DateTime(2012, 10, 26),
-				InvoiceTo = customerId,
-				Journal = "70",
-				OrderedBy = customerId,
-				Description = "New invoice for Entity With Collection"
-			};
+            var customerId = GetCustomerId(client);
+            var itemId = GetItemId(client);
 
-			var newInvoiceLine = new SalesInvoiceLine
-			{
-				Description = "New invoice line for Entity With Collection",
-				Item = itemId
-			};
+            var newInvoice = new SalesInvoice
+            {
+                Currency = "EUR",
+                OrderDate = DateTime.Now,
+                InvoiceTo = customerId,
+                OrderedBy = customerId,
+                Description = "New invoice for Entity With Collection"
+            };
 
-			var invoicelines = new List<SalesInvoiceLine> { newInvoiceLine };
-			newInvoice.SalesInvoiceLines = invoicelines;
+            var newInvoiceLine = new SalesInvoiceLine
+            {
+                Description = "New invoice line for Entity With Collection",
+                Item = itemId
+            };
 
-			// Add SalesInvoice to Database
-			Assert.IsTrue(client.For<SalesInvoice>().Insert(ref newInvoice));
+            var invoicelines = new List<SalesInvoiceLine> { newInvoiceLine };
+            newInvoice.SalesInvoiceLines = invoicelines;
 
-			// Get SalesInvoice and check if contains collections of InvoiceLines
-			SalesInvoice salesInvoice = client.For<SalesInvoice>()
-				.Expand("SalesInvoiceLines")
-				.GetEntity(newInvoice.InvoiceID.ToString());
+            // Add SalesInvoice to Database
+            Assert.IsTrue(client.For<SalesInvoice>().Insert(ref newInvoice));
 
-			Assert.IsNotNull(salesInvoice);
-			Assert.AreEqual(1, salesInvoice.SalesInvoiceLines.Count());
-		}
+            // Get SalesInvoice and check if contains collections of InvoiceLines
+            var salesInvoice = client.For<SalesInvoice>()
+                .Expand("SalesInvoiceLines")
+                .GetEntity(newInvoice.InvoiceID.ToString());
 
-		private static Guid GetCustomerId(ExactOnlineClient client)
-		{
-			var customers = client.For<Account>().Select("ID").Where("IsSales+eq+true").Get();
-			return customers.First().ID;
-		}
+            Assert.IsNotNull(salesInvoice);
+            Assert.AreEqual(1, salesInvoice.SalesInvoiceLines.Count());
+        }
 
-		private static Guid GetItemId(ExactOnlineClient client)
-		{
-			var customers = client.For<Item>().Select("ID").Where("IsSalesItem+eq+true").Get();
-			return customers.First().ID;
-		}
-	}
+        private static Guid GetCustomerId(ExactOnlineClient client)
+        {
+            var customers = client.For<Account>().Select("ID").Where("IsSales+eq+true").Get();
+            return customers.First().ID;
+        }
+
+        private static Guid GetItemId(ExactOnlineClient client)
+        {
+            var customers = client.For<Item>().Select("ID").Where("IsSalesItem+eq+true").Get();
+            return customers.First().ID;
+        }
+    }
 }

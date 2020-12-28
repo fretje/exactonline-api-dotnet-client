@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.SalesInvoice
 {
-    using System;
-
     [SupportedActionsSDK(false, true, false, false)]
     [DataServiceKey("ID")]
     public class Layout
@@ -14,10 +14,10 @@ namespace ExactOnline.Client.Models.SalesInvoice
         public Guid? Creator { get; set; }
         /// <summary>Name of the creator</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String CreatorFullName { get; set; }
+        public string CreatorFullName { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>Primary key</summary>
         public Guid ID { get; set; }
         /// <summary>Last modified date</summary>
@@ -28,10 +28,10 @@ namespace ExactOnline.Client.Models.SalesInvoice
         public Guid? Modifier { get; set; }
         /// <summary>Name of the last modifier</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public String ModifierFullName { get; set; }
+        public string ModifierFullName { get; set; }
         /// <summary>Layout name</summary>
-        public String Subject { get; set; }
+        public string Subject { get; set; }
         /// <summary>Type: 1=Layout, 2=E-mail text layout, 3=Word template</summary>
-        public Int16? Type { get; set; }
+        public short? Type { get; set; }
     }
 }

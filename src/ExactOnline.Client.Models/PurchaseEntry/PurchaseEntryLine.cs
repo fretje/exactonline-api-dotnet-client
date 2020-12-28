@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.PurchaseEntry
 {
-    using System;
-
     [SupportedActionsSDK(true, true, true, true)]
     [DataServiceKey("ID")]
     public class PurchaseEntryLine
@@ -30,7 +30,7 @@ namespace ExactOnline.Client.Models.PurchaseEntry
         public string Description { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32 Division { get; set; }
+        public int Division { get; set; }
         /// <summary>Reference to header of the purchase entry</summary>
         public Guid? EntryID { get; set; }
         /// <summary>From date for deferred revenue</summary>
@@ -57,7 +57,7 @@ namespace ExactOnline.Client.Models.PurchaseEntry
         public string IntraStatTransportMethod { get; set; }
         /// <summary>Line number</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? LineNumber { get; set; }
+        public int? LineNumber { get; set; }
         /// <summary>Extra remarks</summary>
         public string Notes { get; set; }
         /// <summary>Reference to project</summary>
@@ -91,7 +91,7 @@ namespace ExactOnline.Client.Models.PurchaseEntry
         public string TrackingNumberDescription { get; set; }
         /// <summary>Type: 30 = Purchase entry, 31 = Purchase credit note</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? Type { get; set; }
+        public int? Type { get; set; }
         /// <summary>VAT amount in the default currency of the company</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public double? VATAmountDC { get; set; }

@@ -2,77 +2,48 @@
 using ExactOnline.Client.Sdk.Controllers;
 using ExactOnline.Client.Sdk.Helpers;
 using ExactOnline.Client.Sdk.Interfaces;
-using System;
 
 namespace ExactOnline.Client.Sdk.TestContext
 {
-	public class TestObjectsCreator
-	{
-		private const string Website = "https://start.exactonline.nl";
+    public class TestObjectsCreator
+    {
+        public static string ExactOnlineUrl => "https://start.exactonline.be";
+        public static string UriGlAccount(int currentDivision) => $"{ExactOnlineUrl}/api/v1/{currentDivision}/financial/GLAccounts";
+        public static string UriCrmAccount(int currentDivision) => $"{ExactOnlineUrl}/api/v1/{currentDivision}/crm/Accounts";
+        public static string SpecificGLAccountDescription => "Gebouwen";
+        public static string SpecificGLAccountCode => "221000";
 
-		private readonly static UserAuthorization Authorization = new UserAuthorization();
+        private readonly static UserAuthorization _authorization = new UserAuthorization();
+        private IApiConnector _connector;
+        private ExactOnlineClient _client;
 
-		private IApiConnector _connector;
-		private ExactOnlineClient _client;
+        public IApiConnector GetApiConnector() => _connector ?? (_connector = new ApiConnector(GetOAuthAuthenticationToken, GetClient()));
 
-		public IApiConnector ApiConnector()
-		{
-			return _connector ?? (_connector = new ApiConnector(GetOAuthAuthenticationToken, GetClient()));
-		}
+        public ExactOnlineClient GetClient() => _client ?? (_client = new ExactOnlineClient(ExactOnlineUrl, GetOAuthAuthenticationToken));
 
-		public string GetWebsite()
-		{
-			return Website;
-		}
+        public static string GetOAuthAuthenticationToken()
+        {
+            var testApp = new TestApp();
+            UserAuthorizations.Authorize(_authorization, ExactOnlineUrl, testApp.ClientId.ToString(), testApp.ClientSecret, testApp.CallbackUrl);
 
-		public ExactOnlineClient GetClient()
-		{
-			return _client ?? (_client = new ExactOnlineClient(GetWebsite(), GetOAuthAuthenticationToken));
-		}
+            return _authorization.AccessToken;
+        }
 
-		public string GetOAuthAuthenticationToken()
-		{
-			var testApp = new TestApp();
-			UserAuthorizations.Authorize(Authorization, EndPoint, testApp.ClientId.ToString(), testApp.ClientSecret, testApp.CallbackUrl);
+        public int GetCurrentDivision()
+        {
+            var currentDivision = -1;
 
-			return Authorization.AccessToken;
-		}
+            if (_connector == null)
+            {
+                GetApiConnector();
+            }
 
-		public string EndPoint
-		{
-			get
-			{
-				return Website;
-			}
-		}
+            if (_connector != null)
+            {
+                currentDivision = _connector.GetCurrentDivision(ExactOnlineUrl);
+            }
 
-		public string UriGlAccount(int currentDivision)
-		{
-			return String.Format("{0}/api/v1/{1}/financial/GLAccounts", Website, currentDivision);
-		}
-
-		public string UriCrmAccount(int currentDivision)
-		{
-			return String.Format("{0}/api/v1/{1}/crm/Accounts", Website, currentDivision);
-		}
-
-
-		public int GetCurrentDivision()
-		{
-
-			var currentDivision = -1;
-
-			if (_connector == null)
-			{
-				ApiConnector();
-			}
-
-			if (_connector != null)
-			{
-				currentDivision = _connector.GetCurrentDivision(Website);
-			}
-
-			return currentDivision;
-		}
-	}
+            return currentDivision;
+        }
+    }
 }

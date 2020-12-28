@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.Documents
 {
-    using System;
-
     [SupportedActionsSDK(false, true, false, false)]
     [DataServiceKey("ID")]
     public class DocumentType
@@ -19,10 +19,10 @@ namespace ExactOnline.Client.Models.Documents
         /// <summary>Indicates if documents of this type can be retrieved</summary>
         public bool DocumentIsViewable { get; set; }
         /// <summary>Primary key</summary>
-        public Int32 ID { get; set; }
+        public int ID { get; set; }
         /// <summary>Last modified date</summary>
         public DateTime? Modified { get; set; }
         /// <summary>ID of the document type category</summary>
-        public Int32? TypeCategory { get; set; }
+        public int? TypeCategory { get; set; }
     }
 }

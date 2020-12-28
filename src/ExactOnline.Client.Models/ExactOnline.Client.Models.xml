@@ -1048,429 +1048,6 @@
         <member name="P:ExactOnline.Client.Models.Budget.Budget.ReportingYear">
             <summary>Financial year</summary>
         </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.Document.Account">
-            <summary>ID of the related account of this document</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.Document.Attachments">
-            <summary>Attachments linked to the document. Binaries are not sent in the response.</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.Document.Body">
-            <summary>Body of this document</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.Document.Contact">
-            <summary>ID of the related contact of this document</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.Document.Created">
-            <summary>Creation date</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.Document.Creator">
-            <summary>User ID of creator</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.Document.CreatorFullName">
-            <summary>Name of creator</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.Document.Division">
-            <summary>Division code</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.Document.DocumentDate">
-            <summary>Entry date of the incoming document</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.Document.DocumentFolder">
-            <summary>Id of document folder</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.Document.DocumentViewUrl">
-            <summary>Url to view the document</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.Document.HasEmptyBody">
-            <summary>Indicates that the document body is empty</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.Document.HID">
-            <summary>Human-readable ID, formatted as xx.xxx.xxx. Unique. May not be equal to zero</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.Document.ID">
-            <summary>Primary key</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.Document.Modified">
-            <summary>Last modified date</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.Document.Modifier">
-            <summary>User ID of modifier</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.Document.Opportunity">
-            <summary>The opportunity linked to the document</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.Document.PurchaseInvoiceNumber">
-            <summary>Purchase invoice number.</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.Document.PurchaseOrderNumber">
-            <summary>Purchase order number.</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.Document.SalesInvoiceNumber">
-            <summary>&apos;Our reference&apos; of the transaction that belongs to this document</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.Document.SalesOrderNumber">
-            <summary>Number of the sales order</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.Document.SendMethod">
-            <summary>Send Method</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.Document.Subject">
-            <summary>Subject of this document</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.Document.Type">
-            <summary>The document type</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.Document.TypeDescription">
-            <summary>Translated description of the document type. $filter and $orderby are not supported for this property.</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.Document.TypeDescriptionTermId">
-            <summary>Translation id of the document type description</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.Document.UntermedTypeDescription">
-            <summary>English description of the document type</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.DocumentAttachment.Attachment">
-            <summary>Contains the attachment</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.DocumentAttachment.Document">
-            <summary>Reference to the Document</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.DocumentAttachment.FileName">
-            <summary>Filename of the attachment</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.DocumentAttachment.FileSize">
-            <summary>File size of the attachment</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.DocumentAttachment.ID">
-            <summary>Primary key</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.DocumentAttachment.Url">
-            <summary>Url of the attachment. To get the file in its original format (xml, jpg, pdf, etc.) append &lt;b&gt;&amp;Download=1&lt;/b&gt; to the url.</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.Account">
-            <summary>Reference to account</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.AccountCode">
-            <summary>Code of the Account</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.AccountName">
-            <summary>Name of the Account</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.AmountDC">
-            <summary>Amount in the default currency of the company</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.AmountFC">
-            <summary>Amount in the currency of the transaction</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.AmountVATBaseFC">
-            <summary>Vat base amount in the currency of the transaction</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.AmountVATFC">
-            <summary>Vat amount in the currency of the transaction</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.Asset">
-            <summary>Reference to asset</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.AssetCode">
-            <summary>Code of Asset</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.AssetDescription">
-            <summary>Description of Asset</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.CostCenter">
-            <summary>Reference to cost center</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.CostCenterDescription">
-            <summary>Description of CostCenter</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.CostUnit">
-            <summary>Reference to cost unit</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.CostUnitDescription">
-            <summary>Description of CostUnit</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.Created">
-            <summary>Creation date</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.Creator">
-            <summary>User ID of creator</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.CreatorFullName">
-            <summary>Name of creator</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.Currency">
-            <summary>Currency</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.Date">
-            <summary>Date</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.Description">
-            <summary>Description</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.Division">
-            <summary>Division code</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.Document">
-            <summary>Reference to document</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.DocumentNumber">
-            <summary>Number of the document</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.DocumentSubject">
-            <summary>Subject of the document</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.DueDate">
-            <summary>Date that payment should be done</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.EntryID">
-            <summary>Reference to header of the entry</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.EntryNumber">
-            <summary>Entry number of the header</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.ExchangeRate">
-            <summary>Exchange rate</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.ExtraDutyAmountFC">
-            <summary>Extra duty amount</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.ExtraDutyPercentage">
-            <summary>Extra duty percentage</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.FinancialPeriod">
-            <summary>Financial period</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.FinancialYear">
-            <summary>Financial year</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.GLAccount">
-            <summary>General ledger account</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.GLAccountCode">
-            <summary>Code of GLAccount</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.GLAccountDescription">
-            <summary>Description of GLAccount</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.ID">
-            <summary>Primary key</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.InvoiceNumber">
-            <summary>Invoice number</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.Item">
-            <summary>Reference to item</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.ItemCode">
-            <summary>Code of Item</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.ItemDescription">
-            <summary>Description of Item</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.JournalCode">
-            <summary>The journal code</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.JournalDescription">
-            <summary>The journal description</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.LineNumber">
-            <summary>Line number</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.LineType">
-            <summary>Line type</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.Modified">
-            <summary>Last modified date</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.Modifier">
-            <summary>User ID of modifier</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.ModifierFullName">
-            <summary>Name of modifier</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.Notes">
-            <summary>Extra remarks</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.OffsetID">
-            <summary>OffsetID</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.OrderNumber">
-            <summary>Order number</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.PaymentDiscountAmount">
-            <summary>Discount amount when paid in time</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.PaymentReference">
-            <summary>Payment reference</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.Project">
-            <summary>Reference to project</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.ProjectCode">
-            <summary>Code of Project</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.ProjectDescription">
-            <summary>Description of Project</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.Quantity">
-            <summary>Quantity</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.SerialNumber">
-            <summary>Serial number of item</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.Status">
-            <summary>20 = Open, 50 = Processed</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.Subscription">
-            <summary>Reference to subscription line</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.SubscriptionDescription">
-            <summary>Description of subscription line</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.TrackingNumber">
-            <summary>Tracking number of item</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.TrackingNumberDescription">
-            <summary>Tracking number description</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.Type">
-            <summary>The transaction type.&lt;/br&gt;&lt;table class=&quot;enum&quot;&gt;&lt;tr&gt;&lt;td&gt;10 = Opening balance&lt;/td&gt;&lt;td&gt;142 = Issue to parent&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;20 = Sales entry&lt;/td&gt;&lt;td&gt;145 = Shop order time entry&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;21 = Sales credit note&lt;/td&gt;&lt;td&gt;146 = Shop order time entry reversal&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;30 = Purchase entry&lt;/td&gt;&lt;td&gt;147 = Shop order by-product receipt&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;31 = Purchase credit note&lt;/td&gt;&lt;td&gt;148 = Shop order by-product reversal&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;40 = Cash flow&lt;/td&gt;&lt;td&gt;150 = Requirement issue&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;50 = VAT return&lt;/td&gt;&lt;td&gt;151 = Requirement reversal&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;70 = Asset - Depreciation&lt;/td&gt;&lt;td&gt;152 = Returned from parent&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;71 = Asset - Investment&lt;/td&gt;&lt;td&gt;155 = Subcontract Issue&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;72 = Asset - Revaluation&lt;/td&gt;&lt;td&gt;156 = Subcontract reversal&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;73 = Asset - Transfer&lt;/td&gt;&lt;td&gt;158 = Shop order completed&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;74 = Asset - Split&lt;/td&gt;&lt;td&gt;162 = Finish assembly&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;75 = Asset - Discontinue&lt;/td&gt;&lt;td&gt;170 = Payroll&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;76 = Asset - Sales&lt;/td&gt;&lt;td&gt;180 = Stock revaluation&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;80 = Revaluation&lt;/td&gt;&lt;td&gt;181 = Financial revaluation&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;82 = Exchange rate difference&lt;/td&gt;&lt;td&gt;195 = Stock count&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;83 = Payment difference&lt;/td&gt;&lt;td&gt;290 = Correction entry&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;84 = Deferred revenue&lt;/td&gt;&lt;td&gt;310 = Period closing&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;85 = Tracking number:Revaluation&lt;/td&gt;&lt;td&gt;320 = Year end reflection&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;86 = Deferred cost&lt;/td&gt;&lt;td&gt;321 = Year end costing&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;87 = VAT on prepayment&lt;/td&gt;&lt;td&gt;322 = Year end profits to gross profit&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;90 = Other&lt;/td&gt;&lt;td&gt;323 = Year end costs to gross profit&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;120 = Delivery&lt;/td&gt;&lt;td&gt;324 = Year end tax&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;121 = Sales return&lt;/td&gt;&lt;td&gt;325 = Year end gross profit to net p/l&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;130 = Receipt&lt;/td&gt;&lt;td&gt;326 = Year end net p/l to balance sheet&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;131 = Purchase return&lt;/td&gt;&lt;td&gt;327 = Year end closing balance&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;140 = Shop order stock receipt&lt;/td&gt;&lt;td&gt;328 = Year start opening balance&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;141 = Shop order stock reversal&lt;/td&gt;&lt;td&gt;3000 = Budget&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.VATCode">
-            <summary>Vat code</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.VATCodeDescription">
-            <summary>Description of VATCode</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.VATPercentage">
-            <summary>Vat percentage</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.VATType">
-            <summary>Vat type</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.FinancialTransactionLine.YourRef">
-            <summary>Your reference (of customer)</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.AmountDC">
-            <summary>Amount in the default currency of the company</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.AmountFC">
-            <summary>Amount in the currency of the transaction</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.CostCenter">
-            <summary>Reference to Cost center</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.CostCenterDescription">
-            <summary>Description of CostCenter</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.CostPriceFC">
-            <summary>Item cost price</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.CostUnit">
-            <summary>Reference to Cost unit</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.CostUnitDescription">
-            <summary>Description of CostUnit</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.DeliveryDate">
-            <summary>Delivery date of this line</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.Description">
-            <summary>Description</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.Discount">
-            <summary>Discount given on the default price. Discount = (DefaultPrice of Item - PriceItem in line) / DefaultPrice of Item</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.Division">
-            <summary>Division code</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.ID">
-            <summary>Primary key</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.Item">
-            <summary>Reference to the item that is sold in this sales order line</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.ItemCode">
-            <summary>Code of Item</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.ItemDescription">
-            <summary>Description of Item</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.ItemVersion">
-            <summary>Item Version</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.ItemVersionDescription">
-            <summary>Description of Item Version</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.LineNumber">
-            <summary>Line number</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.NetPrice">
-            <summary>Net price of the sales order line</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.Notes">
-            <summary>Extra notes</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.OrderID">
-            <summary>The OrderID identifies the sales order. All the lines of a sales order have the same OrderID</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.OrderNumber">
-            <summary>Number of sales order</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.Pricelist">
-            <summary>Price list</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.PricelistDescription">
-            <summary>Description of Pricelist</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.Project">
-            <summary>The project to which the sales order line is linked. The project can be different per line. Sometimes also the project in the header is filled although this is not really used</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.ProjectDescription">
-            <summary>Description of Project</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.PurchaseOrder">
-            <summary>Purchase order that is linked to the sales order</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.PurchaseOrderLine">
-            <summary>Purchase order line of the purchase order that is linked to the sales order</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.PurchaseOrderLineNumber">
-            <summary>Number of the purchase order line</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.PurchaseOrderNumber">
-            <summary>Number of the purchase order</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.Quantity">
-            <summary>The number of items sold in default units. The quantity shown in the entry screen is Quantity * UnitFactor</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.ShopOrder">
-            <summary>Reference to ShopOrder</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.UnitCode">
-            <summary>Code of item unit</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.UnitDescription">
-            <summary>Description of Unit</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.UnitPrice">
-            <summary>Price per unit in the currency of the transaction</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.UseDropShipment">
-            <summary>Indicates if drop shipment is used (delivery directly to customer, invoice to wholesaler)</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.VATAmount">
-            <summary>VAT amount in the currency of the transaction</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.VATCode">
-            <summary>VAT code</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.VATCodeDescription">
-            <summary>Description of VATCode</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Bulk.SalesOrderLine.VATPercentage">
-            <summary>The vat percentage of the VAT code. This is the percentage at the moment the sales order is created. It&apos;s also used for the default calculation of VAT amounts and VAT base amounts</summary>
-        </member>
         <member name="P:ExactOnline.Client.Models.Cashflow.Bank.BankName">
             <summary>The name of the bank</summary>
         </member>
@@ -7133,6 +6710,9 @@
         <member name="P:ExactOnline.Client.Models.Inventory.ItemWarehouse.WarehouseDescription">
             <summary>Description of warehouse</summary>
         </member>
+        <member name="P:ExactOnline.Client.Models.Inventory.ItemWarehousePlanningDetail.ID">
+            <summary>Primary key</summary>
+        </member>
         <member name="P:ExactOnline.Client.Models.Inventory.ItemWarehousePlanningDetail.Item">
             <summary>ID of item</summary>
         </member>
@@ -8437,6 +8017,18 @@
         </member>
         <member name="P:ExactOnline.Client.Models.Logistics.SalesItemPrice.UnitDescription">
             <summary>Description of the price unit</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Logistics.StockPosition.ItemId">
+            <summary>Primary key item</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Logistics.StockPosition.InStock">
+            <summary>Number of items in stock</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Logistics.StockPosition.PlanningIn">
+            <summary>Number of items that are planned to come ine</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Logistics.StockPosition.PlanningOut">
+            <summary>Number of items that are planned to go out</summary>
         </member>
         <member name="P:ExactOnline.Client.Models.Logistics.SupplierItem.CopyRemarks">
             <summary>Copy purchase remarks to purchase lines</summary>
@@ -15561,7 +15153,10 @@
             <summary>Customer account name</summary>
         </member>
         <member name="P:ExactOnline.Client.Models.Sales.SalesPriceListDetail.BasePrice">
-            <summary>Standard price</summary>
+            <summary>ID of the base price</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Sales.SalesPriceListDetail.BasePriceAmount">
+            <summary>Amount of the base price</summary>
         </member>
         <member name="P:ExactOnline.Client.Models.Sales.SalesPriceListDetail.Created">
             <summary>Creation date</summary>
@@ -16033,6 +15628,24 @@
         </member>
         <member name="P:ExactOnline.Client.Models.Subscription.SubscriptionType.ModifierFullName">
             <summary>Name of the last modifier</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.SupportsSync.Timestamp">
+            <summary>Timestamp for use with the sync api</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Sync.Deleted.Division">
+            <summary>Division code</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Sync.Deleted.EntityKey">
+            <summary>Entity Key</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Sync.Deleted.EntityType">
+            <summary>Entity Type</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Sync.Deleted.ID">
+            <summary>Primary Key</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Sync.Deleted.Timestamp">
+            <summary>Timestamp for use with the sync service</summary>
         </member>
         <member name="P:ExactOnline.Client.Models.SystemBase.AccountantInfo.AddressLine1">
             <summary>First address line.</summary>

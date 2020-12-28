@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.Mailbox
 {
-    using System;
-
     [SupportedActionsSDK(false, true, false, false)]
     [DataServiceKey("ID")]
     public class MailMessagesReceived
@@ -20,7 +20,7 @@ namespace ExactOnline.Client.Models.Mailbox
         [SDKFieldType(FieldType.ReadOnly)]
         public string CreatorFullName { get; set; }
         /// <summary>Administration from which the mail message is sent. This is used for mail messages of type Bank only. When used for a mail message of type bank, the value is reserved for internal use and will then be ignored.</summary>
-        public Int32? ForDivision { get; set; }
+        public int? ForDivision { get; set; }
         /// <summary>Primary key</summary>
         public Guid ID { get; set; }
         /// <summary>Last modified date</summary>
@@ -33,7 +33,7 @@ namespace ExactOnline.Client.Models.Mailbox
         [SDKFieldType(FieldType.ReadOnly)]
         public string ModifierFullName { get; set; }
         /// <summary>Specifies the operation upon dealing with the mailmessage (Kirean scan service)</summary>
-        public Int16? Operation { get; set; }
+        public short? Operation { get; set; }
         /// <summary>Provides a link to another MailMessage (Kirean scan service)</summary>
         public Guid? OriginalMessage { get; set; }
         /// <summary>Subject of the OriginalMessage</summary>
@@ -57,7 +57,7 @@ namespace ExactOnline.Client.Models.Mailbox
         /// <summary>Mailbox ID of the recipient. The owner of this mailbox will see the message in the inbox</summary>
         public Guid? RecipientMailboxID { get; set; }
         /// <summary>Status of the mail message, only the recipient can update this</summary>
-        public Int16? RecipientStatus { get; set; }
+        public short? RecipientStatus { get; set; }
         /// <summary>Description of RecipientStatus</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public string RecipientStatusDescription { get; set; }
@@ -83,6 +83,6 @@ namespace ExactOnline.Client.Models.Mailbox
         /// <summary>Provides a link between Exact Online and the banks</summary>
         public string SynchronizationCode { get; set; }
         /// <summary>Type of the mail message</summary>
-        public Int32? Type { get; set; }
+        public int? Type { get; set; }
     }
 }

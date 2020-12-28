@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.Documents
 {
-    using System;
-
     [SupportedActionsSDK(false, true, false, false)]
     [DataServiceKey("ID")]
     public class DocumentCategory

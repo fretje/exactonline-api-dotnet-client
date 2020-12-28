@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.HRM
 {
-    using System;
-
     [SupportedActionsSDK(false, true, false, false)]
     [DataServiceKey("ID")]
     public class LeaveRegistration
@@ -15,13 +15,13 @@ namespace ExactOnline.Client.Models.HRM
         /// <summary>Description of leave</summary>
         public string Description { get; set; }
         /// <summary>Division code</summary>
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>Employee linked to the leave</summary>
         public Guid Employee { get; set; }
         /// <summary>Employee full name</summary>
         public string EmployeeFullName { get; set; }
         /// <summary>Numeric ID of the employee</summary>
-        public Int32 EmployeeHID { get; set; }
+        public int EmployeeHID { get; set; }
         /// <summary>End date of leave</summary>
         public DateTime EndDate { get; set; }
         /// <summary>End time on the last day of leave stored as DateTime, and the date should be ignored</summary>
@@ -53,6 +53,6 @@ namespace ExactOnline.Client.Models.HRM
         /// <summary>Start time on the first day of leave stored as DateTime, and the date should be ignored</summary>
         public DateTime? StartTime { get; set; }
         /// <summary>Status of leave, 1 = Submitted, 2 = Approved, 3 = Rejected</summary>
-        public Int16 Status { get; set; }
+        public short Status { get; set; }
     }
 }

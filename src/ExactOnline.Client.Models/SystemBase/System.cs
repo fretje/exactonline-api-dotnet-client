@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.SystemBase
 {
-    using System;
-
     [SupportedActionsSDK(false, true, false, false)]
     [DataServiceKey("Code")]
     public class Division
@@ -17,7 +17,7 @@ namespace ExactOnline.Client.Models.SystemBase
         /// <summary>City</summary>
         public string City { get; set; }
         /// <summary>Primary key</summary>
-        public Int32 Code { get; set; }
+        public int Code { get; set; }
         /// <summary>Country of the division. Is used for determination of legislation</summary>
         public string Country { get; set; }
         /// <summary>Creation date</summary>
@@ -37,7 +37,7 @@ namespace ExactOnline.Client.Models.SystemBase
         /// <summary>Email address</summary>
         public string Email { get; set; }
         /// <summary>Company number that is assigned by the customer</summary>
-        public Int64 Hid { get; set; }
+        public long Hid { get; set; }
         /// <summary>True if the division is the main division</summary>
         public bool IsMainDivision { get; set; }
         /// <summary>Last modified date</summary>
@@ -49,7 +49,7 @@ namespace ExactOnline.Client.Models.SystemBase
         /// <summary>State/Province code</summary>
         public string State { get; set; }
         /// <summary>Follow the Division Status 0 for Inactive, 1 for Active and 2 for Archived Divisions</summary>
-        public Int32 Status { get; set; }
+        public int Status { get; set; }
         /// <summary>The number under which the account is known at the Value Added Tax collection agency</summary>
         public string VATNumber { get; set; }
     }

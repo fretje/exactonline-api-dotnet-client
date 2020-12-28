@@ -22,13 +22,13 @@ namespace ExactOnline.Client.Models.Purchase
         public DateTime? DueDate { get; set; }
         /// <summary>The unique number of the purchase invoice. The entry number is based on a setting in the purchase journal and incremented for each new purchase invoice.</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? EntryNumber { get; set; }
+        public int? EntryNumber { get; set; }
         /// <summary>The exchange rate between the invoice currency and the default currency of the division.</summary>
         public double? ExchangeRate { get; set; }
         /// <summary>The financial period in which the invoice is entered.</summary>
-        public Int16? FinancialPeriod { get; set; }
+        public short? FinancialPeriod { get; set; }
         /// <summary>The financial year in which the invoice is entered.</summary>
-        public Int16? FinancialYear { get; set; }
+        public short? FinancialYear { get; set; }
         /// <summary>A guid that is the unique identifier of the purchase invoice.</summary>
         public Guid ID { get; set; }
         /// <summary>The date on which the supplier entered the invoice.</summary>
@@ -43,19 +43,19 @@ namespace ExactOnline.Client.Models.Purchase
         /// <summary>Unique reference to match payments and invoices.</summary>
         public string PaymentReference { get; set; }
         /// <summary>The collection of lines that belong to the purchase invoice.</summary>
-        public IEnumerable<Purchase.PurchaseInvoiceLine> PurchaseInvoiceLines { get; set; }
+        public IEnumerable<PurchaseInvoiceLine> PurchaseInvoiceLines { get; set; }
         /// <summary>The user can enter remarks related to the invoice here.</summary>
         public string Remarks { get; set; }
         /// <summary>Indicates the origin of the invoice. 1 Manual entry, 3 Purchase invoice, 4 Purchase order, 5 Web service.</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int16 Source { get; set; }
+        public short Source { get; set; }
         /// <summary>The status of the invoice. 10 Draft, 20 Open, 50 Processed.</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int16 Status { get; set; }
+        public short Status { get; set; }
         /// <summary>Guid that identifies the supplier.</summary>
         public Guid? Supplier { get; set; }
         /// <summary>Indicates the type of the purchase invoice. 8030 Direct purchase invoice, 8031 Direct purchase invoice (Credit), 8033 Purchase invoice, 8034 Purchase invoice (Credit)</summary>
-        public Int16 Type { get; set; }
+        public short Type { get; set; }
         /// <summary>The total VAT amount of the purchase invoice.</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public double? VATAmount { get; set; }

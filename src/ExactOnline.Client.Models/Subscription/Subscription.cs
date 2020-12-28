@@ -1,8 +1,8 @@
+using System;
+using System.Collections.Generic;
+
 namespace ExactOnline.Client.Models.Subscription
 {
-    using global::System;
-    using global::System.Collections.Generic;
-
     [SupportedActionsSDK(true, true, true, true)]
     [DataServiceKey("EntryID")]
     public class Subscription
@@ -36,7 +36,7 @@ namespace ExactOnline.Client.Models.Subscription
         public string Description { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32 Division { get; set; }
+        public int Division { get; set; }
         /// <summary>End date</summary>
         public DateTime? EndDate { get; set; }
         /// <summary>Primary key</summary>
@@ -69,7 +69,7 @@ namespace ExactOnline.Client.Models.Subscription
         /// <summary>Remarks</summary>
         public string Notes { get; set; }
         /// <summary>Number</summary>
-        public Int32 Number { get; set; }
+        public int Number { get; set; }
         /// <summary>Reference to order account</summary>
         public Guid? OrderedBy { get; set; }
         /// <summary>Reference of contact person of order account</summary>

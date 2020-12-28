@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.HRM
 {
-    using System;
-
     [SupportedActionsSDK(false, true, false, false)]
     [DataServiceKey("ID")]
     public class AbsenceRegistrationTransaction
@@ -15,7 +15,7 @@ namespace ExactOnline.Client.Models.HRM
         /// <summary>Name of creator</summary>
         public string CreatorFullName { get; set; }
         /// <summary>Division code</summary>
-        public Int32 Division { get; set; }
+        public int Division { get; set; }
         /// <summary>End time on the last day of absence stored as DateTime, and the date should be ignored</summary>
         public DateTime? EndTime { get; set; }
         /// <summary>Expected end date of absence</summary>
@@ -45,6 +45,6 @@ namespace ExactOnline.Client.Models.HRM
         /// <summary>Start time on the first day of absence stored as DateTime, and the date should be ignored</summary>
         public DateTime? StartTime { get; set; }
         /// <summary>Status of absence, 0 = Open, 1 = Recovered</summary>
-        public Int16 Status { get; set; }
+        public short Status { get; set; }
     }
 }

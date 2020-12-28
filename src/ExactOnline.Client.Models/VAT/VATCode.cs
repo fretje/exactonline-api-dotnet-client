@@ -37,7 +37,7 @@ namespace ExactOnline.Client.Models.VAT
         public string Description { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>Used in all legislations except France. Indicates if and how transactions using the VAT code appear on the ICT return (EU sales list). L = Listing goods, N = No listing, S = Listing services, T = Triangulation</summary>
         public string EUSalesListing { get; set; }
         /// <summary>Indicates the purchase discount GL account linked to the VAT codes for German legislation</summary>
@@ -95,7 +95,7 @@ namespace ExactOnline.Client.Models.VAT
         [SDKFieldType(FieldType.ReadOnly)]
         public double? Percentage { get; set; }
         /// <summary>Indicates what type of Taxcode it is: can be VAT, IncomeTax</summary>
-        public Int16? TaxReturnType { get; set; }
+        public short? TaxReturnType { get; set; }
         /// <summary>Indicates how the VAT amount should be calculated in relation to the invoice amount. B = VAT 0% (Only base amount), E = Excluding, I = Including, N = No VAT</summary>
         public string Type { get; set; }
         /// <summary>Field in VAT code maintenance to calculate different VATs depending on the selected document type. P = purchase invoice, F = freelance invoice, E = expense voucher. The field is valid for witholding tax type</summary>
@@ -103,9 +103,9 @@ namespace ExactOnline.Client.Models.VAT
         /// <summary>The VAT margin scheme is used for the trade of secondhand goods which are purchased without VAT (for example when a company buys a secondhand good from a private person). In the VAT margin scheme, the VAT is not calculated based on the sales price. Instead of that, the VAT is calculated based on the margin (gross sales price minus the gross purchase price)</summary>
         public byte VatMargin { get; set; }
         /// <summary>Partial ratio explains which part of the VAT the company has to pay. Used in some branches where the sellers have a bad reputation, so the buyers have to take over the VAT-liability</summary>
-        public Int16? VATPartialRatio { get; set; }
+        public short? VATPartialRatio { get; set; }
         /// <summary>VAT percentages. You can have several VAT percentages, with start and end dates</summary>
-        public IEnumerable<VAT.VatPercentage> VATPercentages { get; set; }
+        public IEnumerable<VatPercentage> VATPercentages { get; set; }
         /// <summary>Indicates the type of transactions for which the VAT code may be used. B = Both, P = Purchase, S = Sales</summary>
         public string VATTransactionType { get; set; }
     }

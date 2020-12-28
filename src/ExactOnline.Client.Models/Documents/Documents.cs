@@ -39,7 +39,7 @@ namespace ExactOnline.Client.Models.Documents
         public string Currency { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32 Division { get; set; }
+        public int Division { get; set; }
         /// <summary>Entry date of the incoming document</summary>
         public DateTime? DocumentDate { get; set; }
         /// <summary>The Id of document folder</summary>
@@ -59,7 +59,7 @@ namespace ExactOnline.Client.Models.Documents
         [SDKFieldType(FieldType.ReadOnly)]
         public bool HasEmptyBody { get; set; }
         /// <summary>Human-readable ID, formatted as xx.xxx.xxx. Unique. May not be equal to zero</summary>
-        public Int32? HID { get; set; }
+        public int? HID { get; set; }
         /// <summary>Primary key</summary>
         public Guid ID { get; set; }
         /// <summary>The language code of the document</summary>
@@ -84,21 +84,20 @@ namespace ExactOnline.Client.Models.Documents
         [SDKFieldType(FieldType.ReadOnly)]
         public string ProjectDescription { get; set; }
         /// <summary>&apos;Our reference&apos; of the transaction that belongs to this document</summary>
-        public Int32? SalesInvoiceNumber { get; set; }
+        public int? SalesInvoiceNumber { get; set; }
         /// <summary>Number of the sales order</summary>
-        public Int32? SalesOrderNumber { get; set; }
+        public int? SalesOrderNumber { get; set; }
         /// <summary>Send method</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? SendMethod { get; set; }
+        public int? SendMethod { get; set; }
         /// <summary>Number of the shop order</summary>
-        public Int32? ShopOrderNumber { get; set; }
+        public int? ShopOrderNumber { get; set; }
         /// <summary>Subject of this document</summary>
         public string Subject { get; set; }
         /// <summary>ID of the type of this document</summary>
-        public Int32? Type { get; set; }
+        public int? Type { get; set; }
         /// <summary>Description of Type</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public string TypeDescription { get; set; }
     }
-
 }

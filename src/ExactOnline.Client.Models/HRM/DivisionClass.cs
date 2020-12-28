@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.HRM
 {
-    using System;
-
     [SupportedActionsSDK(false, true, false, false)]
     [DataServiceKey("ID")]
     public class DivisionClass
@@ -23,7 +23,7 @@ namespace ExactOnline.Client.Models.HRM
         /// <summary>Property description</summary>
         public string Description { get; set; }
         /// <summary>Property description term ID</summary>
-        public Int32? DescriptionTermID { get; set; }
+        public int? DescriptionTermID { get; set; }
         /// <summary>Primary key</summary>
         public Guid ID { get; set; }
         /// <summary>Last modified date</summary>
@@ -33,6 +33,6 @@ namespace ExactOnline.Client.Models.HRM
         /// <summary>Name of modifier</summary>
         public string ModifierFullName { get; set; }
         /// <summary>Related classification sequence number </summary>
-        public Int32 SequenceNr { get; set; }
+        public int SequenceNr { get; set; }
     }
 }

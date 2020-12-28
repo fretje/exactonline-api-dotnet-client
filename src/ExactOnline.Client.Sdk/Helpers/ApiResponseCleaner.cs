@@ -1,191 +1,171 @@
 ﻿using ExactOnline.Client.Sdk.Exceptions;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Web.Script.Serialization;
 
 namespace ExactOnline.Client.Sdk.Helpers
 {
 	/// <summary>
 	/// Class for stripping unnecessary Json tags from API Response
 	/// </summary>
-	public class ApiResponseCleaner
-	{
-		#region Public methods
+	public static class ApiResponseCleaner
+    {
+        /// <summary>
+        /// Fetch Json Object (Json within ['d'] name/value pair) from response
+        /// </summary>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        public static string GetJsonObject(string response)
+        {
+            var oldCulture = Thread.CurrentThread.CurrentCulture;
+            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
-		/// <summary>
-		/// Fetch Json Object (Json within ['d'] name/value pair) from response
-		/// </summary>
-		/// <param name="response"></param>
-		/// <returns></returns>
-		public static string GetJsonObject(string response)
-		{
-			var serializer = new JavaScriptSerializer();
-			serializer.RegisterConverters(new JavaScriptConverter[] { new JssDateTimeConverter() });
-			var oldCulture = Thread.CurrentThread.CurrentCulture;
-			Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
-
-			string output;
-			try
-			{
-				var dict = (Dictionary<string, object>)serializer.Deserialize<object>(response);
-				var d = (Dictionary<string, object>)dict["d"];
-				output = GetJsonFromDictionary(d);
-			}
-			finally
-			{
-				Thread.CurrentThread.CurrentCulture = oldCulture;
-			}
-			return output;
-		}
-
-		public static string GetSkipToken(string response)
-		{
-			var serializer = new JavaScriptSerializer();
-			serializer.RegisterConverters(new JavaScriptConverter[] { new JssDateTimeConverter() });
-			var oldCulture = Thread.CurrentThread.CurrentCulture;
-			Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
-			string token = string.Empty;
-			try
-			{
-				var dict = (Dictionary<string, object>)serializer.Deserialize<object>(response);
-				var innerPart = dict["d"];
-				if (innerPart.GetType() == typeof(Dictionary<string, object>))
-				{
-					var d = (Dictionary<string, object>)dict["d"];
-					if (d.ContainsKey("__next"))
-					{
-						var next = (string)d["__next"];
-
-						// Skiptoken has format "$skiptoken=xyz" in the url and we want to extract xyz.
-						var match = Regex.Match(next ?? "", @"\$skiptoken=([^&#]*)");
-
-						// Extract the skip token
-						token = match.Success ? match.Groups[1].Value : null;
-					}
-				}
-			}
+            string output;
+            try
+            {
+                var jtoken = JsonConvert.DeserializeObject(response, new JsonSerializerSettings { DateFormatHandling = DateFormatHandling.MicrosoftDateFormat }) as JToken;
+                output = GetJsonFromObject(jtoken["d"] as JObject);
+            }
 			catch (Exception e)
 			{
 				throw new IncorrectJsonException(e.Message);
 			}
 			finally
 			{
-				Thread.CurrentThread.CurrentCulture = oldCulture;
-			}
-			return token;
-		}
+                Thread.CurrentThread.CurrentCulture = oldCulture;
+            }
+            return output;
+        }
 
-		/// <summary>
-		/// Fetch Json Array (Json within ['d']['results']) from response
-		/// </summary>
-		public static string GetJsonArray(string response)
-		{
-			var serializer = new JavaScriptSerializer();
-			serializer.RegisterConverters(new JavaScriptConverter[] { new JssDateTimeConverter() });
+        public static string GetSkipToken(string response)
+        {
+            var oldCulture = Thread.CurrentThread.CurrentCulture;
+            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+            var token = string.Empty;
+            try
+            {
+				var jtoken = JsonConvert.DeserializeObject(response, new JsonSerializerSettings { DateFormatHandling = DateFormatHandling.MicrosoftDateFormat }) as JToken;
+                if (jtoken["d"] is JObject dObject)
+                {
+                    if (dObject.ContainsKey("__next"))
+                    {
+                        var next = dObject["__next"].ToString();
 
-			var oldCulture = Thread.CurrentThread.CurrentCulture;
-			Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
-			try
-			{
-				ArrayList results;
-				var dict = (Dictionary<string, object>)serializer.Deserialize<object>(response);
-				var innerPart = dict["d"];
-				if (innerPart.GetType() == typeof(Dictionary<string, object>))
-				{
-					var d = (Dictionary<string, object>)dict["d"];
-					results = (ArrayList)d["results"];
-				}
+                        // Skiptoken has format "$skiptoken=xyz" in the url and we want to extract xyz.
+                        var match = Regex.Match(next ?? "", @"\$skiptoken=([^&#]*)");
+
+                        // Extract the skip token
+                        token = match.Success ? match.Groups[1].Value : null;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw new IncorrectJsonException(e.Message);
+            }
+            finally
+            {
+                Thread.CurrentThread.CurrentCulture = oldCulture;
+            }
+            return token;
+        }
+
+        /// <summary>
+        /// Fetch Json Array (Json within ['d']['results']) from response
+        /// </summary>
+        public static string GetJsonArray(string response)
+        {
+            var oldCulture = Thread.CurrentThread.CurrentCulture;
+            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+            try
+            {
+                var results = default(JArray);
+				var jtoken = JsonConvert.DeserializeObject(response, new JsonSerializerSettings { DateFormatHandling = DateFormatHandling.MicrosoftDateFormat }) as JToken;
+                if (jtoken["d"] is JObject dObject && dObject["results"] is JArray resultsArray)
+                {
+					results = resultsArray;
+                }
+                else if (jtoken["d"] is JArray dArray)
+                {
+					results = dArray;
+                }
 				else
 				{
-					results = (ArrayList)innerPart;
+					throw new Exception("No ['d']['results'] token found in response");
 				}
-				return GetJsonFromResultDictionary(results);
-			}
-			catch (Exception e)
-			{
-				throw new IncorrectJsonException(e.Message);
-			}
-			finally
-			{
-				Thread.CurrentThread.CurrentCulture = oldCulture;
-			}
+                return GetJsonFromArray(results);
+            }
+            catch (Exception e)
+            {
+                throw new IncorrectJsonException(e.Message);
+            }
+            finally
+            {
+                Thread.CurrentThread.CurrentCulture = oldCulture;
+            }
 
-		}
+        }
 
-		#endregion
+        /// <summary>
+        /// Converts key/value pairs to json
+        /// </summary>
+        private static string GetJsonFromObject(JObject jObject)
+        {
+            var json = "{";
 
-		#region Private methods
-
-		/// <summary>
-		/// Converts key/value pairs to json
-		/// </summary>
-		private static string GetJsonFromDictionary(Dictionary<string, object> dictionary)
-		{
-			string json = "{";
-
-			foreach (var entry in dictionary)
-			{
-				if (entry.Value == null || entry.Value.GetType() != typeof(Dictionary<string, object>))
+            foreach (var entry in jObject)
+            {
+				if (entry.Value is JValue jValue)
 				{
 					// Entry is of type keyvaluepair
 					json += "\"" + entry.Key + "\":";
-					if (entry.Value == null)
+					if (jValue.Value == null)
 					{
 						json += "null";
 					}
 					else
 					{
-						json += JsonConvert.ToString(entry.Value.ToString());
+						json += JsonConvert.ToString(jValue.Value);
 					}
 					json += ",";
 				}
-				else
+				else if (entry.Value is JObject subcollection && subcollection.ContainsKey("results") && subcollection["results"] is JArray results)
 				{
 					// Create linked entities json
-					var subcollection = (Dictionary<string, object>)entry.Value;
-					if (subcollection.Keys.Contains("results"))
+					var subjson = GetJsonFromArray(results);
+
+					if (subjson.Length > 0)
 					{
-						var results = (ArrayList)subcollection["results"];
-						string subjson = GetJsonFromResultDictionary(results);
-						if (subjson.Length > 0)
-						{
-							json += "\"" + entry.Key + "\":";
-							json += subjson;
-							json += ",";
-						}
+						json += "\"" + entry.Key + "\":";
+						json += subjson;
+						json += ",";
 					}
 				}
 			}
 
 			json = json.Remove(json.Length - 1, 1); // Remove last comma
-			json += "}";
+            json += "}";
 
-			return json;
+            return json;
 		}
 
-		private static string GetJsonFromResultDictionary(ArrayList results)
-		{
-			string json = "[";
-			if (results != null && results.Count > 0)
-			{
-				foreach (Dictionary<string, object> entity in results)
-				{
-					json += GetJsonFromDictionary(entity) + ",";
-				}
+		private static string GetJsonFromArray(JArray results)
+        {
+            var json = "[";
+            if (results != null && results.Count > 0)
+            {
+                foreach (var entity in results)
+                {
+                    json += GetJsonFromObject(entity as JObject) + ",";
+                }
 
-				json = json.Remove(json.Length - 1, 1); // Remove last comma
-			}
-			json += "]";
-			return json;
-		}
-
-		#endregion
-
+                json = json.Remove(json.Length - 1, 1); // Remove last comma
+            }
+            json += "]";
+            return json;
+        }
 	}
 }

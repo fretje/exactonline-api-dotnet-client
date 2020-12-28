@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.Cashflow
 {
-    using System;
-
     [SupportedActionsSDK(true, false, false, false)]
     [DataServiceKey("ID")]
     public class PaymentID

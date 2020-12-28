@@ -1,12 +1,11 @@
 using System;
 
-public class SDKFieldType : Attribute
+namespace ExactOnline.Client.Models
 {
-    public FieldType TypeOfField { get; set; }
+	public sealed class SDKFieldType : Attribute
+	{
+		public FieldType TypeOfField { get; set; }
 
-    public SDKFieldType(FieldType fieldType)
-    {
-        TypeOfField = fieldType;
-    }
+		public SDKFieldType(FieldType fieldType) => TypeOfField = fieldType;
+	}
 }
-

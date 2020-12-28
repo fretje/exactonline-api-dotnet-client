@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.Mailbox
 {
-    using System;
-
     [SupportedActionsSDK(false, true, false, false)]
     [DataServiceKey("ID")]
     public class DefaultMailbox
@@ -13,7 +13,7 @@ namespace ExactOnline.Client.Models.Mailbox
         /// <summary>Extra description of the mailbox</summary>
         public string Description { get; set; }
         /// <summary>Only used when this mailbox is used for one specific administration, for example invoices to this mailbox will only be booked in this administration</summary>
-        public Int32? ForDivision { get; set; }
+        public int? ForDivision { get; set; }
         /// <summary>Primary key</summary>
         public Guid ID { get; set; }
         /// <summary>Indicates whether this service is used for messages returned by the scanning service</summary>

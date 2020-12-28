@@ -1,8 +1,8 @@
+using System;
+using System.Collections.Generic;
+
 namespace ExactOnline.Client.Models.PurchaseOrder
 {
-    using System;
-    using System.Collections.Generic;
-
     [SupportedActionsSDK(true, true, false, false)]
     [DataServiceKey("ID")]
     public class GoodsReceiptLine
@@ -23,7 +23,7 @@ namespace ExactOnline.Client.Models.PurchaseOrder
         public string Description { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32 Division { get; set; }
+        public int Division { get; set; }
         /// <summary>All the lines of a goods receipt have the same GoodsReceiptID</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public Guid? GoodsReceiptID { get; set; }
@@ -43,7 +43,7 @@ namespace ExactOnline.Client.Models.PurchaseOrder
         public string ItemUnitCode { get; set; }
         /// <summary>Line number</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32 LineNumber { get; set; }
+        public int LineNumber { get; set; }
         /// <summary>ID of the storage location in the warehouse where the item is received</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public Guid? Location { get; set; }
@@ -80,7 +80,7 @@ namespace ExactOnline.Client.Models.PurchaseOrder
         public Guid? PurchaseOrderLineID { get; set; }
         /// <summary>Order number of the purchase order that is received</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32 PurchaseOrderNumber { get; set; }
+        public int PurchaseOrderNumber { get; set; }
         /// <summary>Quantity ordered</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public double? QuantityOrdered { get; set; }

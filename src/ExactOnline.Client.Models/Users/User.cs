@@ -75,7 +75,7 @@ namespace ExactOnline.Client.Models.Users
         /// <summary>Startdate after which the login is allowed. If the start date is NULL the login is allowed as well</summary>
         public DateTime? StartDate { get; set; }
         /// <summary>Start Division</summary>
-        public Int32 StartDivision { get; set; }
+        public int StartDivision { get; set; }
         /// <summary>Title</summary>
         public string Title { get; set; }
         /// <summary>Primary key</summary>
@@ -87,7 +87,7 @@ namespace ExactOnline.Client.Models.Users
         public IEnumerable<Accountancy.InvolvedUserRole> UserRoles { get; set; }
         /// <summary>Collection of user roles per division</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public IEnumerable<Users.UserRolesPerDivision> UserRolesPerDivision { get; set; }
+        public IEnumerable<UserRolesPerDivision> UserRolesPerDivision { get; set; }
         /// <summary>Obsolete</summary>
         public string UserTypesList { get; set; }
     }

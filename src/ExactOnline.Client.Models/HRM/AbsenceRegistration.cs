@@ -10,7 +10,7 @@ namespace ExactOnline.Client.Models.HRM
         /// <summary>Collection of absence registration transactions</summary>
         public IEnumerable<AbsenceRegistrationTransaction> AbsenceRegistrationTransactions { get; set; }
         /// <summary>Absence cause, only supported for the Netherland legislation</summary>
-        public Int16? Cause { get; set; }
+        public short? Cause { get; set; }
         /// <summary>Code for the absence cause, only supported for the Netherland legislation</summary>
         public string CauseCode { get; set; }
         /// <summary>Description for the absence cause, only supported for the Netherland legislation</summary>
@@ -22,17 +22,17 @@ namespace ExactOnline.Client.Models.HRM
         /// <summary>Name of creator</summary>
         public string CreatorFullName { get; set; }
         /// <summary>Division code</summary>
-        public Int32 Division { get; set; }
+        public int Division { get; set; }
         /// <summary>Employee linked to the absence</summary>
         public Guid Employee { get; set; }
         /// <summary>Employee full name</summary>
         public string EmployeeFullName { get; set; }
         /// <summary>Numeric ID of the employee</summary>
-        public Int32 EmployeeHID { get; set; }
+        public int EmployeeHID { get; set; }
         /// <summary>Primary key</summary>
         public Guid ID { get; set; }
         /// <summary>Absence kind, only supported for the Netherland legislation</summary>
-        public Int16? Kind { get; set; }
+        public short? Kind { get; set; }
         /// <summary>Code for the absence kind, only supported for the Netherland legislation</summary>
         public string KindCode { get; set; }
         /// <summary>Description for the absence kind, only supported for the Netherland legislation</summary>

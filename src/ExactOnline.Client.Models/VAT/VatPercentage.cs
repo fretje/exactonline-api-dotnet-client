@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.VAT
 {
-    using System;
-
     [SupportedActionsSDK(false, true, false, false)]
     [DataServiceKey("ID")]
     public class VatPercentage
@@ -17,13 +17,13 @@ namespace ExactOnline.Client.Models.VAT
         public string CreatorFullName { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>End date of the date range during which this percentage is valid</summary>
         public DateTime? EndDate { get; set; }
         /// <summary>Primary key</summary>
         public Guid ID { get; set; }
         /// <summary>Line number</summary>
-        public Int32? LineNumber { get; set; }
+        public int? LineNumber { get; set; }
         /// <summary>Last modified date</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public DateTime? Modified { get; set; }
@@ -38,7 +38,7 @@ namespace ExactOnline.Client.Models.VAT
         /// <summary>Start date of the date range during which this percentage is valid</summary>
         public DateTime? StartDate { get; set; }
         /// <summary>0 = Normal, 1 = Extra duty</summary>
-        public Int16 Type { get; set; }
+        public short Type { get; set; }
         /// <summary>VAT code</summary>
         public Guid VATCodeID { get; set; }
     }

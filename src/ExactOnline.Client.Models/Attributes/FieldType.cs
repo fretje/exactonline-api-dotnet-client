@@ -1,6 +1,7 @@
-public enum FieldType
+namespace ExactOnline.Client.Models
 {
-    ReadOnly
+	public enum FieldType
+	{
+		ReadOnly
+	}
 }
-
-

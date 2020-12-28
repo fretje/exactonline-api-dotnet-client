@@ -8,7 +8,7 @@ namespace ExactOnline.Client.Models.Inventory
     {
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>Transfer Date</summary>
         public DateTime? TransferDate { get; set; }
         /// <summary>Primary key</summary>

@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.Cashflow
 {
-    using System;
-
     [SupportedActionsSDK(true, true, false, false)]
     [DataServiceKey("ID")]
     public class PaymentCondition
@@ -30,12 +30,12 @@ namespace ExactOnline.Client.Models.Cashflow
         /// <summary>Indicates how the discount amount is calculated. Values: E = Excluding VAT, I = Including VAT</summary>
         public string DiscountCalculation { get; set; }
         /// <summary>Number of days to pay within, to have the right to take the discount</summary>
-        public Int32? DiscountPaymentDays { get; set; }
+        public int? DiscountPaymentDays { get; set; }
         /// <summary>Discount percentage</summary>
         public double? DiscountPercentage { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>Primary key</summary>
         public Guid ID { get; set; }
         /// <summary>Last modified date</summary>
@@ -48,11 +48,11 @@ namespace ExactOnline.Client.Models.Cashflow
         [SDKFieldType(FieldType.ReadOnly)]
         public string ModifierFullName { get; set; }
         /// <summary>Number of days to be included in the due date calculation. Example: invoice date = 17/01 PaymentEndOfMonths = 2 =&gt; 31/03 PaymentDays = 15 =&gt; 15/04</summary>
-        public Int32? PaymentDays { get; set; }
+        public int? PaymentDays { get; set; }
         /// <summary>Type of payment discount. Values: B = Settlement discount, K = Credit surcharge</summary>
         public string PaymentDiscountType { get; set; }
         /// <summary>Number of month endings to be included in the due date calculation</summary>
-        public Int32? PaymentEndOfMonths { get; set; }
+        public int? PaymentEndOfMonths { get; set; }
         /// <summary>Method of payment. Values: B = On credit, I = Collection, K = Cash</summary>
         public string PaymentMethod { get; set; }
         /// <summary>Percentage (stored as fraction) of total invoice amount</summary>

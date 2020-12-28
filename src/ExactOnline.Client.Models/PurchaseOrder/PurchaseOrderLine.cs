@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.PurchaseOrder
 {
-    using System;
-
     [SupportedActionsSDK(true, true, false, true)]
     [DataServiceKey("ID")]
     public class PurchaseOrderLine
@@ -37,7 +37,7 @@ namespace ExactOnline.Client.Models.PurchaseOrder
         public double? Discount { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>Expense related to the Work Breakdown Structure of the selected project. Only available with a professional service license</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public Guid? Expense { get; set; }
@@ -65,7 +65,7 @@ namespace ExactOnline.Client.Models.PurchaseOrder
         public bool? ItemDivisable { get; set; }
         /// <summary>Line number</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? LineNumber { get; set; }
+        public int? LineNumber { get; set; }
         /// <summary>Last modified date</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public DateTime? Modified { get; set; }
@@ -112,10 +112,10 @@ namespace ExactOnline.Client.Models.PurchaseOrder
         public Guid? SalesOrderLine { get; set; }
         /// <summary>Number of the sales order line</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? SalesOrderLineNumber { get; set; }
+        public int? SalesOrderLineNumber { get; set; }
         /// <summary>Number of the sales order</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? SalesOrderNumber { get; set; }
+        public int? SalesOrderNumber { get; set; }
         /// <summary>Code the supplier uses for this item</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public string SupplierItemCode { get; set; }

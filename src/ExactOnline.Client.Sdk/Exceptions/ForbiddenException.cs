@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace ExactOnline.Client.Sdk.Exceptions
 {
@@ -7,10 +8,9 @@ namespace ExactOnline.Client.Sdk.Exceptions
     {
         public ForbiddenException() { }
         public ForbiddenException(string message) : base(message) { }
-        public ForbiddenException(string message, Exception inner) : base(message, inner) { }
-        protected ForbiddenException(
-          System.Runtime.Serialization.SerializationInfo info,
-          System.Runtime.Serialization.StreamingContext context)
+        public ForbiddenException(string message, Exception inner)
+            : base(message, inner) { }
+        protected ForbiddenException(SerializationInfo info, StreamingContext context)
             : base(info, context) { }
     }
 }

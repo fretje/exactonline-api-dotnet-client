@@ -1,8 +1,8 @@
+using System;
+using System.Collections.Generic;
+
 namespace ExactOnline.Client.Models.PurchaseOrder
 {
-    using System;
-    using System.Collections.Generic;
-
     [SupportedActionsSDK(true, true, false, false)]
     [DataServiceKey("ID")]
     public class GoodsReceipt
@@ -20,7 +20,7 @@ namespace ExactOnline.Client.Models.PurchaseOrder
         public string Description { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32 Division { get; set; }
+        public int Division { get; set; }
         /// <summary>Document that is linked to the goods receipt</summary>
         public Guid? Document { get; set; }
         /// <summary>Document subject</summary>
@@ -28,7 +28,7 @@ namespace ExactOnline.Client.Models.PurchaseOrder
         public string DocumentSubject { get; set; }
         /// <summary>Entry number of the resulting stock entry</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? EntryNumber { get; set; }
+        public int? EntryNumber { get; set; }
         /// <summary>Collection of receipt lines</summary>
         public IEnumerable<GoodsReceiptLine> GoodsReceiptLines { get; set; }
         /// <summary>Primary key</summary>
@@ -47,7 +47,7 @@ namespace ExactOnline.Client.Models.PurchaseOrder
         public DateTime? ReceiptDate { get; set; }
         /// <summary>Receipt number</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? ReceiptNumber { get; set; }
+        public int? ReceiptNumber { get; set; }
         /// <summary>Receipt note</summary>
         public string Remarks { get; set; }
         /// <summary>Account ID of the supplier</summary>

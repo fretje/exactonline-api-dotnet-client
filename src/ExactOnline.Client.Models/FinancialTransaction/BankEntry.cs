@@ -8,12 +8,12 @@ namespace ExactOnline.Client.Models.FinancialTransaction
     public class BankEntry
     {
         /// <summary>Collection of lines</summary>
-        public IEnumerable<FinancialTransaction.BankEntryLine> BankEntryLines { get; set; }
+        public IEnumerable<BankEntryLine> BankEntryLines { get; set; }
         /// <summary>Reference to document with bank statement</summary>
         public Guid? BankStatementDocument { get; set; }
         /// <summary>Document number of document with bank statement</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? BankStatementDocumentNumber { get; set; }
+        public int? BankStatementDocumentNumber { get; set; }
         /// <summary>Subject of document with bank statement</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public string BankStatementDocumentSubject { get; set; }
@@ -26,16 +26,16 @@ namespace ExactOnline.Client.Models.FinancialTransaction
         public string Currency { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>Primary key</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public Guid EntryID { get; set; }
         /// <summary>Entry number</summary>
-        public Int32? EntryNumber { get; set; }
+        public int? EntryNumber { get; set; }
         /// <summary>Fiancial period</summary>
-        public Int16? FinancialPeriod { get; set; }
+        public short? FinancialPeriod { get; set; }
         /// <summary>Fiancial year</summary>
-        public Int16? FinancialYear { get; set; }
+        public short? FinancialYear { get; set; }
         /// <summary>Code of Journal</summary>
         public string JournalCode { get; set; }
         /// <summary>Description of Journal</summary>
@@ -48,7 +48,7 @@ namespace ExactOnline.Client.Models.FinancialTransaction
         public double? OpeningBalanceFC { get; set; }
         /// <summary>Status: 5 = Rejected, 20 = Open, 50 = Processed</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int16? Status { get; set; }
+        public short? Status { get; set; }
         /// <summary>Description of Status</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public string StatusDescription { get; set; }

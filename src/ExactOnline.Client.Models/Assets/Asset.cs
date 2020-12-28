@@ -49,20 +49,20 @@ namespace ExactOnline.Client.Models.Assets
         /// <summary>Amount that is already depreciated when adding an existing asset. Can only be filled when &apos;Alreadydepreciated&apos; is on</summary>
         public double? DepreciatedAmount { get; set; }
         /// <summary>Number of periods that already have been depreciated for the asset. Can only be filled when &apos;Alreadydepreciated&apos; is on</summary>
-        public Int32? DepreciatedPeriods { get; set; }
+        public int? DepreciatedPeriods { get; set; }
         /// <summary>StartDate of depreciating. Can only be filled when &apos;Alreadydepreciated&apos; is on</summary>
         public DateTime? DepreciatedStartDate { get; set; }
         /// <summary>This is the description of the Asset</summary>
         public string Description { get; set; }
         /// <summary>Division code</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? Division { get; set; }
+        public int? Division { get; set; }
         /// <summary>Asset EndDate is filled when asset is Sold or Inactive</summary>
         public DateTime? EndDate { get; set; }
         /// <summary>Engine emission of the asset, needed to calculate the co² report</summary>
-        public Int16? EngineEmission { get; set; }
+        public short? EngineEmission { get; set; }
         /// <summary>Engine type of the asset, Needed to generate a co² report</summary>
-        public Int16? EngineType { get; set; }
+        public short? EngineType { get; set; }
         /// <summary>Links to the gltransactions.id. GL transaction line based on which the asset is created</summary>
         public Guid? GLTransactionLine { get; set; }
         /// <summary>Description of GLTransactionLine</summary>
@@ -90,7 +90,7 @@ namespace ExactOnline.Client.Models.Assets
         /// <summary>Refers to the original date when the asset was bought</summary>
         public DateTime? InvestmentDate { get; set; }
         /// <summary>Belgian functionality, to determine how a local legal report regarding investment deduction must be created</summary>
-        public Int16? InvestmentDeduction { get; set; }
+        public short? InvestmentDeduction { get; set; }
         /// <summary>Last modified date</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public DateTime? Modified { get; set; }
@@ -127,12 +127,12 @@ namespace ExactOnline.Client.Models.Assets
         /// <summary>Asset Depreciation StartDate</summary>
         public DateTime? StartDate { get; set; }
         /// <summary>Identifies the status of the Asset. (see AssetStatus table to see the possibilities)</summary>
-        public Int16? Status { get; set; }
+        public short? Status { get; set; }
         /// <summary>Reference to Transaction</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public Guid? TransactionEntryID { get; set; }
         /// <summary>Entry number of transaction</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public Int32? TransactionEntryNo { get; set; }
+        public int? TransactionEntryNo { get; set; }
     }
 }

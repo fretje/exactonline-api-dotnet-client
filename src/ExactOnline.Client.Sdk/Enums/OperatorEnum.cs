@@ -1,5 +1,4 @@
-﻿
-namespace ExactOnline.Client.Sdk.Enums
+﻿namespace ExactOnline.Client.Sdk.Enums
 {
     public enum OperatorEnum
     {

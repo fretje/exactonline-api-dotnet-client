@@ -1,7 +1,7 @@
+using System;
+
 namespace ExactOnline.Client.Models.Financial
 {
-    using System;
-
     [SupportedActionsSDK(false, true, false, false)]
     [DataServiceKey("HID")]
     public class PayablesList
@@ -23,15 +23,15 @@ namespace ExactOnline.Client.Models.Financial
         /// <summary>Date the invoice should be paid</summary>
         public DateTime DueDate { get; set; }
         /// <summary>Entry number</summary>
-        public Int32 EntryNumber { get; set; }
+        public int EntryNumber { get; set; }
         /// <summary>Primary key, human readable ID</summary>
-        public Int64 HID { get; set; }
+        public long HID { get; set; }
         /// <summary>Obsolete</summary>
         public Guid Id { get; set; }
         /// <summary>Invoice date</summary>
         public DateTime InvoiceDate { get; set; }
         /// <summary>Invoice number. The value is 0 when the invoice number of the linked transaction is empty.</summary>
-        public Int32 InvoiceNumber { get; set; }
+        public int InvoiceNumber { get; set; }
         /// <summary>Code of Journal</summary>
         public string JournalCode { get; set; }
         /// <summary>Description of Journal</summary>

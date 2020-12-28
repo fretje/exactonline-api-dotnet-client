@@ -1,4 +1,5 @@
-﻿using ExactOnline.Client.Sdk.Enums;
+﻿using ExactOnline.Client.Models;
+using ExactOnline.Client.Sdk.Enums;
 using ExactOnline.Client.Sdk.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -27,46 +28,53 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// </summary>
         public ExactOnlineQuery(IController<T> controller)
         {
-            if (controller == null) { throw new ArgumentException("Instance of type Controller cannot be null"); }
+            _controller = controller ?? throw new ArgumentException("Instance of type Controller cannot be null");
             _and = new List<string>();
-            _controller = controller;
         }
 
         /// <summary>
         /// Creates a 'where' clause for the query
         /// </summary>
-        public ExactOnlineQuery<T> Where<TProperty>(Expression<Func<T, TProperty>> property, TProperty value, OperatorEnum @operator = OperatorEnum.Eq)
-        {
-            return Where($"{TransformExpressionToODataFormat(property.Body)}+{@operator.ToString().ToLower()}+{ToODataParameter(value)}");
-        }
+        public ExactOnlineQuery<T> Where<TProperty>(Expression<Func<T, TProperty>> property, TProperty value, OperatorEnum @operator = OperatorEnum.Eq) =>
+            Where($"{TransformExpressionToODataFormat(property.Body)}+{@operator.ToString().ToLower()}+{ToODataParameter(value)}");
 
         /// <summary>
         /// Creates a 'where' clause for the query
         /// </summary>
         public ExactOnlineQuery<T> Where(string filter)
         {
-            if (string.IsNullOrEmpty(filter)) throw new ArgumentException("Query 'where' operator cannot be empty");
+            if (string.IsNullOrEmpty(filter))
+            {
+                throw new ArgumentException("Query 'where' operator cannot be empty");
+            }
+
             _where = "$filter=" + filter;
+
             return this;
         }
 
         /// <summary>
         /// Appends an 'and' clause to the query. This method can't be called before a where clause is set.
         /// </summary>
-        public ExactOnlineQuery<T> And<TProperty>(Expression<Func<T, TProperty>> property, TProperty value, OperatorEnum @operator = OperatorEnum.Eq)
-        {
-            return And($"{TransformExpressionToODataFormat(property.Body)}+{@operator.ToString().ToLower()}+{ToODataParameter(value)}");
-        }
+        public ExactOnlineQuery<T> And<TProperty>(Expression<Func<T, TProperty>> property, TProperty value, OperatorEnum @operator = OperatorEnum.Eq) =>
+            And($"{TransformExpressionToODataFormat(property.Body)}+{@operator.ToString().ToLower()}+{ToODataParameter(value)}");
 
         /// <summary>
         /// Appends an 'and' clause to the query. This method can't be called before a where clause is set.
         /// </summary>
         public ExactOnlineQuery<T> And(string and)
         {
-            if (string.IsNullOrEmpty(and)) throw new ArgumentException("Query 'and' operator cannot be empty");
-            if (string.IsNullOrEmpty(_where)) throw new ArgumentException("Query 'and' operator cannot be used before 'where' operator is set");
+            if (string.IsNullOrEmpty(and))
+            {
+                throw new ArgumentException("Query 'and' operator cannot be empty");
+            }
+            if (string.IsNullOrEmpty(_where))
+            {
+                throw new ArgumentException("Query 'and' operator cannot be used before 'where' operator is set");
+            }
 
             _and.Add(and);
+
             return this;
         }
 
@@ -126,19 +134,15 @@ namespace ExactOnline.Client.Sdk.Helpers
                 queryParts.Add(_orderby);
             }
 
-            string query = string.Join("&", queryParts);
-
-            return query;
+            return string.Join("&", queryParts);
         }
 
         /// <summary>
         /// Specify the fields to get from the API
         /// </summary>
         /// <param name="property">The property to select</param>
-        public ExactOnlineQuery<T> Select(params Expression<Func<T, object>>[] property)
-        {
-            return Select(fields: property.Select(x => TransformExpressionToODataFormat(x.Body)).ToArray());
-        }
+        public ExactOnlineQuery<T> Select(params Expression<Func<T, object>>[] property) =>
+            Select(fields: property.Select(x => TransformExpressionToODataFormat(x.Body)).ToArray());
 
         /// <summary>
         /// Specify the field(s) to get from the API
@@ -148,12 +152,16 @@ namespace ExactOnline.Client.Sdk.Helpers
         {
             if (fields != null && fields.Length > 0)
             {
-                string select = String.Join(",", fields);
+                var select = string.Join(",", fields);
 
-                if (String.IsNullOrEmpty(_select))
+                if (string.IsNullOrEmpty(_select))
+                {
                     _select = "$select=" + select;
+                }
                 else
+                {
                     _select += ',' + select;
+                }
             }
             return this;
         }
@@ -196,10 +204,8 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// Specify the field to order by
         /// </summary>
         /// <param name="orderby"></param>
-        public ExactOnlineQuery<T> OrderBy(Expression<Func<T, object>> orderby)
-        {
-            return OrderBy(TransformExpressionToODataFormat(orderby.Body));
-        }
+        public ExactOnlineQuery<T> OrderBy(Expression<Func<T, object>> orderby) =>
+            OrderBy(TransformExpressionToODataFormat(orderby.Body));
 
         /// <summary>
         /// Specify the field(s) to order by
@@ -209,12 +215,16 @@ namespace ExactOnline.Client.Sdk.Helpers
         {
             if (orderby != null && orderby.Length > 0)
             {
-                string orderbyclause = String.Join(",", orderby);
+                var orderbyclause = string.Join(",", orderby);
 
-                if (String.IsNullOrEmpty(_orderby))
+                if (string.IsNullOrEmpty(_orderby))
+                {
                     _orderby = "$orderby=" + orderbyclause;
+                }
                 else
+                {
                     _orderby += ',' + orderbyclause;
+                }
             }
             return this;
         }
@@ -232,47 +242,56 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <summary>
         /// Count the amount of entities in the the entity
         /// </summary>
-        public int Count()
-        {
-            return _controller.Count(CreateODataQuery(false));
-        }
+        public int Count() => _controller.Count(CreateODataQuery(false));
 
         /// <summary>
         /// Count the amount of entities in the the entity
         /// </summary>
-        public Task<int> CountAsync()
-        {
-            return _controller.CountAsync(CreateODataQuery(false));
-        }
-
+        public Task<int> CountAsync() => _controller.CountAsync(CreateODataQuery(false));
 
         /// <summary>
         /// Returns a List of entities using the specified query
         /// </summary>
-        public List<T> Get()
+        public List<T> Get() => Get(EndpointTypeEnum.Single);
+
+        /// <summary>
+        /// Returns a List of entities using the specified query
+        /// <param name="endpointType">Which endpoint type to use.</param>
+        /// </summary>
+        public List<T> Get(EndpointTypeEnum endpointType)
         {
-            string skipToken = string.Empty;
-            return Get(ref skipToken);
+            var skipToken = string.Empty;
+            return Get(ref skipToken, endpointType);
         }
 
         /// <summary>
         /// Returns a List of entities using the specified query.
         /// </summary>
         /// <param name="skipToken">The variable to store the skiptoken in</param>
-        public List<T> Get(ref string skiptoken)
+        public List<T> Get(ref string skipToken) => Get(ref skipToken, EndpointTypeEnum.Single);
+
+        /// <summary>
+        /// Returns a List of entities using the specified query.
+        /// </summary>
+        /// <param name="skipToken">The variable to store the skiptoken in</param>
+        /// <param name="endpointType">Which endpoint type to use.</param>
+        public List<T> Get(ref string skipToken, EndpointTypeEnum endpointType)
         {
+            var selectIsMandatory = !SupportedActionsSDK.GetByType(typeof(T)).AllowsEmptySelect;
+            FormulateSkipToken(skipToken);
+            return _controller.Get(CreateODataQuery(selectIsMandatory), ref skipToken, endpointType);
+        }
+
+        /// <summary>
+        /// Returns a List of entities using the specified query.
+        /// </summary>
+        /// <param name="skipToken">The variable to store the skiptoken in</param>
+        /// <param name="endpointType">Which endpoint type to use.</param>
+        public Task<Models.ApiList<T>> GetAsync(string skiptoken = "", EndpointTypeEnum endpointType = EndpointTypeEnum.Single)
+        {
+            var selectIsMandatory = !SupportedActionsSDK.GetByType(typeof(T)).AllowsEmptySelect;
             FormulateSkipToken(skiptoken);
-            return _controller.Get(CreateODataQuery(true), ref skiptoken);
-        }
-
-        /// <summary>
-        /// Returns a List of entities using the specified query.
-        /// </summary>
-        /// <param name="skipToken">The variable to store the skiptoken in</param>
-        public Task<Models.ApiList<T>> GetAsync(string skiptoken = "")
-        {
-            FormulateSkipToken( skiptoken );
-            return _controller.GetAsync(CreateODataQuery(true));
+            return _controller.GetAsync(CreateODataQuery(selectIsMandatory), endpointType);
         }
 
         /// <summary>
@@ -280,8 +299,12 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// </summary>
         public T GetEntity(string identifier)
         {
-            if (string.IsNullOrEmpty(identifier)) throw new ArgumentException("Get entity: Identifier cannot be empty");
-            string query = CreateODataQuery(false);
+            if (string.IsNullOrEmpty(identifier))
+            {
+                throw new ArgumentException("Get entity: Identifier cannot be empty");
+            }
+
+            var query = CreateODataQuery(false);
             return _controller.GetEntity(identifier, query);
         }
 
@@ -290,8 +313,12 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// </summary>
         public Task<T> GetEntityAsync(string identifier)
         {
-            if( string.IsNullOrEmpty( identifier ) ) throw new ArgumentException( "Get entity: Identifier cannot be empty" );
-            string query = CreateODataQuery( false );
+            if (string.IsNullOrEmpty(identifier))
+            {
+                throw new ArgumentException("Get entity: Identifier cannot be empty");
+            }
+
+            var query = CreateODataQuery(false);
             return _controller.GetEntityAsync(identifier, query);
         }
 
@@ -300,8 +327,12 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// </summary>
         public T GetEntity(Guid identifier)
         {
-            if (identifier == Guid.Empty) throw new ArgumentException("Get entity: Identifier cannot be empty");
-            string query = CreateODataQuery(false);
+            if (identifier == Guid.Empty)
+            {
+                throw new ArgumentException("Get entity: Identifier cannot be empty");
+            }
+
+            var query = CreateODataQuery(false);
             return _controller.GetEntity(identifier.ToString(), query);
         }
 
@@ -310,8 +341,12 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// </summary>
         public Task<T> GetEntityAsync(Guid identifier)
         {
-            if( identifier == Guid.Empty ) throw new ArgumentException( "Get entity: Identifier cannot be empty" );
-            string query = CreateODataQuery( false );
+            if (identifier == Guid.Empty)
+            {
+                throw new ArgumentException("Get entity: Identifier cannot be empty");
+            }
+
+            var query = CreateODataQuery(false);
             return _controller.GetEntityAsync(identifier.ToString(), query);
         }
 
@@ -320,7 +355,7 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// </summary>
         public T GetEntity(int identifier)
         {
-            string query = CreateODataQuery(false);
+            var query = CreateODataQuery(false);
             return _controller.GetEntity(identifier.ToString(CultureInfo.InvariantCulture), query);
         }
 
@@ -329,63 +364,57 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// </summary>
         public Task<T> GetEntityAsync(int identifier)
         {
-            string query = CreateODataQuery( false );
-            return _controller.GetEntityAsync(identifier.ToString( CultureInfo.InvariantCulture), query );
+            var query = CreateODataQuery(false);
+            return _controller.GetEntityAsync(identifier.ToString(CultureInfo.InvariantCulture), query);
         }
 
         /// <summary>
         /// Updates the specified entity
         /// </summary>
-        public Boolean Update(T entity)
-        {
-            if (entity == null) throw new ArgumentException("Update entity: Entity cannot be null");
-            return _controller.Update(entity);
-        }
+        public bool Update(T entity) =>
+            entity == null
+                ? throw new ArgumentException("Update entity: Entity cannot be null")
+                : _controller.Update(entity);
 
         /// <summary>
         /// Updates the specified entity
         /// </summary>
-        public Task<Boolean> UpdateAsync(T entity)
-        {
-            if( entity == null ) throw new ArgumentException( "Update entity: Entity cannot be null" );
-            return _controller.UpdateAsync(entity);
-        }
+        public Task<bool> UpdateAsync(T entity) =>
+            entity == null
+                ? throw new ArgumentException("Update entity: Entity cannot be null")
+                : _controller.UpdateAsync(entity);
 
         /// <summary>
         /// Deletes the specified entity
         /// </summary>
-        public Boolean Delete(T entity)
-        {
-            if (entity == null) throw new ArgumentException("Delete entity: Entity cannot be null");
-            return _controller.Delete(entity);
-        }
+        public bool Delete(T entity) =>
+            entity == null
+                ? throw new ArgumentException("Delete entity: Entity cannot be null")
+                : _controller.Delete(entity);
 
         /// <summary>
         /// Deletes the specified entity
         /// </summary>
-        public Task<Boolean> DeleteAsync(T entity)
-        {
-            if( entity == null ) throw new ArgumentException( "Delete entity: Entity cannot be null" );
-            return _controller.DeleteAsync(entity);
-        }
+        public Task<bool> DeleteAsync(T entity) =>
+            entity == null
+                ? throw new ArgumentException("Delete entity: Entity cannot be null")
+                : _controller.DeleteAsync(entity);
 
         /// <summary>
         /// Inserts the specified entity into Exact Online
         /// </summary>
-        public Boolean Insert(ref T entity)
-        {
-            if (entity == null) throw new ArgumentException("Insert entity: Entity cannot be null");
-            return _controller.Create(ref entity);
-        }
+        public bool Insert(ref T entity) =>
+            entity == null
+                ? throw new ArgumentException("Insert entity: Entity cannot be null")
+                : _controller.Create(ref entity);
 
         /// <summary>
         /// Inserts the specified entity into Exact Online
         /// </summary>
-        public Task<T> InsertAsync(T entity)
-        {
-            if( entity == null ) throw new ArgumentException( "Insert entity: Entity cannot be null" );
-            return _controller.CreateAsync(entity);
-        }
+        public Task<T> InsertAsync(T entity) =>
+            entity == null
+                ? throw new ArgumentException("Insert entity: Entity cannot be null")
+                : _controller.CreateAsync(entity);
 
         /// <summary>
         /// Transforms a given C# expression to an OData-compliant expression
@@ -395,16 +424,25 @@ namespace ExactOnline.Client.Sdk.Helpers
             MemberExpression me = null;
 
             if (e is MemberExpression)
+            {
                 me = e as MemberExpression;
-            else if (e is UnaryExpression)
-                me = ((UnaryExpression)e).Operand as MemberExpression;
+            }
+            else if (e is UnaryExpression ue)
+            {
+                me = ue.Operand as MemberExpression;
+            }
 
-            if (me != null) return me.Member.Name;
+            if (me != null)
+            {
+                return me.Member.Name;
+            }
 
             var listArguments = new List<string>();
-            var mce = e as MethodCallExpression;
 
-            if (mce == null) throw new ArgumentException($"Invalid expression '{e}': Lambda expression should resolve a property on model type '{nameof(T)}' (with optional extension method calls).", nameof(e));
+            if (!(e is MethodCallExpression mce))
+            {
+                throw new ArgumentException($"Invalid expression '{e}': Lambda expression should resolve a property on model type '{nameof(T)}' (with optional extension method calls).", nameof(e));
+            }
 
             foreach (var argument in mce.Arguments)
             {
@@ -416,7 +454,10 @@ namespace ExactOnline.Client.Sdk.Helpers
             }
 
             string arguments = null;
-            if (listArguments.Count > 0) arguments = "," + String.Join(",", listArguments);
+            if (listArguments.Count > 0)
+            {
+                arguments = "," + string.Join(",", listArguments);
+            }
 
             return $"{mce.Method.Name.ToLower()}({TransformExpressionToODataFormat(mce.Object)}{arguments})";
         }
@@ -424,7 +465,7 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <summary>
         /// Formats any given value to it's OData-compliant string representation.
         /// </summary>
-        string ToODataParameter(object value)
+        private static string ToODataParameter(object value)
         {
             string _value = null;
 
@@ -433,16 +474,11 @@ namespace ExactOnline.Client.Sdk.Helpers
                 var type = value.GetType();
                 type = Nullable.GetUnderlyingType(type) ?? type;
 
-                if (type == typeof(string) || type == typeof(char))
-                    _value = $"'{value}'";
-                else if (type == typeof(Guid))
-                    _value = $"guid'{value}'";
-                else if (type == typeof(DateTime))
-                    _value = $"datetime'{value:s}'";
-                else if (type == typeof(bool))
-                    _value = value.ToString().ToLower();
-                else
-                    _value = value.ToString();
+                _value = type == typeof(string) || type == typeof(char) ? $"'{value}'"
+                    : type == typeof(Guid) ? $"guid'{value}'"
+                    : type == typeof(DateTime) ? $"datetime'{value:s}'"
+                    : type == typeof(bool) ? value.ToString().ToLower()
+                    : value.ToString();
             }
 
             return _value;
