@@ -8,8 +8,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\ExactOnline.Client.OAuth\ExactOnline.Client.OAuth.csproj" />
-		<ProjectReference Include="..\ExactOnline.Client.Sdk\ExactOnline.Client.Sdk.csproj" />
+	  <ProjectReference Include="..\..\src\ExactOnline.Client.OAuth\ExactOnline.Client.OAuth.csproj" />
+	  <ProjectReference Include="..\..\src\ExactOnline.Client.Sdk\ExactOnline.Client.Sdk.csproj" />
 	</ItemGroup>
 
 </Project>
