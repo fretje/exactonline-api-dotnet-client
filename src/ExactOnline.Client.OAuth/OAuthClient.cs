@@ -1,14 +1,12 @@
-﻿using System;
+﻿using DotNetOpenAuth.Messaging;
 using DotNetOpenAuth.OAuth2;
-using DotNetOpenAuth.Messaging;
+using System;
 
 namespace ExactOnline.Client.OAuth
 {
-    public class OAuthClient : UserAgentClient
+	public class OAuthClient : UserAgentClient
     {
         private readonly Uri _redirectUri;
-
-        #region Constructor
 
         public OAuthClient(AuthorizationServerDescription serverDescription, string clientId, string clientSecret, Uri redirectUri)
             : base(serverDescription, clientId, clientSecret)
@@ -17,69 +15,85 @@ namespace ExactOnline.Client.OAuth
             ClientCredentialApplicator = ClientCredentialApplicator.PostParameter(clientSecret);
         }
 
-        #endregion
-
-        #region Public methods
-
         public void Authorize(ref IAuthorizationState authorization, string refreshToken) =>
 			Authorize(ref authorization, refreshToken, false);
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="authorization"></param>
-        /// <param name="refreshToken"></param>
-        /// <param name="throwExceptionIfNotAuthorized">Indicates if an exception should be thrown when not authorized. When
-        /// this value is true an exception is thrown if not authorized, when false a login dialog is shown to allow a user to login.</param>
-        public void Authorize(ref IAuthorizationState authorization, string refreshToken, bool throwExceptionIfNotAuthorized)
-        {
-            if (authorization == null)
-            {
-                authorization = new AuthorizationState();
-            }
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="authorization"></param>
+		/// <param name="refreshToken"></param>
+		/// <param name="throwExceptionIfNotAuthorized">Indicates if an exception should be thrown when not authorized. When
+		/// this value is true an exception is thrown if not authorized, when false a login dialog is shown to allow a user to login.</param>
+		public void Authorize(ref IAuthorizationState authorization, string refreshToken, bool throwExceptionIfNotAuthorized)
+		{
+			if (IsAuthorizationNeeded(ref authorization, refreshToken, out var authorizationUri))
+			{
+				if (throwExceptionIfNotAuthorized)
+				{
+					//Throw an exception if a login dialog cannot be shown, for example the client is used in server side
+					//code and cannot show a dialog to the user. This way the calling code can handle the exception and implement
+					//it's own login dialog
+					throw new UnauthorizedAccessException("Not authorized to use Exact Online API.");
+				}
+				else
+				{
+					using (var loginDialog = new LoginForm(_redirectUri))
+					{
+						loginDialog.AuthorizationUri = authorizationUri;
+						loginDialog.ShowDialog();
+						ProcessUserAuthorization(loginDialog.AuthorizationUri, authorization);
+					}
+				}
+			}
+		}
 
-            authorization.Callback = _redirectUri;
-            authorization.RefreshToken = refreshToken;
+		public bool IsAuthorizationNeeded(ref IAuthorizationState authorization, string refreshToken, out Uri authorizationUri)
+		{
+			if (authorization == null)
+			{
+				authorization = new AuthorizationState();
+			}
 
-            var refreshFailed = false;
-            if (AccessTokenHasToBeRefreshed(authorization))
-            {
-                try
-                {
-                    refreshFailed = !RefreshAuthorization(authorization);
-                }
-                catch (ProtocolException)
-                {
-                    //The refreshtoken is not valid anymore
-                }
-            }
+			authorization.Callback = _redirectUri;
+			authorization.RefreshToken = refreshToken;
 
-            if (authorization.AccessToken == null || refreshFailed)
-            {
-                if (throwExceptionIfNotAuthorized)
-                {
-                    //Throw an exception if a login dialog cannot be shown, for example the client is used in server side
-                    //code and cannot show a dialog to the user. This way the calling code can handle the exception and implement
-                    //it's own login dialog
-                    throw new UnauthorizedAccessException("Not authorized to use Exact Online API.");
-                }
-                else
-                {
-                    using (var loginDialog = new LoginForm(_redirectUri))
-                    {
-                        loginDialog.AuthorizationUri = GetAuthorizationUri(authorization);
-                        loginDialog.ShowDialog();
-                        ProcessUserAuthorization(loginDialog.AuthorizationUri, authorization);
-                    }
-                }
-            }
-        }
+			var refreshFailed = false;
+			if (AccessTokenHasToBeRefreshed(authorization))
+			{
+				try
+				{
+					refreshFailed = !RefreshAuthorization(authorization);
+				}
+				catch (ProtocolException)
+				{
+					//The refreshtoken is not valid anymore
+				}
+			}
 
-        #endregion
+			if (authorization.AccessToken == null || refreshFailed)
+			{
+				authorizationUri = GetAuthorizationUri(authorization);
+				return true;
+			}
 
-        #region Private methods
+			authorizationUri = null;
+			return false;
+		}
 
-        private static bool AccessTokenHasToBeRefreshed(IAuthorizationState authorization)
+		public IAuthorizationState ProcessAuthorization(Uri actualRedirectUri, IAuthorizationState authorization)
+		{
+			if (authorization == null)
+			{
+				authorization = new AuthorizationState();
+			}
+
+			authorization.Callback = _redirectUri;
+
+			return ProcessUserAuthorization(actualRedirectUri, authorization);
+		}
+
+		private static bool AccessTokenHasToBeRefreshed(IAuthorizationState authorization)
         {
             if (authorization.AccessToken == null && authorization.RefreshToken != null)
             {
@@ -105,8 +119,5 @@ namespace ExactOnline.Client.OAuth
 
             return authorizationUriBuilder.Uri;
         }
-
-        #endregion
-
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ExactOnline.Client.Models.CRM;
+using ExactOnline.Client.OAuth;
 using ExactOnline.Client.Sdk.Controllers;
 using ExactOnline.Client.Sdk.Helpers;
 using System;
@@ -9,14 +10,16 @@ namespace ConsoleApplication
 {
 	internal class Program
 	{
+		public static string ExactOnlineUrl => "https://start.exactonline.be";
+
 		[STAThread]
 		private static void Main()
 		{
 			// To make this work set the authorisation properties of your test app in the testapp.config.
 			var testApp = new TestApp();
 
-			var connector = new Connector(testApp.ClientId.ToString(), testApp.ClientSecret, testApp.CallbackUrl);
-			var client = new ExactOnlineClient(Connector.EndPoint, connector.GetAccessToken);
+			var authorizer = new ExactOnlineAuthorizer(ExactOnlineUrl, testApp.ClientId.ToString(), testApp.ClientSecret, testApp.CallbackUrl);
+			var client = new ExactOnlineClient(ExactOnlineUrl, authorizer.GetAccessToken);
 
 			// Get the Code and Name of a random account in the administration.
 			var fields = new[] { "Code", "Name" };

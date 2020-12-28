@@ -20,9 +20,9 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// secret
         /// http://foo.bar
         /// </summary>
-        public TestApp()
+        public TestApp(string path = @"..\..\..\..\..\testapp.config")
         {
-            var details = System.IO.File.ReadAllLines(@"..\..\..\..\..\testapp.config");
+            var details = System.IO.File.ReadAllLines(path);
 
             ClientId = new Guid(details[0]);
             ClientSecret = details[1];
