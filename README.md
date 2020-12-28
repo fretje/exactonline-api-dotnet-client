@@ -4,6 +4,19 @@
 
 C# client SDK for the Exact Online RESTFul API
 ===============
+
+This is the original client SDK from Exact which doesn't seem to be supported anymore.
+This is what has been changed/added in this repo since their last commit:
+
+* Bulk support thanks to @aspin-fvdmolen.
+* Sync support (building further on the same concept).
+* A lot of code clean-up and some refactoring.
+* All projects have been migrated to SDK style projects building for net472 and netstandard2.0 where possible (not yet for the OAuth project due to the winforms dependency).
+* Support for building nuget packages (4.0.0-beta1 for now).
+* ExactOnlineAuthenticator is added to more easily work with the OAuth authentication.
+* A WebApplication sample is added to show the usage of that authenticator.
+* The ConsoleApplication sample is changed to also use that authenticator.
+
 <h3>Dare to contribute</h3>
 
 At Exact we know how important it is to have an API you can easily work with. In reaching this ambition the next step is to offer you a C# client SDK which gives you a set of easy functions to call our API. Just some words for otherwise long statements. Combine it with the right Oauth framework and you are quickly on your way.
