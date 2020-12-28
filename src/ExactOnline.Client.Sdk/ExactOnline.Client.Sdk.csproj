@@ -2,6 +2,8 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.0;net472</TargetFrameworks>
+		<!-- ExactOnline.Client.Sdk is taken so had to invent a new PackageId -->
+		<PackageId>ExactOnline.Client.Sdk.vNext</PackageId>
 	</PropertyGroup>
 
 	<Import Project="..\SharedProjectProperties.proj" />
