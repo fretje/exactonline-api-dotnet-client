@@ -3,7 +3,7 @@
 namespace ExactOnline.Client.Models.Manufacturing
 {
     [SupportedActionsSDK(false, true, false, false)]
-    [DataServiceKey("RecentTimeTransaction")]
+    [DataServiceKey("ID")]
     public class RecentTimeTransaction
     {
         /// <summary>Customer code</summary>

@@ -4,8 +4,8 @@ namespace ExactOnline.Client.Models.Logistics
 {
     [SupportedActionsSDK(true, true, true, true, canBulkRead: true)]
     [DataServiceKey("ID")]
-    public class Item
-    {
+    public class Item : SupportsSync
+	{
         /// <summary>Barcode of the item (numeric string)</summary>
         public string Barcode { get; set; }
         /// <summary>Item class code referring to ItemClasses with ClassID 1</summary>
@@ -142,8 +142,6 @@ namespace ExactOnline.Client.Models.Logistics
         public Guid ID { get; set; }
         /// <summary>Indicates if batches are used for this item</summary>
         public byte IsBatchItem { get; set; }
-        /// <summary>This property is obsolete. Use property &apos;IsBatchItem&apos; instead.</summary>
-        public byte IsBatchNumberItem { get; set; }
         /// <summary>Indicates if fractions (for example 0.35) are allowed for quantities of this item</summary>
         public bool? IsFractionAllowedItem { get; set; }
         /// <summary>Indicates that an Item is produced to Inventory, not purchased</summary>
@@ -162,8 +160,6 @@ namespace ExactOnline.Client.Models.Logistics
         public bool? IsSalesItem { get; set; }
         /// <summary>Indicates that serial numbers are used for this item</summary>
         public bool? IsSerialItem { get; set; }
-        /// <summary>This property is obsolete. Use property &apos;IsSerialItem&apos; instead.</summary>
-        public bool? IsSerialNumberItem { get; set; }
         /// <summary>If you have the Trade or Manufacturing license and you check this property the item will be shown in the stock positions overview, stock counts and transaction lists. If you have the Invoice module and you check this property you will get a general journal entry based on the Stock and Costs G/L accounts of the item group. If you don’t want the general journal entry to be created you should change the Stock/Costs G/L account on the Item group page to the type Costs instead of Inventory.</summary>
         public bool? IsStockItem { get; set; }
         /// <summary>Indicates if the item is provided by an outside supplier</summary>

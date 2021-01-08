@@ -2,9 +2,9 @@ using System;
 
 namespace ExactOnline.Client.Models.Documents
 {
-    [SupportedActionsSDK(true, true, true, true)]
+    [SupportedActionsSDK(true, true, true, true, canBulkRead: true)]
     [DataServiceKey("ID")]
-    public class Document
+    public class Document : SupportsSync
     {
         /// <summary>ID of the related account of this document</summary>
         public Guid? Account { get; set; }

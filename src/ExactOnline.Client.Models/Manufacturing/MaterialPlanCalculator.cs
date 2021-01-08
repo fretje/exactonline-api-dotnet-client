@@ -2,30 +2,30 @@
 {
     public class MaterialPlanCalculator
     {
-        /// <summary>Fixed calculator</summary>
-        [SDKFieldType(FieldType.ReadOnly)]
-        public FixedCalculator FixedCalculator { get; set; }
-        /// <summary>Materials per piece calculator</summary>
-        [SDKFieldType(FieldType.ReadOnly)]
-        public MaterialsPerPieceCalculator MaterialsPerPieceCalculator { get; set; }
-        /// <summary>Pieces per material calculator</summary>
-        [SDKFieldType(FieldType.ReadOnly)]
-        public PiecesPerMaterialCalculator PiecesPerMaterialCalculator { get; set; }
-        /// <summary>Bar calculator</summary>
-        [SDKFieldType(FieldType.ReadOnly)]
-        public BarCalculator BarCalculator { get; set; }
-        /// <summary>Sheet calculator</summary>
-        [SDKFieldType(FieldType.ReadOnly)]
-        public SheetCalculator SheetCalculator { get; set; }
-        /// <summary>Coil wire length calculator</summary>
-        [SDKFieldType(FieldType.ReadOnly)]
-        public CoilWireLengthCalculator CoilWireLengthCalculator { get; set; }
-        /// <summary>Coil wire weight calculator</summary>
-        [SDKFieldType(FieldType.ReadOnly)]
-        public CoilWireWeightCalculator CoilWireWeightCalculator { get; set; }
-        /// <summary>Volume calculator</summary>
-        [SDKFieldType(FieldType.ReadOnly)]
-        public VolumeCalculator VolumeCalculator { get; set; }
+		/// <summary>Fixed calculator</summary>
+		[SDKFieldType(FieldType.ReadOnly)]
+		public FixedCalculator FixedCalculator { get; set; } = new FixedCalculator();
+		/// <summary>Materials per piece calculator</summary>
+		[SDKFieldType(FieldType.ReadOnly)]
+		public MaterialsPerPieceCalculator MaterialsPerPieceCalculator { get; set; } = new MaterialsPerPieceCalculator();
+		/// <summary>Pieces per material calculator</summary>
+		[SDKFieldType(FieldType.ReadOnly)]
+		public PiecesPerMaterialCalculator PiecesPerMaterialCalculator { get; set; } = new PiecesPerMaterialCalculator();
+		/// <summary>Bar calculator</summary>
+		[SDKFieldType(FieldType.ReadOnly)]
+		public BarCalculator BarCalculator { get; set; } = new BarCalculator();
+		/// <summary>Sheet calculator</summary>
+		[SDKFieldType(FieldType.ReadOnly)]
+		public SheetCalculator SheetCalculator { get; set; } = new SheetCalculator();
+		/// <summary>Coil wire length calculator</summary>
+		[SDKFieldType(FieldType.ReadOnly)]
+		public CoilWireLengthCalculator CoilWireLengthCalculator { get; set; } = new CoilWireLengthCalculator();
+		/// <summary>Coil wire weight calculator</summary>
+		[SDKFieldType(FieldType.ReadOnly)]
+		public CoilWireWeightCalculator CoilWireWeightCalculator { get; set; } = new CoilWireWeightCalculator();
+		/// <summary>Volume calculator</summary>
+		[SDKFieldType(FieldType.ReadOnly)]
+		public VolumeCalculator VolumeCalculator { get; set; } = new VolumeCalculator();
     }
 
     public class FixedCalculator

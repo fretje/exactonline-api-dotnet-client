@@ -22,7 +22,7 @@ namespace ExactOnline.Client.Models.Activities
         [SDKFieldType(FieldType.ReadOnly)]
         public IEnumerable<Workflow.RequestAttachment> Attachments { get; set; }
         /// <summary>A short description of the complaint</summary>
-        [JsonProperty(PropertyName = "complaint")]
+        [JsonProperty(PropertyName = "Complaint")]
         public string ComplaintName { get; set; }
         /// <summary>The contact person that is related to the complaint</summary>
         public Guid? Contact { get; set; }

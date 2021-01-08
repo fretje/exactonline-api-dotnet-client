@@ -2,7 +2,7 @@ using System;
 
 namespace ExactOnline.Client.Models.SalesOrder
 {
-    [SupportedActionsSDK(true, true, true, true)]
+    [SupportedActionsSDK(true, true, true, true, canBulkRead: true)]
     [DataServiceKey("ID")]
     public class SalesOrderLine
     {
@@ -93,14 +93,6 @@ namespace ExactOnline.Client.Models.SalesOrder
         public double? QuantityInvoiced { get; set; }
         /// <summary>Reference to ShopOrder</summary>
         public Guid? ShopOrder { get; set; }
-        /// <summary>Obsolete</summary>
-        public Guid? TaxSchedule { get; set; }
-        /// <summary>Obsolete</summary>
-        [SDKFieldType(FieldType.ReadOnly)]
-        public string TaxScheduleCode { get; set; }
-        /// <summary>Obsolete</summary>
-        [SDKFieldType(FieldType.ReadOnly)]
-        public string TaxScheduleDescription { get; set; }
         /// <summary>Code of item unit</summary>
         public string UnitCode { get; set; }
         /// <summary>Description of Unit</summary>

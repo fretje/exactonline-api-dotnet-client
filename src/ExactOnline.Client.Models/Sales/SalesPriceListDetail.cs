@@ -3,7 +3,7 @@ using System;
 namespace ExactOnline.Client.Models.Sales
 {
     [SupportedActionsSDK(false, true, false, false)]
-    [DataServiceKey("ID")]
+    [DataServiceKey("ID,Account")]
     public class SalesPriceListDetail
     {
         /// <summary>Customer account Id</summary>

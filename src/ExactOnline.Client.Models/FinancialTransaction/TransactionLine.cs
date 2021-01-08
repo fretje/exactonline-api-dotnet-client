@@ -2,9 +2,9 @@ using System;
 
 namespace ExactOnline.Client.Models.FinancialTransaction
 {
-    [SupportedActionsSDK(false, true, false, false)]
+    [SupportedActionsSDK(false, true, false, false, canBulkRead: true)]
     [DataServiceKey("ID")]
-    public class TransactionLine
+    public class TransactionLine : SupportsSync
     {
         /// <summary>Reference to account</summary>
         public Guid? Account { get; set; }

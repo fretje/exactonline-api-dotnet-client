@@ -2,10 +2,10 @@ using System;
 
 namespace ExactOnline.Client.Models.Financial
 {
-    [SupportedActionsSDK(true, true, true, true)]
+    [SupportedActionsSDK(true, true, true, true, canBulkRead: true)]
     [DataServiceKey("ID")]
-    public class GLAccount
-    {
+    public class GLAccount : SupportsSync
+	{
         /// <summary>AssimilatedVATBox (France)</summary>
         public short? AssimilatedVATBox { get; set; }
         /// <summary>The following values are supported: D (Debit) C (Credit)</summary>

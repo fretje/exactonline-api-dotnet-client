@@ -2,7 +2,7 @@ using System;
 
 namespace ExactOnline.Client.Models.CRM
 {
-    [SupportedActionsSDK(true, true, true, true)]
+    [SupportedActionsSDK(true, true, true, true, canBulkRead: true)]
     [DataServiceKey("ID")]
     public class QuotationLine
     {

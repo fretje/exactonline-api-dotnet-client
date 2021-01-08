@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace ExactOnline.Client.Models.SalesOrder
 {
-    [SupportedActionsSDK(true, true, true, false)]
+    [SupportedActionsSDK(true, true, true, false, canBulkRead: true)]
     [DataServiceKey("EntryID")]
-    public class GoodsDelivery
-    {
+    public class GoodsDelivery : SupportsSync
+	{
         /// <summary>Creation date</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public DateTime? Created { get; set; }

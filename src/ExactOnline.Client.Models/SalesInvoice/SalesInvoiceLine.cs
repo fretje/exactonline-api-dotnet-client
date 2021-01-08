@@ -2,7 +2,7 @@ using System;
 
 namespace ExactOnline.Client.Models.SalesInvoice
 {
-    [SupportedActionsSDK(true, true, true, true)]
+    [SupportedActionsSDK(true, true, true, true, canBulkRead: true)]
     [DataServiceKey("ID")]
     public class SalesInvoiceLine
     {

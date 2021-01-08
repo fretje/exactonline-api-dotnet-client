@@ -3,10 +3,10 @@ using System;
 
 namespace ExactOnline.Client.Models.CRM
 {
-    [SupportedActionsSDK(false, true, false, false)]
+    [SupportedActionsSDK(false, true, false, false, canBulkRead: true)]
     [DataServiceKey("ID")]
-    public class Document
-    {
+    public class Document : SupportsSync
+	{
         /// <summary>ID of the related account of this document</summary>
         public Guid? Account { get; set; }
         /// <summary>Attachments linked to the document. Binaries are not sent in the response.</summary>

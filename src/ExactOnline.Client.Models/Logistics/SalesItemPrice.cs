@@ -2,10 +2,10 @@ using System;
 
 namespace ExactOnline.Client.Models.Logistics
 {
-    [SupportedActionsSDK(true, true, true, true)]
+    [SupportedActionsSDK(true, true, true, true, canBulkRead: true)]
     [DataServiceKey("ID")]
-    public class SalesItemPrice
-    {
+    public class SalesItemPrice : SupportsSync
+	{
         /// <summary>ID of the customer</summary>
         public Guid? Account { get; set; }
         /// <summary>Name of the customer account</summary>

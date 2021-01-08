@@ -2,9 +2,9 @@ using System;
 
 namespace ExactOnline.Client.Models.CRM
 {
-    [SupportedActionsSDK(true, true, true, true)]
+    [SupportedActionsSDK(true, true, true, true, canBulkRead: true)]
     [DataServiceKey("ID")]
-    public class Contact
+    public class Contact : SupportsSync
     {
         /// <summary>The account to which the contact belongs</summary>
         public Guid? Account { get; set; }

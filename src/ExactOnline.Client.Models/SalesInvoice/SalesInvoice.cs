@@ -3,10 +3,10 @@ using System;
 
 namespace ExactOnline.Client.Models.SalesInvoice
 {
-    [SupportedActionsSDK(true, true, true, true)]
+    [SupportedActionsSDK(true, true, true, true, canBulkRead: true)]
     [DataServiceKey("InvoiceID")]
-    public class SalesInvoice
-    {
+    public class SalesInvoice : SupportsSync
+	{
         /// <summary>For the header lines (LineNumber = 0) of an entry this is the SUM(AmountDC) of all lines</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public double? AmountDC { get; set; }

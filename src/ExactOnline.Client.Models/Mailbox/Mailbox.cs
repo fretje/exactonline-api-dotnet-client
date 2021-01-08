@@ -31,7 +31,7 @@ namespace ExactOnline.Client.Models.Mailbox
         /// <summary>Primary key</summary>
         public Guid ID { get; set; }
         /// <summary>E-mail address-like format, for example johndoe@exactonline.nl</summary>
-        [JsonProperty(PropertyName = "mailbox")]
+        [JsonProperty(PropertyName = "Mailbox")]
         public string MailboxName { get; set; }
         /// <summary>Last modified date</summary>
         [SDKFieldType(FieldType.ReadOnly)]

@@ -2,10 +2,10 @@ using System;
 
 namespace ExactOnline.Client.Models.Financial
 {
-    [SupportedActionsSDK(false, true, false, false)]
+    [SupportedActionsSDK(false, true, false, false, canBulkRead: true)]
     [DataServiceKey("ID")]
-    public class GLClassification
-    {
+    public class GLClassification : SupportsSync
+	{
         /// <summary>Abstract elements are only used in presentation linkbases to group other elements. They are not supposed to be used in instance documents</summary>
         public bool? Abstract { get; set; }
         /// <summary>Only used for amount concepts: in that case either &apos;debit&apos; or &apos;credit&apos;</summary>

@@ -3808,69 +3808,6 @@
         <member name="P:ExactOnline.Client.Models.Current.Me.UserName">
             <summary>Login name of the user</summary>
         </member>
-        <member name="P:ExactOnline.Client.Models.Documents.DocumentAttachment.Attachment">
-            <summary>Contains the attachment</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Documents.DocumentAttachment.Document">
-            <summary>Reference to the Document</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Documents.DocumentAttachment.FileName">
-            <summary>Filename of the attachment</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Documents.DocumentAttachment.FileSize">
-            <summary>File size of the attachment</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Documents.DocumentAttachment.ID">
-            <summary>Primary key</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Documents.DocumentAttachment.Url">
-            <summary>Url of the attachment. To get the file in its original format (xml, jpg, pdf, etc.) append &lt;b&gt;&amp;Download=1&lt;/b&gt; to the url.</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Documents.DocumentCategory.Created">
-            <summary>Creation date</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Documents.DocumentCategory.Description">
-            <summary>Document category description</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Documents.DocumentCategory.ID">
-            <summary>Primary key</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Documents.DocumentCategory.Modified">
-            <summary>Last modified date</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Documents.DocumentFolder.Code">
-            <summary>Document folder code</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Documents.DocumentFolder.Created">
-            <summary>Creation date</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Documents.DocumentFolder.Creator">
-            <summary>User ID of creator</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Documents.DocumentFolder.CreatorFullName">
-            <summary>Name of creator</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Documents.DocumentFolder.Description">
-            <summary>Document folder description</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Documents.DocumentFolder.Division">
-            <summary>Division code</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Documents.DocumentFolder.ID">
-            <summary>Primary key</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Documents.DocumentFolder.Modified">
-            <summary>Last modified date</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Documents.DocumentFolder.Modifier">
-            <summary>User ID of modifier</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Documents.DocumentFolder.ModifierFullName">
-            <summary>Name of modifier</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Documents.DocumentFolder.ParentFolder">
-            <summary>Document folder parent folder ID</summary>
-        </member>
         <member name="P:ExactOnline.Client.Models.Documents.Document.Account">
             <summary>ID of the related account of this document</summary>
         </member>
@@ -3984,6 +3921,69 @@
         </member>
         <member name="P:ExactOnline.Client.Models.Documents.Document.TypeDescription">
             <summary>Description of Type</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Documents.DocumentAttachment.Attachment">
+            <summary>Contains the attachment</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Documents.DocumentAttachment.Document">
+            <summary>Reference to the Document</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Documents.DocumentAttachment.FileName">
+            <summary>Filename of the attachment</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Documents.DocumentAttachment.FileSize">
+            <summary>File size of the attachment</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Documents.DocumentAttachment.ID">
+            <summary>Primary key</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Documents.DocumentAttachment.Url">
+            <summary>Url of the attachment. To get the file in its original format (xml, jpg, pdf, etc.) append &lt;b&gt;&amp;Download=1&lt;/b&gt; to the url.</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Documents.DocumentCategory.Created">
+            <summary>Creation date</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Documents.DocumentCategory.Description">
+            <summary>Document category description</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Documents.DocumentCategory.ID">
+            <summary>Primary key</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Documents.DocumentCategory.Modified">
+            <summary>Last modified date</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Documents.DocumentFolder.Code">
+            <summary>Document folder code</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Documents.DocumentFolder.Created">
+            <summary>Creation date</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Documents.DocumentFolder.Creator">
+            <summary>User ID of creator</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Documents.DocumentFolder.CreatorFullName">
+            <summary>Name of creator</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Documents.DocumentFolder.Description">
+            <summary>Document folder description</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Documents.DocumentFolder.Division">
+            <summary>Division code</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Documents.DocumentFolder.ID">
+            <summary>Primary key</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Documents.DocumentFolder.Modified">
+            <summary>Last modified date</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Documents.DocumentFolder.Modifier">
+            <summary>User ID of modifier</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Documents.DocumentFolder.ModifierFullName">
+            <summary>Name of modifier</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.Documents.DocumentFolder.ParentFolder">
+            <summary>Document folder parent folder ID</summary>
         </member>
         <member name="P:ExactOnline.Client.Models.Documents.DocumentType.Created">
             <summary>Creation date</summary>
@@ -7640,9 +7640,6 @@
         <member name="P:ExactOnline.Client.Models.Logistics.Item.IsBatchItem">
             <summary>Indicates if batches are used for this item</summary>
         </member>
-        <member name="P:ExactOnline.Client.Models.Logistics.Item.IsBatchNumberItem">
-            <summary>This property is obsolete. Use property &apos;IsBatchItem&apos; instead.</summary>
-        </member>
         <member name="P:ExactOnline.Client.Models.Logistics.Item.IsFractionAllowedItem">
             <summary>Indicates if fractions (for example 0.35) are allowed for quantities of this item</summary>
         </member>
@@ -7669,9 +7666,6 @@
         </member>
         <member name="P:ExactOnline.Client.Models.Logistics.Item.IsSerialItem">
             <summary>Indicates that serial numbers are used for this item</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.Logistics.Item.IsSerialNumberItem">
-            <summary>This property is obsolete. Use property &apos;IsSerialItem&apos; instead.</summary>
         </member>
         <member name="P:ExactOnline.Client.Models.Logistics.Item.IsStockItem">
             <summary>If you have the Trade or Manufacturing license and you check this property the item will be shown in the stock positions overview, stock counts and transaction lists. If you have the Invoice module and you check this property you will get a general journal entry based on the Stock and Costs G/L accounts of the item group. If you don’t want the general journal entry to be created you should change the Stock/Costs G/L account on the Item group page to the type Costs instead of Inventory.</summary>
@@ -15070,15 +15064,6 @@
         </member>
         <member name="P:ExactOnline.Client.Models.SalesOrder.SalesOrderLine.ShopOrder">
             <summary>Reference to ShopOrder</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.SalesOrder.SalesOrderLine.TaxSchedule">
-            <summary>Obsolete</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.SalesOrder.SalesOrderLine.TaxScheduleCode">
-            <summary>Obsolete</summary>
-        </member>
-        <member name="P:ExactOnline.Client.Models.SalesOrder.SalesOrderLine.TaxScheduleDescription">
-            <summary>Obsolete</summary>
         </member>
         <member name="P:ExactOnline.Client.Models.SalesOrder.SalesOrderLine.UnitCode">
             <summary>Code of item unit</summary>

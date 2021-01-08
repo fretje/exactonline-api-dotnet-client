@@ -70,7 +70,6 @@ namespace ExactOnline.Client
 			ServicesDictionary.Add(typeof(ImportNotificationDetail).FullName, "Cashflow/ImportNotificationDetails");
 			ServicesDictionary.Add(typeof(Payment).FullName, "Cashflow/Payments");
 			ServicesDictionary.Add(typeof(PaymentCondition).FullName, "Cashflow/PaymentConditions");
-			ServicesDictionary.Add(typeof(PaymentID).FullName, "Cashflow/PaymentIDs");
 			ServicesDictionary.Add(typeof(ProcessPayment).FullName, "Cashflow/ProcessPayments");
 			ServicesDictionary.Add(typeof(Receivable).FullName, "Cashflow/Receivables");
 			ServicesDictionary.Add(typeof(AcceptQuotation).FullName, "CRM/AcceptQuotation");

@@ -3,7 +3,7 @@
 namespace ExactOnline.Client.Models.Manufacturing
 {
     [SupportedActionsSDK(false, true, false, false)]
-    [DataServiceKey("StartedTimedTimeTransaction")]
+    [DataServiceKey("ID")]
     public class StartedTimedTimeTransaction
     {
         /// <summary>Creation date</summary>

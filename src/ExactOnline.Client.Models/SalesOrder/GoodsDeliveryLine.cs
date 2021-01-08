@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace ExactOnline.Client.Models.SalesOrder
 {
-    [SupportedActionsSDK(true, true, true, false)]
+    [SupportedActionsSDK(true, true, true, false, canBulkRead: true)]
     [DataServiceKey("ID")]
-    public class GoodsDeliveryLine
-    {
+    public class GoodsDeliveryLine : SupportsSync
+	{
         /// <summary>Collection of batch numbers</summary>
         public IEnumerable<Inventory.StockBatchNumber> BatchNumbers { get; set; }
         /// <summary>Creation date</summary>

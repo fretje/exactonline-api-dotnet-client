@@ -9,9 +9,9 @@ namespace ExactOnline.Client.Models.Manufacturing
     {
         /// <summary>Indicates if this is a backflush step</summary>
         public byte? Backflush { get; set; }
-        /// <summary>The calculator associated with this material plan</summary>
-        [SDKFieldType(FieldType.ReadOnly)]
-        public MaterialPlanCalculator Calculator { get; set; }
+		/// <summary>The calculator associated with this material plan</summary>
+		[SDKFieldType(FieldType.ReadOnly)]
+		public MaterialPlanCalculator Calculator { get; set; } = new MaterialPlanCalculator();
         /// <summary>Calculator type</summary>
         public int? CalculatorType { get; set; }
         /// <summary>Creation date</summary>

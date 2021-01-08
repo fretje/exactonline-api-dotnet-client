@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace ExactOnline.Client.Models.CRM
 {
-    [SupportedActionsSDK(true, true, true, true)]
+    [SupportedActionsSDK(true, true, true, true, canBulkRead: true)]
     [DataServiceKey("QuotationID")]
-    public class Quotation
-    {
+    public class Quotation : SupportsSync
+	{
         /// <summary>Amount in the default currency of the company</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public double AmountDC { get; set; }

@@ -2,10 +2,10 @@
 
 namespace ExactOnline.Client.Models.Documents
 {
-    [SupportedActionsSDK(true, true, true, true)]
+    [SupportedActionsSDK(true, true, true, true, canBulkRead: true)]
     [DataServiceKey("ID")]
-    public class DocumentAttachment
-    {
+    public class DocumentAttachment : SupportsSync
+	{
         /// <summary>Contains the attachment</summary>
         public byte[] Attachment { get; set; }
         /// <summary>Reference to the Document</summary>

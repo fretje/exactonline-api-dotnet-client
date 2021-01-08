@@ -3,9 +3,9 @@ using System;
 
 namespace ExactOnline.Client.Models.SalesOrder
 {
-    [SupportedActionsSDK(true, true, true, true)]
+    [SupportedActionsSDK(true, true, true, true, canBulkRead: true)]
     [DataServiceKey("OrderID")]
-    public class SalesOrder
+    public class SalesOrder : SupportsSync
     {
         /// <summary>Amount in the default currency of the company</summary>
         [SDKFieldType(FieldType.ReadOnly)]
