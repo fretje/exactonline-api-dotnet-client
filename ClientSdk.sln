@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3F1610DB
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExactOnline.Client.OAuth", "src\ExactOnline.Client.OAuth\ExactOnline.Client.OAuth.csproj", "{610FE8C1-F026-4567-8B47-8CB6338251F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExactOnline.Client.Sdk.UnitTests", "test\ExactOnline.Client.Sdk.UnitTests\ExactOnline.Client.Sdk.UnitTests.csproj", "{866362D4-39CA-4FAA-99C0-2BE23530E881}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExactOnline.Client.Sdk.UnitTests", "test\ExactOnline.Client.Sdk.UnitTests\ExactOnline.Client.Sdk.UnitTests.csproj", "{866362D4-39CA-4FAA-99C0-2BE23530E881}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExactOnline.Client.Models", "src\ExactOnline.Client.Models\ExactOnline.Client.Models.csproj", "{0FBE029A-DD5E-0A4A-3EE2-6F330EB60B7C}"
 EndProject
@@ -23,6 +23,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		src\SharedProjectProperties.proj = src\SharedProjectProperties.proj
 		testapp.config.example = testapp.config.example
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExactOnline.Client.Sdk.Sync", "src\ExactOnline.Client.Sdk.Sync\ExactOnline.Client.Sdk.Sync.csproj", "{602C4EC8-2774-4925-A90A-D0F7A62AA09C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExactOnline.Client.Sdk.Sync.EntityFramework", "src\ExactOnline.Client.Sdk.Sync.EntityFramework\ExactOnline.Client.Sdk.Sync.EntityFramework.csproj", "{949C4680-5DC1-452A-B52E-12846C9CFAEF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +59,18 @@ Global
 		{0FBE029A-DD5E-0A4A-3EE2-6F330EB60B7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FBE029A-DD5E-0A4A-3EE2-6F330EB60B7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FBE029A-DD5E-0A4A-3EE2-6F330EB60B7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{602C4EC8-2774-4925-A90A-D0F7A62AA09C}.Browser|Any CPU.ActiveCfg = Debug|Any CPU
+		{602C4EC8-2774-4925-A90A-D0F7A62AA09C}.Browser|Any CPU.Build.0 = Debug|Any CPU
+		{602C4EC8-2774-4925-A90A-D0F7A62AA09C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{602C4EC8-2774-4925-A90A-D0F7A62AA09C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{602C4EC8-2774-4925-A90A-D0F7A62AA09C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{602C4EC8-2774-4925-A90A-D0F7A62AA09C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{949C4680-5DC1-452A-B52E-12846C9CFAEF}.Browser|Any CPU.ActiveCfg = Debug|Any CPU
+		{949C4680-5DC1-452A-B52E-12846C9CFAEF}.Browser|Any CPU.Build.0 = Debug|Any CPU
+		{949C4680-5DC1-452A-B52E-12846C9CFAEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{949C4680-5DC1-452A-B52E-12846C9CFAEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{949C4680-5DC1-452A-B52E-12846C9CFAEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{949C4680-5DC1-452A-B52E-12846C9CFAEF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
