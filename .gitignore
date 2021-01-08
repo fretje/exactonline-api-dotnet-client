@@ -195,3 +195,7 @@ testapp.config
 
 *.lock
 /.vs
+
+# built nuget packages
+src/*.nupkg
+src/*.snupkg

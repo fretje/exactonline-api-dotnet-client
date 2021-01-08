@@ -30,6 +30,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExactOnline.Client.Sdk.Sync
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExactOnline.Client.Sdk.Sync.EntityFramework", "src\ExactOnline.Client.Sdk.Sync.EntityFramework\ExactOnline.Client.Sdk.Sync.EntityFramework.csproj", "{E340EFB6-AE9E-49F6-858C-30DAC2F56A30}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuget", "nuget", "{9A76CC7A-6D2E-409A-A4D6-AF0D529660FF}"
+	ProjectSection(SolutionItems) = preProject
+		nuget\PackAndPushToNuget.cmd = nuget\PackAndPushToNuget.cmd
+		nuget\SetEnvironment.cmd = nuget\SetEnvironment.cmd
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

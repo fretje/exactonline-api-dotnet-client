@@ -20,10 +20,10 @@
 		<PackageProjectUrl>https://github.com/fretje/exactonline-api-dotnet-client</PackageProjectUrl>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageTags>Exact Online Client SDK API</PackageTags>
+		<PackageOutputPath>..\</PackageOutputPath>
 
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
 		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	</PropertyGroup>
 
 	<ItemGroup>
