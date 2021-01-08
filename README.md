@@ -12,10 +12,12 @@ This is what has been changed/added in this repo since their last commit:
 * Sync support (building further on the same concept).
 * A lot of code clean-up and some refactoring.
 * All projects have been migrated to SDK style projects building for net472 and netstandard2.0 where possible (not yet for the OAuth project due to the winforms dependency).
-* Support for building nuget packages (4.0.0-beta1 for now).
+* Support for building nuget packages (4.0.0-beta for now).
 * ExactOnlineAuthenticator is added to more easily work with the OAuth authentication.
 * A WebApplication sample is added to show the usage of that authenticator.
 * The ConsoleApplication sample is changed to also use that authenticator.
+* ExactOnline.Client.Sdk.Sync project (full entity sync support) has been added as well as an example Sync.EntityFramework target.
+* The ConsoleApplication sample is updated to show the usage of the sync support.
 
 <h3>Dare to contribute</h3>
 
