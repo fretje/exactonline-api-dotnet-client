@@ -31,19 +31,17 @@ namespace ExactOnline.Client.Sdk.TestContext
 
         public int GetCurrentDivision()
         {
-            var currentDivision = -1;
-
-            if (_connector == null)
+            if (_client == null)
             {
-                GetApiConnector();
+                GetClient();
             }
 
-            if (_connector != null)
+            if (_client != null)
             {
-                currentDivision = _connector.GetCurrentDivision(ExactOnlineUrl);
+                return _client.Division;
             }
 
-            return currentDivision;
+            return -1;
         }
     }
 }

@@ -80,7 +80,7 @@ namespace ExactOnline.Client.Sdk.UnitTests
             const string expected = "{\"Code\":\"123\",\"Description\":\"FOO\",\"Id\":\"53697fab-137f-4242-b710-0139886b50f4\",\"StartDate\":\"2013-12-16T10:10:17.287\",\"EndDate\":null,\"Boolean\":true,\"NullableBoolean\":null,\"Integer\":5,\"NullableInteger\":null}";
             #endregion
 
-            var result = EntityConverter.ConvertObjectToJson(simpleEntity, null);
+            var result = EntityConverter.ConvertObjectToJson(simpleEntity);
 
             Assert.AreEqual(expected, result);
         }
@@ -330,7 +330,7 @@ namespace ExactOnline.Client.Sdk.UnitTests
             var invoicelines = new List<ComplexEntityLine> { newInvoiceLine };
             newInvoice.Lines = invoicelines;
 
-            var json = EntityConverter.ConvertObjectToJson(newInvoice, null);
+            var json = EntityConverter.ConvertObjectToJson(newInvoice);
             var expected = JsonFileReader.GetJsonFromFileWithoutWhiteSpace("Expected_Json_Object_ComplexEntity_WithLinkedEntity.txt");
             Assert.AreEqual(expected, json);
         }
@@ -359,8 +359,7 @@ namespace ExactOnline.Client.Sdk.UnitTests
             var entityController = new EntityController(newInvoice, "ID", "4f68481a-7a2c-4fbc-a3a0-0c494df3fa0d", new MockObjects.ApiConnectionMock(), null);
             newInvoiceLine.Description = "ChangedNewInvoiceForEntityWithCollection";
 
-            var controllerDelegate = new GetEntityController(GetEntityController);
-            var json = EntityConverter.ConvertObjectToJson((SalesInvoice)entityController.OriginalEntity, newInvoice, controllerDelegate);
+            var json = EntityConverter.ConvertObjectToJson((SalesInvoice)entityController.OriginalEntity, newInvoice, GetEntityController);
 
             const string expected = "{\"SalesInvoiceLines\": [{\"Description\": \"ChangedNewInvoiceForEntityWithCollection\"}]}";
             Assert.AreEqual(expected, json);
@@ -383,7 +382,7 @@ namespace ExactOnline.Client.Sdk.UnitTests
                 Description = "NewInvoiceForEntityWithCollection"
             };
 
-            var json = EntityConverter.ConvertObjectToJson(newInvoice, null);
+            var json = EntityConverter.ConvertObjectToJson(newInvoice);
             var expected = JsonFileReader.GetJsonFromFileWithoutWhiteSpace("Expected_Json_Object_ComplexEntity_WithEmptyLinkedEntities.txt");
             Assert.AreEqual(expected, json);
         }

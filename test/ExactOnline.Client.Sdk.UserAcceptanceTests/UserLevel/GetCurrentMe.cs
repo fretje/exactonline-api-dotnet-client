@@ -1,5 +1,7 @@
-﻿using ExactOnline.Client.Sdk.TestContext;
+﻿using ExactOnline.Client.Models.Current;
+using ExactOnline.Client.Sdk.TestContext;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace ExactOnline.Client.Sdk.UserAcceptanceTests.UserLevel
 {
@@ -12,7 +14,9 @@ namespace ExactOnline.Client.Sdk.UserAcceptanceTests.UserLevel
         {
             var client = new TestObjectsCreator().GetClient();
 
-            Assert.IsNotNull(client.CurrentMe());
+			var currentMe = client.For<Me>().Select("CurrentDivision").Get().FirstOrDefault();
+
+			Assert.IsNotNull(currentMe);
         }
     }
 }

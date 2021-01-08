@@ -3,6 +3,7 @@ using ExactOnline.Client.Sdk.Delegates;
 using ExactOnline.Client.Sdk.Enums;
 using ExactOnline.Client.Sdk.Exceptions;
 using ExactOnline.Client.Sdk.Interfaces;
+using ExactOnline.Client.Sdk.Models;
 using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
@@ -21,14 +22,15 @@ namespace ExactOnline.Client.Sdk.Helpers
         private readonly AccessTokenManagerDelegate _accessTokenDelegate;
         private readonly ExactOnlineClient _client;
 
-        /// <summary>
-        /// Creates new instance of ApiConnector
-        /// </summary>
-        /// <param name="accessTokenDelegate">Valid oAuth Access Token</param>
-        public ApiConnector(AccessTokenManagerDelegate accessTokenDelegate, ExactOnlineClient client)
+		/// <summary>
+		/// Creates new instance of ApiConnector
+		/// </summary>
+		/// <param name="accessTokenDelegate">Delegate that provides a valid oAuth Access Token</param>
+		/// <param name="client">The ExactOnlineClient this connector is associated with</param>
+		public ApiConnector(AccessTokenManagerDelegate accessTokenDelegate, ExactOnlineClient client)
         {
+            _accessTokenDelegate = accessTokenDelegate ?? throw new ArgumentNullException(nameof(accessTokenDelegate));
             _client = client;
-            _accessTokenDelegate = accessTokenDelegate ?? throw new ArgumentException("accessTokenDelegate");
         }
 
         /// <summary>
@@ -135,18 +137,6 @@ namespace ExactOnline.Client.Sdk.Helpers
         public Task<string> DoCleanRequestAsync(string endpoint, string querystring) =>
             GetResponseAsync(CreateCleanRequest(endpoint, querystring));
 
-        public int GetCurrentDivision(string website) =>
-            ParseDivision(GetResponse(CreateCurrentDivisionRequest(website)));
-
-        public async Task<int> GetCurrentDivisionAsync(string website) =>
-            ParseDivision(await GetResponseAsync(CreateCurrentDivisionRequest(website)).ConfigureAwait(false));
-
-        private static int ParseDivision(string response)
-        {
-            var jsonObject = JsonConvert.DeserializeObject<dynamic>(response);
-            return (int)jsonObject.d["results"][0]["CurrentDivision"].Value;
-        }
-
         private HttpWebRequest CreateGetRequest(string endpoint, string querystring = null) =>
             CreateRequest(RequestTypeEnum.GET, endpoint, querystring);
         private HttpWebRequest CreatePostRequest(string endpoint, string postdata) =>
@@ -190,14 +180,6 @@ namespace ExactOnline.Client.Sdk.Helpers
             }
 
             return request;
-        }
-
-        private HttpWebRequest CreateCurrentDivisionRequest(string website)
-        {
-            var url = website + "/api/v1/current/Me";
-            const string querystring = "$select=CurrentDivision";
-
-            return CreateWebRequest(url, querystring, RequestTypeEnum.GET);
         }
 
         private HttpWebRequest CreateWebRequest(string url, string querystring, RequestTypeEnum method, string acceptContentType = "application/json")
@@ -318,27 +300,34 @@ namespace ExactOnline.Client.Sdk.Helpers
             var messageFromServer = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
             Debug.WriteLine(messageFromServer);
             Debug.WriteLine("");
+			var messageError = JsonConvert.DeserializeObject(messageFromServer, typeof(ServerMessage)) as ServerMessage;
+
+			var message = messageError?.Error?.Message?.Value;
+			if (string.IsNullOrEmpty(message))
+			{
+				message = ex.Message;
+			}
 
             switch (statusCode)
             {
                 case HttpStatusCode.BadRequest: // 400
                 case HttpStatusCode.MethodNotAllowed: // 405
-                    throw new BadRequestException(ex.Message, ex);
+                    throw new BadRequestException(message, ex);
 
                 case HttpStatusCode.Unauthorized: //401
-                    throw new UnauthorizedException(ex.Message, ex); // 401
+                    throw new UnauthorizedException(message, ex); // 401
 
                 case HttpStatusCode.Forbidden:
-                    throw new ForbiddenException(ex.Message, ex); // 403
+                    throw new ForbiddenException(message, ex); // 403
 
                 case HttpStatusCode.NotFound:
-                    throw new NotFoundException(ex.Message, ex); // 404
+                    throw new NotFoundException(message, ex); // 404
 
                 case HttpStatusCode.InternalServerError: // 500
-                    throw new InternalServerErrorException(messageFromServer, ex);
+                    throw new InternalServerErrorException(message, ex);
 
                 case (HttpStatusCode)429: // 429: too many requests
-                    throw new TooManyRequestsException(ex.Message, ex);
+                    throw new TooManyRequestsException(message, ex);
             }
         }
 
@@ -346,19 +335,16 @@ namespace ExactOnline.Client.Sdk.Helpers
         {
             if (response != null)
             {
-                SetRateLimitHeaders(response);
+				_client.EolResponseHeader = new EolResponseHeader
+				{
+					RateLimit = new RateLimit
+					{
+						Limit = response.Headers["X-RateLimit-Limit"].ToNullableInt(),
+						Remaining = response.Headers["X-RateLimit-Remaining"].ToNullableInt(),
+						Reset = response.Headers["X-RateLimit-Reset"].ToNullableLong()
+					}
+				};
             }
         }
-
-        private void SetRateLimitHeaders(WebResponse response) =>
-            _client.EolResponseHeader = new Models.EolResponseHeader
-            {
-                RateLimit = new Models.RateLimit
-                {
-                    Limit = response.Headers["X-RateLimit-Limit"].ToNullableInt(),
-                    Remaining = response.Headers["X-RateLimit-Remaining"].ToNullableInt(),
-                    Reset = response.Headers["X-RateLimit-Reset"].ToNullableLong()
-                }
-            };
     }
 }

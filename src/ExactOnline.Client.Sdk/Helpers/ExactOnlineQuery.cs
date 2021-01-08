@@ -13,9 +13,9 @@ namespace ExactOnline.Client.Sdk.Helpers
     public class ExactOnlineQuery<T>
     {
         private readonly IController<T> _controller;
-        private readonly List<string> _and;
 
         private string _select;
+        private readonly List<string> _and = new List<string>();
         private string _skip;
         private string _expand;
         private string _top;
@@ -24,13 +24,10 @@ namespace ExactOnline.Client.Sdk.Helpers
         private string _skipToken;
 
         /// <summary>
-        /// Private constructor, can only be called by static For()
+        /// Creates a new instance of ExactOnlineQuery
         /// </summary>
-        public ExactOnlineQuery(IController<T> controller)
-        {
-            _controller = controller ?? throw new ArgumentException("Instance of type Controller cannot be null");
-            _and = new List<string>();
-        }
+        public ExactOnlineQuery(IController<T> controller) =>
+            _controller = controller ?? throw new ArgumentNullException(nameof(controller));
 
         /// <summary>
         /// Creates a 'where' clause for the query
@@ -79,70 +76,11 @@ namespace ExactOnline.Client.Sdk.Helpers
         }
 
         /// <summary>
-        /// Builds query using the _where and _and properties
-        /// </summary>
-        private string CreateODataQuery(bool selectIsMandatory)
-        {
-            var queryParts = new List<string>();
-
-            if (!string.IsNullOrEmpty(_where))
-            {
-                if (_and != null && _and.Count > 0)
-                {
-                    _where += string.Format("+and+{0}", string.Join("+and+", _and));
-                }
-                queryParts.Add(_where);
-            }
-
-            // Add $select
-            if (!string.IsNullOrEmpty(_select))
-            {
-                queryParts.Add(_select);
-            }
-            else if (selectIsMandatory)
-            {
-                throw new Exception("You have to specify which fields you want to select");
-            }
-
-            // Add $skip
-            if (!string.IsNullOrEmpty(_skip))
-            {
-                queryParts.Add(_skip);
-            }
-
-            // Add $expand
-            if (!string.IsNullOrEmpty(_expand))
-            {
-                queryParts.Add(_expand);
-            }
-
-            // Add top
-            if (!string.IsNullOrEmpty(_top))
-            {
-                queryParts.Add(_top);
-            }
-
-            // Add $skipToken
-            if (!string.IsNullOrEmpty(_skipToken))
-            {
-                queryParts.Add(_skipToken);
-            }
-
-            // Add orderby
-            if (!string.IsNullOrEmpty(_orderby))
-            {
-                queryParts.Add(_orderby);
-            }
-
-            return string.Join("&", queryParts);
-        }
-
-        /// <summary>
         /// Specify the fields to get from the API
         /// </summary>
-        /// <param name="property">The property to select</param>
-        public ExactOnlineQuery<T> Select(params Expression<Func<T, object>>[] property) =>
-            Select(fields: property.Select(x => TransformExpressionToODataFormat(x.Body)).ToArray());
+        /// <param name="properties">The properties to select</param>
+        public ExactOnlineQuery<T> Select(params Expression<Func<T, object>>[] properties) =>
+            Select(fields: properties.Select(x => TransformExpressionToODataFormat(x.Body)).ToArray());
 
         /// <summary>
         /// Specify the field(s) to get from the API
@@ -187,20 +125,6 @@ namespace ExactOnline.Client.Sdk.Helpers
         }
 
         /// <summary>
-        /// Paging: Specify the skip token
-        /// </summary>
-        /// <param name="skipToken"></param>
-        private ExactOnlineQuery<T> FormulateSkipToken(string skipToken)
-        {
-            if (!string.IsNullOrEmpty(skipToken))
-            {
-                _skipToken = string.Format("$skiptoken={0}", skipToken);
-            }
-            return this;
-        }
-
-
-        /// <summary>
         /// Specify the field to order by
         /// </summary>
         /// <param name="orderby"></param>
@@ -242,12 +166,12 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <summary>
         /// Count the amount of entities in the the entity
         /// </summary>
-        public int Count() => _controller.Count(CreateODataQuery(false));
+        public int Count() => _controller.Count(BuildODataQuery(false));
 
         /// <summary>
         /// Count the amount of entities in the the entity
         /// </summary>
-        public Task<int> CountAsync() => _controller.CountAsync(CreateODataQuery(false));
+        public Task<int> CountAsync() => _controller.CountAsync(BuildODataQuery(false));
 
         /// <summary>
         /// Returns a List of entities using the specified query
@@ -277,9 +201,8 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <param name="endpointType">Which endpoint type to use.</param>
         public List<T> Get(ref string skipToken, EndpointTypeEnum endpointType)
         {
-            var selectIsMandatory = !SupportedActionsSDK.GetByType(typeof(T)).AllowsEmptySelect;
-            FormulateSkipToken(skipToken);
-            return _controller.Get(CreateODataQuery(selectIsMandatory), ref skipToken, endpointType);
+            AddSkipToken(skipToken);
+            return _controller.Get(BuildODataQuery(true), ref skipToken, endpointType);
         }
 
         /// <summary>
@@ -289,23 +212,28 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <param name="endpointType">Which endpoint type to use.</param>
         public Task<Models.ApiList<T>> GetAsync(string skiptoken = "", EndpointTypeEnum endpointType = EndpointTypeEnum.Single)
         {
-            var selectIsMandatory = !SupportedActionsSDK.GetByType(typeof(T)).AllowsEmptySelect;
-            FormulateSkipToken(skiptoken);
-            return _controller.GetAsync(CreateODataQuery(selectIsMandatory), endpointType);
+            AddSkipToken(skiptoken);
+            return _controller.GetAsync(BuildODataQuery(true), endpointType);
         }
 
-        /// <summary>
-        /// Returns one instance of an entity using the specified identifier
-        /// </summary>
-        public T GetEntity(string identifier)
+		private void AddSkipToken(string skipToken)
+		{
+			if (!string.IsNullOrEmpty(skipToken))
+			{
+				_skipToken = string.Format("$skiptoken={0}", skipToken);
+			}
+		}
+
+		/// <summary>
+		/// Returns one instance of an entity using the specified identifier
+		/// </summary>
+		public T GetEntity(string identifier)
         {
             if (string.IsNullOrEmpty(identifier))
             {
                 throw new ArgumentException("Get entity: Identifier cannot be empty");
             }
-
-            var query = CreateODataQuery(false);
-            return _controller.GetEntity(identifier, query);
+            return _controller.GetEntity(identifier, BuildODataQuery(false));
         }
 
         /// <summary>
@@ -317,9 +245,7 @@ namespace ExactOnline.Client.Sdk.Helpers
             {
                 throw new ArgumentException("Get entity: Identifier cannot be empty");
             }
-
-            var query = CreateODataQuery(false);
-            return _controller.GetEntityAsync(identifier, query);
+            return _controller.GetEntityAsync(identifier, BuildODataQuery(false));
         }
 
         /// <summary>
@@ -331,9 +257,7 @@ namespace ExactOnline.Client.Sdk.Helpers
             {
                 throw new ArgumentException("Get entity: Identifier cannot be empty");
             }
-
-            var query = CreateODataQuery(false);
-            return _controller.GetEntity(identifier.ToString(), query);
+            return _controller.GetEntity(identifier.ToString(), BuildODataQuery(false));
         }
 
         /// <summary>
@@ -345,28 +269,20 @@ namespace ExactOnline.Client.Sdk.Helpers
             {
                 throw new ArgumentException("Get entity: Identifier cannot be empty");
             }
-
-            var query = CreateODataQuery(false);
-            return _controller.GetEntityAsync(identifier.ToString(), query);
+            return _controller.GetEntityAsync(identifier.ToString(), BuildODataQuery(false));
         }
 
         /// <summary>
         /// Returns one instance of an entity using the specified identifier
         /// </summary>
-        public T GetEntity(int identifier)
-        {
-            var query = CreateODataQuery(false);
-            return _controller.GetEntity(identifier.ToString(CultureInfo.InvariantCulture), query);
-        }
+        public T GetEntity(int identifier) =>
+            _controller.GetEntity(identifier.ToString(CultureInfo.InvariantCulture), BuildODataQuery(false));
 
         /// <summary>
         /// Returns one instance of an entity using the specified identifier
         /// </summary>
-        public Task<T> GetEntityAsync(int identifier)
-        {
-            var query = CreateODataQuery(false);
-            return _controller.GetEntityAsync(identifier.ToString(CultureInfo.InvariantCulture), query);
-        }
+        public Task<T> GetEntityAsync(int identifier) =>
+            _controller.GetEntityAsync(identifier.ToString(CultureInfo.InvariantCulture), BuildODataQuery(false));
 
         /// <summary>
         /// Updates the specified entity
@@ -419,7 +335,7 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <summary>
         /// Transforms a given C# expression to an OData-compliant expression
         /// </summary>
-        string TransformExpressionToODataFormat(Expression e)
+        private string TransformExpressionToODataFormat(Expression e)
         {
             MemberExpression me = null;
 
@@ -474,14 +390,74 @@ namespace ExactOnline.Client.Sdk.Helpers
                 var type = value.GetType();
                 type = Nullable.GetUnderlyingType(type) ?? type;
 
-                _value = type == typeof(string) || type == typeof(char) ? $"'{value}'"
-                    : type == typeof(Guid) ? $"guid'{value}'"
-                    : type == typeof(DateTime) ? $"datetime'{value:s}'"
-                    : type == typeof(bool) ? value.ToString().ToLower()
+				_value = type == typeof(string) || type == typeof(char) ? $"'{value}'"
+					: type == typeof(Guid) ? $"guid'{value}'"
+					: type == typeof(DateTime) ? $"datetime'{value:o}'"
+					: type == typeof(bool) ? value.ToString().ToLower()
+					: type.IsEnum ? $"{value:D}" // need the numerical value of enums, not the name!
                     : value.ToString();
             }
 
             return _value;
         }
-    }
+
+		/// <summary>
+		/// Builds the full OData query from all its individual parts
+		/// </summary>
+		private string BuildODataQuery(bool selectIsMandatory)
+		{
+			var queryParts = new List<string>();
+
+			if (!string.IsNullOrEmpty(_where))
+			{
+				if (_and != null && _and.Count > 0)
+				{
+					_where += string.Format("+and+{0}", string.Join("+and+", _and));
+				}
+				queryParts.Add(_where);
+			}
+
+			// Add $select
+			if (!string.IsNullOrEmpty(_select))
+			{
+				queryParts.Add(_select);
+			}
+			else if (selectIsMandatory && !SupportedActionsSDK.GetByType(typeof(T)).AllowsEmptySelect)
+			{
+				throw new Exception("You have to specify which fields you want to select");
+			}
+
+			// Add $skip
+			if (!string.IsNullOrEmpty(_skip))
+			{
+				queryParts.Add(_skip);
+			}
+
+			// Add $expand
+			if (!string.IsNullOrEmpty(_expand))
+			{
+				queryParts.Add(_expand);
+			}
+
+			// Add top
+			if (!string.IsNullOrEmpty(_top))
+			{
+				queryParts.Add(_top);
+			}
+
+			// Add $skipToken
+			if (!string.IsNullOrEmpty(_skipToken))
+			{
+				queryParts.Add(_skipToken);
+			}
+
+			// Add orderby
+			if (!string.IsNullOrEmpty(_orderby))
+			{
+				queryParts.Add(_orderby);
+			}
+
+			return string.Join("&", queryParts);
+		}
+	}
 }

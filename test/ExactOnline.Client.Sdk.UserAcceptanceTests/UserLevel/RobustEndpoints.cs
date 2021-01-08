@@ -15,7 +15,7 @@ namespace ExactOnline.Client.Sdk.UserAcceptanceTests.UserLevel
         public void InitializeSharedTestObjects()
         {
             _toc = new TestObjectsCreator();
-            _currentDivision = _toc.GetClient().GetDivision();
+            _currentDivision = _toc.GetClient().Division;
         }
 
         [TestMethod]

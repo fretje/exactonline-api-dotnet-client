@@ -38,26 +38,15 @@ namespace ExactOnline.Client.Sdk.UnitTests
 
         [TestMethod]
         [TestCategory("Unit Test")]
-        public void Controller_GetIdentifierValueForCompoundKey_Fails()
+        public void Controller_GetIdentifierValueForCompoundKey_ReturnsNull()
         {
             // JournalStatus has a compound key
             var journalStatusController = new Controller<JournalStatusList>(_mockConnection);
             var journalStatus = new JournalStatusList();
-            var exceptionThrown = false;
-            var exceptionMessage = "";
 
-            try
-            {
-                journalStatusController.GetIdentifierValue(journalStatus);
-            }
-            catch (Exception ex)
-            {
-                exceptionThrown = true;
-                exceptionMessage = ex.Message;
-            }
+            var idValue = journalStatusController.GetIdentifierValue(journalStatus);
 
-            Assert.IsTrue(exceptionThrown);
-            Assert.AreEqual("Currently the SDK doesn't support entities with a compound key.", exceptionMessage);
+            Assert.IsNull(idValue);
         }
 
         [TestMethod]
@@ -180,7 +169,6 @@ namespace ExactOnline.Client.Sdk.UnitTests
 
             var salesinvoicecontroller = (Controller<SalesInvoice>)controllerList.GetController<SalesInvoice>();
             var invoicelines = (Controller<SalesInvoiceLine>)controllerList.GetController<SalesInvoiceLine>();
-            salesinvoicecontroller.GetManagerForEntity = controllerList.GetEntityManager;
 
             // Verify if sales invoice lines are registrated entities
             var invoice = salesinvoicecontroller.Get("")[0];
@@ -198,7 +186,6 @@ namespace ExactOnline.Client.Sdk.UnitTests
 
             var salesinvoicecontroller = (Controller<SalesInvoice>)controllerList.GetController<SalesInvoice>();
             var invoicelines = (Controller<SalesInvoiceLine>)controllerList.GetController<SalesInvoiceLine>();
-            salesinvoicecontroller.GetManagerForEntity = controllerList.GetEntityManager;
 
             // Verify if sales invoice lines are registrated entities
             var invoice = (await salesinvoicecontroller.GetAsync("").ConfigureAwait(false)).List[0];

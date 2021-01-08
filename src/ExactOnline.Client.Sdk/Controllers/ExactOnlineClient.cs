@@ -20,9 +20,19 @@ namespace ExactOnline.Client.Sdk.Controllers
         public string ExactOnlineApiUrl { get; private set; }
 
         private readonly ControllerList _controllers;
-        private int _division;
+
+        public int Division { get; private set; }
 
         public EolResponseHeader EolResponseHeader { get; internal set; }
+
+        /// <summary>
+        /// Create instance of ExactClient
+        /// </summary>
+        /// <param name="exactOnlineUrl">{URI}/</param>
+        /// <param name="accesstokenDelegate">Valid oAuth AccessToken</param>
+        public ExactOnlineClient(string exactOnlineUrl, AccessTokenManagerDelegate accesstokenDelegate)
+            : this(exactOnlineUrl, 0, accesstokenDelegate)
+        { }
 
         /// <summary>
         /// Create instance of ExactClient
@@ -39,51 +49,22 @@ namespace ExactOnline.Client.Sdk.Controllers
 
             ExactOnlineApiUrl = exactOnlineUrl + "api/v1/";
 
-            // Set culture for correct deserializing of API Response (comma and points)
             _apiConnector = new ApiConnector(accesstokenDelegate, this);
-            //Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
 
-            _division = (division > 0) ? division : GetDivision();
+			Division = (division > 0) ? division : GetDivision();
 
-            var baseUrl = ExactOnlineApiUrl + _division + "/";
+            var baseUrl = ExactOnlineApiUrl + Division + "/";
 
             _controllers = new ControllerList(_apiConnector, baseUrl);
         }
 
         /// <summary>
-        /// Create instance of ExactClient
+        /// Returns instance of ExactOnlineQuery that can be used to manipulate data in Exact Online
         /// </summary>
-        /// <param name="exactOnlineUrl">{URI}/</param>
-        /// <param name="accesstokenDelegate">Valid oAuth AccessToken</param>
-        public ExactOnlineClient(string exactOnlineUrl, AccessTokenManagerDelegate accesstokenDelegate)
-            : this(exactOnlineUrl, 0, accesstokenDelegate)
+        public ExactOnlineQuery<T> For<T>() where T : class
         {
-        }
-
-        /// <summary>
-        /// Returns the current user data
-        /// </summary>
-        /// <returns>Me entity</returns>
-        public Me CurrentMe()
-        {
-            var conn = new ApiConnection(_apiConnector, ExactOnlineApiUrl + "current/Me");
-            var response = conn.Get("$select=CurrentDivision");
-            response = ApiResponseCleaner.GetJsonArray(response);
-            var currentMe = EntityConverter.ConvertJsonArrayToObjectList<Me>(response);
-            return currentMe.FirstOrDefault();
-        }
-
-        /// <summary>
-        /// Returns the current user data
-        /// </summary>
-        /// <returns>Me entity</returns>
-        public async Task<Me> CurrentMeAsync()
-        {
-            var conn = new ApiConnection(_apiConnector, ExactOnlineApiUrl + "current/Me");
-            var response = await conn.GetAsync("$select=CurrentDivision").ConfigureAwait(false);
-            response = ApiResponseCleaner.GetJsonArray(response);
-            var currentMe = EntityConverter.ConvertJsonArrayToObjectList<Me>(response);
-            return currentMe.FirstOrDefault();
+            var controller = _controllers.GetController<T>();
+            return new ExactOnlineQuery<T>(controller);
         }
 
         /// <summary>
@@ -106,55 +87,30 @@ namespace ExactOnline.Client.Sdk.Controllers
             return conn.GetFileAsync();
         }
 
-        /// <summary>
-        /// return the division number of the current user
-        /// </summary>
-        /// <returns>Division number</returns>
-        public int GetDivision()
+        private int GetDivision()
         {
-            if (_division > 0)
+            if (Division > 0)
             {
-                return _division;
+                return Division;
             }
 
             var currentMe = CurrentMe();
             if (currentMe != null)
             {
-                _division = currentMe.CurrentDivision;
-                return _division;
+				Division = currentMe.CurrentDivision;
+                return Division;
             }
 
             throw new Exception("Cannot get division. Please specify division explicitly via the constructor.");
         }
 
-        /// <summary>
-        /// return the division number of the current user
-        /// </summary>
-        /// <returns>Division number</returns>
-        public async Task<int> GetDivisionAsync()
+        private Me CurrentMe()
         {
-            if (_division > 0)
-            {
-                return _division;
-            }
-
-            var currentMe = await CurrentMeAsync().ConfigureAwait(false);
-            if (currentMe != null)
-            {
-                _division = currentMe.CurrentDivision;
-                return _division;
-            }
-
-            throw new Exception("Cannot get division. Please specify division explicitly via the constructor.");
-        }
-
-        /// <summary>
-        /// Returns instance of ExactOnlineQuery that can be used to manipulate data in Exact Online
-        /// </summary>
-        public ExactOnlineQuery<T> For<T>() where T : class
-        {
-            var controller = _controllers.GetController<T>();
-            return new ExactOnlineQuery<T>(controller);
+            var conn = new ApiConnection(_apiConnector, ExactOnlineApiUrl + "current/Me");
+            var response = conn.Get("$select=CurrentDivision");
+            response = ApiResponseCleaner.GetJsonArray(response);
+            var currentMe = EntityConverter.ConvertJsonArrayToObjectList<Me>(response);
+            return currentMe.FirstOrDefault();
         }
     }
 }

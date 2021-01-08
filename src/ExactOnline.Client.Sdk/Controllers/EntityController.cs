@@ -1,23 +1,21 @@
-﻿using System;
-using System.Collections;
-using ExactOnline.Client.Sdk.Delegates;
-using ExactOnline.Client.Sdk.Helpers;
+﻿using ExactOnline.Client.Sdk.Helpers;
 using ExactOnline.Client.Sdk.Interfaces;
+using System;
+using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace ExactOnline.Client.Sdk.Controllers
 {
-    /// <summary>
-    /// Controls the state of an entity to create the functionality for only sending altered fields to the API
-    /// </summary>
-    public class EntityController
+	/// <summary>
+	/// Controls the state of an entity to create the functionality for only sending altered fields to the API
+	/// </summary>
+	public class EntityController
     {
-        private readonly IApiConnection _connection;
-        private readonly GetEntityController _entityControllerDelegate;
         private readonly string _keyName; // Name of the field that identifies the entity
         private readonly string _identifier; // Value of the field that identifies the entity 
-        public object OriginalEntity { get; private set; }
+        private readonly IApiConnection _connection;
+        private readonly Func<object, EntityController> _getEntityControllerFunc;
 
         /// <summary>
         /// Creates an instance of EntityController
@@ -26,15 +24,17 @@ namespace ExactOnline.Client.Sdk.Controllers
         /// <param name="keyName">Name of the keyname field of the entity (mostly ID)</param>
         /// <param name="identifier">Name of the identifier field of the entity (mostly ID)</param>
         /// <param name="connection">Instance of IApiConnection to connect to the specific part of the API</param>
-        /// <param name="entityControllerDelegate">Delegate that gets the entity controller</param>
-        public EntityController(object entity, string keyName, string identifier, IApiConnection connection, GetEntityController entityControllerDelegate)
+        /// <param name="getEntityControllerFunc">Delegate that gets the entity controller</param>
+        public EntityController(object entity, string keyName, string identifier, IApiConnection connection, Func<object, EntityController> getEntityControllerFunc)
         {
-            _connection = connection;
+            OriginalEntity = Clone(entity);
             _keyName = keyName;
             _identifier = identifier;
-            OriginalEntity = Clone(entity);
-            _entityControllerDelegate = entityControllerDelegate;
+            _connection = connection;
+            _getEntityControllerFunc = getEntityControllerFunc;
         }
+
+        public object OriginalEntity { get; private set; }
 
         /// <summary>
         /// Indicates if an entity is updated 
@@ -59,7 +59,7 @@ namespace ExactOnline.Client.Sdk.Controllers
 
         private static object Clone(object entity)
         {
-            var returnEntity = Activator.CreateInstance(entity.GetType(), null);
+            var clonedEntity = Activator.CreateInstance(entity.GetType(), null);
             var writableProperties = entity.GetType().GetProperties().Where(p => p.CanWrite);
             foreach (var property in writableProperties)
             {
@@ -75,9 +75,9 @@ namespace ExactOnline.Client.Sdk.Controllers
                     }
                     value = newValue;
                 }
-                returnEntity.GetType().GetProperty(property.Name).SetValue(returnEntity, value);
+                clonedEntity.GetType().GetProperty(property.Name).SetValue(clonedEntity, value);
             }
-            return returnEntity;
+            return clonedEntity;
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace ExactOnline.Client.Sdk.Controllers
         public bool Update(object entity)
         {
             // Convert object to json
-            var json = EntityConverter.ConvertObjectToJson(OriginalEntity, entity, _entityControllerDelegate);
+            var json = EntityConverter.ConvertObjectToJson(OriginalEntity, entity, _getEntityControllerFunc);
 
             if (string.IsNullOrEmpty(json))
             {
@@ -114,7 +114,7 @@ namespace ExactOnline.Client.Sdk.Controllers
         public async Task<bool> UpdateAsync(object entity)
         {
             // Convert object to json
-            var json = EntityConverter.ConvertObjectToJson(OriginalEntity, entity, _entityControllerDelegate);
+            var json = EntityConverter.ConvertObjectToJson(OriginalEntity, entity, _getEntityControllerFunc);
 
             if (string.IsNullOrEmpty(json))
             {

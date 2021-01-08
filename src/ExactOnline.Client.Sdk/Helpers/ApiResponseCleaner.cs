@@ -23,11 +23,10 @@ namespace ExactOnline.Client.Sdk.Helpers
             var oldCulture = Thread.CurrentThread.CurrentCulture;
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
-            string output;
             try
             {
                 var jtoken = JsonConvert.DeserializeObject(response, new JsonSerializerSettings { DateFormatHandling = DateFormatHandling.MicrosoftDateFormat }) as JToken;
-                output = GetJsonFromObject(jtoken["d"] as JObject);
+                return GetJsonFromObject(jtoken["d"] as JObject);
             }
 			catch (Exception e)
 			{
@@ -37,7 +36,6 @@ namespace ExactOnline.Client.Sdk.Helpers
 			{
                 Thread.CurrentThread.CurrentCulture = oldCulture;
             }
-            return output;
         }
 
         public static string GetSkipToken(string response)
@@ -106,7 +104,6 @@ namespace ExactOnline.Client.Sdk.Helpers
             {
                 Thread.CurrentThread.CurrentCulture = oldCulture;
             }
-
         }
 
         /// <summary>

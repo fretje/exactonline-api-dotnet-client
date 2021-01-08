@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ExactOnline.Client.Sdk.Delegates;
+﻿using ExactOnline.Client.Sdk.Controllers;
 using ExactOnline.Client.Sdk.Exceptions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ExactOnline.Client.Sdk.Helpers
 {
-    /// <summary>
-    /// Convert entities from json to Exact Online object and vice versa
-    /// </summary>
-    public static class EntityConverter
+	/// <summary>
+	/// Convert entities from json to Exact Online object and vice versa
+	/// </summary>
+	public static class EntityConverter
     {
         /// <summary>
         /// Convert single object to Dynamic object
@@ -56,9 +56,8 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// </summary>
         /// <typeparam name="T">Type of Exact.Web.Api.Models</typeparam>
         /// <param name="entity">entity</param>
-        /// <param name="entityControllerDelegate">Delegate for entitycontroller</param>
         /// <returns>Json String</returns>
-        public static string ConvertObjectToJson<T>(T entity, GetEntityController entityControllerDelegate) =>
+        public static string ConvertObjectToJson<T>(T entity) =>
             JsonConvert.SerializeObject(entity, new ExactOnlineJsonConverter());
 
         /// <summary>
@@ -71,8 +70,8 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <param name="entity">Current State of the Entity</param>
         /// <param name="entityControllerDelegate">Delegate for entitycontroller</param>
         /// <returns>Json String</returns>
-        public static string ConvertObjectToJson<T>(T originalEntity, T entity, GetEntityController entityControllerDelegate) =>
-            JsonConvert.SerializeObject(entity, new ExactOnlineJsonConverter(originalEntity, entityControllerDelegate));
+        public static string ConvertObjectToJson<T>(T originalEntity, T entity, Func<object, EntityController> getEntityControllerFunc) =>
+            JsonConvert.SerializeObject(entity, new ExactOnlineJsonConverter(originalEntity, getEntityControllerFunc));
 
         /// <summary>
         /// Convert Json to Exact Online Object

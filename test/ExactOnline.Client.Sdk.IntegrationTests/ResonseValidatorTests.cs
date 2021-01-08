@@ -5,7 +5,7 @@ using System;
 namespace ExactOnline.Client.Sdk.IntegrationTests
 {
     [TestClass]
-    public class ResonseValidatorTests
+    public class ResponseValidatorTests
     {
         [TestCategory("Integration Tests")]
         [TestMethod]

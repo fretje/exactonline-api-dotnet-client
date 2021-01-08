@@ -1,5 +1,4 @@
 ﻿using ExactOnline.Client.Models;
-using ExactOnline.Client.Sdk.Delegates;
 using ExactOnline.Client.Sdk.Enums;
 using ExactOnline.Client.Sdk.Helpers;
 using ExactOnline.Client.Sdk.Interfaces;
@@ -12,30 +11,27 @@ using System.Threading.Tasks;
 namespace ExactOnline.Client.Sdk.Controllers
 {
 
-    /// <summary>
-    /// Class for managing entity Objects (Read, Get, Update & Delete)
-    /// </summary>
-    public class Controller<T> : IController<T>, IEntityManager where T : class
+	/// <summary>
+	/// Class for managing entity Objects (Read, Get, Update & Delete)
+	/// </summary>
+	public class Controller<T> : IController<T>, IEntityManager where T : class
     {
-        private readonly GetEntityController _entityControllerDelegate;
-        public ManagerForEntity GetManagerForEntity;
-        private readonly Hashtable _entityControllers;
+        private readonly Hashtable _entityControllers = new Hashtable();
         private readonly IApiConnection _conn;
-        private readonly string _keyname;
+		private readonly Func<Type, IEntityManager> _getEntityManager;
+		private readonly string _keyname;
         private string _expandfield;
 
         /// <summary>
         /// Create new instance of the controller
         /// </summary>
-        public Controller(IApiConnection conn)
+        public Controller(IApiConnection conn, Func<Type, IEntityManager> getEntityManager = null)
         {
             _conn = conn ?? throw new ArgumentException("Instance of type APIConnection cannot be null");
+			_getEntityManager = getEntityManager;
 
-            // Instantiate the class variables
-            _entityControllers = new Hashtable();
-
-            // Set keyname of the entity (name of the field that is used to identify)
-            var attributes = Attribute.GetCustomAttributes(typeof(T)).Where(x => x.GetType() == typeof(DataServiceKey)).Select(a => a); //DataServiceKey
+			// Set keyname of the entity (name of the field that is used to identify)
+			var attributes = Attribute.GetCustomAttributes(typeof(T)).Where(x => x.GetType() == typeof(DataServiceKey)).Select(a => a); //DataServiceKey
 
             // Find unique value of entity
             var enumerable = attributes as IList<Attribute> ?? attributes.ToList();
@@ -45,22 +41,21 @@ namespace ExactOnline.Client.Sdk.Controllers
             }
             var key = (DataServiceKey)enumerable.First();
             _keyname = key.DataServiceKeyName;
-            _entityControllerDelegate = GetEntityController;
         }
 
-        /// <summary>
-        /// Returns if the specified entity is managed by the controller
-        /// </summary>
-        public bool IsManagedEntity(object entity)
-        {
-            var identifierValue = GetIdentifierValue(entity);
-            return identifierValue != null && _entityControllers.Contains(identifierValue);
-        }
+		/// <summary>
+		/// Returns if the specified entity is managed by the controller
+		/// </summary>
+		public bool IsManagedEntity(object entity)
+		{
+			var identifierValue = GetIdentifierValue(entity);
+			return identifierValue != null && _entityControllers.Contains(identifierValue);
+		}
 
-        /// <summary>
-        /// Returns the number of entities of the current type
-        /// </summary>
-        public int Count(string query) => _conn.Count(query);
+		/// <summary>
+		/// Returns the number of entities of the current type
+		/// </summary>
+		public int Count(string query) => _conn.Count(query);
 
         /// <summary>
         /// Returns the number of entities of the current type
@@ -69,7 +64,7 @@ namespace ExactOnline.Client.Sdk.Controllers
 
         /// <summary>
         /// Gets specific collection of entities.
-        /// Please notice that this method will return at max 60 entities. 
+        /// Please notice that this method will return at max 60 entities (or 1000 when working with bulk or sync endpoints). 
         /// </summary>
         /// <param name="query">oData query</param>
         /// <returns>List of entity Objects</returns>
@@ -108,31 +103,22 @@ namespace ExactOnline.Client.Sdk.Controllers
         /// <param name="endpointType">Which endpoint type to use.</param>
         /// <returns>List of entity Objects</returns>
         public List<T> Get(string query, ref string skipToken, EndpointTypeEnum endpointType)
-        {
-            CheckValidEndpointType(endpointType);
+		{
+			CheckValidEndpointType(endpointType);
 
-            // Get the response and convert it to a list of entities of the specific type
-            var response = _conn.Get(query, endpointType);
+			// Get the response and convert it to a list of entities of the specific type
+			var response = _conn.Get(query, endpointType);
 
-            skipToken = ApiResponseCleaner.GetSkipToken(response);
-            response = ApiResponseCleaner.GetJsonArray(response);
+			return ParseGetResponse(response, out skipToken);
+		}
 
-            var entities = EntityConverter.ConvertJsonArrayToObjectList<T>(response);
-
-            // If the entity aren't managed already, register to managed entity collection
-            AddEntitiesToManagedEntitiesCollection(entities);
-
-            // Convert list
-            return entities.ConvertAll(x => x);
-        }
-
-        /// <summary>
-        /// Gets specific collection of entities and return a skipToken if there are more than
-        /// 60 entities to be returned.
-        /// </summary>
-        /// <param name="query">oData query</param>
-        /// <returns>List of entity Objects</returns>
-        public Task<Models.ApiList<T>> GetAsync(string query) => GetAsync(query, EndpointTypeEnum.Single);
+		/// <summary>
+		/// Gets specific collection of entities and return a skipToken if there are more than
+		/// 60 entities to be returned.
+		/// </summary>
+		/// <param name="query">oData query</param>
+		/// <returns>List of entity Objects</returns>
+		public Task<Models.ApiList<T>> GetAsync(string query) => GetAsync(query, EndpointTypeEnum.Single);
 
         /// <summary>
         /// Gets specific collection of entities and return a skipToken if there are more records
@@ -148,16 +134,9 @@ namespace ExactOnline.Client.Sdk.Controllers
             // Get the response and convert it to a list of entities of the specific type
             var response = await _conn.GetAsync(query, endpointType).ConfigureAwait(false);
 
-            var skipToken = ApiResponseCleaner.GetSkipToken(response);
-            response = ApiResponseCleaner.GetJsonArray(response);
+			var entities = ParseGetResponse(response, out var skipToken);
 
-            var entities = EntityConverter.ConvertJsonArrayToObjectList<T>(response);
-
-            // If the entities aren't managed already, register to managed entity collection
-            AddEntitiesToManagedEntitiesCollection(entities);
-
-            // Convert list
-            return new Models.ApiList<T>(entities.ConvertAll(x => x), skipToken);
+            return new Models.ApiList<T>(entities, skipToken);
         }
 
         private static void CheckValidEndpointType(EndpointTypeEnum endpointType)
@@ -172,13 +151,27 @@ namespace ExactOnline.Client.Sdk.Controllers
             }
         }
 
-        /// <summary>
-        /// Get entity using specific GUID
-        /// </summary>
-        /// <param name="guid">Global Unique Identifier of the entity</param>
-        /// <param name="parameters">parameters</param>
-        /// <returns>Entity if exists. Null if entity not exists.</returns>
-        public T GetEntity(string guid, string parameters)
+		private List<T> ParseGetResponse(string response, out string skipToken)
+		{
+			skipToken = ApiResponseCleaner.GetSkipToken(response);
+			response = ApiResponseCleaner.GetJsonArray(response);
+
+			var entities = EntityConverter.ConvertJsonArrayToObjectList<T>(response);
+
+			// If the entity aren't managed already, register to managed entity collection
+			AddEntitiesToManagedEntitiesCollection(entities);
+
+			// Convert list
+			return entities.ConvertAll(x => x);
+		}
+
+		/// <summary>
+		/// Get entity using specific GUID
+		/// </summary>
+		/// <param name="guid">Global Unique Identifier of the entity</param>
+		/// <param name="parameters">parameters</param>
+		/// <returns>Entity if exists. Null if entity not exists.</returns>
+		public T GetEntity(string guid, string parameters)
         {
             if (guid.Contains('}') || guid.Contains('{'))
             {
@@ -245,7 +238,7 @@ namespace ExactOnline.Client.Sdk.Controllers
             // Get Json code
             var created = false;
             var emptyEntity = Activator.CreateInstance<T>();
-            var json = EntityConverter.ConvertObjectToJson(emptyEntity, entity, _entityControllerDelegate);
+            var json = EntityConverter.ConvertObjectToJson(emptyEntity, entity, GetEntityController);
 
             // Send to API
             var response = _conn.Post(json);
@@ -288,7 +281,7 @@ namespace ExactOnline.Client.Sdk.Controllers
 
             // Get Json code
             var emptyEntity = Activator.CreateInstance<T>();
-            var json = EntityConverter.ConvertObjectToJson(emptyEntity, entity, _entityControllerDelegate);
+            var json = EntityConverter.ConvertObjectToJson(emptyEntity, entity, GetEntityController);
 
             // Send to API
             var response = await _conn.PostAsync(json).ConfigureAwait(false);
@@ -308,7 +301,7 @@ namespace ExactOnline.Client.Sdk.Controllers
                 if (supportedActions.CanRead)
                 {
                     // Get entity with linked entities (API Response for creating does not return the linked entities)
-                    createdEntity = GetEntity(GetIdentifierValue(createdEntity), _expandfield);
+                    createdEntity = await GetEntityAsync(GetIdentifierValue(createdEntity), _expandfield).ConfigureAwait(false);
                 }
                 return createdEntity;
             }
@@ -363,7 +356,7 @@ namespace ExactOnline.Client.Sdk.Controllers
                 : associatedController.UpdateAsync(entity);
         }
 
-        private bool IsUpdateable(T entity) => GetSupportedActions(entity).CanUpdate;
+        private static bool IsUpdateable(T entity) => GetSupportedActions(entity).CanUpdate;
 
         /// <summary>
         /// Deletes an entity from Exact Online
@@ -427,19 +420,19 @@ namespace ExactOnline.Client.Sdk.Controllers
             return returnValue;
         }
 
-        private bool IsDeleteable(T entity) => GetSupportedActions(entity).CanDelete;
+        private static bool IsDeleteable(T entity) => GetSupportedActions(entity).CanDelete;
 
         private static SupportedActionsSDK GetSupportedActions(T entity) => SupportedActionsSDK.GetByType(entity.GetType());
 
         /// <summary>
         /// Get the unique value of the entity
         /// </summary>
-        /// <returns>Identifier value of the entity. Null if the indicated keyname is set to null.</returns>
+        /// <returns>Identifier value of the entity. Null if the indicated keyname is set to null or is not found.</returns>
         public string GetIdentifierValue(object entity) =>
             _keyname == null
                 ? null
                 : _keyname.Contains(",")
-                ? throw new Exception("Currently the SDK doesn't support entities with a compound key.")
+                ? null // throw new Exception("Currently the SDK doesn't support entities with a compound key.") // why throw an exception if it only disables the auto change tracking?
                 : entity.GetType().GetProperty(_keyname).GetValue(entity).ToString();
 
         /// <summary>
@@ -467,26 +460,28 @@ namespace ExactOnline.Client.Sdk.Controllers
 
             if (!_entityControllers.Contains(entityIdentifier))
             {
-                var newController = new EntityController(entity, _keyname, GetIdentifierValue(entity), _conn, _entityControllerDelegate);
+                var newController = new EntityController(entity, _keyname, entityIdentifier, _conn, GetEntityController);
                 _entityControllers.Add(entityIdentifier, newController);
 
                 returnValue = true;
 
                 // Get linked entity fields
                 var linkedEntityFields = from property in entity.GetType().GetProperties()
-                                         let ns = property.GetValue(entity)?.GetType().Namespace
-                                         where ns != null && (property.GetValue(entity) != null)
-                                         && ns.Contains("System.Collections.Generic")
-                                         select property.GetValue(entity);
+										 let value = property.GetValue(entity)
+										 where value != null
+                                         let ns = value.GetType().Namespace
+                                         where ns != null
+											&& ns.Contains("System.Collections.Generic")
+                                         select value;
 
                 // Get associated controller & registrate entity
                 foreach (var field in linkedEntityFields)
                 {
                     foreach (var linkedEntity in (IEnumerable)field)
                     {
-                        if (GetManagerForEntity != null)
+                        if (_getEntityManager != null)
                         {
-                            var controller = GetManagerForEntity(linkedEntity.GetType());
+                            var controller = _getEntityManager(linkedEntity.GetType());
                             controller.AddEntityToManagedEntitiesCollection(linkedEntity);
                         }
                         else
@@ -496,6 +491,7 @@ namespace ExactOnline.Client.Sdk.Controllers
                     }
                 }
             }
+
             return returnValue;
         }
 
@@ -514,9 +510,9 @@ namespace ExactOnline.Client.Sdk.Controllers
         /// </summary>
         public EntityController GetEntityController(object o)
         {
-            var associatedController = GetManagerForEntity(o.GetType());
-            var id = associatedController.GetIdentifierValue(o);
-            return associatedController.GetEntityController(id);
+            var entityManager = _getEntityManager(o.GetType());
+            var id = entityManager.GetIdentifierValue(o);
+            return entityManager.GetEntityController(id);
         }
     }
 }

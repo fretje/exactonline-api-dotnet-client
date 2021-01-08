@@ -22,8 +22,5 @@ namespace ExactOnline.Client.Sdk.Interfaces
 
         string DoCleanRequest(string endpoint, string parameters); // Request without Content-Type for $count function, including parameters
         Task<string> DoCleanRequestAsync(string endpoint, string parameters); // Request without Content-Type for $count function, including parameters
-
-        int GetCurrentDivision(string endpoint);
-        Task<int> GetCurrentDivisionAsync(string endpoint);
     }
 }

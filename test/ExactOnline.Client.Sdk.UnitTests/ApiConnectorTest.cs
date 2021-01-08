@@ -19,7 +19,7 @@ namespace ExactOnline.Client.Sdk.UnitTests
 
 
         [TestMethod]
-        [TestCategory("Unit Test"), ExpectedException(typeof(ArgumentException))]
+        [TestCategory("Unit Test"), ExpectedException(typeof(ArgumentNullException))]
         public void ApiConnector_Constructor_WithoutDelegate_Fails() => 
             _ = new ApiConnector(null, null);
 

@@ -134,12 +134,12 @@ namespace ExactOnline.Client.Sdk.UnitTests
 			await new ExactOnlineQuery<Account>(_controllerMock).Select("Code").GetAsync().ConfigureAwait(false);
 
         [TestMethod]
-        [TestCategory("Unit Test"), ExpectedException(typeof(ArgumentException))]
+        [TestCategory("Unit Test"), ExpectedException(typeof(ArgumentNullException))]
         public void ExactOnlineQueryFor_WithEmptyController_Fails() =>
 			new ExactOnlineQuery<Account>(null).Get();
 
         [TestMethod]
-        [TestCategory("Unit Test"), ExpectedException(typeof(ArgumentException))]
+        [TestCategory("Unit Test"), ExpectedException(typeof(ArgumentNullException))]
         public async Task ExactOnlineQueryFor_WithEmptyController_FailsAsync() =>
 			await new ExactOnlineQuery<Account>(null).GetAsync().ConfigureAwait(false);
 

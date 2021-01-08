@@ -9,9 +9,9 @@ namespace ExactOnline.Client.Sdk.Interfaces
     /// </summary>
     public interface IEntityManager
     {
-        bool IsManagedEntity(object entity);
+		bool IsManagedEntity(object entity);
 
-        bool AddEntityToManagedEntitiesCollection(object entity);
+		bool AddEntityToManagedEntitiesCollection(object entity);
 
         EntityController GetEntityController(string guid);
 
