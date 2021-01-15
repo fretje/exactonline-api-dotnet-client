@@ -10,6 +10,16 @@ using System.Reflection;
 
 namespace ExactOnline.Client.Sdk.Sync
 {
+	public class FieldInfo
+	{
+		public FieldInfo(string name, Type type, bool isKey) =>
+			(Name, Type, IsKey) = (name, type, isKey);
+
+		public string Name { get; private set; }
+		public Type Type { get; set; }
+		public bool IsKey { get; set; }
+	}
+
 	public class ModelInfo
 	{
 		private static readonly Hashtable _modelInfos = new Hashtable();
@@ -35,7 +45,7 @@ namespace ExactOnline.Client.Sdk.Sync
 		private readonly Lazy<LambdaExpression> _timestampLambda;
 		private readonly Lazy<LambdaExpression> _timestampCastedToNullableLambda;
 		private readonly Lazy<LambdaExpression> _modifiedLambda;
-		private readonly Lazy<string[]> _fieldNames;
+		private readonly Lazy<FieldInfo[]> _fields;
 
 		public ModelInfo(Type modelType)
 		{
@@ -48,7 +58,7 @@ namespace ExactOnline.Client.Sdk.Sync
 			_timestampLambda = new Lazy<LambdaExpression>(() => LambdaForProperty(TimestampName));
 			_timestampCastedToNullableLambda = new Lazy<LambdaExpression>(() => LambdaForPropertyCastedToNullable(TimestampName));
 			_modifiedLambda = new Lazy<LambdaExpression>(() => LambdaForPropertyCastedToNullable(ModifiedName));
-			_fieldNames = new Lazy<string[]>(() => GetFieldNames());
+			_fields = new Lazy<FieldInfo[]>(() => GetFields());
 		}
 
 		public bool SupportsCreate => _supportedActions.Value.CanCreate;
@@ -92,7 +102,8 @@ namespace ExactOnline.Client.Sdk.Sync
 		public Expression<Func<TModel, DateTime?>> ModifiedLambda<TModel>() =>
 			_modifiedLambda.Value as Expression<Func<TModel, DateTime?>>;
 
-		public string[] FieldNames(bool forSync = false) => forSync ? FieldNamesForSync() : _fieldNames.Value;
+		public FieldInfo[] Fields(bool forSync = false) => forSync ? FieldsForSync() : _fields.Value;
+		public string[] FieldNames(bool forSync = false) => Fields(forSync).Select(f => f.Name).ToArray();
 
 		public bool HasDeletedEntityType =>
 			_modelType == typeof(Client.Models.CRM.Account) ||
@@ -192,23 +203,27 @@ namespace ExactOnline.Client.Sdk.Sync
 			return DynamicExpressionParser.ParseLambda(_modelType, nullableType, propertyName);
 		}
 
-		private string[] FieldNamesForSync() =>
-			_fieldNames.Value.Where(name =>
-				!(_modelType == typeof(Client.Models.CRM.Quotation) &&
-						name == "QuotationLines" ||
-				  _modelType == typeof(Client.Models.SalesInvoice.SalesInvoice) &&
-						name == "SalesInvoiceLines" ||
-				  _modelType == typeof(Client.Models.SalesOrder.GoodsDelivery) &&
-						name == "GoodsDeliveryLines" ||
-				  _modelType == typeof(Client.Models.SalesOrder.SalesOrder) &&
-						name == "SalesOrderLines" ||
-				  _modelType == typeof(Client.Models.SalesOrder.SalesOrderLine) &&
-						(name == "QuantityDelivered" || name == "QuantityInvoiced" || name == "Margin"))).ToArray();
+		private FieldInfo[] GetFields() =>
+			(from p in _modelType.GetProperties()
+			 where p.PropertyType == typeof(string) || !typeof(IEnumerable).IsAssignableFrom(p.PropertyType)
+			 let fieldName = p.GetCustomAttribute<JsonPropertyAttribute>()?.PropertyName ?? p.Name
+			 select new FieldInfo(
+				 fieldName,
+				 p.PropertyType,
+				 IdentifierName?.Split(',')?.Any(idName => idName == fieldName) ?? false))
+			.ToArray();
 
-		private string[] GetFieldNames() =>
-			_modelType
-				.GetProperties()
-				.Select(p => p.GetCustomAttribute<JsonPropertyAttribute>()?.PropertyName ?? p.Name)
-				.ToArray();
+		private FieldInfo[] FieldsForSync() =>
+			_fields.Value.Where(field =>
+				!(_modelType == typeof(Client.Models.CRM.Quotation) &&
+						field.Name == "QuotationLines" ||
+				  _modelType == typeof(Client.Models.SalesInvoice.SalesInvoice) &&
+						field.Name == "SalesInvoiceLines" ||
+				  _modelType == typeof(Client.Models.SalesOrder.GoodsDelivery) &&
+						field.Name == "GoodsDeliveryLines" ||
+				  _modelType == typeof(Client.Models.SalesOrder.SalesOrder) &&
+						field.Name == "SalesOrderLines" ||
+				  _modelType == typeof(Client.Models.SalesOrder.SalesOrderLine) &&
+						(field.Name == "QuantityDelivered" || field.Name == "QuantityInvoiced" || field.Name == "Margin"))).ToArray();
 	}
 }
