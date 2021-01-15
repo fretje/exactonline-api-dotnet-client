@@ -7,7 +7,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFramework.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-            ContextKey = "ExactOnline.Client.Sdk.Sync.EntityFramework.EntityFrameworkDbContext";
         }
 
         protected override void Seed(EntityFrameworkDbContext context)

@@ -11,6 +11,14 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFramework
 		public EntityFrameworkTarget(string nameOrConnectionString = null) =>
 			_nameOrConnectionString = nameOrConnectionString;
 
+		public void InitializeDatabase(bool force)
+		{
+			using (var db = new EntityFrameworkDbContext(_nameOrConnectionString))
+			{
+				db.Database.Initialize(force);
+			}
+		}
+
 		protected override ISyncTargetController<TModel> CreateControllerFor<TModel>() =>
 			Activator.CreateInstance(
 				typeof(EntityFrameworkTargetController<,>)

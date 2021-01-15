@@ -14,7 +14,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFramework
 			: base(string.IsNullOrEmpty(nameOrConnectionString)
 				  ? typeof(EntityFrameworkDbContext).FullName
 				  : nameOrConnectionString) =>
-			Database.SetInitializer(new MigrateDatabaseToLatestVersion<EntityFrameworkDbContext, Migrations.Configuration>());
+			Database.SetInitializer(new MigrateDatabaseToLatestVersion<EntityFrameworkDbContext, Migrations.Configuration>(true));
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
