@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ExactOnline.Client.Sdk.Sync
@@ -61,7 +62,7 @@ namespace ExactOnline.Client.Sdk.Sync
 			return result;
 		}
 
-		public static async Task<SyncResult> SynchronizeWithAsync<TModel>(this ExactOnlineQuery<TModel> query, ISyncTarget syncTarget, ExactOnlineClient client)
+		public static async Task<SyncResult> SynchronizeWithAsync<TModel>(this ExactOnlineQuery<TModel> query, ISyncTarget syncTarget, ExactOnlineClient client, CancellationToken cancellationToken = default)
 			where TModel : class
 		{
 			var modelInfo = ModelInfo.For<TModel>();
@@ -73,11 +74,11 @@ namespace ExactOnline.Client.Sdk.Sync
 
 			if (endpointType == EndpointTypeEnum.Sync)
 			{
-				maxTimestamp = await targetController.GetMaxTimestampAsync().ConfigureAwait(false);
+				maxTimestamp = await targetController.GetMaxTimestampAsync(cancellationToken).ConfigureAwait(false);
 			}
 			else if (modelInfo.HasModifiedProperty)
 			{
-				maxModified = await targetController.GetMaxModifiedAsync().ConfigureAwait(false);
+				maxModified = await targetController.GetMaxModifiedAsync(cancellationToken).ConfigureAwait(false);
 			}
 
 			PrepareForSync(query, modelInfo, endpointType, maxTimestamp, maxModified);
@@ -85,6 +86,8 @@ namespace ExactOnline.Client.Sdk.Sync
 			var skiptoken = default(string);
 			do
 			{
+				cancellationToken.ThrowIfCancellationRequested();
+
 				var apiList = await query.GetAsync(skiptoken, endpointType).ConfigureAwait(false);
 				skiptoken = apiList.SkipToken;
 				var entities = apiList.List;
@@ -92,12 +95,14 @@ namespace ExactOnline.Client.Sdk.Sync
 				result.RecordsRead += entities.Count;
 
 				result.RecordsInsertedOrUpdated +=
-					await targetController.CreateOrUpdateEntitiesAsync(entities).ConfigureAwait(false);
+					await targetController.CreateOrUpdateEntitiesAsync(entities, cancellationToken).ConfigureAwait(false);
 
 			} while (!string.IsNullOrEmpty(skiptoken));
 
 			if (endpointType == EndpointTypeEnum.Sync && modelInfo.HasDeletedEntityType)
 			{
+				cancellationToken.ThrowIfCancellationRequested();
+
 				var deleted = (await client.DeletedFor(modelInfo.DeletedEntityType, maxTimestamp)
 					.GetAsync().ConfigureAwait(false))
 					.List
@@ -105,7 +110,7 @@ namespace ExactOnline.Client.Sdk.Sync
 
 				result.RecordsDeletedRead += deleted.Length;
 
-				result.RecordsDeleted = await targetController.DeleteEntitiesAsync(deleted).ConfigureAwait(false);
+				result.RecordsDeleted = await targetController.DeleteEntitiesAsync(deleted, cancellationToken).ConfigureAwait(false);
 			}
 
 			Debug.WriteLine(result);

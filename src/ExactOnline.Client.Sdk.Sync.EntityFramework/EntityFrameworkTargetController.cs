@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Dynamic.Core;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ExactOnline.Client.Sdk.Sync.EntityFramework
@@ -26,13 +27,13 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFramework
 			}
 		}
 
-		public override async Task<long> GetMaxTimestampAsync()
+		public override async Task<long> GetMaxTimestampAsync(CancellationToken cancellationToken)
 		{
 			using (var db = new EntityFrameworkDbContext(_nameOrConnectionString))
 			{
 				return await db.Set<TModel>()
 					.Select(ModelInfo.TimestampCastedToNullableLambda<TModel>())
-					.MaxAsync().ConfigureAwait(false) ?? 0;
+					.MaxAsync(cancellationToken).ConfigureAwait(false) ?? 0;
 			}
 		}
 
@@ -46,13 +47,13 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFramework
 			}
 		}
 
-		public override async Task<DateTime?> GetMaxModifiedAsync()
+		public override async Task<DateTime?> GetMaxModifiedAsync(CancellationToken cancellationToken)
 		{
 			using (var db = new EntityFrameworkDbContext(_nameOrConnectionString))
 			{
 				return await db.Set<TModel>()
 					.Select(ModelInfo.ModifiedLambda<TModel>())
-					.MaxAsync().ConfigureAwait(false);
+					.MaxAsync(cancellationToken).ConfigureAwait(false);
 			}
 		}
 
@@ -64,12 +65,12 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFramework
 			}
 			using (var db = new EntityFrameworkDbContext(_nameOrConnectionString))
 			{
-				CreateOrUpdateEntities(entities, db);
+				CreateOrUpdateEntities(entities, db, GetExistingIds());
 				return db.SaveChanges();
 			}
 		}
 
-		public override async Task<int> CreateOrUpdateEntitiesAsync(List<TModel> entities)
+		public override async Task<int> CreateOrUpdateEntitiesAsync(List<TModel> entities, CancellationToken cancellationToken)
 		{
 			if (!entities.Any())
 			{
@@ -77,14 +78,33 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFramework
 			}
 			using (var db = new EntityFrameworkDbContext(_nameOrConnectionString))
 			{
-				CreateOrUpdateEntities(entities, db);
-				return await db.SaveChangesAsync().ConfigureAwait(false);
+				CreateOrUpdateEntities(entities, db, await GetExistingIdsAsync(cancellationToken).ConfigureAwait(false));
+				return await db.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 			}
 		}
 
-		private void CreateOrUpdateEntities(List<TModel> entities, EntityFrameworkDbContext db)
+		private TId[] GetExistingIds()
 		{
-			var existingIds = GetExistingIds();
+			using (var db = new EntityFrameworkDbContext(_nameOrConnectionString))
+			{
+				return db.Set<TModel>()
+					.Select(ModelInfo.IdentifierLambda<TModel, TId>())
+					.ToArray();
+			}
+		}
+
+		private async Task<TId[]> GetExistingIdsAsync(CancellationToken cancellationToken)
+		{
+			using (var db = new EntityFrameworkDbContext(_nameOrConnectionString))
+			{
+				return await db.Set<TModel>()
+					.Select(ModelInfo.IdentifierLambda<TModel, TId>())
+					.ToArrayAsync(cancellationToken).ConfigureAwait(false);
+			}
+		}
+
+		private void CreateOrUpdateEntities(List<TModel> entities, EntityFrameworkDbContext db, TId[] existingIds)
+		{
 			foreach (var entity in entities)
 			{
 				var idValue = ModelInfo.IdentifierValue<TModel, TId>(entity);
@@ -102,16 +122,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFramework
 			}
 		}
 
-		private TId[] GetExistingIds()
-		{
-			using (var db = new EntityFrameworkDbContext(_nameOrConnectionString))
-			{
-				return db.Set<TModel>()
-					.Select(ModelInfo.IdentifierLambda<TModel, TId>())
-					.ToArray();
-			}
-		}
-
 		public override int DeleteEntities(Guid[] deleted)
 		{
 			if (deleted == null || deleted.Length == 0)
@@ -125,7 +135,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFramework
 			}
 		}
 
-		public override async Task<int> DeleteEntitiesAsync(Guid[] deleted)
+		public override async Task<int> DeleteEntitiesAsync(Guid[] deleted, CancellationToken cancellationToken)
 		{
 			if (deleted == null || deleted.Length == 0)
 			{
@@ -134,7 +144,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFramework
 			using (var db = new EntityFrameworkDbContext(_nameOrConnectionString))
 			{
 				DeleteEntities(deleted, db);
-				return await db.SaveChangesAsync().ConfigureAwait(false);
+				return await db.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 			}
 		}
 
