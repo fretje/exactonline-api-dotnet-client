@@ -9,6 +9,7 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 
 namespace ConsoleApplication
 {
@@ -18,7 +19,7 @@ namespace ConsoleApplication
 
 		private static readonly string _refreshTokenCacheFile = @"c:\temp\refreshTokenCache";
 		private static readonly string _accessTokenCacheFile = @"c:\temp\accessTokenCache";
-		private static readonly string _accessTokenExpirationUtcCacheFile = @"c:\temp\accessTokenExpirationUtcCache";
+		private static readonly string _accessTokenExpirationCacheFile = @"c:\temp\accessTokenExpirationUtcCache";
 
 		private static string _refreshToken
 		{
@@ -30,18 +31,18 @@ namespace ConsoleApplication
 			get => File.Exists(_accessTokenCacheFile) ? File.ReadAllText(_accessTokenCacheFile) : null;
 			set => File.WriteAllText(_accessTokenCacheFile, value);
 		}
-		private static DateTime? _accessTokenExpirationUtc
+		private static DateTimeOffset? _accessTokenExpiration
 		{
-			get => File.Exists(_accessTokenExpirationUtcCacheFile) ? DateTime.Parse(File.ReadAllText(_accessTokenExpirationUtcCacheFile), null, DateTimeStyles.RoundtripKind) : (DateTime?)null;
+			get => File.Exists(_accessTokenExpirationCacheFile) ? DateTime.Parse(File.ReadAllText(_accessTokenExpirationCacheFile), null, DateTimeStyles.RoundtripKind) : (DateTime?)null;
 			set
 			{
 				if (value.HasValue)
 				{
-					File.WriteAllText(_accessTokenExpirationUtcCacheFile, value.Value.ToString("o"));
+					File.WriteAllText(_accessTokenExpirationCacheFile, value.Value.ToString("o"));
 				}
 				else
 				{
-					File.Delete(_accessTokenExpirationUtcCacheFile);
+					File.Delete(_accessTokenExpirationCacheFile);
 				}
 			}
 		}
@@ -52,10 +53,10 @@ namespace ConsoleApplication
 			// To make this work set the authorisation properties of your test app in the testapp.config.
 			var testApp = new TestApp();
 
-			var authorizer = new ExactOnlineAuthorizer(_exactOnlineUrl, testApp.ClientId.ToString(), testApp.ClientSecret, testApp.CallbackUrl, _refreshToken, _accessToken, _accessTokenExpirationUtc);
-			authorizer.AnyTokenUpdated += (sender, e) => (_refreshToken, _accessToken, _accessTokenExpirationUtc) = (e.NewRefreshToken, e.NewAccessToken, e.NewAccessTokenExpirationUtc);
-
-			var client = new ExactOnlineClient(_exactOnlineUrl, authorizer.GetAccessToken);
+			var httpClient = new HttpClient();
+			var authorizer = new ExactOnlineAuthorizer(httpClient, _exactOnlineUrl, testApp.ClientId.ToString(), testApp.ClientSecret, testApp.CallbackUrl, _refreshToken, _accessToken, _accessTokenExpiration);
+			authorizer.AnyTokenUpdated += (sender, e) => (_refreshToken, _accessToken, _accessTokenExpiration) = (e.NewRefreshToken, e.NewAccessToken, e.NewAccessTokenExpiration);
+			var client = new ExactOnlineClient(_exactOnlineUrl, 0, authorizer.GetAccessToken, httpClient);
 
 			// Get the Code and Name of a random account in the administration.
 			var fields = new[] { "Code", "Name" };

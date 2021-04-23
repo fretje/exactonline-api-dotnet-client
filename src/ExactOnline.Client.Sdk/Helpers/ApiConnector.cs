@@ -6,9 +6,13 @@ using ExactOnline.Client.Sdk.Interfaces;
 using ExactOnline.Client.Sdk.Models;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,9 +23,10 @@ namespace ExactOnline.Client.Sdk.Helpers
 	/// Class for doing request to REST API
 	/// </summary>
 	public class ApiConnector : IApiConnector
-    {
-        private readonly AccessTokenManagerDelegate _accessTokenDelegate;
-        private readonly ExactOnlineClient _client;
+	{
+		private readonly AccessTokenManagerDelegate _accessTokenDelegate;
+		private readonly HttpClient _httpClient;
+		public EolResponseHeader EolResponseHeader { get; set; }
 
 		private int _minutelyRemaining = -1;
 		private DateTime _minutelyResetTime;
@@ -39,10 +44,10 @@ namespace ExactOnline.Client.Sdk.Helpers
 		/// </summary>
 		/// <param name="accessTokenDelegate">Delegate that provides a valid oAuth Access Token</param>
 		/// <param name="client">The ExactOnlineClient this connector is associated with</param>
-		public ApiConnector(AccessTokenManagerDelegate accessTokenDelegate, ExactOnlineClient client)
-        {
-            _accessTokenDelegate = accessTokenDelegate ?? throw new ArgumentNullException(nameof(accessTokenDelegate));
-            _client = client;
+		public ApiConnector(AccessTokenManagerDelegate accessTokenDelegate, HttpClient httpClient)
+		{
+			_accessTokenDelegate = accessTokenDelegate ?? throw new ArgumentNullException(nameof(accessTokenDelegate));
+			_httpClient = httpClient;
 		}
 
 		/// <summary>
@@ -52,212 +57,202 @@ namespace ExactOnline.Client.Sdk.Helpers
 		/// <param name="querystring">querystring</param>
 		/// <returns>String with API Response in Json Format</returns>
 		public string DoGetRequest(string endpoint, string querystring) =>
-            GetResponse(CreateGetRequest(endpoint, querystring));
+			GetResponse(CreateGetRequest(endpoint, querystring));
 
-        /// <summary>
-        /// Read Data: Perform a GET Request on the API
-        /// </summary>
-        /// <param name="endpoint">{URI}/{Division}/{Resource}/{Entity}</param>
-        /// <param name="querystring">querystring</param>
-        /// <returns>String with API Response in Json Format</returns>
-        public Task<string> DoGetRequestAsync(string endpoint, string querystring) =>
-            GetResponseAsync(CreateGetRequest(endpoint, querystring));
+		/// <summary>
+		/// Read Data: Perform a GET Request on the API
+		/// </summary>
+		/// <param name="endpoint">{URI}/{Division}/{Resource}/{Entity}</param>
+		/// <param name="querystring">querystring</param>
+		/// <returns>String with API Response in Json Format</returns>
+		public Task<string> DoGetRequestAsync(string endpoint, string querystring) =>
+			GetResponseAsync(CreateGetRequest(endpoint, querystring));
 
-        /// <summary>
-        /// Read Data: Perform a GET Request on the API
-        /// </summary>
-        /// <param name="endpoint">full url</param>
-        /// <returns>Stream</returns>
-        public Stream DoGetFileRequest(string endpoint) =>
-            GetResponseStream(CreateGetRequest(endpoint));
+		/// <summary>
+		/// Read Data: Perform a GET Request on the API
+		/// </summary>
+		/// <param name="endpoint">full url</param>
+		/// <returns>Stream</returns>
+		public Stream DoGetFileRequest(string endpoint) =>
+			GetResponseStream(CreateGetRequest(endpoint));
 
-        /// <summary>
-        /// Read Data: Perform a GET Request on the API
-        /// </summary>
-        /// <param name="endpoint">full url</param>
-        /// <returns>Stream</returns>
-        public Task<Stream> DoGetFileRequestAsync(string endpoint) =>
-            GetResponseStreamAsync(CreateGetRequest(endpoint));
+		/// <summary>
+		/// Read Data: Perform a GET Request on the API
+		/// </summary>
+		/// <param name="endpoint">full url</param>
+		/// <returns>Stream</returns>
+		public Task<Stream> DoGetFileRequestAsync(string endpoint) =>
+			GetResponseStreamAsync(CreateGetRequest(endpoint));
 
-        /// <summary>
-        /// Create Data: Perform a POST Request on the API
-        /// </summary>
-        /// <param name="endpoint">{URI}/{Division}/{Resource}/{Entity}</param>
-        /// <param name="postdata">String containing data of new entity in Json format</param>
-        /// <returns>String with API Response in Json Format</returns>
-        public string DoPostRequest(string endpoint, string postdata) =>
-            GetResponse(CreatePostRequest(endpoint, postdata));
+		/// <summary>
+		/// Create Data: Perform a POST Request on the API
+		/// </summary>
+		/// <param name="endpoint">{URI}/{Division}/{Resource}/{Entity}</param>
+		/// <param name="postdata">String containing data of new entity in Json format</param>
+		/// <returns>String with API Response in Json Format</returns>
+		public string DoPostRequest(string endpoint, string postdata) =>
+			GetResponse(CreatePostRequest(endpoint, postdata));
 
-        /// <summary>
-        /// Create Data: Perform a POST Request on the API
-        /// </summary>
-        /// <param name="endpoint">{URI}/{Division}/{Resource}/{Entity}</param>
-        /// <param name="postdata">String containing data of new entity in Json format</param>
-        /// <returns>String with API Response in Json Format</returns>
-        public Task<string> DoPostRequestAsync(string endpoint, string postdata) =>
-            GetResponseAsync(CreatePostRequest(endpoint, postdata));
+		/// <summary>
+		/// Create Data: Perform a POST Request on the API
+		/// </summary>
+		/// <param name="endpoint">{URI}/{Division}/{Resource}/{Entity}</param>
+		/// <param name="postdata">String containing data of new entity in Json format</param>
+		/// <returns>String with API Response in Json Format</returns>
+		public Task<string> DoPostRequestAsync(string endpoint, string postdata) =>
+			GetResponseAsync(CreatePostRequest(endpoint, postdata));
 
-        /// <summary>
-        /// Update data: Perform a PUT Request on API
-        /// </summary>
-        /// <param name="endpoint">{URI}/{Division}/{Resource}/{Entity}</param>
-        /// <param name="putData">String containing updated entity data in Json format</param>
-        /// <returns>String with API Response in Json Format</returns>
-        public string DoPutRequest(string endpoint, string putData) =>
-            GetResponse(CreatePutRequest(endpoint, putData));
+		/// <summary>
+		/// Update data: Perform a PUT Request on API
+		/// </summary>
+		/// <param name="endpoint">{URI}/{Division}/{Resource}/{Entity}</param>
+		/// <param name="putData">String containing updated entity data in Json format</param>
+		/// <returns>String with API Response in Json Format</returns>
+		public string DoPutRequest(string endpoint, string putData) =>
+			GetResponse(CreatePutRequest(endpoint, putData));
 
-        /// <summary>
-        /// Update data: Perform a PUT Request on API
-        /// </summary>
-        /// <param name="endpoint">{URI}/{Division}/{Resource}/{Entity}</param>
-        /// <param name="putData">String containing updated entity data in Json format</param>
-        /// <returns>String with API Response in Json Format</returns>
-        public Task<string> DoPutRequestAsync(string endpoint, string putData) =>
-            GetResponseAsync(CreatePutRequest(endpoint, putData));
+		/// <summary>
+		/// Update data: Perform a PUT Request on API
+		/// </summary>
+		/// <param name="endpoint">{URI}/{Division}/{Resource}/{Entity}</param>
+		/// <param name="putData">String containing updated entity data in Json format</param>
+		/// <returns>String with API Response in Json Format</returns>
+		public Task<string> DoPutRequestAsync(string endpoint, string putData) =>
+			GetResponseAsync(CreatePutRequest(endpoint, putData));
 
-        /// <summary>
-        /// Delete entity: Perform a DELETE Request on API
-        /// </summary>
-        /// <param name="endpoint">{URI}/{Division}/{Resource}/{Entity}</param>
-        /// <returns>String with API Response in Json Format</returns>
-        public string DoDeleteRequest(string endpoint) =>
-            GetResponse(CreateDeleteRequest(endpoint));
+		/// <summary>
+		/// Delete entity: Perform a DELETE Request on API
+		/// </summary>
+		/// <param name="endpoint">{URI}/{Division}/{Resource}/{Entity}</param>
+		/// <returns>String with API Response in Json Format</returns>
+		public string DoDeleteRequest(string endpoint) =>
+			GetResponse(CreateDeleteRequest(endpoint));
 
-        /// <summary>
-        /// Delete entity: Perform a DELETE Request on API
-        /// </summary>
-        /// <param name="endpoint">{URI}/{Division}/{Resource}/{Entity}</param>
-        /// <returns>String with API Response in Json Format</returns>
-        public Task<string> DoDeleteRequestAsync(string endpoint) =>
-            GetResponseAsync(CreateDeleteRequest(endpoint));
+		/// <summary>
+		/// Delete entity: Perform a DELETE Request on API
+		/// </summary>
+		/// <param name="endpoint">{URI}/{Division}/{Resource}/{Entity}</param>
+		/// <returns>String with API Response in Json Format</returns>
+		public Task<string> DoDeleteRequestAsync(string endpoint) =>
+			GetResponseAsync(CreateDeleteRequest(endpoint));
 
-        /// <summary>
-        /// Request without 'Accept' Header, including parameters
-        /// </summary>
-        /// <param name="endpoint"></param>
-        /// <param name="querystring">querystring</param>
-        /// <returns></returns>
-        public string DoCleanRequest(string endpoint, string querystring) =>
-            GetResponse(CreateCleanRequest(endpoint, querystring));
+		/// <summary>
+		/// Request without 'Accept' Header, including parameters
+		/// </summary>
+		/// <param name="endpoint"></param>
+		/// <param name="querystring">querystring</param>
+		/// <returns></returns>
+		public string DoCleanRequest(string endpoint, string querystring) =>
+			GetResponse(CreateCleanRequest(endpoint, querystring));
 
-        /// <summary>
-        /// Request without 'Accept' Header, including parameters
-        /// </summary>
-        /// <param name="endpoint"></param>
-        /// <param name="querystring">querystring</param>
-        /// <returns></returns>
-        public Task<string> DoCleanRequestAsync(string endpoint, string querystring) =>
-            GetResponseAsync(CreateCleanRequest(endpoint, querystring));
+		/// <summary>
+		/// Request without 'Accept' Header, including parameters
+		/// </summary>
+		/// <param name="endpoint"></param>
+		/// <param name="querystring">querystring</param>
+		/// <returns></returns>
+		public Task<string> DoCleanRequestAsync(string endpoint, string querystring) =>
+			GetResponseAsync(CreateCleanRequest(endpoint, querystring));
 
-        private HttpWebRequest CreateGetRequest(string endpoint, string querystring = null) =>
-            CreateRequest(RequestTypeEnum.GET, endpoint, querystring);
-        private HttpWebRequest CreatePostRequest(string endpoint, string postdata) =>
-            CreateRequest(RequestTypeEnum.POST, endpoint, data: postdata);
-        private HttpWebRequest CreatePutRequest(string endpoint, string putData) =>
-            CreateRequest(RequestTypeEnum.PUT, endpoint, data: putData);
-        private HttpWebRequest CreateDeleteRequest(string endpoint) =>
-            CreateRequest(RequestTypeEnum.DELETE, endpoint);
-        private HttpWebRequest CreateCleanRequest(string endpoint, string querystring) =>
-            CreateRequest(RequestTypeEnum.GET, endpoint, querystring, acceptContentType: null);
+		private HttpRequestMessage CreateGetRequest(string endpoint, string querystring = null) =>
+			CreateRequest(HttpMethod.Get, endpoint, querystring);
+		private HttpRequestMessage CreatePostRequest(string endpoint, string postdata) =>
+			CreateRequest(HttpMethod.Post, endpoint, data: postdata);
+		private HttpRequestMessage CreatePutRequest(string endpoint, string putData) =>
+			CreateRequest(HttpMethod.Put, endpoint, data: putData);
+		private HttpRequestMessage CreateDeleteRequest(string endpoint) =>
+			CreateRequest(HttpMethod.Delete, endpoint);
+		private HttpRequestMessage CreateCleanRequest(string endpoint, string querystring) =>
+			CreateRequest(HttpMethod.Get, endpoint, querystring, acceptContentType: null);
 
-        private HttpWebRequest CreateRequest(RequestTypeEnum requestType, string endpoint, string querystring = null, string data = null, string acceptContentType = "application/json")
-        {
-            if (string.IsNullOrEmpty(endpoint))
-            {
-                throw new BadRequestException("Cannot perform request with empty endpoint");
-            }
-            if ((requestType == RequestTypeEnum.POST || requestType == RequestTypeEnum.PUT) && string.IsNullOrEmpty(data))
-            {
-                throw new BadRequestException("Cannot perform request with empty data");
-            }
+		private HttpRequestMessage CreateRequest(HttpMethod httpMethod, string endpoint, string querystring = null, string data = null, string acceptContentType = "application/json")
+		{
+			if (string.IsNullOrEmpty(endpoint))
+			{
+				throw new BadRequestException("Cannot perform request with empty endpoint");
+			}
+			if ((httpMethod == HttpMethod.Post || httpMethod == HttpMethod.Put) && string.IsNullOrEmpty(data))
+			{
+				throw new BadRequestException("Cannot perform request with empty data");
+			}
 
-            var request = CreateWebRequest(endpoint, querystring, requestType, acceptContentType);
+			var request = CreateWebRequest(endpoint, querystring, httpMethod, acceptContentType);
 
-            if (!string.IsNullOrEmpty(data))
-            {
-                var bytes = Encoding.GetEncoding("utf-8").GetBytes(data);
-                request.ContentLength = bytes.Length;
+			if (!string.IsNullOrEmpty(data))
+			{
+				request.Content = new StringContent(data, Encoding.UTF8, "application/json");
+			}
+			Debug.Write(httpMethod.ToString() + " ");
+			Debug.WriteLine(request.RequestUri);
+			if (!string.IsNullOrEmpty(data))
+			{
+				Debug.WriteLine(data);
+			}
 
-                using (var writeStream = request.GetRequestStream())
-                {
-                    writeStream.Write(bytes, 0, bytes.Length);
-                }
-            }
+			return request;
+		}
 
-            Debug.Write(requestType.ToString() + " ");
-            Debug.WriteLine(request.RequestUri);
-            if (!string.IsNullOrEmpty(data))
-            {
-                Debug.WriteLine(data);
-            }
+		private HttpRequestMessage CreateWebRequest(string url, string querystring, HttpMethod httpMethod, string acceptContentType = "application/json")
+		{
+			if (!string.IsNullOrEmpty(querystring))
+			{
+				url += "?" + querystring;
+			}
 
-            return request;
-        }
+			HttpRequestMessage request = new HttpRequestMessage(httpMethod, url);
+			if (!string.IsNullOrEmpty(acceptContentType))
+			{
+				request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(acceptContentType));
+			}
+			request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _accessTokenDelegate());
 
-        private HttpWebRequest CreateWebRequest(string url, string querystring, RequestTypeEnum method, string acceptContentType = "application/json")
-        {
-            if (!string.IsNullOrEmpty(querystring))
-            {
-                url += "?" + querystring;
-            }
+			return request;
+		}
 
-            var request = (HttpWebRequest)WebRequest.Create(url);
-            request.ServicePoint.Expect100Continue = false;
-            request.Method = method.ToString();
-            request.ContentType = "application/json";
-            if (!string.IsNullOrEmpty(acceptContentType))
-            {
-                request.Accept = acceptContentType;
-            }
-            request.Headers.Add("Authorization", "Bearer " + _accessTokenDelegate());
+		private string GetResponse(HttpRequestMessage request)
+		{
+			var responseValue = string.Empty;
 
-            return request;
-        }
+			using (var responseStream = GetResponseStream(request))
+			{
+				if (responseStream != null)
+				{
+					using (var reader = new StreamReader(responseStream))
+					{
+						responseValue = reader.ReadToEnd();
+					}
+				}
+			}
 
-        private string GetResponse(HttpWebRequest request)
-        {
-            var responseValue = string.Empty;
+			Debug.WriteLine(responseValue);
+			Debug.WriteLine("");
 
-            using (var responseStream = GetResponseStream(request))
-            {
-                if (responseStream != null)
-                {
-                    using (var reader = new StreamReader(responseStream))
-                    {
-                        responseValue = reader.ReadToEnd();
-                    }
-                }
-            }
+			return responseValue;
+		}
 
-            Debug.WriteLine(responseValue);
-            Debug.WriteLine("");
+		private async Task<string> GetResponseAsync(HttpRequestMessage request)
+		{
+			var responseValue = string.Empty;
 
-            return responseValue;
-        }
-
-        private async Task<string> GetResponseAsync(HttpWebRequest request)
-        {
-            var responseValue = string.Empty;
-
-            using (var responseStream = await GetResponseStreamAsync(request).ConfigureAwait(false))
-            {
-                if (responseStream != null)
-                {
-                    using (var reader = new StreamReader(responseStream))
-                    {
-                        responseValue = await reader.ReadToEndAsync().ConfigureAwait(false);
-                    }
-                }
-            }
+			using (var responseStream = await GetResponseStreamAsync(request).ConfigureAwait(false))
+			{
+				if (responseStream != null)
+				{
+					using (var reader = new StreamReader(responseStream))
+					{
+						responseValue = await reader.ReadToEndAsync().ConfigureAwait(false);
+					}
+				}
+			}
 
 			Debug.WriteLine("BODY");
-            Debug.WriteLine(responseValue);
-            Debug.WriteLine("");
+			Debug.WriteLine(responseValue);
+			Debug.WriteLine("");
 
-            return responseValue;
-        }
+			return responseValue;
+		}
 
-        private Stream GetResponseStream(HttpWebRequest request)
+		private Stream GetResponseStream(HttpRequestMessage request)
 		{
 			if (_minutelyRemaining == 0)
 			{
@@ -266,19 +261,19 @@ namespace ExactOnline.Client.Sdk.Helpers
 			}
 
 			Debug.WriteLine("RESPONSE");
+			var response = default(HttpResponseMessage);
 
-			var response = default(WebResponse);
 
 			// Get response. If this fails: Throw the correct Exception (for testability)
 			try
 			{
-				response = request.GetResponse();
-				return response.GetResponseStream();
+				response = _httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead).Result;
+				response.EnsureSuccessStatusCode();
+				return response.Content.ReadAsStreamAsync().Result;
 			}
-			catch (WebException ex)
+			catch (HttpRequestException ex)
 			{
-				response = ex.Response;
-				ThrowSpecificException(ex);
+				ThrowSpecificException(ex, response, request);
 				throw;
 			}
 			finally
@@ -287,8 +282,8 @@ namespace ExactOnline.Client.Sdk.Helpers
 			}
 		}
 
-		private async Task<Stream> GetResponseStreamAsync(HttpWebRequest request)
-        {
+		private async Task<Stream> GetResponseStreamAsync(HttpRequestMessage request)
+		{
 			if (_minutelyRemaining == 0)
 			{
 				Debug.WriteLine($"WAITING {_minutelyWaitTime} to respect minutely rate limit.");
@@ -297,42 +292,40 @@ namespace ExactOnline.Client.Sdk.Helpers
 
 			Debug.WriteLine("RESPONSE");
 
-            var response = default(WebResponse);
+			var response = default(HttpResponseMessage);
 
-            // Get response. If this fails: Throw the correct Exception (for testability)
-            try
-            {
-                response = await request.GetResponseAsync().ConfigureAwait(false);
-                return response.GetResponseStream();
-            }
-            catch (WebException ex)
-            {
-                response = ex.Response;
-                ThrowSpecificException(ex);
-                throw;
-            }
-            finally
-            {
-                SetEolResponseHeaders(response);
-            }
-        }
+			// Get response. If this fails: Throw the correct Exception (for testability)
+			try
+			{
+				response = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
+				response.EnsureSuccessStatusCode();
+				return await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
+			}
+			catch (HttpRequestException ex)
+			{
+				ThrowSpecificException(ex, response, request);
+				throw;
+			}
+			finally
+			{
+				SetEolResponseHeaders(response);
+			}
+		}
 
-        private static void ThrowSpecificException(WebException ex)
-        {
-            var statusCode = ((HttpWebResponse)ex.Response).StatusCode;
-            Debug.WriteLine(ex.Message);
+		private static void ThrowSpecificException(HttpRequestException ex, HttpResponseMessage response, HttpRequestMessage request = null)
+		{
+			var statusCode = response.StatusCode;
+			Debug.WriteLine(ex.Message);
 
-            var messageFromServer = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
-            Debug.WriteLine(messageFromServer);
-            Debug.WriteLine("");
-
+			var messageFromServer = response.Content.ReadAsStringAsync().Result;
+			Debug.WriteLine(messageFromServer);
+			Debug.WriteLine("");
 			var messageError = default(ServerMessage);
 			try
 			{
 				messageError = JsonConvert.DeserializeObject(messageFromServer, typeof(ServerMessage)) as ServerMessage;
 			}
 			catch { /* the response might not be a json payload */ }
-
 			var message = messageError?.Error?.Message?.Value;
 			if (string.IsNullOrEmpty(message))
 			{
@@ -358,33 +351,45 @@ namespace ExactOnline.Client.Sdk.Helpers
 					throw new InternalServerErrorException(message, ex);
 
 				case (HttpStatusCode)429: // 429: too many requests
-                    throw new TooManyRequestsException(message, ex);
-            }
-        }
+					throw new TooManyRequestsException(message, ex);
+			}
+		}
 
-        private void SetEolResponseHeaders(WebResponse response)
-        {
-            if (response != null)
+
+		private void SetEolResponseHeaders(HttpResponseMessage response)
+		{
+			if (response != null)
 			{
-				_client.EolResponseHeader = new EolResponseHeader
+				IEnumerable<String> output;
+				var rateLimit = new RateLimit();
+				if (response.Headers.TryGetValues("X-RateLimit-Limit", out output))
 				{
-					RateLimit = new RateLimit
-					{
-						Limit = response.Headers["X-RateLimit-Limit"].ToNullableInt(),
-						Remaining = response.Headers["X-RateLimit-Remaining"].ToNullableInt(),
-						Reset = response.Headers["X-RateLimit-Reset"].ToNullableLong(),
-						MinutelyLimit = response.Headers["X-RateLimit-Minutely-Limit"].ToNullableInt(),
-						MinutelyRemaining = response.Headers["X-RateLimit-Minutely-Remaining"].ToNullableInt(),
-						MinutelyReset = response.Headers["X-RateLimit-Minutely-Reset"].ToNullableLong()
-					}
-				};
-
+					rateLimit.Limit = output.Single().ToNullableInt();
+				}
+				if (response.Headers.TryGetValues("X-RateLimit-Remaining", out output))
+				{
+					rateLimit.Remaining = output.Single().ToNullableInt();
+				}
+				if (response.Headers.TryGetValues("X-RateLimit-Reset", out output))
+				{
+					rateLimit.Reset = output.Single().ToNullableLong();
+				}
+				if (response.Headers.TryGetValues("X-RateLimit-Minutely-Limit", out output))
+				{
+					rateLimit.MinutelyLimit = output.Single().ToNullableInt();
+				}
+				if (response.Headers.TryGetValues("X-RateLimit-Minutely-Remaining", out output))
+				{
+					rateLimit.MinutelyRemaining = output.Single().ToNullableInt();
+				}
+				if (response.Headers.TryGetValues("X-RateLimit-Minutely-Reset", out output))
+				{
+					rateLimit.MinutelyReset = output.Single().ToNullableLong();
+				}
 				Debug.WriteLine("HEADERS");
 				Debug.WriteLine($"X-RateLimit-Limit: {_client.EolResponseHeader.RateLimit.Limit} - X-RateLimit-Remaining: {_client.EolResponseHeader.RateLimit.Remaining} - X-RateLimit-Reset: {_client.EolResponseHeader.RateLimit.ResetDate}");
 				Debug.WriteLine($"X-RateLimit-Minutely-Limit: {_client.EolResponseHeader.RateLimit.MinutelyLimit} - X-RateLimit-Minutely-Remaining: {_client.EolResponseHeader.RateLimit.MinutelyRemaining} - X-RateLimit-Minutely-Reset: {_client.EolResponseHeader.RateLimit.MinutelyResetDate}");
-
-				if (_client.EolResponseHeader.RateLimit.MinutelyLimit is int minutelyLimit &&
-					_client.EolResponseHeader.RateLimit.MinutelyRemaining is int minutelyRemaining)
+				if (rateLimit.MinutelyLimit is int minutelyLimit && rateLimit.MinutelyRemaining is int minutelyRemaining)
 				{
 					if (_minutelyRemaining == -1 || minutelyRemaining == minutelyLimit - 1) // this means this is the first call of a 1 minute window
 					{
@@ -392,7 +397,9 @@ namespace ExactOnline.Client.Sdk.Helpers
 					}
 					_minutelyRemaining = minutelyRemaining;
 				}
-			}
+				EolResponseHeader = new EolResponseHeader(RateLimit);
+			};
 		}
 	}
 }
+

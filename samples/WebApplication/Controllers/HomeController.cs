@@ -2,15 +2,17 @@
 using ExactOnline.Client.OAuth;
 using ExactOnline.Client.Sdk.Controllers;
 using ExactOnline.Client.Sdk.Helpers;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace WebApplication.Controllers
 {
 	public class HomeController : Controller
-    {
+	{
 		public static string ExactOnlineUrl => "https://start.exactonline.be";
 
 		// The authorizer is stored in the session state, so as long as that lives the user won't have to log in again.
@@ -32,7 +34,7 @@ namespace WebApplication.Controllers
 			}
 		}
 
-        public ActionResult Index()
+		public async Task<ActionResult> Index()
 		{
 			if (!string.IsNullOrEmpty(Request.QueryString["code"]))
 			{
@@ -43,7 +45,8 @@ namespace WebApplication.Controllers
 				return RedirectToAction("Index");
 			}
 
-			if (Authorizer.IsAuthorizationNeeded(out var authorizationUrl))
+			Uri authorizationUrl = await Authorizer.GetUriIfAuthorizationNeeded();
+			if (authorizationUrl != null)
 			{
 				// When authorization is needed we simply redirect to the authorizationUrl
 				return Redirect(authorizationUrl.ToString());
@@ -63,17 +66,17 @@ namespace WebApplication.Controllers
 		}
 
 		public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
+		{
+			ViewBag.Message = "Your application description page.";
 
-            return View();
-        }
+			return View();
+		}
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
+		public ActionResult Contact()
+		{
+			ViewBag.Message = "Your contact page.";
 
-            return View();
-        }
-    }
+			return View();
+		}
+	}
 }

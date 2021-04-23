@@ -1,15 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net472</TargetFramework>
+		<TargetFrameworks>net5.0-windows; net472</TargetFrameworks>
+		<UseWindowsForms>true</UseWindowsForms>
 		<OutputType>Exe</OutputType>
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
 		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\src\ExactOnline.Client.OAuth\ExactOnline.Client.OAuth.csproj" />
-	  <ProjectReference Include="..\..\src\ExactOnline.Client.Sdk.Sync.EntityFramework\ExactOnline.Client.Sdk.Sync.EntityFramework.csproj" />
+		<ProjectReference Include="..\..\src\ExactOnline.Client.OAuth\ExactOnline.Client.OAuth.csproj" />
+		<ProjectReference Include="..\..\src\ExactOnline.Client.Sdk.Sync.EntityFramework\ExactOnline.Client.Sdk.Sync.EntityFramework.csproj" />
 	</ItemGroup>
 
 </Project>

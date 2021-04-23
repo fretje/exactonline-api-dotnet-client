@@ -1,16 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net472</TargetFramework>
+		<TargetFrameworks>net5.0-windows;net472</TargetFrameworks>
+		<UseWindowsForms>True</UseWindowsForms>
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="DotNetOpenAuth.OAuth2.Client" Version="4.3.4.13329" />
-	  <PackageReference Include="Microsoft.Net.Http" Version="2.2.29" />
+		<PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
+		<PackageReference Include="Microsoft.Net.Http" Version="2.2.29" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<Reference Include="System.Windows.Forms" />
 	</ItemGroup>
-		
+
 </Project>

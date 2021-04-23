@@ -1,33 +1,37 @@
-﻿using DotNetOpenAuth.Messaging;
-using DotNetOpenAuth.OAuth2;
+﻿using ExactOnline.Client.OAuth.Models;
+using Microsoft.AspNetCore.WebUtilities;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace ExactOnline.Client.OAuth
 {
-	public class OAuthClient : UserAgentClient
-    {
-        private readonly Uri _redirectUri;
+	public class OAuthClient
+	{
+		private readonly HttpClient _httpClient;
+		private readonly string _clientId;
+		private readonly string _clientSecret;
+		private readonly Uri _authorizationEndpoint;
+		private readonly Uri _tokenEndpoint;
+		private readonly Uri _redirectUri;
 
-        public OAuthClient(AuthorizationServerDescription serverDescription, string clientId, string clientSecret, Uri redirectUri)
-            : base(serverDescription, clientId, clientSecret)
-        {
-            _redirectUri = redirectUri;
-            ClientCredentialApplicator = ClientCredentialApplicator.PostParameter(clientSecret);
-        }
-
-        public void Authorize(ref IAuthorizationState authorization, string refreshToken) =>
-			Authorize(ref authorization, refreshToken, false);
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="authorization"></param>
-		/// <param name="refreshToken"></param>
-		/// <param name="throwExceptionIfNotAuthorized">Indicates if an exception should be thrown when not authorized. When
-		/// this value is true an exception is thrown if not authorized, when false a login dialog is shown to allow a user to login.</param>
-		public void Authorize(ref IAuthorizationState authorization, string refreshToken, bool throwExceptionIfNotAuthorized)
+		public OAuthClient(HttpClient httpClient, Uri authorizationEndpoint, Uri tokenEndpoint, string clientId, string clientSecret, Uri redirectUri)
 		{
-			if (IsAuthorizationNeeded(ref authorization, refreshToken, out var authorizationUri))
+			_httpClient = httpClient;
+			_clientId = clientId;
+			_clientSecret = clientSecret;
+			_authorizationEndpoint = authorizationEndpoint;
+			_tokenEndpoint = tokenEndpoint;
+			_redirectUri = redirectUri;
+		}
+
+		public void Authorize(UserAuthorization authorization, bool throwExceptionIfNotAuthorized)
+		{
+			if (IsAuthorizationNeeded(authorization).Result)
 			{
 				if (throwExceptionIfNotAuthorized)
 				{
@@ -40,85 +44,101 @@ namespace ExactOnline.Client.OAuth
 				{
 					using (var loginDialog = new LoginForm(_redirectUri))
 					{
-						loginDialog.AuthorizationUri = authorizationUri;
+						loginDialog.AuthorizationUri = GetAuthorizationUri();
 						loginDialog.ShowDialog();
-						ProcessUserAuthorization(loginDialog.AuthorizationUri, authorization);
+						var success = ProcessAuthorisationCodeGrant(loginDialog.AuthorizationUri, authorization).Result;
 					}
 				}
 			}
 		}
 
-		public bool IsAuthorizationNeeded(ref IAuthorizationState authorization, string refreshToken, out Uri authorizationUri)
+		public async Task<bool> IsAuthorizationNeeded(UserAuthorization authorization)
 		{
-			if (authorization == null)
+			if (authorization is null)
 			{
-				authorization = new AuthorizationState();
+				throw new ArgumentNullException(nameof(authorization));
 			}
-
-			authorization.Callback = _redirectUri;
-			authorization.RefreshToken = refreshToken;
 
 			var refreshFailed = false;
 			if (AccessTokenHasToBeRefreshed(authorization))
 			{
-				try
-				{
-					refreshFailed = !RefreshAuthorization(authorization);
-				}
-				catch (ProtocolException)
+				refreshFailed = !(await RefreshAuthorization(authorization));
+			}
+			return authorization.AccessToken == null || refreshFailed;
+		}
+
+		private async Task<bool> RefreshAuthorization(UserAuthorization authorization)
+		{
+			var parameters = new Dictionary<String, String>
+			{
+				{ "refresh_token", authorization.RefreshToken },
+				{ "grant_type", "refresh_token" },
+				{ "client_id", _clientId },
+				{ "client_secret", _clientSecret }
+			};
+			return await SendTokenRequest(authorization, parameters).ConfigureAwait(false);
+		}
+
+		private async Task<bool> ProcessAuthorisationCodeGrant(Uri authorizationUri, UserAuthorization authorization)
+		{
+			var query = QueryHelpers.ParseQuery(authorizationUri.Query);
+			var parameters = new Dictionary<String, String>
+			{
+				{ "code", query["code"].Single()},
+				{ "grant_type", "authorization_code" },
+				{  "redirect_uri", _redirectUri.ToString() },
+				{ "client_id", _clientId },
+				{ "client_secret", _clientSecret }
+			};
+			return await SendTokenRequest(authorization, parameters).ConfigureAwait(false);
+		}
+
+		private async Task<bool> SendTokenRequest(UserAuthorization authorization, Dictionary<string, string> parameters)
+		{
+			var content = new FormUrlEncodedContent(parameters);
+			using (HttpResponseMessage response = await _httpClient.PostAsync(_tokenEndpoint, content).ConfigureAwait(false))
+			{
+				if (response.StatusCode != HttpStatusCode.OK)
 				{
 					//The refreshtoken is not valid anymore
-					refreshFailed = true;
+					return false;
 				}
+				var result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+				var authResult = JsonConvert.DeserializeObject<OAuthTokenResult>(result);
+				authorization.AccessToken = authResult.AccessToken;
+				authorization.RefreshToken = authResult.RefreshToken;
+				authorization.AccessTokenExpiration = response.Headers.Date.Value.AddSeconds(authResult.ExpiresIn);
+				return true;
 			}
+		}
 
-			if (authorization.AccessToken == null || refreshFailed)
+		private static bool AccessTokenHasToBeRefreshed(UserAuthorization authorization)
+		{
+			if (authorization.AccessToken == null && authorization.RefreshToken != null)
 			{
-				authorizationUri = GetAuthorizationUri(authorization);
 				return true;
 			}
 
-			authorizationUri = null;
+			if (authorization.AccessTokenExpiration != null)
+			{
+				var timeToExpire = authorization.AccessTokenExpiration.Value - DateTime.UtcNow;
+				return timeToExpire.Minutes < 1;
+			}
 			return false;
 		}
 
-		public IAuthorizationState ProcessAuthorization(Uri actualRedirectUri, IAuthorizationState authorization)
+		public Uri GetAuthorizationUri()
 		{
-			if (authorization == null)
+			var baseUri = _authorizationEndpoint;
+			var parameters = new Dictionary<String, String>
 			{
-				authorization = new AuthorizationState();
-			}
-
-			authorization.Callback = _redirectUri;
-
-			return ProcessUserAuthorization(actualRedirectUri, authorization);
+				{ "client_id", _clientId },
+				{ "redirect_uri", _redirectUri.ToString() },
+				{ "response_type", "code" },
+				{ "force_login", "1" }
+			};
+			var authorizationUri = QueryHelpers.AddQueryString(baseUri.ToString(), parameters);
+			return new Uri(authorizationUri);
 		}
-
-		private static bool AccessTokenHasToBeRefreshed(IAuthorizationState authorization)
-        {
-            if (authorization.AccessToken == null && authorization.RefreshToken != null)
-            {
-                return true;
-            }
-
-            if (authorization.AccessTokenExpirationUtc != null)
-            {
-                var timeToExpire = authorization.AccessTokenExpirationUtc.Value.Subtract(DateTime.UtcNow);
-                return timeToExpire.TotalSeconds < 30;
-            }
-            return false;
-        }
-
-        private Uri GetAuthorizationUri(IAuthorizationState authorization)
-        {
-            var baseUri = RequestUserAuthorization(authorization);
-
-            var authorizationUriBuilder = new UriBuilder(baseUri)
-            {
-                Query = baseUri.Query.Substring(1) + "&force_login=1"
-            };
-
-            return authorizationUriBuilder.Uri;
-        }
-    }
+	}
 }

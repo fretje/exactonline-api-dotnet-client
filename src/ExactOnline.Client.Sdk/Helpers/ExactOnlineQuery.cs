@@ -394,13 +394,14 @@ namespace ExactOnline.Client.Sdk.Helpers
 					: type == typeof(Guid) ? $"guid'{value}'"
 					: type == typeof(DateTime) ? $"datetime'{value:o}'"
 					: type == typeof(bool) ? value.ToString().ToLower()
+					: type == typeof(long) ? $"{value}L"
 					: type.IsEnum ? $"{value:D}" // need the numerical value of enums, not the name!
 					: type == typeof(long) || type == typeof(ulong) ? $"{value}L" // longs need an "L" attached
-                    : value.ToString();
-            }
+					: value.ToString();
+			}
 
-            return _value;
-        }
+			return _value;
+		}
 
 		/// <summary>
 		/// Builds the full OData query from all its individual parts

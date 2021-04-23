@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using ExactOnline.Client.Models.Current;
 using ExactOnline.Client.Sdk.Delegates;
@@ -9,21 +10,21 @@ using ExactOnline.Client.Sdk.Models;
 
 namespace ExactOnline.Client.Sdk.Controllers
 {
-	/// <summary>
-	/// Front Controller for working with Exact Online Entities
-	/// </summary>
-	public class ExactOnlineClient
+    /// <summary>
+    /// Front Controller for working with Exact Online Entities
+    /// </summary>
+    public class ExactOnlineClient
     {
         private readonly ApiConnector _apiConnector;
 
-		// https://start.exactonline.nl/api/v1
-		public string ExactOnlineApiUrl { get; private set; }
+        public EolResponseHeader EolResponseHeader => this._apiConnector.EolResponseHeader;
+
+        // https://start.exactonline.nl/api/v1
+        public string ExactOnlineApiUrl { get; private set; }
 
         private readonly ControllerList _controllers;
 
         public int Division { get; private set; }
-
-        public EolResponseHeader EolResponseHeader { get; internal set; }
 
         /// <summary>
         /// Create instance of ExactClient
@@ -40,7 +41,7 @@ namespace ExactOnline.Client.Sdk.Controllers
         /// <param name="exactOnlineUrl">The Exact Online URL for your country</param>
         /// <param name="division">Division number</param>
         /// <param name="accesstokenDelegate">Delegate that will be executed the access token is expired</param>
-        public ExactOnlineClient(string exactOnlineUrl, int division, AccessTokenManagerDelegate accesstokenDelegate)
+        public ExactOnlineClient(string exactOnlineUrl, int division, AccessTokenManagerDelegate accesstokenDelegate, HttpClient httpClient = null)
         {
             if (!exactOnlineUrl.EndsWith("/"))
             {
@@ -48,15 +49,15 @@ namespace ExactOnline.Client.Sdk.Controllers
             }
 
             ExactOnlineApiUrl = exactOnlineUrl + "api/v1/";
+            httpClient = httpClient ?? new HttpClient();
+            _apiConnector = new ApiConnector(accesstokenDelegate, httpClient);
 
-            _apiConnector = new ApiConnector(accesstokenDelegate, this);
-
-			Division = (division > 0) ? division : GetDivision();
+            Division = (division > 0) ? division : GetDivision();
 
             var baseUrl = ExactOnlineApiUrl + Division + "/";
 
             _controllers = new ControllerList(_apiConnector, baseUrl);
-		}
+        }
 
         /// <summary>
         /// Returns instance of ExactOnlineQuery that can be used to manipulate data in Exact Online
@@ -97,7 +98,7 @@ namespace ExactOnline.Client.Sdk.Controllers
             var currentMe = CurrentMe();
             if (currentMe != null)
             {
-				Division = currentMe.CurrentDivision;
+                Division = currentMe.CurrentDivision;
                 return Division;
             }
 
