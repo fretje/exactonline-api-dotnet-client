@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using ExactOnline.Client.Models.Current;
 using ExactOnline.Client.Sdk.Delegates;
@@ -23,7 +24,7 @@ namespace ExactOnline.Client.Sdk.Controllers
 
         public int Division { get; private set; }
 
-        public EolResponseHeader EolResponseHeader { get; internal set; }
+        public EolResponseHeader EolResponseHeader => this._apiConnector.EolResponseHeader;
 
         /// <summary>
         /// Create instance of ExactClient
@@ -40,7 +41,8 @@ namespace ExactOnline.Client.Sdk.Controllers
         /// <param name="exactOnlineUrl">The Exact Online URL for your country</param>
         /// <param name="division">Division number</param>
         /// <param name="accesstokenDelegate">Delegate that will be executed the access token is expired</param>
-        public ExactOnlineClient(string exactOnlineUrl, int division, AccessTokenManagerDelegate accesstokenDelegate)
+        /// <param name="httpClient">A HttpClient instance to perform HTTP requests</param>
+        public ExactOnlineClient(string exactOnlineUrl, int division, AccessTokenManagerDelegate accesstokenDelegate, HttpClient httpClient = null)
         {
             if (!exactOnlineUrl.EndsWith("/"))
             {
@@ -48,8 +50,9 @@ namespace ExactOnline.Client.Sdk.Controllers
             }
 
             ExactOnlineApiUrl = exactOnlineUrl + "api/v1/";
+            httpClient = httpClient ?? new HttpClient();
 
-            _apiConnector = new ApiConnector(accesstokenDelegate, this);
+            _apiConnector = new ApiConnector(accesstokenDelegate, httpClient);
 
 			Division = (division > 0) ? division : GetDivision();
 

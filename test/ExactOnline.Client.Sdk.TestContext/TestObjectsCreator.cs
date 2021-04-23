@@ -2,6 +2,7 @@
 using ExactOnline.Client.Sdk.Controllers;
 using ExactOnline.Client.Sdk.Helpers;
 using ExactOnline.Client.Sdk.Interfaces;
+using System.Net.Http;
 
 namespace ExactOnline.Client.Sdk.TestContext
 {
@@ -14,12 +15,15 @@ namespace ExactOnline.Client.Sdk.TestContext
         public static string SpecificGLAccountCode => "221000";
 
         private readonly static UserAuthorization _authorization = new UserAuthorization();
+        private HttpClient _httpClient;
         private IApiConnector _connector;
         private ExactOnlineClient _client;
 
-        public IApiConnector GetApiConnector() => _connector ?? (_connector = new ApiConnector(GetOAuthAuthenticationToken, GetClient()));
+        public HttpClient GetHttpClient() => _httpClient ?? (_httpClient = new HttpClient());
 
-        public ExactOnlineClient GetClient() => _client ?? (_client = new ExactOnlineClient(ExactOnlineUrl, GetOAuthAuthenticationToken));
+        public IApiConnector GetApiConnector() => _connector ?? (_connector = new ApiConnector(GetOAuthAuthenticationToken, GetHttpClient()));
+
+        public ExactOnlineClient GetClient() => _client ?? (_client = new ExactOnlineClient(ExactOnlineUrl, 0, GetOAuthAuthenticationToken, GetHttpClient()));
 
         public static string GetOAuthAuthenticationToken()
         {

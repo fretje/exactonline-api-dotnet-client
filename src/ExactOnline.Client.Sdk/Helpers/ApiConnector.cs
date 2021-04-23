@@ -6,9 +6,13 @@ using ExactOnline.Client.Sdk.Interfaces;
 using ExactOnline.Client.Sdk.Models;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +25,8 @@ namespace ExactOnline.Client.Sdk.Helpers
 	public class ApiConnector : IApiConnector
     {
         private readonly AccessTokenManagerDelegate _accessTokenDelegate;
-        private readonly ExactOnlineClient _client;
+        private readonly HttpClient _httpClient;
+        public EolResponseHeader EolResponseHeader { get; set; }
 
 		private int _minutelyRemaining = -1;
 		private DateTime _minutelyResetTime;
@@ -39,10 +44,10 @@ namespace ExactOnline.Client.Sdk.Helpers
 		/// </summary>
 		/// <param name="accessTokenDelegate">Delegate that provides a valid oAuth Access Token</param>
 		/// <param name="client">The ExactOnlineClient this connector is associated with</param>
-		public ApiConnector(AccessTokenManagerDelegate accessTokenDelegate, ExactOnlineClient client)
+		public ApiConnector(AccessTokenManagerDelegate accessTokenDelegate, HttpClient httpClient)
         {
             _accessTokenDelegate = accessTokenDelegate ?? throw new ArgumentNullException(nameof(accessTokenDelegate));
-            _client = client;
+            _httpClient = httpClient;
 		}
 
 		/// <summary>
@@ -149,42 +154,35 @@ namespace ExactOnline.Client.Sdk.Helpers
         public Task<string> DoCleanRequestAsync(string endpoint, string querystring) =>
             GetResponseAsync(CreateCleanRequest(endpoint, querystring));
 
-        private HttpWebRequest CreateGetRequest(string endpoint, string querystring = null) =>
-            CreateRequest(RequestTypeEnum.GET, endpoint, querystring);
-        private HttpWebRequest CreatePostRequest(string endpoint, string postdata) =>
-            CreateRequest(RequestTypeEnum.POST, endpoint, data: postdata);
-        private HttpWebRequest CreatePutRequest(string endpoint, string putData) =>
-            CreateRequest(RequestTypeEnum.PUT, endpoint, data: putData);
-        private HttpWebRequest CreateDeleteRequest(string endpoint) =>
-            CreateRequest(RequestTypeEnum.DELETE, endpoint);
-        private HttpWebRequest CreateCleanRequest(string endpoint, string querystring) =>
-            CreateRequest(RequestTypeEnum.GET, endpoint, querystring, acceptContentType: null);
+        private HttpRequestMessage CreateGetRequest(string endpoint, string querystring = null) =>
+            CreateRequest(HttpMethod.Get, endpoint, querystring);
+        private HttpRequestMessage CreatePostRequest(string endpoint, string postdata) =>
+            CreateRequest(HttpMethod.Post, endpoint, data: postdata);
+        private HttpRequestMessage CreatePutRequest(string endpoint, string putData) =>
+            CreateRequest(HttpMethod.Put, endpoint, data: putData);
+        private HttpRequestMessage CreateDeleteRequest(string endpoint) =>
+            CreateRequest(HttpMethod.Delete, endpoint);
+        private HttpRequestMessage CreateCleanRequest(string endpoint, string querystring) =>
+            CreateRequest(HttpMethod.Get, endpoint, querystring, acceptContentType: null);
 
-        private HttpWebRequest CreateRequest(RequestTypeEnum requestType, string endpoint, string querystring = null, string data = null, string acceptContentType = "application/json")
+        private HttpRequestMessage CreateRequest(HttpMethod httpMethod, string endpoint, string querystring = null, string data = null, string acceptContentType = "application/json")
         {
             if (string.IsNullOrEmpty(endpoint))
             {
                 throw new BadRequestException("Cannot perform request with empty endpoint");
             }
-            if ((requestType == RequestTypeEnum.POST || requestType == RequestTypeEnum.PUT) && string.IsNullOrEmpty(data))
+            if ((httpMethod == HttpMethod.Post || httpMethod == HttpMethod.Put) && string.IsNullOrEmpty(data))
             {
                 throw new BadRequestException("Cannot perform request with empty data");
             }
 
-            var request = CreateWebRequest(endpoint, querystring, requestType, acceptContentType);
+            var request = CreateWebRequest(endpoint, querystring, httpMethod, acceptContentType);
 
             if (!string.IsNullOrEmpty(data))
             {
-                var bytes = Encoding.GetEncoding("utf-8").GetBytes(data);
-                request.ContentLength = bytes.Length;
-
-                using (var writeStream = request.GetRequestStream())
-                {
-                    writeStream.Write(bytes, 0, bytes.Length);
-                }
+                request.Content = new StringContent(data, Encoding.UTF8, "application/json");
             }
-
-            Debug.Write(requestType.ToString() + " ");
+            Debug.Write(httpMethod.ToString() + " ");
             Debug.WriteLine(request.RequestUri);
             if (!string.IsNullOrEmpty(data))
             {
@@ -194,27 +192,24 @@ namespace ExactOnline.Client.Sdk.Helpers
             return request;
         }
 
-        private HttpWebRequest CreateWebRequest(string url, string querystring, RequestTypeEnum method, string acceptContentType = "application/json")
+        private HttpRequestMessage CreateWebRequest(string url, string querystring, HttpMethod httpMethod, string acceptContentType = "application/json")
         {
             if (!string.IsNullOrEmpty(querystring))
             {
                 url += "?" + querystring;
             }
 
-            var request = (HttpWebRequest)WebRequest.Create(url);
-            request.ServicePoint.Expect100Continue = false;
-            request.Method = method.ToString();
-            request.ContentType = "application/json";
+            HttpRequestMessage request = new HttpRequestMessage(httpMethod, url);
             if (!string.IsNullOrEmpty(acceptContentType))
             {
-                request.Accept = acceptContentType;
+                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(acceptContentType));
             }
-            request.Headers.Add("Authorization", "Bearer " + _accessTokenDelegate());
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _accessTokenDelegate());
 
             return request;
         }
 
-        private string GetResponse(HttpWebRequest request)
+        private string GetResponse(HttpRequestMessage request)
         {
             var responseValue = string.Empty;
 
@@ -235,7 +230,7 @@ namespace ExactOnline.Client.Sdk.Helpers
             return responseValue;
         }
 
-        private async Task<string> GetResponseAsync(HttpWebRequest request)
+        private async Task<string> GetResponseAsync(HttpRequestMessage request)
         {
             var responseValue = string.Empty;
 
@@ -257,7 +252,7 @@ namespace ExactOnline.Client.Sdk.Helpers
             return responseValue;
         }
 
-        private Stream GetResponseStream(HttpWebRequest request)
+        private Stream GetResponseStream(HttpRequestMessage request)
 		{
 			if (_minutelyRemaining == 0)
 			{
@@ -266,19 +261,19 @@ namespace ExactOnline.Client.Sdk.Helpers
 			}
 
 			Debug.WriteLine("RESPONSE");
+			var response = default(HttpResponseMessage);
 
-			var response = default(WebResponse);
 
 			// Get response. If this fails: Throw the correct Exception (for testability)
 			try
 			{
-				response = request.GetResponse();
-				return response.GetResponseStream();
+				response = _httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead).Result;
+				response.EnsureSuccessStatusCode();
+				return response.Content.ReadAsStreamAsync().Result;
 			}
-			catch (WebException ex)
+			catch (HttpRequestException ex)
 			{
-				response = ex.Response;
-				ThrowSpecificException(ex);
+				ThrowSpecificException(ex, response, request);
 				throw;
 			}
 			finally
@@ -287,7 +282,7 @@ namespace ExactOnline.Client.Sdk.Helpers
 			}
 		}
 
-		private async Task<Stream> GetResponseStreamAsync(HttpWebRequest request)
+		private async Task<Stream> GetResponseStreamAsync(HttpRequestMessage request)
         {
 			if (_minutelyRemaining == 0)
 			{
@@ -297,18 +292,18 @@ namespace ExactOnline.Client.Sdk.Helpers
 
 			Debug.WriteLine("RESPONSE");
 
-            var response = default(WebResponse);
+            var response = default(HttpResponseMessage);
 
             // Get response. If this fails: Throw the correct Exception (for testability)
             try
             {
-                response = await request.GetResponseAsync().ConfigureAwait(false);
-                return response.GetResponseStream();
+                response = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
+                response.EnsureSuccessStatusCode();
+                return await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
             }
-            catch (WebException ex)
+            catch (HttpRequestException ex)
             {
-                response = ex.Response;
-                ThrowSpecificException(ex);
+                ThrowSpecificException(ex, response, request);
                 throw;
             }
             finally
@@ -317,12 +312,12 @@ namespace ExactOnline.Client.Sdk.Helpers
             }
         }
 
-        private static void ThrowSpecificException(WebException ex)
+        private static void ThrowSpecificException(HttpRequestException ex, HttpResponseMessage response, HttpRequestMessage request = null)
         {
-            var statusCode = ((HttpWebResponse)ex.Response).StatusCode;
+            var statusCode = response.StatusCode;
             Debug.WriteLine(ex.Message);
 
-            var messageFromServer = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+            var messageFromServer = response.Content.ReadAsStringAsync().Result;
             Debug.WriteLine(messageFromServer);
             Debug.WriteLine("");
 
@@ -362,29 +357,41 @@ namespace ExactOnline.Client.Sdk.Helpers
             }
         }
 
-        private void SetEolResponseHeaders(WebResponse response)
+
+        private void SetEolResponseHeaders(HttpResponseMessage response)
         {
             if (response != null)
-			{
-				_client.EolResponseHeader = new EolResponseHeader
+            {
+				IEnumerable<String> output;
+				var rateLimit = new RateLimit();
+				if (response.Headers.TryGetValues("X-RateLimit-Limit", out output))
 				{
-					RateLimit = new RateLimit
-					{
-						Limit = response.Headers["X-RateLimit-Limit"].ToNullableInt(),
-						Remaining = response.Headers["X-RateLimit-Remaining"].ToNullableInt(),
-						Reset = response.Headers["X-RateLimit-Reset"].ToNullableLong(),
-						MinutelyLimit = response.Headers["X-RateLimit-Minutely-Limit"].ToNullableInt(),
-						MinutelyRemaining = response.Headers["X-RateLimit-Minutely-Remaining"].ToNullableInt(),
-						MinutelyReset = response.Headers["X-RateLimit-Minutely-Reset"].ToNullableLong()
-					}
-				};
-
+					rateLimit.Limit = output.Single().ToNullableInt();
+				}
+				if (response.Headers.TryGetValues("X-RateLimit-Remaining", out output))
+				{
+					rateLimit.Remaining = output.Single().ToNullableInt();
+				}
+				if (response.Headers.TryGetValues("X-RateLimit-Reset", out output))
+				{
+					rateLimit.Reset = output.Single().ToNullableLong();
+				}
+				if (response.Headers.TryGetValues("X-RateLimit-Minutely-Limit", out output))
+				{
+					rateLimit.MinutelyLimit = output.Single().ToNullableInt();
+				}
+				if (response.Headers.TryGetValues("X-RateLimit-Minutely-Remaining", out output))
+				{
+					rateLimit.MinutelyRemaining = output.Single().ToNullableInt();
+				}
+				if (response.Headers.TryGetValues("X-RateLimit-Minutely-Reset", out output))
+				{
+					rateLimit.MinutelyReset = output.Single().ToNullableLong();
+				}
 				Debug.WriteLine("HEADERS");
-				Debug.WriteLine($"X-RateLimit-Limit: {_client.EolResponseHeader.RateLimit.Limit} - X-RateLimit-Remaining: {_client.EolResponseHeader.RateLimit.Remaining} - X-RateLimit-Reset: {_client.EolResponseHeader.RateLimit.ResetDate}");
-				Debug.WriteLine($"X-RateLimit-Minutely-Limit: {_client.EolResponseHeader.RateLimit.MinutelyLimit} - X-RateLimit-Minutely-Remaining: {_client.EolResponseHeader.RateLimit.MinutelyRemaining} - X-RateLimit-Minutely-Reset: {_client.EolResponseHeader.RateLimit.MinutelyResetDate}");
-
-				if (_client.EolResponseHeader.RateLimit.MinutelyLimit is int minutelyLimit &&
-					_client.EolResponseHeader.RateLimit.MinutelyRemaining is int minutelyRemaining)
+				Debug.WriteLine($"X-RateLimit-Limit: {rateLimit.Limit} - X-RateLimit-Remaining: {rateLimit.Remaining} - X-RateLimit-Reset: {rateLimit.ResetDate}");
+				Debug.WriteLine($"X-RateLimit-Minutely-Limit: {rateLimit.MinutelyLimit} - X-RateLimit-Minutely-Remaining: {rateLimit.MinutelyRemaining} - X-RateLimit-Minutely-Reset: {rateLimit.MinutelyResetDate}");
+				if (rateLimit.MinutelyLimit is int minutelyLimit && rateLimit.MinutelyRemaining is int minutelyRemaining)
 				{
 					if (_minutelyRemaining == -1 || minutelyRemaining == minutelyLimit - 1) // this means this is the first call of a 1 minute window
 					{
@@ -392,7 +399,8 @@ namespace ExactOnline.Client.Sdk.Helpers
 					}
 					_minutelyRemaining = minutelyRemaining;
 				}
-			}
+				EolResponseHeader = new EolResponseHeader(rateLimit);
+			};
 		}
 	}
 }
