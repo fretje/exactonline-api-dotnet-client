@@ -395,6 +395,7 @@ namespace ExactOnline.Client.Sdk.Helpers
 					: type == typeof(DateTime) ? $"datetime'{value:o}'"
 					: type == typeof(bool) ? value.ToString().ToLower()
 					: type.IsEnum ? $"{value:D}" // need the numerical value of enums, not the name!
+					: type == typeof(long) || type == typeof(ulong) ? $"{value}L" // longs need an "L" attached
                     : value.ToString();
             }
 
