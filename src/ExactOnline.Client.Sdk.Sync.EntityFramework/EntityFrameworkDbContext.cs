@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 
 namespace ExactOnline.Client.Sdk.Sync.EntityFramework
@@ -18,6 +19,8 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFramework
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
+			modelBuilder.Conventions.Remove<PluralizingTableNameConvention>(); // Don't pluralize tablenames!
+
 			modelBuilder.Properties()
 				.Where(p => {
 					var identifierName = ModelInfo.For(p.DeclaringType).IdentifierName;
