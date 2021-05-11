@@ -70,7 +70,7 @@ namespace ConsoleApplication
 		}
 
 		private static void WriteRateLimitInfo(ExactOnlineClient client) =>
-			Debug.WriteLine(string.Format("X-RateLimit-Limit:  {0} - X-RateLimit-Remaining: {1} - X-RateLimit-Reset: {2}",
-				client.EolResponseHeader.RateLimit.Limit, client.EolResponseHeader.RateLimit.Remaining, client.EolResponseHeader.RateLimit.Reset));
+			Debug.WriteLine(string.Format("X-RateLimit-Limit: {0} - X-RateLimit-Remaining: {1} - X-RateLimit-Reset: {2} - X-RateLimit-Minutely-Limit: {3} - X-RateLimit-Minutely-Remaining: {4} - X-RateLimit-Minutely-Reset: {5}",
+				client.EolResponseHeader.RateLimit.Limit, client.EolResponseHeader.RateLimit.Remaining, client.EolResponseHeader.RateLimit.Reset, client.EolResponseHeader.RateLimit.MinutelyLimit, client.EolResponseHeader.RateLimit.MinutelyRemaining, client.EolResponseHeader.RateLimit.MinutelyReset));
 	}
 }

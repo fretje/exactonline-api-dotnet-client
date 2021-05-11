@@ -23,5 +23,20 @@
         /// The time at which the rate limit window resets in UTC epoch seconds.
         /// </summary>
         public long? Reset { get; set; }
-    }
+
+		/// <summary>
+		/// The maximum number of API calls that your app is permitted to make per company, per minute.
+		/// </summary>
+		public int? MinutelyLimit { get; set; }
+
+		/// <summary>
+		/// The remaining number of API calls that your app is permitted to make for a company, per minute.
+		/// </summary>
+		public int? MinutelyRemaining { get; set; }
+
+        /// <summary>
+        /// The time at which the minutely rate limit window resets in UTC epoch seconds.
+        /// </summary>
+        public long? MinutelyReset { get; set; }
+	}
 }
