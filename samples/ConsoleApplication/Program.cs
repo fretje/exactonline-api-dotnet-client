@@ -7,13 +7,21 @@ using ExactOnline.Client.Sdk.Sync;
 using ExactOnline.Client.Sdk.Sync.EntityFramework;
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 
 namespace ConsoleApplication
 {
 	internal class Program
 	{
-		public static string ExactOnlineUrl => "https://start.exactonline.be";
+		private static string _exactOnlineUrl => "https://start.exactonline.be";
+
+		private static readonly string _refreshTokenCacheFile = @"c:\temp\refreshTokenCache";
+		private static string _refreshToken
+		{
+			get => File.Exists(_refreshTokenCacheFile) ? File.ReadAllText(_refreshTokenCacheFile) : null;
+			set => File.WriteAllText(_refreshTokenCacheFile, value);
+		}
 
 		[STAThread]
 		private static void Main()
@@ -21,8 +29,10 @@ namespace ConsoleApplication
 			// To make this work set the authorisation properties of your test app in the testapp.config.
 			var testApp = new TestApp();
 
-			var authorizer = new ExactOnlineAuthorizer(ExactOnlineUrl, testApp.ClientId.ToString(), testApp.ClientSecret, testApp.CallbackUrl);
-			var client = new ExactOnlineClient(ExactOnlineUrl, authorizer.GetAccessToken);
+			var authorizer = new ExactOnlineAuthorizer(_exactOnlineUrl, testApp.ClientId.ToString(), testApp.ClientSecret, testApp.CallbackUrl, _refreshToken);
+			authorizer.RefreshTokenUpdated += (sender, e) => _refreshToken = e.NewRefreshToken;
+
+			var client = new ExactOnlineClient(_exactOnlineUrl, authorizer.GetAccessToken);
 
 			// Get the Code and Name of a random account in the administration.
 			var fields = new[] { "Code", "Name" };
