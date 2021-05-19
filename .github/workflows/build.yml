@@ -35,7 +35,12 @@ jobs:
       - name: Run Tests
         run: dotnet test ClientSdk.sln --no-restore
 
-      - name: Publish the package to nuget.org
-        run: dotnet nuget push .\src\*.nupkg -k $NUGET_AUTH_TOKEN -s https://api.nuget.org/v3/index.json
+      - name: Publish the package to nuget.org when we have a new version
         env:
           NUGET_AUTH_TOKEN: ${{ secrets.NUGET_AUTH_TOKEN }}
+        run: |
+          $version = (Select-Xml -Path .\src\Directory.Build.props -XPath /Project/PropertyGroup/Version).Node.InnerText
+          $versions = (curl https://api.nuget.org/v3-flatcontainer/ExactOnline.Client.Sdk.vNext/index.json -UseBasicParsing | ConvertFrom-Json).versions
+          if (-not($versions -contains $version)) {
+            dotnet nuget push .\src\*.nupkg -k $env:NUGET_AUTH_TOKEN
+          }
