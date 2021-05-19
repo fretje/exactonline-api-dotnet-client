@@ -33,4 +33,4 @@ jobs:
         run: msbuild ClientSdk.sln /t:pack /p:Configuration=Release
 
       - name: Run Tests
-        run: dotnet test ClientSdk.sln --no-restore --no-build
+        run: dotnet test ClientSdk.sln --no-restore
