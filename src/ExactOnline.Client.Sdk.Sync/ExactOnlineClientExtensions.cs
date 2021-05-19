@@ -20,8 +20,8 @@ namespace ExactOnline.Client.Sdk.Sync
 		public static SyncResult SynchronizeWith(this ExactOnlineClient client, ISyncTarget syncTarget, Type modelType, params string[] fields) =>
 			InvokeMethod<SyncResult>(_synchronizeWithMethod, modelType, client, syncTarget, fields);
 
-		public static Task<SyncResult> SynchronizeWithAsync(this ExactOnlineClient client, ISyncTarget syncTarget, Type modelType, string[] fields, CancellationToken cancellationToken = default) =>
-			InvokeMethod<Task<SyncResult>>(_synchronizeWithAsyncMethod, modelType, client, syncTarget, fields, cancellationToken);
+		public static Task<SyncResult> SynchronizeWithAsync(this ExactOnlineClient client, ISyncTarget syncTarget, Type modelType, string[] fields, Action<int, int> reportProgress = null, CancellationToken cancellationToken = default) =>
+			InvokeMethod<Task<SyncResult>>(_synchronizeWithAsyncMethod, modelType, client, syncTarget, fields, reportProgress, cancellationToken);
 
 		private static TReturn InvokeMethod<TReturn>(MethodInfo method, Type modelType, params object[] parameters) =>
 			// here we call SynchronizeWith or SynchronizeWithAsync<TModel>(query, syncTarget, fields) with the right TModel for modelType
