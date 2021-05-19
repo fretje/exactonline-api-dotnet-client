@@ -23,17 +23,17 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
         
-      #- name: Restore NuGet Packages
-      #  run: dotnet restore ClientSdk.sln
+      - name: Restore NuGet Packages
+        run: dotnet restore ClientSdk.sln
 
-      #- name: Add msbuild to PATH
-      #  uses: microsoft/setup-msbuild@v1.0.2
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.0.2
 
-      #- name: Build and Pack Solution
-      #  run: msbuild ClientSdk.sln /t:pack /p:Configuration=Release
+      - name: Build and Pack Solution
+        run: msbuild ClientSdk.sln /t:pack /p:Configuration=Release
 
-      #- name: Run Tests
-      #  run: dotnet test ClientSdk.sln --no-restore
+      - name: Run Tests
+        run: dotnet test ClientSdk.sln --no-restore
 
       - name: Publish the package to nuget.org when we have a new version
         env:
