@@ -300,7 +300,13 @@ namespace ExactOnline.Client.Sdk.Helpers
             var messageFromServer = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
             Debug.WriteLine(messageFromServer);
             Debug.WriteLine("");
-			var messageError = JsonConvert.DeserializeObject(messageFromServer, typeof(ServerMessage)) as ServerMessage;
+
+			var messageError = default(ServerMessage);
+			try
+			{
+				messageError = JsonConvert.DeserializeObject(messageFromServer, typeof(ServerMessage)) as ServerMessage;
+			}
+			catch { /* the response might not be a json payload */ }
 
 			var message = messageError?.Error?.Message?.Value;
 			if (string.IsNullOrEmpty(message))
