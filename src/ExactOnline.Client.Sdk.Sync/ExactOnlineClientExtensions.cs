@@ -33,8 +33,8 @@ namespace ExactOnline.Client.Sdk.Sync
 			where TModel : class =>
 			client.For<TModel>().Select(fields).SynchronizeWith(syncTarget, client);
 
-		public static Task<SyncResult> SynchronizeWithAsync<TModel>(this ExactOnlineClient client, ISyncTarget syncTarget, string[] fields, CancellationToken cancellationToken = default)
+		public static Task<SyncResult> SynchronizeWithAsync<TModel>(this ExactOnlineClient client, ISyncTarget syncTarget, string[] fields, Action<int, int> reportProgress = null, CancellationToken cancellationToken = default)
 			where TModel : class =>
-			client.For<TModel>().Select(fields).SynchronizeWithAsync(syncTarget, client, cancellationToken);
+			client.For<TModel>().Select(fields).SynchronizeWithAsync(syncTarget, client, reportProgress, cancellationToken);
 	}
 }

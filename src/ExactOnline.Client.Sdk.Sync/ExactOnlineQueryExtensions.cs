@@ -62,7 +62,7 @@ namespace ExactOnline.Client.Sdk.Sync
 			return result;
 		}
 
-		public static async Task<SyncResult> SynchronizeWithAsync<TModel>(this ExactOnlineQuery<TModel> query, ISyncTarget syncTarget, ExactOnlineClient client, CancellationToken cancellationToken = default)
+		public static async Task<SyncResult> SynchronizeWithAsync<TModel>(this ExactOnlineQuery<TModel> query, ISyncTarget syncTarget, ExactOnlineClient client, Action<int, int> reportProgress = null, CancellationToken cancellationToken = default)
 			where TModel : class
 		{
 			var modelInfo = ModelInfo.For<TModel>();
@@ -94,8 +94,12 @@ namespace ExactOnline.Client.Sdk.Sync
 
 				result.RecordsRead += entities.Count;
 
+				reportProgress?.Invoke(result.RecordsRead, result.RecordsInsertedOrUpdated);
+
 				result.RecordsInsertedOrUpdated +=
 					await targetController.CreateOrUpdateEntitiesAsync(entities, cancellationToken).ConfigureAwait(false);
+
+				reportProgress?.Invoke(result.RecordsRead, result.RecordsInsertedOrUpdated);
 
 			} while (!string.IsNullOrEmpty(skiptoken));
 
