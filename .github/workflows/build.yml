@@ -36,6 +36,6 @@ jobs:
         run: dotnet test ClientSdk.sln --no-restore
 
       - name: Publish the package to nuget.org
-        run: dotnet nuget push *.nupkg -k $NUGET_AUTH_TOKEN -s https://api.nuget.org/v3/index.json
+        run: dotnet nuget push .\src\*.nupkg -k $NUGET_AUTH_TOKEN -s https://api.nuget.org/v3/index.json
         env:
           NUGET_AUTH_TOKEN: ${{ secrets.NUGET_AUTH_TOKEN }}
