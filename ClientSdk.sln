@@ -17,10 +17,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
+		src\Directory.Build.props = src\Directory.Build.props
 		src\exact.png = src\exact.png
 		LICENSE.txt = LICENSE.txt
 		README.md = README.md
-		src\SharedProjectProperties.proj = src\SharedProjectProperties.proj
 		testapp.config.example = testapp.config.example
 	EndProjectSection
 EndProject
@@ -32,6 +32,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuget", "nuget", "{7EE18EF7
 	ProjectSection(SolutionItems) = preProject
 		nuget\PackAndPushToNuget.cmd = nuget\PackAndPushToNuget.cmd
 		nuget\SetEnvironment.cmd = nuget\SetEnvironment.cmd
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{110DF8AC-AE28-4BA8-99F3-265B4060EF50}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{C7117E1E-8DF0-4887-BEAA-00396907B6B4}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\build.yml = .github\workflows\build.yml
 	EndProjectSection
 EndProject
 Global
@@ -83,6 +90,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{866362D4-39CA-4FAA-99C0-2BE23530E881} = {3F1610DB-DF11-43C3-B024-427B17186896}
+		{C7117E1E-8DF0-4887-BEAA-00396907B6B4} = {110DF8AC-AE28-4BA8-99F3-265B4060EF50}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {196FED2E-FC3C-402C-8CF2-6B913287B70E}

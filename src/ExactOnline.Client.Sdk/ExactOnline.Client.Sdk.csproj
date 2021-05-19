@@ -6,14 +6,12 @@
 		<PackageId>ExactOnline.Client.Sdk.vNext</PackageId>
 	</PropertyGroup>
 
-	<Import Project="..\SharedProjectProperties.proj" />
-
 	<ItemGroup>
-	  <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\ExactOnline.Client.Models\ExactOnline.Client.Models.csproj" />
+		<ProjectReference Include="..\ExactOnline.Client.Models\ExactOnline.Client.Models.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -4,11 +4,9 @@
 		<TargetFrameworks>netstandard2.0;net472</TargetFrameworks>
 	</PropertyGroup>
 
-	<Import Project="..\SharedProjectProperties.proj" />
-
 	<ItemGroup>
-		<PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-		<PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.7" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.9" />
 	</ItemGroup>
 
 	<ItemGroup>
