@@ -148,12 +148,8 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFramework
 			}
 		}
 
-		private void DeleteEntities(Guid[] deleted, EntityFrameworkDbContext db)
-			=> db.Set<TModel>().RemoveRange(
-					db.Set<TModel>().Where(
-						ModelInfo.IdentifierName.Contains(',')
-							? $"new ({ModelInfo.IdentifierName}) in @0"
-							: $"{ModelInfo.IdentifierName} in @0",
-						deleted));
+		private void DeleteEntities(Guid[] deleted, EntityFrameworkDbContext db) =>
+			db.Set<TModel>().RemoveRange(
+				db.Set<TModel>().Where($"{ModelInfo.IdentifierName} in @0", deleted));
 	}
 }

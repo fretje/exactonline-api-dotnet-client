@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 
@@ -15,11 +16,13 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFramework
 			: base(string.IsNullOrEmpty(nameOrConnectionString)
 				  ? typeof(EntityFrameworkDbContext).FullName
 				  : nameOrConnectionString) =>
-			Database.SetInitializer(new MigrateDatabaseToLatestVersion<EntityFrameworkDbContext, Migrations.Configuration>(true));
+			Database.SetInitializer(new MigrateDatabaseToLatestVersion<EntityFrameworkDbContext, MigrationConfiguration>(true));
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
-			modelBuilder.Conventions.Remove<PluralizingTableNameConvention>(); // Don't pluralize tablenames!
+			modelBuilder.Conventions.Remove<PluralizingTableNameConvention>(); // Don't pluralize tablenames
+			modelBuilder.Conventions.Remove<IdKeyDiscoveryConvention>(); // The primary keys are defined by the IdentifierName of the ModelInfo (see below)
+			modelBuilder.Conventions.Remove<StoreGeneratedIdentityKeyConvention>(); // Don't use databasegenerated option for integer id's
 
 			modelBuilder.Properties()
 				.Where(p => {
@@ -50,6 +53,11 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFramework
 			modelBuilder.ComplexType<Client.Models.Manufacturing.CoilWireLengthCalculator>();
 			modelBuilder.ComplexType<Client.Models.Manufacturing.CoilWireWeightCalculator>();
 			modelBuilder.ComplexType<Client.Models.Manufacturing.VolumeCalculator>();
+		}
+
+		internal sealed class MigrationConfiguration : DbMigrationsConfiguration<EntityFrameworkDbContext>
+		{
+			public MigrationConfiguration() => AutomaticMigrationsEnabled = true;
 		}
 	}
 }
