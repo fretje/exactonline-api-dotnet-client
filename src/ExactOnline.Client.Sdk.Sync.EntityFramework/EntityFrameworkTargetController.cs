@@ -59,7 +59,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFramework
 
 		public override int CreateOrUpdateEntities(List<TModel> entities)
 		{
-			if (!entities.Any())
+			if (entities is null || !entities.Any())
 			{
 				return 0;
 			}
@@ -72,7 +72,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFramework
 
 		public override async Task<int> CreateOrUpdateEntitiesAsync(List<TModel> entities, CancellationToken cancellationToken)
 		{
-			if (!entities.Any())
+			if (entities is null || !entities.Any())
 			{
 				return 0;
 			}
@@ -108,16 +108,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFramework
 			foreach (var entity in entities)
 			{
 				var idValue = ModelInfo.IdentifierValue<TModel, TId>(entity);
-				var timestampValue = ModelInfo.TimestampValue(entity);
-				if (timestampValue != null)
-				{
-					if (entities.AsQueryable().Any($"{ModelInfo.IdentifierName} = @0 and {ModelInfo.TimestampName} > @1", idValue, timestampValue))
-					{
-						// Sync results can contain duplicate entries for the same unique key.
-						// Here we take only the last change into account and filter out all the previous ones.
-						continue;
-					}
-				}
 				db.Entry(entity).State = existingIds.Contains(idValue) ? EntityState.Modified : EntityState.Added;
 			}
 		}

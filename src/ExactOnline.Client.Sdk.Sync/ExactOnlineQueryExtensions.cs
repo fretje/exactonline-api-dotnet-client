@@ -1,13 +1,14 @@
-﻿using ExactOnline.Client.Models.Sync;
-using ExactOnline.Client.Sdk.Controllers;
-using ExactOnline.Client.Sdk.Enums;
-using ExactOnline.Client.Sdk.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Threading;
 using System.Threading.Tasks;
+using ExactOnline.Client.Models.Sync;
+using ExactOnline.Client.Sdk.Controllers;
+using ExactOnline.Client.Sdk.Enums;
+using ExactOnline.Client.Sdk.Helpers;
 
 namespace ExactOnline.Client.Sdk.Sync
 {
@@ -40,6 +41,12 @@ namespace ExactOnline.Client.Sdk.Sync
 				var entities = query.Get(ref skiptoken, endpointType);
 
 				result.RecordsRead += entities.Count;
+
+				if (endpointType == EndpointTypeEnum.Sync)
+				{
+					entities = entities.FilterDoubles(modelInfo.IdentifierName)
+						.ToDynamicList<TModel>();
+				}
 
 				result.RecordsInsertedOrUpdated +=
 					targetController.CreateOrUpdateEntities(entities);
@@ -96,6 +103,12 @@ namespace ExactOnline.Client.Sdk.Sync
 
 				reportProgress?.Invoke(result.RecordsRead, result.RecordsInsertedOrUpdated);
 
+				if (endpointType == EndpointTypeEnum.Sync)
+				{
+					entities = await entities.FilterDoubles(modelInfo.IdentifierName)
+						.ToDynamicListAsync<TModel>().ConfigureAwait(false);
+				}
+
 				result.RecordsInsertedOrUpdated +=
 					await targetController.CreateOrUpdateEntitiesAsync(entities, cancellationToken).ConfigureAwait(false);
 
@@ -121,6 +134,13 @@ namespace ExactOnline.Client.Sdk.Sync
 
 			return result;
 		}
+
+		// Sync results can contain duplicate entries for the same unique key.
+		// Here we take only the last change into account and filter out all the previous ones.
+		private static IQueryable FilterDoubles<TModel>(this IList<TModel> entities, string identifierName) =>
+			entities.AsQueryable()
+				.GroupBy(identifierName)
+				.Select($"it.OrderByDescending({ModelInfo.TimestampName}).First()");
 
 		private static EndpointTypeEnum GetEndpointType(ModelInfo modelInfo) =>
 			modelInfo.SupportsSync ? EndpointTypeEnum.Sync
