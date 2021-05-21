@@ -59,10 +59,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFramework
 
 		public override int CreateOrUpdateEntities(List<TModel> entities)
 		{
-			if (entities is null || !entities.Any())
-			{
-				return 0;
-			}
 			using (var db = new EntityFrameworkDbContext(_nameOrConnectionString))
 			{
 				CreateOrUpdateEntities(entities, db, GetExistingIds());
@@ -72,10 +68,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFramework
 
 		public override async Task<int> CreateOrUpdateEntitiesAsync(List<TModel> entities, CancellationToken cancellationToken)
 		{
-			if (entities is null || !entities.Any())
-			{
-				return 0;
-			}
 			using (var db = new EntityFrameworkDbContext(_nameOrConnectionString))
 			{
 				CreateOrUpdateEntities(entities, db, await GetExistingIdsAsync(cancellationToken).ConfigureAwait(false));
@@ -114,10 +106,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFramework
 
 		public override int DeleteEntities(Guid[] deleted)
 		{
-			if (deleted == null || deleted.Length == 0)
-			{
-				return 0;
-			}
 			using (var db = new EntityFrameworkDbContext(_nameOrConnectionString))
 			{
 				DeleteEntities(deleted, db);
@@ -127,10 +115,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFramework
 
 		public override async Task<int> DeleteEntitiesAsync(Guid[] deleted, CancellationToken cancellationToken)
 		{
-			if (deleted == null || deleted.Length == 0)
-			{
-				return 0;
-			}
 			using (var db = new EntityFrameworkDbContext(_nameOrConnectionString))
 			{
 				DeleteEntities(deleted, db);

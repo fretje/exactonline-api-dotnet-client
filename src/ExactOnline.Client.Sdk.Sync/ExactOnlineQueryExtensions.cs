@@ -44,24 +44,33 @@ namespace ExactOnline.Client.Sdk.Sync
 
 				if (endpointType == EndpointTypeEnum.Sync)
 				{
-					entities = entities.FilterDoubles(modelInfo.IdentifierName)
+					entities = entities
+						.FilterDoubles(modelInfo.IdentifierName)
 						.ToDynamicList<TModel>();
 				}
 
-				result.RecordsInsertedOrUpdated +=
-					targetController.CreateOrUpdateEntities(entities);
+				if (entities.Count > 0)
+				{
+					result.RecordsInsertedOrUpdated += targetController
+						.CreateOrUpdateEntities(entities);
+				}
 
 			} while (!string.IsNullOrEmpty(skiptoken));
 
 			if (endpointType == EndpointTypeEnum.Sync && modelInfo.HasDeletedEntityType)
 			{
-				var deleted = client.DeletedFor(modelInfo.DeletedEntityType, maxTimestamp)
+				var deleted = client
+					.DeletedFor(modelInfo.DeletedEntityType, maxTimestamp)
 					.Get()
 					.ToEntityKeyArray();
 
 				result.RecordsDeletedRead += deleted.Length;
 
-				result.RecordsDeleted = targetController.DeleteEntities(deleted);
+				if (deleted.Length > 0)
+				{
+					result.RecordsDeleted = targetController
+						.DeleteEntities(deleted);
+				}
 			}
 
 			Debug.WriteLine(result);
@@ -105,12 +114,16 @@ namespace ExactOnline.Client.Sdk.Sync
 
 				if (endpointType == EndpointTypeEnum.Sync)
 				{
-					entities = await entities.FilterDoubles(modelInfo.IdentifierName)
+					entities = await entities
+						.FilterDoubles(modelInfo.IdentifierName)
 						.ToDynamicListAsync<TModel>().ConfigureAwait(false);
 				}
 
-				result.RecordsInsertedOrUpdated +=
-					await targetController.CreateOrUpdateEntitiesAsync(entities, cancellationToken).ConfigureAwait(false);
+				if (entities.Count > 0)
+				{
+					result.RecordsInsertedOrUpdated += await targetController
+						.CreateOrUpdateEntitiesAsync(entities, cancellationToken).ConfigureAwait(false);
+				}
 
 				reportProgress?.Invoke(result.RecordsRead, result.RecordsInsertedOrUpdated);
 
@@ -120,14 +133,19 @@ namespace ExactOnline.Client.Sdk.Sync
 			{
 				cancellationToken.ThrowIfCancellationRequested();
 
-				var deleted = (await client.DeletedFor(modelInfo.DeletedEntityType, maxTimestamp)
+				var deleted = (await client
+					.DeletedFor(modelInfo.DeletedEntityType, maxTimestamp)
 					.GetAsync().ConfigureAwait(false))
 					.List
 					.ToEntityKeyArray();
 
 				result.RecordsDeletedRead += deleted.Length;
 
-				result.RecordsDeleted = await targetController.DeleteEntitiesAsync(deleted, cancellationToken).ConfigureAwait(false);
+				if (deleted.Length > 0)
+				{
+					result.RecordsDeleted = await targetController
+						.DeleteEntitiesAsync(deleted, cancellationToken).ConfigureAwait(false);
+				}
 			}
 
 			Debug.WriteLine(result);
