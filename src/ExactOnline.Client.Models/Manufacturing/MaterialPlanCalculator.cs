@@ -151,7 +151,7 @@
 
         /// <summary>Is calculated -  if Length = 0 and PieceFacing = 0 and PieceCutOff = 0 and PiecesPerMakeItem = 1 then false</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public bool IsCalculated { get; set; }
+        public bool? IsCalculated { get; set; }
     }
 
     public class SheetCalculator : CalculatorBase
@@ -231,7 +231,7 @@
 
         /// <summary>Is calculated -  if Length = 0 and Width = 0 and Allowance = 0 and PiecesPerMakeItem = 1 then false</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public bool IsCalculated { get; set; }
+        public bool? IsCalculated { get; set; }
     }
 
     public class CoilWireLengthCalculator : CalculatorBase
@@ -290,7 +290,7 @@
 
         /// <summary>Is calculated -  Always true for CoilWireWeight</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public bool IsCalculated { get; set; }
+        public bool? IsCalculated { get; set; }
     }
 
     public class CoilWireWeightCalculator : CalculatorBase
@@ -313,7 +313,7 @@
 
         /// <summary>Is calculated -  Always true for CoilWireWeight</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public bool IsCalculated { get; set; }
+        public bool? IsCalculated { get; set; }
     }
 
     public class VolumeCalculator : CalculatorBase
@@ -348,6 +348,6 @@
 
         /// <summary>Is calculated -  if Length = 0 and PieceFacing = 0 and PieceCutOff = 0 and PiecesPerMakeItem = 1 then false</summary>
         [SDKFieldType(FieldType.ReadOnly)]
-        public bool IsCalculated { get; set; }
+        public bool? IsCalculated { get; set; }
     }
 }
