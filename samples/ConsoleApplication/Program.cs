@@ -17,10 +17,33 @@ namespace ConsoleApplication
 		private static string _exactOnlineUrl => "https://start.exactonline.be";
 
 		private static readonly string _refreshTokenCacheFile = @"c:\temp\refreshTokenCache";
+		private static readonly string _accessTokenCacheFile = @"c:\temp\accessTokenCache";
+		private static readonly string _accessTokenExpirationUtcCacheFile = @"c:\temp\accessTokenExpirationUtcCache";
+
 		private static string _refreshToken
 		{
 			get => File.Exists(_refreshTokenCacheFile) ? File.ReadAllText(_refreshTokenCacheFile) : null;
 			set => File.WriteAllText(_refreshTokenCacheFile, value);
+		}
+		private static string _accessToken
+		{
+			get => File.Exists(_accessTokenCacheFile) ? File.ReadAllText(_accessTokenCacheFile) : null;
+			set => File.WriteAllText(_accessTokenCacheFile, value);
+		}
+		private static DateTime? _accessTokenExpirationUtc
+		{
+			get => File.Exists(_accessTokenExpirationUtcCacheFile) ? DateTime.Parse(File.ReadAllText(_accessTokenExpirationUtcCacheFile)) : (DateTime?)null;
+			set
+			{
+				if (value.HasValue)
+				{
+					File.WriteAllText(_accessTokenExpirationUtcCacheFile, value.Value.ToString("o"));
+				}
+				else
+				{
+					File.Delete(_accessTokenExpirationUtcCacheFile);
+				}
+			}
 		}
 
 		[STAThread]
@@ -29,8 +52,8 @@ namespace ConsoleApplication
 			// To make this work set the authorisation properties of your test app in the testapp.config.
 			var testApp = new TestApp();
 
-			var authorizer = new ExactOnlineAuthorizer(_exactOnlineUrl, testApp.ClientId.ToString(), testApp.ClientSecret, testApp.CallbackUrl, _refreshToken);
-			authorizer.RefreshTokenUpdated += (sender, e) => _refreshToken = e.NewRefreshToken;
+			var authorizer = new ExactOnlineAuthorizer(_exactOnlineUrl, testApp.ClientId.ToString(), testApp.ClientSecret, testApp.CallbackUrl, _refreshToken, _accessToken, _accessTokenExpirationUtc);
+			authorizer.AnyTokenUpdated += (sender, e) => (_refreshToken, _accessToken, _accessTokenExpirationUtc) = (e.NewRefreshToken, e.NewAccessToken, e.NewAccessTokenExpirationUtc);
 
 			var client = new ExactOnlineClient(_exactOnlineUrl, authorizer.GetAccessToken);
 
