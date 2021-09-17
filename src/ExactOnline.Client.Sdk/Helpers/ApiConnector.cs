@@ -25,7 +25,14 @@ namespace ExactOnline.Client.Sdk.Helpers
 
 		private int _minutelyRemaining = -1;
 		private DateTime _minutelyResetTime;
-		private TimeSpan _minutelyWaitTime => _minutelyResetTime - DateTime.Now;
+		private TimeSpan _minutelyWaitTime
+		{
+			get
+			{
+				var waitTime = _minutelyResetTime - DateTime.Now;
+				return waitTime < TimeSpan.Zero ? TimeSpan.Zero : waitTime;
+			}
+		}
 
 		/// <summary>
 		/// Creates new instance of ApiConnector
