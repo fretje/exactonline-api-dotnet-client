@@ -13,7 +13,7 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
 
-		<Version>4.0.0-preview07</Version>
+		<Version>4.0.0-preview08</Version>
 
 		<PackageIcon>exact.png</PackageIcon>
 		<PackageIconUrl>https://avatars0.githubusercontent.com/u/4112611?v=3&amp;s=200</PackageIconUrl>
