@@ -68,6 +68,7 @@ namespace ExactOnline.Client.OAuth
 				catch (ProtocolException)
 				{
 					//The refreshtoken is not valid anymore
+					refreshFailed = true;
 				}
 			}
 
