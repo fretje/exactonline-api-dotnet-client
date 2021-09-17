@@ -103,7 +103,7 @@ namespace ExactOnline.Client.OAuth
             if (authorization.AccessTokenExpirationUtc != null)
             {
                 var timeToExpire = authorization.AccessTokenExpirationUtc.Value.Subtract(DateTime.UtcNow);
-                return timeToExpire.Seconds < 30;
+                return timeToExpire.TotalSeconds < 30;
             }
             return false;
         }
