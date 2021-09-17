@@ -9,15 +9,15 @@ using ExactOnline.Client.Sdk.Models;
 
 namespace ExactOnline.Client.Sdk.Controllers
 {
-    /// <summary>
-    /// Front Controller for working with Exact Online Entities
-    /// </summary>
-    public class ExactOnlineClient
+	/// <summary>
+	/// Front Controller for working with Exact Online Entities
+	/// </summary>
+	public class ExactOnlineClient
     {
         private readonly ApiConnector _apiConnector;
 
-        // https://start.exactonline.nl/api/v1
-        public string ExactOnlineApiUrl { get; private set; }
+		// https://start.exactonline.nl/api/v1
+		public string ExactOnlineApiUrl { get; private set; }
 
         private readonly ControllerList _controllers;
 
@@ -56,7 +56,7 @@ namespace ExactOnline.Client.Sdk.Controllers
             var baseUrl = ExactOnlineApiUrl + Division + "/";
 
             _controllers = new ControllerList(_apiConnector, baseUrl);
-        }
+		}
 
         /// <summary>
         /// Returns instance of ExactOnlineQuery that can be used to manipulate data in Exact Online

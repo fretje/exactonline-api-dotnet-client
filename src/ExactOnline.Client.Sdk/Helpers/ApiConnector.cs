@@ -10,17 +10,22 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ExactOnline.Client.Sdk.Helpers
 {
-    /// <summary>
-    /// Class for doing request to REST API
-    /// </summary>
-    public class ApiConnector : IApiConnector
+	/// <summary>
+	/// Class for doing request to REST API
+	/// </summary>
+	public class ApiConnector : IApiConnector
     {
         private readonly AccessTokenManagerDelegate _accessTokenDelegate;
         private readonly ExactOnlineClient _client;
+
+		private int _minutelyRemaining = -1;
+		private DateTime _minutelyResetTime;
+		private TimeSpan _minutelyWaitTime => _minutelyResetTime - DateTime.Now;
 
 		/// <summary>
 		/// Creates new instance of ApiConnector
@@ -31,15 +36,15 @@ namespace ExactOnline.Client.Sdk.Helpers
         {
             _accessTokenDelegate = accessTokenDelegate ?? throw new ArgumentNullException(nameof(accessTokenDelegate));
             _client = client;
-        }
+		}
 
-        /// <summary>
-        /// Read Data: Perform a GET Request on the API
-        /// </summary>
-        /// <param name="endpoint">{URI}/{Division}/{Resource}/{Entity}</param>
-        /// <param name="querystring">querystring</param>
-        /// <returns>String with API Response in Json Format</returns>
-        public string DoGetRequest(string endpoint, string querystring) =>
+		/// <summary>
+		/// Read Data: Perform a GET Request on the API
+		/// </summary>
+		/// <param name="endpoint">{URI}/{Division}/{Resource}/{Entity}</param>
+		/// <param name="querystring">querystring</param>
+		/// <returns>String with API Response in Json Format</returns>
+		public string DoGetRequest(string endpoint, string querystring) =>
             GetResponse(CreateGetRequest(endpoint, querystring));
 
         /// <summary>
@@ -238,6 +243,7 @@ namespace ExactOnline.Client.Sdk.Helpers
                 }
             }
 
+			Debug.WriteLine("BODY");
             Debug.WriteLine(responseValue);
             Debug.WriteLine("");
 
@@ -245,32 +251,44 @@ namespace ExactOnline.Client.Sdk.Helpers
         }
 
         private Stream GetResponseStream(HttpWebRequest request)
+		{
+			if (_minutelyRemaining == 0)
+			{
+				Debug.WriteLine($"WAITING {_minutelyWaitTime} to respect minutely rate limit.");
+				Thread.Sleep(_minutelyWaitTime);
+			}
+
+			Debug.WriteLine("RESPONSE");
+
+			var response = default(WebResponse);
+
+			// Get response. If this fails: Throw the correct Exception (for testability)
+			try
+			{
+				response = request.GetResponse();
+				return response.GetResponseStream();
+			}
+			catch (WebException ex)
+			{
+				response = ex.Response;
+				ThrowSpecificException(ex);
+				throw;
+			}
+			finally
+			{
+				SetEolResponseHeaders(response);
+			}
+		}
+
+		private async Task<Stream> GetResponseStreamAsync(HttpWebRequest request)
         {
-            Debug.WriteLine("RESPONSE");
+			if (_minutelyRemaining == 0)
+			{
+				Debug.WriteLine($"WAITING {_minutelyWaitTime} to respect minutely rate limit.");
+				await Task.Delay(_minutelyWaitTime).ConfigureAwait(false);
+			}
 
-            var response = default(WebResponse);
-
-            // Get response. If this fails: Throw the correct Exception (for testability)
-            try
-            {
-                response = request.GetResponse();
-                return response.GetResponseStream();
-            }
-            catch (WebException ex)
-            {
-                response = ex.Response;
-                ThrowSpecificException(ex);
-                throw;
-            }
-            finally
-            {
-                SetEolResponseHeaders(response);
-            }
-        }
-
-        private async Task<Stream> GetResponseStreamAsync(HttpWebRequest request)
-        {
-            Debug.WriteLine("RESPONSE");
+			Debug.WriteLine("RESPONSE");
 
             var response = default(WebResponse);
 
@@ -314,25 +332,25 @@ namespace ExactOnline.Client.Sdk.Helpers
 				message = ex.Message;
 			}
 
-            switch (statusCode)
-            {
-                case HttpStatusCode.BadRequest: // 400
-                case HttpStatusCode.MethodNotAllowed: // 405
-                    throw new BadRequestException(message, ex);
+			switch (statusCode)
+			{
+				case HttpStatusCode.BadRequest: // 400
+				case HttpStatusCode.MethodNotAllowed: // 405
+					throw new BadRequestException(message, ex);
 
-                case HttpStatusCode.Unauthorized: //401
-                    throw new UnauthorizedException(message, ex); // 401
+				case HttpStatusCode.Unauthorized: //401
+					throw new UnauthorizedException(message, ex); // 401
 
-                case HttpStatusCode.Forbidden:
-                    throw new ForbiddenException(message, ex); // 403
+				case HttpStatusCode.Forbidden:
+					throw new ForbiddenException(message, ex); // 403
 
-                case HttpStatusCode.NotFound:
-                    throw new NotFoundException(message, ex); // 404
+				case HttpStatusCode.NotFound:
+					throw new NotFoundException(message, ex); // 404
 
-                case HttpStatusCode.InternalServerError: // 500
-                    throw new InternalServerErrorException(message, ex);
+				case HttpStatusCode.InternalServerError: // 500
+					throw new InternalServerErrorException(message, ex);
 
-                case (HttpStatusCode)429: // 429: too many requests
+				case (HttpStatusCode)429: // 429: too many requests
                     throw new TooManyRequestsException(message, ex);
             }
         }
@@ -340,7 +358,7 @@ namespace ExactOnline.Client.Sdk.Helpers
         private void SetEolResponseHeaders(WebResponse response)
         {
             if (response != null)
-            {
+			{
 				_client.EolResponseHeader = new EolResponseHeader
 				{
 					RateLimit = new RateLimit
@@ -353,7 +371,21 @@ namespace ExactOnline.Client.Sdk.Helpers
 						MinutelyReset = response.Headers["X-RateLimit-Minutely-Reset"].ToNullableLong()
 					}
 				};
-            }
-        }
-    }
+
+				Debug.WriteLine("HEADERS");
+				Debug.WriteLine($"X-RateLimit-Limit: {_client.EolResponseHeader.RateLimit.Limit} - X-RateLimit-Remaining: {_client.EolResponseHeader.RateLimit.Remaining} - X-RateLimit-Reset: {_client.EolResponseHeader.RateLimit.ResetDate}");
+				Debug.WriteLine($"X-RateLimit-Minutely-Limit: {_client.EolResponseHeader.RateLimit.MinutelyLimit} - X-RateLimit-Minutely-Remaining: {_client.EolResponseHeader.RateLimit.MinutelyRemaining} - X-RateLimit-Minutely-Reset: {_client.EolResponseHeader.RateLimit.MinutelyResetDate}");
+
+				if (_client.EolResponseHeader.RateLimit.MinutelyLimit is int minutelyLimit &&
+					_client.EolResponseHeader.RateLimit.MinutelyRemaining is int minutelyRemaining)
+				{
+					if (_minutelyRemaining == -1 || minutelyRemaining == minutelyLimit - 1) // this means this is the first call of a 1 minute window
+					{
+						_minutelyResetTime = DateTime.Now + TimeSpan.FromMinutes(1); // set the reset time to one minute from now
+					}
+					_minutelyRemaining = minutelyRemaining;
+				}
+			}
+		}
+	}
 }

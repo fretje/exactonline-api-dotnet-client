@@ -6,7 +6,7 @@ using ExactOnline.Client.Sdk.Helpers;
 using ExactOnline.Client.Sdk.Sync;
 using ExactOnline.Client.Sdk.Sync.EntityFramework;
 using System;
-using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 
@@ -32,7 +32,7 @@ namespace ConsoleApplication
 		}
 		private static DateTime? _accessTokenExpirationUtc
 		{
-			get => File.Exists(_accessTokenExpirationUtcCacheFile) ? DateTime.Parse(File.ReadAllText(_accessTokenExpirationUtcCacheFile)) : (DateTime?)null;
+			get => File.Exists(_accessTokenExpirationUtcCacheFile) ? DateTime.Parse(File.ReadAllText(_accessTokenExpirationUtcCacheFile), null, DateTimeStyles.RoundtripKind) : (DateTime?)null;
 			set
 			{
 				if (value.HasValue)
@@ -60,16 +60,13 @@ namespace ConsoleApplication
 			// Get the Code and Name of a random account in the administration.
 			var fields = new[] { "Code", "Name" };
 			var account = client.For<Account>().Top(1).Select(fields).Get().FirstOrDefault();
-			WriteRateLimitInfo(client);
 
 			// This is an example of how to use skipToken for paging.
 			var skipToken = string.Empty;
 			var accounts = client.For<Account>().Select(fields).Get(ref skipToken);
-			WriteRateLimitInfo(client);
 
 			// Now I can use the skip token to get the first record from the next page.
 			var nextAccount = client.For<Account>().Top(1).Select(fields).Get(ref skipToken).FirstOrDefault();
-			WriteRateLimitInfo(client);
 
 
 			// How to use SynchronizeWith functionality
@@ -82,7 +79,6 @@ namespace ConsoleApplication
 
 			// Synchronize a single full entity
 			client.SynchronizeWith<Account>(efTarget, ModelInfo.For<Account>().FieldNames(true));
-			WriteRateLimitInfo(client);
 
 			// Or create a filter first and then call SynchronizeWith on the ExactOnlineQuery.
 			// In this case you have to provide the client as a parameter because SynchronizeWith
@@ -91,19 +87,23 @@ namespace ConsoleApplication
 				.Select("AddressLine1", "AddressLine2", "AddressLine3")
 				.Where(a => a.StartDate, new DateTime(2000, 1, 1), OperatorEnum.Gt)
 				.SynchronizeWith(efTarget, client);
-			WriteRateLimitInfo(client);
 
 			// There's also an override that takes a type in case you want to run the synchronization dynamically (for a given modeltype)
 			// E.g. use the following code to synchronize all supported modeltypes
 			//foreach (var modelType in EntityFrameworkTarget.SupportedModelTypes)
 			//{
-			//	client.SynchronizeWith(efTarget, modelType, ModelInfo.For(modelType).FieldNames(true));
-			//	WriteRateLimitInfo(client);
+			//	// These give an 'unauthorized exception' apparently...
+			//	if (modelType == typeof(ExactOnline.Client.Models.Accountancy.AccountInvolvedAccount) ||
+			//		modelType == typeof(ExactOnline.Client.Models.Accountancy.AccountOwner) ||
+			//		modelType == typeof(ExactOnline.Client.Models.Payroll.EmploymentSalary) ||
+			//		modelType == typeof(ExactOnline.Client.Models.Financial.OfficialReturn) ||
+			//		modelType == typeof(ExactOnline.Client.Models.Accountancy.SolutionLink) ||
+			//		modelType == typeof(ExactOnline.Client.Models.Accountancy.TaskType) ||
+			//		modelType == typeof(ExactOnline.Client.Models.HRM.LeaveBuildUpRegistration))
+			//		continue;
+
+			//	await client.SynchronizeWithAsync(efTarget, modelType, ModelInfo.For(modelType).FieldNames(true));
 			//}
 		}
-
-		private static void WriteRateLimitInfo(ExactOnlineClient client) =>
-			Debug.WriteLine(string.Format("X-RateLimit-Limit: {0} - X-RateLimit-Remaining: {1} - X-RateLimit-Reset: {2} - X-RateLimit-Minutely-Limit: {3} - X-RateLimit-Minutely-Remaining: {4} - X-RateLimit-Minutely-Reset: {5}",
-				client.EolResponseHeader.RateLimit.Limit, client.EolResponseHeader.RateLimit.Remaining, client.EolResponseHeader.RateLimit.Reset, client.EolResponseHeader.RateLimit.MinutelyLimit, client.EolResponseHeader.RateLimit.MinutelyRemaining, client.EolResponseHeader.RateLimit.MinutelyReset));
 	}
 }

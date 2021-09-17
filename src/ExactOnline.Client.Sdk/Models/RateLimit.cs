@@ -1,4 +1,6 @@
-﻿namespace ExactOnline.Client.Sdk.Models
+﻿using System;
+
+namespace ExactOnline.Client.Sdk.Models
 {
     /// <summary>
     /// If you exceed the shaping limit, all of your app API calls will be queued,
@@ -23,6 +25,7 @@
         /// The time at which the rate limit window resets in UTC epoch seconds.
         /// </summary>
         public long? Reset { get; set; }
+		public DateTimeOffset? ResetDate => Reset.HasValue ? DateTimeOffset.FromUnixTimeMilliseconds(Reset.Value) : (DateTimeOffset?)null;
 
 		/// <summary>
 		/// The maximum number of API calls that your app is permitted to make per company, per minute.
@@ -38,5 +41,6 @@
         /// The time at which the minutely rate limit window resets in UTC epoch seconds.
         /// </summary>
         public long? MinutelyReset { get; set; }
+		public DateTimeOffset? MinutelyResetDate => MinutelyReset.HasValue ? DateTimeOffset.FromUnixTimeMilliseconds(MinutelyReset.Value) : (DateTimeOffset?)null;
 	}
 }
