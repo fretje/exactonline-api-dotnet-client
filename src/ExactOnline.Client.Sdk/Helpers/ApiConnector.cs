@@ -387,8 +387,8 @@ namespace ExactOnline.Client.Sdk.Helpers
 					rateLimit.MinutelyReset = output.Single().ToNullableLong();
 				}
 				Debug.WriteLine("HEADERS");
-				Debug.WriteLine($"X-RateLimit-Limit: {_client.EolResponseHeader.RateLimit.Limit} - X-RateLimit-Remaining: {_client.EolResponseHeader.RateLimit.Remaining} - X-RateLimit-Reset: {_client.EolResponseHeader.RateLimit.ResetDate}");
-				Debug.WriteLine($"X-RateLimit-Minutely-Limit: {_client.EolResponseHeader.RateLimit.MinutelyLimit} - X-RateLimit-Minutely-Remaining: {_client.EolResponseHeader.RateLimit.MinutelyRemaining} - X-RateLimit-Minutely-Reset: {_client.EolResponseHeader.RateLimit.MinutelyResetDate}");
+				Debug.WriteLine($"X-RateLimit-Limit: {rateLimit.Limit} - X-RateLimit-Remaining: {rateLimit.Remaining} - X-RateLimit-Reset: {rateLimit.ResetDate}");
+				Debug.WriteLine($"X-RateLimit-Minutely-Limit: {rateLimit.MinutelyLimit} - X-RateLimit-Minutely-Remaining: {rateLimit.MinutelyRemaining} - X-RateLimit-Minutely-Reset: {rateLimit.MinutelyResetDate}");
 				if (rateLimit.MinutelyLimit is int minutelyLimit && rateLimit.MinutelyRemaining is int minutelyRemaining)
 				{
 					if (_minutelyRemaining == -1 || minutelyRemaining == minutelyLimit - 1) // this means this is the first call of a 1 minute window
@@ -397,7 +397,7 @@ namespace ExactOnline.Client.Sdk.Helpers
 					}
 					_minutelyRemaining = minutelyRemaining;
 				}
-				EolResponseHeader = new EolResponseHeader(RateLimit);
+				EolResponseHeader = new EolResponseHeader(rateLimit);
 			};
 		}
 	}
