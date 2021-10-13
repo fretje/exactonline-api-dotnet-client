@@ -40,9 +40,8 @@ namespace ExactOnline.Client.Sdk.Controllers
         /// </summary>
         /// <param name="exactOnlineUrl">The Exact Online URL for your country</param>
         /// <param name="division">Division number</param>
-        /// <param name="accesstokenDelegate">Delegate that will be executed the access token is expired</param>
-        /// <param name="httpClient">A HttpClient instance to perform HTTP requests</param>
-        public ExactOnlineClient(string exactOnlineUrl, int division, AccessTokenManagerDelegate accesstokenDelegate, HttpClient httpClient = null)
+        /// <param name="apiConnector">IApiConnector instance to communicate with the API</param>
+        public ExactOnlineClient(string exactOnlineUrl, int division, ApiConnector apiConnector)
         {
             if (!exactOnlineUrl.EndsWith("/"))
             {
@@ -50,9 +49,7 @@ namespace ExactOnline.Client.Sdk.Controllers
             }
 
             ExactOnlineApiUrl = exactOnlineUrl + "api/v1/";
-            httpClient = httpClient ?? new HttpClient();
-
-            _apiConnector = new ApiConnector(accesstokenDelegate, httpClient);
+            _apiConnector = apiConnector;
 
 			Division = (division > 0) ? division : GetDivision();
 
@@ -62,9 +59,21 @@ namespace ExactOnline.Client.Sdk.Controllers
 		}
 
         /// <summary>
-        /// Returns instance of ExactOnlineQuery that can be used to manipulate data in Exact Online
+        /// Create instance of ExactClient
         /// </summary>
-        public ExactOnlineQuery<T> For<T>() where T : class
+        /// <param name="exactOnlineUrl">The Exact Online URL for your country</param>
+        /// <param name="division">Division number</param>
+        /// <param name="accesstokenDelegate">Delegate that will be executed the access token is expired</param>
+        /// <param name="httpClient">A HttpClient instance to perform HTTP requests</param>
+        public ExactOnlineClient(string exactOnlineUrl, int division, AccessTokenManagerDelegate accesstokenDelegate, HttpClient httpClient = null)
+            : this(exactOnlineUrl, division, new ApiConnector(accesstokenDelegate, httpClient ?? new HttpClient()))
+        {
+        }
+
+		/// <summary>
+		/// Returns instance of ExactOnlineQuery that can be used to manipulate data in Exact Online
+		/// </summary>
+		public ExactOnlineQuery<T> For<T>() where T : class
         {
             var controller = _controllers.GetController<T>();
             return new ExactOnlineQuery<T>(controller);
