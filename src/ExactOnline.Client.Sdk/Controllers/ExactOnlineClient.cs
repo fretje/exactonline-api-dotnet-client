@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ExactOnline.Client.Models.Current;
 using ExactOnline.Client.Sdk.Delegates;
 using ExactOnline.Client.Sdk.Helpers;
+using ExactOnline.Client.Sdk.Interfaces;
 using ExactOnline.Client.Sdk.Models;
 
 namespace ExactOnline.Client.Sdk.Controllers
@@ -15,7 +16,7 @@ namespace ExactOnline.Client.Sdk.Controllers
 	/// </summary>
 	public class ExactOnlineClient
     {
-        private readonly ApiConnector _apiConnector;
+        private readonly IApiConnector _apiConnector;
 
 		// https://start.exactonline.nl/api/v1
 		public string ExactOnlineApiUrl { get; private set; }
@@ -23,8 +24,6 @@ namespace ExactOnline.Client.Sdk.Controllers
         private readonly ControllerList _controllers;
 
         public int Division { get; private set; }
-
-        public EolResponseHeader EolResponseHeader => this._apiConnector.EolResponseHeader;
 
         /// <summary>
         /// Create instance of ExactClient
@@ -41,7 +40,7 @@ namespace ExactOnline.Client.Sdk.Controllers
         /// <param name="exactOnlineUrl">The Exact Online URL for your country</param>
         /// <param name="division">Division number</param>
         /// <param name="apiConnector">IApiConnector instance to communicate with the API</param>
-        public ExactOnlineClient(string exactOnlineUrl, int division, ApiConnector apiConnector)
+        public ExactOnlineClient(string exactOnlineUrl, int division, IApiConnector apiConnector)
         {
             if (!exactOnlineUrl.EndsWith("/"))
             {
