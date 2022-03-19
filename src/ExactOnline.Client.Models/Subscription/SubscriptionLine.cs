@@ -39,6 +39,9 @@ namespace ExactOnline.Client.Models.Subscription
         /// <summary>Description of LineType</summary>
         [SDKFieldType(FieldType.ReadOnly)]
         public string LineTypeDescription { get; set; }
+        /// <summary>Last modified date</summary>
+        [SDKFieldType(FieldType.ReadOnly)]
+        public DateTime Modified { get; set; }		
         /// <summary>Net price in the currency of the transaction</summary>
         public double NetPrice { get; set; }
         /// <summary>Remarks</summary>
