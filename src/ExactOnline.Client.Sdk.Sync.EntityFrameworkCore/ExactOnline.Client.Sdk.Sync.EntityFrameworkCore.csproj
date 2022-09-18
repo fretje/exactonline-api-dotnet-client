@@ -2,8 +2,6 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>net6.0</TargetFrameworks>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<LangVersion>10</LangVersion>
 	</PropertyGroup>
 
 	<ItemGroup>

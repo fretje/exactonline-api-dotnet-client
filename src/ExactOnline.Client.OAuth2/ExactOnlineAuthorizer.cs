@@ -36,11 +36,11 @@ public class ExactOnlineAuthorizer : OAuth2Client
 
 	public event EventHandler<TokensChangedEventArgs>? TokensChanged;
 
-	public async Task<bool> IsAuthorizationNeededAsync(CancellationToken ct)
+	public virtual async Task<bool> IsAuthorizationNeededAsync(CancellationToken ct)
 	{
 		try
 		{
-			return string.IsNullOrWhiteSpace(RefreshToken) || await GetCurrentTokenAsync(cancellationToken: ct) is null;
+			return string.IsNullOrWhiteSpace(RefreshToken) || await GetCurrentTokenAsync(ct: ct).ConfigureAwait(false) is null;
 		}
 		catch
 		{
@@ -48,9 +48,10 @@ public class ExactOnlineAuthorizer : OAuth2Client
 		}
 	}
 
-	public async Task ProcessAuthorization(string code) => await GetTokenAsync(new() { { "code", code } });
+	public virtual async Task ProcessAuthorizationAsync(string code, CancellationToken ct) =>
+		await GetTokenAsync(new() { { "code", code } }, ct).ConfigureAwait(false);
 
-	public Task<string?> GetAccessTokenAsync(CancellationToken ct) => GetCurrentTokenAsync(cancellationToken: ct);
+	public virtual Task<string?> GetAccessTokenAsync(CancellationToken ct) => GetCurrentTokenAsync(ct: ct);
 
 	/// <summary>
 	/// Exact Online client name

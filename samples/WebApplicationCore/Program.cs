@@ -5,8 +5,8 @@ using ExactOnline.Client.Sdk.Controllers;
 using ExactOnline.Client.Sdk.Helpers;
 using ExactOnline.Client.Sdk.Sync;
 using ExactOnline.Client.Sdk.Sync.EntityFrameworkCore;
+using ExactOnline.Client.Sdk.Test.Infrastructure;
 using Microsoft.EntityFrameworkCore;
-using Samples.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,7 +30,7 @@ app.MapGet("/", async (CancellationToken ct) =>
 {
 	if (await authorizer.IsAuthorizationNeededAsync(ct))
 	{
-		return Results.Redirect(await authorizer.GetLoginLinkUriAsync(cancellationToken: ct));
+		return Results.Redirect(await authorizer.GetLoginLinkUriAsync(ct: ct));
 	}
 
 	var client = new ExactOnlineClient(ExactOnlineTest.Url, authorizer.GetAccessTokenAsync);
@@ -47,7 +47,7 @@ app.MapGet("/", async (CancellationToken ct) =>
 
 app.MapGet("/callback", async (string code, string? state, CancellationToken ct) =>
 {
-	await authorizer.ProcessAuthorization(code);
+	await authorizer.ProcessAuthorizationAsync(code, ct);
 
 	return Results.LocalRedirect(string.IsNullOrWhiteSpace(state) ? "/" : state);
 });
@@ -56,7 +56,7 @@ app.MapGet("/sync", async (CancellationToken ct) =>
 {
 	if (await authorizer.IsAuthorizationNeededAsync(ct))
 	{
-		return Results.Redirect(await authorizer.GetLoginLinkUriAsync("/sync", cancellationToken: ct));
+		return Results.Redirect(await authorizer.GetLoginLinkUriAsync("/sync", ct: ct));
 	}
 
 	var client = new ExactOnlineClient(ExactOnlineTest.Url, authorizer.GetAccessTokenAsync);
@@ -73,7 +73,7 @@ app.MapGet("/sync", async (CancellationToken ct) =>
 	await efTarget.InitializeDatabaseAsync(ct);
 
 	// Synchronize a single full entity
-	await client.SynchronizeWithAsync<Account>(efTarget, ModelInfo.For<Account>().FieldNames(true), cancellationToken: ct);
+	await client.SynchronizeWithAsync<Account>(efTarget, ModelInfo.For<Account>().FieldNames(true), ct: ct);
 
 	// There's also an override that takes a type in case you want to run the synchronization dynamically (for a given modeltype)
 	// E.g. use the following code to synchronize all supported modeltypes

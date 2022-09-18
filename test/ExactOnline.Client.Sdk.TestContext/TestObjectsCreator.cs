@@ -1,50 +1,58 @@
-﻿using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-using ExactOnline.Client.OAuth;
+﻿using ExactOnline.Client.OAuth2.WinForms;
 using ExactOnline.Client.Sdk.Controllers;
 using ExactOnline.Client.Sdk.Helpers;
 using ExactOnline.Client.Sdk.Interfaces;
+using ExactOnline.Client.Sdk.Test.Infrastructure;
 
-namespace ExactOnline.Client.Sdk.TestContext
+namespace ExactOnline.Client.Sdk.TestContext;
+
+public class TestObjectsCreator
 {
-    public class TestObjectsCreator
-    {
-        public static string ExactOnlineUrl => "https://start.exactonline.be";
-        public static string UriGlAccount(int currentDivision) => $"{ExactOnlineUrl}/api/v1/{currentDivision}/financial/GLAccounts";
-        public static string UriCrmAccount(int currentDivision) => $"{ExactOnlineUrl}/api/v1/{currentDivision}/crm/Accounts";
-        public static string SpecificGLAccountDescription => "Gebouwen";
-        public static string SpecificGLAccountCode => "221000";
+	public static string ExactOnlineUrl => ExactOnlineTest.Url;
+	public static string UriGlAccount(int currentDivision) => $"{ExactOnlineUrl}/api/v1/{currentDivision}/financial/GLAccounts";
+	public static string UriCrmAccount(int currentDivision) => $"{ExactOnlineUrl}/api/v1/{currentDivision}/crm/Accounts";
+	public static string SpecificGLAccountDescription => "Gebouwen";
+	public static string SpecificGLAccountCode => "221000";
 
-        private readonly static UserAuthorization _authorization = new UserAuthorization();
-        private IApiConnector _connector;
-        private ExactOnlineClient _client;
+	private static readonly ExactOnlineWinFormsAuthorizer _authorizer;
+	static TestObjectsCreator()
+	{
+		var testApp = new TestApp();
+		_authorizer = new(testApp.ClientId, testApp.ClientSecret, testApp.CallbackUrl, ExactOnlineUrl, ExactOnlineTest.AccessToken, ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessTokenExpiresAt);
+		_authorizer.TokensChanged += (sender, args) =>
+			(ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessToken, ExactOnlineTest.AccessTokenExpiresAt) =
+			(args.NewRefreshToken, args.NewAccessToken, args.NewExpiresAt);
+	}
 
-        public IApiConnector GetApiConnector() => _connector ?? (_connector = new ApiConnector(GetOAuthAuthenticationToken, new HttpClient()));
+	private IApiConnector _connector;
+	private ExactOnlineClient _client;
 
-        public ExactOnlineClient GetClient() => _client ?? (_client = new ExactOnlineClient(ExactOnlineUrl, GetOAuthAuthenticationToken));
+	public IApiConnector GetApiConnector() => _connector ??= new ApiConnector(GetOAuthAuthenticationToken, new HttpClient());
 
-        public static Task<string> GetOAuthAuthenticationToken(CancellationToken ct)
-        {
-            var testApp = new TestApp();
-            UserAuthorizations.Authorize(_authorization, ExactOnlineUrl, testApp.ClientId, testApp.ClientSecret, testApp.CallbackUrl);
+	public async Task<ExactOnlineClient> GetClientAsync(CancellationToken ct = default)
+	{
+		if (_client == null)
+		{
+			_client = new ExactOnlineClient(ExactOnlineUrl, GetOAuthAuthenticationToken);
+			await _client.InitializeDivisionAsync(ct).ConfigureAwait(false);
+		}
+		return _client;
+	}
 
-            return Task.FromResult(_authorization.AccessToken);
-        }
+	public static Task<string> GetOAuthAuthenticationToken(CancellationToken ct) => _authorizer.GetAccessTokenAsync(ct);
 
-        public int GetCurrentDivision()
-        {
-            if (_client == null)
-            {
-                GetClient();
-            }
+	public async Task<int> GetCurrentDivisionAsync(CancellationToken ct = default)
+	{
+		if (_client == null)
+		{
+			await GetClientAsync(ct).ConfigureAwait(false);
+		}
 
-            if (_client != null)
-            {
-                return _client.Division;
-            }
+		if (_client != null)
+		{
+			return _client.Division;
+		}
 
-            return -1;
-        }
-    }
+		return -1;
+	}
 }

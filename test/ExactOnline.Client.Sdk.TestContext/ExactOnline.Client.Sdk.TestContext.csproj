@@ -1,14 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net472</TargetFramework>
+		<TargetFramework>net60-windows</TargetFramework>
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
 		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\src\ExactOnline.Client.OAuth\ExactOnline.Client.OAuth.csproj" />
+		<ProjectReference Include="..\..\src\ExactOnline.Client.OAuth2.WinForms\ExactOnline.Client.OAuth2.WinForms.csproj" />
 		<ProjectReference Include="..\..\src\ExactOnline.Client.Sdk\ExactOnline.Client.Sdk.csproj" />
+		<ProjectReference Include="..\ExactOnline.Client.Sdk.Test.Infrastructure\ExactOnline.Client.Sdk.Test.Infrastructure.csproj" />
 	</ItemGroup>
 
 </Project>

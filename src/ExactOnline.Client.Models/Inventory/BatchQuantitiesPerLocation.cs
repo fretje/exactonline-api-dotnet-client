@@ -1,18 +1,15 @@
-using System;
+namespace ExactOnline.Client.Models.Inventory;
 
-namespace ExactOnline.Client.Models.Inventory
+[SupportedActionsSDK(false, false, false, false)]
+[DataServiceKey("BatchNumberId")]
+public class BatchQuantitiesPerLocation
 {
-    [SupportedActionsSDK(false, false, false, false)]
-    [DataServiceKey("BatchNumberId")]
-    public class BatchQuantitiesPerLocation
-    {
-        public double AvailableQuantity { get; set; }
-        public Guid BatchNumberId { get; set; }
-        public Guid? StorageLocation { get; set; }
-        public string StorageLocationCode { get; set; }
-        public string StorageLocationDescription { get; set; }
-        public Guid? Warehouse { get; set; }
-        public string WarehouseCode { get; set; }
-        public string WarehouseDescription { get; set; }
-    }
+	public double AvailableQuantity { get; set; }
+	public Guid BatchNumberId { get; set; }
+	public Guid? StorageLocation { get; set; }
+	public string StorageLocationCode { get; set; }
+	public string StorageLocationDescription { get; set; }
+	public Guid? Warehouse { get; set; }
+	public string WarehouseCode { get; set; }
+	public string WarehouseDescription { get; set; }
 }

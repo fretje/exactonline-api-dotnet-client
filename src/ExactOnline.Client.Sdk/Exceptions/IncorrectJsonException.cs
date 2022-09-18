@@ -1,16 +1,14 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
-namespace ExactOnline.Client.Sdk.Exceptions
+namespace ExactOnline.Client.Sdk.Exceptions;
+
+[Serializable]
+public class IncorrectJsonException : Exception
 {
-    [Serializable]
-    public class IncorrectJsonException : Exception
-    {
-        public IncorrectJsonException() { }
-        public IncorrectJsonException(string message) : base(message) { }
-        public IncorrectJsonException(string message, Exception innerException)
-            : base(message, innerException) { }
-        protected IncorrectJsonException(SerializationInfo info, StreamingContext context)
-            : base(info, context) { }
-    }
+	public IncorrectJsonException() { }
+	public IncorrectJsonException(string message) : base(message) { }
+	public IncorrectJsonException(string message, Exception innerException)
+		: base(message, innerException) { }
+	protected IncorrectJsonException(SerializationInfo info, StreamingContext context)
+		: base(info, context) { }
 }

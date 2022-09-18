@@ -82,8 +82,8 @@ public abstract class OAuth2Client : IClient
 	/// <param name="state">
 	/// Any additional information that will be posted back by service.
 	/// </param>
-	/// <param name="cancellationToken"></param>
-	public virtual Task<string> GetLoginLinkUriAsync(string? state = null, CancellationToken cancellationToken = default)
+	/// <param name="ct"></param>
+	public virtual Task<string> GetLoginLinkUriAsync(string? state = null, CancellationToken ct = default)
 	{
 		var client = _factory.CreateClient(AccessCodeServiceEndpoint);
 		var request = _factory.CreateRequest(AccessCodeServiceEndpoint);
@@ -115,16 +115,16 @@ public abstract class OAuth2Client : IClient
 	/// Issues query for access token and returns access token.
 	/// </summary>
 	/// <param name="parameters">Callback request payload (parameters).</param>
-	/// <param name="cancellationToken">Optional cancellation token</param>
-	public async Task<string?> GetTokenAsync(NameValueCollection parameters, CancellationToken cancellationToken = default)
+	/// <param name="ct">Optional cancellation token</param>
+	public async Task<string?> GetTokenAsync(NameValueCollection parameters, CancellationToken ct = default)
 	{
 		GrantType = "authorization_code";
 		CheckErrorAndSetState(parameters);
-		await QueryAccessTokenAsync(parameters, cancellationToken);
+		await QueryAccessTokenAsync(parameters, ct).ConfigureAwait(false);
 		return AccessToken;
 	}
 
-	public async Task<string?> GetCurrentTokenAsync(string? refreshToken = null, bool forceUpdate = false, CancellationToken cancellationToken = default)
+	public async Task<string?> GetCurrentTokenAsync(string? refreshToken = null, bool forceUpdate = false, CancellationToken ct = default)
 	{
 		if (!forceUpdate && ExpiresAt != default && DateTime.Now < ExpiresAt && !string.IsNullOrEmpty(AccessToken))
 		{
@@ -144,7 +144,7 @@ public abstract class OAuth2Client : IClient
 		if (parameters.Count > 0)
 		{
 			GrantType = "refresh_token";
-			await QueryAccessTokenAsync(parameters, cancellationToken).ConfigureAwait(false);
+			await QueryAccessTokenAsync(parameters, ct).ConfigureAwait(false);
 			return AccessToken;
 		}
 		throw new Exception("Token never fetched and refresh token not provided.");
@@ -182,8 +182,8 @@ public abstract class OAuth2Client : IClient
 	/// Issues query for access token and parses response.
 	/// </summary>
 	/// <param name="parameters">Callback request payload (parameters).</param>
-	/// <param name="cancellationToken">Optional cancellation token</param>
-	private async Task QueryAccessTokenAsync(NameValueCollection parameters, CancellationToken cancellationToken = default)
+	/// <param name="ct">Optional cancellation token</param>
+	private async Task QueryAccessTokenAsync(NameValueCollection parameters, CancellationToken ct = default)
 	{
 		var client = _factory.CreateClient(AccessTokenServiceEndpoint);
 		var request = _factory.CreateRequest(AccessTokenServiceEndpoint, Method.Post);
@@ -196,7 +196,7 @@ public abstract class OAuth2Client : IClient
 			Configuration = Configuration
 		});
 
-		var response = await client.ExecuteAndVerifyAsync(request, cancellationToken).ConfigureAwait(false);
+		var response = await client.ExecuteAndVerifyAsync(request, ct).ConfigureAwait(false);
 
 		AccessToken = ParseTokenResponse(response.Content, AccessTokenKey);
 		if (string.IsNullOrEmpty(AccessToken))

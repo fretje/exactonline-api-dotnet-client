@@ -1,7 +1,6 @@
-﻿namespace ExactOnline.Client.Sdk.Models
+﻿namespace ExactOnline.Client.Sdk.Models;
+
+internal class ServerMessage
 {
-    internal class ServerMessage
-    {
-        public ServerMessageError Error { get; set; }
-    }
+	public ServerMessageError Error { get; set; }
 }

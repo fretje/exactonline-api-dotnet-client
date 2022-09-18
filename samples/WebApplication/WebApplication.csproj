@@ -183,9 +183,9 @@
       <Project>{decfe5b4-f775-436b-93e3-a36deba5a9c4}</Project>
       <Name>ExactOnline.Client.Sdk</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Shared\Shared.csproj">
-      <Project>{6CAFCDDB-B5ED-46E6-814C-D7D2C1DB4BAB}</Project>
-      <Name>Shared</Name>
+    <ProjectReference Include="..\..\test\ExactOnline.Client.Sdk.Test.Infrastructure\ExactOnline.Client.Sdk.Test.Infrastructure.csproj">
+      <Project>{18751CD9-0ABA-4362-ABC6-5A36547C9E80}</Project>
+      <Name>ExactOnline.Client.Sdk.Test.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -3,17 +3,15 @@ using ExactOnline.Client.Models.SalesInvoice;
 using ExactOnline.Client.Sdk.Helpers;
 using ExactOnline.Client.Sdk.PerformanceTests.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
 
-namespace ExactOnline.Client.Sdk.PerformanceTests
+namespace ExactOnline.Client.Sdk.PerformanceTests;
+
+[TestClass]
+public class JsonToObjectTest
 {
-    [TestClass]
-    public class JsonToObjectTest
-    {
-        #region Json
+	#region Json
 
-        private const string _linkedEntities = @"{
+	private const string _linkedEntities = @"{
 	""d"": {
 		""results"": [
 			{
@@ -210,7 +208,7 @@ namespace ExactOnline.Client.Sdk.PerformanceTests
 	}
 }";
 
-        private const string _jsonArray = @"{
+	private const string _jsonArray = @"{
 	""d"": {
 		""results"": [
 			{
@@ -472,54 +470,53 @@ namespace ExactOnline.Client.Sdk.PerformanceTests
 	}
 }";
 
-        #endregion
+	#endregion
 
-        [TestCategory("Performance Test")]
-        [TestMethod]
-        public void TestPerformance_JsonArray_ToObject()
-        {
-            var originalprocesstime = TimeSpan.FromSeconds(1.3);
-            var currentprocesstime = TestTimer.Time(ParseObjectList);
-            Assert.IsTrue(currentprocesstime < originalprocesstime);
-        }
+	[TestCategory("Performance Test")]
+	[TestMethod]
+	public void TestPerformance_JsonArray_ToObject()
+	{
+		var originalprocesstime = TimeSpan.FromSeconds(1.3);
+		var currentprocesstime = TestTimer.Time(ParseObjectList);
+		Assert.IsTrue(currentprocesstime < originalprocesstime);
+	}
 
-        [TestCategory("Performance Test")]
-        [TestMethod]
-        public void TestPerformance_JsonArray_LinkedEntities_ToObject()
-        {
-            var originalprocesstime = TimeSpan.FromSeconds(1.16);
-            var currentprocesstime = TestTimer.Time(ParseObjectList_LinkedEntities);
-            Assert.IsTrue(currentprocesstime < originalprocesstime);
-        }
+	[TestCategory("Performance Test")]
+	[TestMethod]
+	public void TestPerformance_JsonArray_LinkedEntities_ToObject()
+	{
+		var originalprocesstime = TimeSpan.FromSeconds(1.16);
+		var currentprocesstime = TestTimer.Time(ParseObjectList_LinkedEntities);
+		Assert.IsTrue(currentprocesstime < originalprocesstime);
+	}
 
-        private void ParseObjectList()
-        {
-            for (var i = 0; i < 100; i++)
-            {
-                var json = ApiResponseCleaner.GetJsonArray(_jsonArray);
-                var accounts = EntityConverter.ConvertJsonArrayToObjectList<Account>(json);
-                if (accounts.Count != 2)
-                {
-                    throw new Exception("The count of the list isn't equal to the actual list");
-                }
-            }
-        }
+	private void ParseObjectList()
+	{
+		for (var i = 0; i < 100; i++)
+		{
+			var json = ApiResponseCleaner.GetJsonArray(_jsonArray);
+			var accounts = EntityConverter.ConvertJsonArrayToObjectList<Account>(json);
+			if (accounts.Count != 2)
+			{
+				throw new Exception("The count of the list isn't equal to the actual list");
+			}
+		}
+	}
 
-        [TestCategory("Performance Test")]
-        [TestMethod]
-        public void ParseObjectList_LinkedEntities()
-        {
-            for (var i = 0; i < 100; i++)
-            {
-                var json = ApiResponseCleaner.GetJsonArray(_linkedEntities);
-                var invoices = EntityConverter.ConvertJsonArrayToObjectList<SalesInvoice>(json);
+	[TestCategory("Performance Test")]
+	[TestMethod]
+	public void ParseObjectList_LinkedEntities()
+	{
+		for (var i = 0; i < 100; i++)
+		{
+			var json = ApiResponseCleaner.GetJsonArray(_linkedEntities);
+			var invoices = EntityConverter.ConvertJsonArrayToObjectList<SalesInvoice>(json);
 
-                foreach (var invoice in invoices)
-                {
-                    var sil = (List<SalesInvoiceLine>)invoice.SalesInvoiceLines;
-                    Assert.IsTrue(sil.Count > 0);
-                }
-            }
-        }
-    }
+			foreach (var invoice in invoices)
+			{
+				var sil = (List<SalesInvoiceLine>)invoice.SalesInvoiceLines;
+				Assert.IsTrue(sil.Count > 0);
+			}
+		}
+	}
 }

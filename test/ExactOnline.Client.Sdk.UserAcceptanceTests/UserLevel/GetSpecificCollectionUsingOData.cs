@@ -1,26 +1,24 @@
 ﻿using ExactOnline.Client.Models.Financial;
 using ExactOnline.Client.Sdk.TestContext;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
 
-namespace ExactOnline.Client.Sdk.UserAcceptanceTests.UserLevel
+namespace ExactOnline.Client.Sdk.UserAcceptanceTests.UserLevel;
+
+[TestClass]
+public class GetSpecificCollectionCusingOData184244
 {
-    [TestClass]
-    public class GetSpecificCollectionCusingOData184244
-    {
-        [TestMethod]
-        [TestCategory("User Acceptance Tests")]
-        public void GetSpecificCollectionUsingOData()
-        {
-            var client = new TestObjectsCreator().GetClient();
+	[TestMethod]
+	[TestCategory("User Acceptance Tests")]
+	public async Task GetSpecificCollectionUsingOData()
+	{
+		var client = await new TestObjectsCreator().GetClientAsync();
 
-            var accounts = client.For<GLAccount>()
-                .Select("Code")
-                .Where($"Description+eq+'{TestObjectsCreator.SpecificGLAccountDescription}'")
-                .And($"Code+eq+'{TestObjectsCreator.SpecificGLAccountCode}'")
-                .Get();
+		var accounts = client.For<GLAccount>()
+			.Select("Code")
+			.Where($"Description+eq+'{TestObjectsCreator.SpecificGLAccountDescription}'")
+			.And($"Code+eq+'{TestObjectsCreator.SpecificGLAccountCode}'")
+			.Get();
 
-            Assert.IsTrue(accounts.Any());
-        }
-    }
+		Assert.IsTrue(accounts.Any());
+	}
 }

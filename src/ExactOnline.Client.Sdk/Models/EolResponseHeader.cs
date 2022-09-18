@@ -1,11 +1,10 @@
-﻿namespace ExactOnline.Client.Sdk.Models
+﻿namespace ExactOnline.Client.Sdk.Models;
+
+public class EolResponseHeader
 {
-    public class EolResponseHeader
-    {
-        /// <summary>
-        /// HTTP response header to indicate the shaping / throttling rate limit
-        /// more info: https://support.exactonline.com/community/s/knowledge-base#All-All-DNO-Simulation-gen-apilimits
-        /// </summary>
-        public RateLimit RateLimit { get; set; }
-    }
+	/// <summary>
+	/// HTTP response header to indicate the shaping / throttling rate limit
+	/// more info: https://support.exactonline.com/community/s/knowledge-base#All-All-DNO-Simulation-gen-apilimits
+	/// </summary>
+	public RateLimit RateLimit { get; set; }
 }

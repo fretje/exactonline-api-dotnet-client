@@ -17,6 +17,6 @@ public static class RestClientExtensions
 		return response;
 	}
 
-	public static async Task<RestResponse> ExecuteAndVerifyAsync(this RestClient client, RestRequest request, CancellationToken cancellationToken = default) =>
-		VerifyResponse(await client.ExecuteAsync(request, cancellationToken).ConfigureAwait(false));
+	public static async Task<RestResponse> ExecuteAndVerifyAsync(this RestClient client, RestRequest request, CancellationToken ct = default) =>
+		VerifyResponse(await client.ExecuteAsync(request, ct).ConfigureAwait(false));
 }

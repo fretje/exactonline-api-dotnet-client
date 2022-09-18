@@ -18,8 +18,8 @@ This is what has been changed/added in this repo since their last commit:
 * The ConsoleApplication sample is changed to also use that authenticator.
 * ExactOnline.Client.Sdk.Sync project (full entity sync support) has been added as well as an example Sync.EntityFramework target.
 * The ConsoleApplication sample is updated to show the usage of the sync support.
-* Add ExactOnline.Client.OAuth2 => .NET Standard 2.0 OAuth2 support
-* Add ExactOnline.Client.Sync.EntityFrameworkCore => .NET 6.0 EntityFrameworkCore Sync support
+* Add ExactOnline.Client.OAuth2 => .netstandard2.0 OAuth2 support (thanks to https://github.com/titarenko/OAuth2)
+* Add ExactOnline.Client.Sync.EntityFrameworkCore => .NET 6 EntityFrameworkCore Sync support
 * Add WebApplicationCore sample that uses these new projects
 * Use HttpClient iso HttpWebRequest
 * Replace GetAccessTokenDelegate with async Func

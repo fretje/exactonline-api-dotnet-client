@@ -1,8 +1,8 @@
 ﻿using System.Globalization;
 
-namespace Samples.Shared;
+namespace ExactOnline.Client.Sdk.Test.Infrastructure;
 
-static public class ExactOnlineTest
+public static class ExactOnlineTest
 {
 	public static string Url => "https://start.exactonline.be";
 
@@ -10,7 +10,7 @@ static public class ExactOnlineTest
 	private static readonly string _accessTokenCacheFile = @"c:\temp\accessTokenCache";
 	private static readonly string _accessTokenExpiresAtCacheFile = @"c:\temp\accessTokenExpiresAtCache";
 
-	public static string? RefreshToken
+	public static string RefreshToken
 	{
 		get => File.Exists(_refreshTokenCacheFile) ? File.ReadAllText(_refreshTokenCacheFile) : null;
 		set
@@ -26,7 +26,7 @@ static public class ExactOnlineTest
 		}
 	}
 
-	public static string? AccessToken
+	public static string AccessToken
 	{
 		get => File.Exists(_accessTokenCacheFile) ? File.ReadAllText(_accessTokenCacheFile) : null;
 		set

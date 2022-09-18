@@ -1,22 +1,20 @@
 ﻿using ExactOnline.Client.Models.Current;
 using ExactOnline.Client.Sdk.TestContext;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
 
-namespace ExactOnline.Client.Sdk.UserAcceptanceTests.UserLevel
+namespace ExactOnline.Client.Sdk.UserAcceptanceTests.UserLevel;
+
+[TestClass]
+public class GetCurrentMe
 {
-    [TestClass]
-    public class GetCurrentMe
-    {
-        [TestMethod]
-        [TestCategory("User Acceptance Tests")]
-        public void ExactClient_GetCurrentMe_Succeeds()
-        {
-            var client = new TestObjectsCreator().GetClient();
+	[TestMethod]
+	[TestCategory("User Acceptance Tests")]
+	public async Task ExactClient_GetCurrentMe_Succeeds()
+	{
+		var client = await new TestObjectsCreator().GetClientAsync();
 
-			var currentMe = client.For<Me>().Select("CurrentDivision").Get().FirstOrDefault();
+		var currentMe = client.For<Me>().Select("CurrentDivision").Get().FirstOrDefault();
 
-			Assert.IsNotNull(currentMe);
-        }
-    }
+		Assert.IsNotNull(currentMe);
+	}
 }

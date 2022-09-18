@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net472</TargetFramework>
+		<TargetFramework>net6.0</TargetFramework>
 		<IsPackable>false</IsPackable>
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
 		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
@@ -15,6 +15,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\ExactOnline.Client.Sdk\ExactOnline.Client.Sdk.csproj" />
+		<ProjectReference Include="..\ExactOnline.Client.Sdk.Test.Infrastructure\ExactOnline.Client.Sdk.Test.Infrastructure.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

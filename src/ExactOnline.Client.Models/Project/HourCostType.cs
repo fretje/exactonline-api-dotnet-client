@@ -1,15 +1,12 @@
-using System;
+namespace ExactOnline.Client.Models.Project;
 
-namespace ExactOnline.Client.Models.Project
+[SupportedActionsSDK(false, true, false, false)]
+[DataServiceKey("ItemId")]
+public class HourCostType
 {
-    [SupportedActionsSDK(false, true, false, false)]
-    [DataServiceKey("ItemId")]
-    public class HourCostType
-    {
-        /// <summary>Description of Item</summary>
-        [SDKFieldType(FieldType.ReadOnly)]
-        public string ItemDescription { get; set; }
-        /// <summary>Primary key</summary>
-        public Guid ItemId { get; set; }
-    }
+	/// <summary>Description of Item</summary>
+	[SDKFieldType(FieldType.ReadOnly)]
+	public string ItemDescription { get; set; }
+	/// <summary>Primary key</summary>
+	public Guid ItemId { get; set; }
 }

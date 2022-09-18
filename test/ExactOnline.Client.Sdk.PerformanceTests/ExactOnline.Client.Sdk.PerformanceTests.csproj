@@ -1,20 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net472</TargetFramework>
+		<TargetFramework>net60-windows</TargetFramework>
 		<IsPackable>false</IsPackable>
-		<EnableNETAnalyzers>true</EnableNETAnalyzers>
-		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.1" />
 		<PackageReference Include="MSTest.TestFramework" Version="2.2.10" />
 		<PackageReference Include="MSTest.TestAdapter" Version="2.2.10" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\ExactOnline.Client.Sdk.TestContext\ExactOnline.Client.Sdk.TestContext.csproj" />
-	  <ProjectReference Include="..\ExactOnline.Client.Sdk.UnitTests\ExactOnline.Client.Sdk.UnitTests.csproj" />
 	</ItemGroup>
 
 </Project>
