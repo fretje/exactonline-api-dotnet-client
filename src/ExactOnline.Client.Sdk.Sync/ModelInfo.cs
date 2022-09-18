@@ -28,7 +28,7 @@ namespace ExactOnline.Client.Sdk.Sync
 
 		public static ModelInfo For(Type modelType)
 		{
-			if (!(_modelInfos[modelType] is ModelInfo modelInfo))
+			if (_modelInfos[modelType] is not ModelInfo modelInfo)
 			{
 				modelInfo = new ModelInfo(modelType);
 				_modelInfos.Add(modelType, modelInfo);

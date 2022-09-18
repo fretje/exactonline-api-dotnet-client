@@ -13,3 +13,6 @@ tab_width = 4
 # New line preferences
 end_of_line = crlf
 insert_final_newline = true
+
+# CS1591: Missing XML comment for publicly visible type or member
+dotnet_diagnostic.CS1591.severity = suggestion

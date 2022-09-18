@@ -15,16 +15,16 @@ jobs:
         uses: actions/checkout@v2
         
       - name: Restore NuGet Packages
-        run: dotnet restore ClientSdk.sln
+        run: dotnet restore ExactOnline.Client.Sdk.sln
 
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.0.2
 
       - name: Build and Pack Solution
-        run: msbuild ClientSdk.sln /t:pack /p:Configuration=Release
+        run: msbuild ExactOnline.Client.Sdk.sln /t:pack /p:Configuration=Release
 
-      - name: Run Tests
-        run: dotnet test ClientSdk.sln --no-restore
+      - name: Run Unit Tests
+        run: dotnet test src/ExactOnline.Client.Sdk.UnitTests/ --no-restore
 
       - name: Publish the package to nuget.org when we have a new version
         env:

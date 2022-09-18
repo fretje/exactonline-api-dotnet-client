@@ -28,7 +28,7 @@ namespace ExactOnline.Client.Sdk.Sync
 
 		public ISyncTargetController<TModel> ControllerFor<TModel>()
 		{
-			if (!(_controllers[typeof(TModel)] is ISyncTargetController<TModel> controller))
+			if (_controllers[typeof(TModel)] is not ISyncTargetController<TModel> controller)
 			{
 				controller = CreateControllerFor<TModel>();
 				_controllers.Add(typeof(TModel), controller);
