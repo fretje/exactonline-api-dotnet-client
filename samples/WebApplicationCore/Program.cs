@@ -10,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+// This is only necessary to be able to add migrations.
 builder.Services.AddDbContext<EntityFrameworkCoreDbContext>(b => b.UseSqlServer("Data Source=(localdb)\\mssqllocaldb;Initial Catalog=ExactOnlineClientSdkSyncTest;Integrated Security=True;MultipleActiveResultSets=True"));
 
 var app = builder.Build();

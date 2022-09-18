@@ -3482,6 +3482,12 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<double>("AmountDC")
                         .HasColumnType("float");
 
+                    b.Property<double>("AmountDiscount")
+                        .HasColumnType("float");
+
+                    b.Property<double>("AmountDiscountExclVat")
+                        .HasColumnType("float");
+
                     b.Property<double>("AmountFC")
                         .HasColumnType("float");
 
@@ -3581,6 +3587,12 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<string>("OrderAccountName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PaymentCondition")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PaymentConditionDescription")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid?>("Project")
                         .HasColumnType("uniqueidentifier");
 
@@ -3604,6 +3616,12 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.Property<string>("SalesPersonFullName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ShippingMethod")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ShippingMethodDescription")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<short?>("Status")
                         .HasColumnType("smallint");

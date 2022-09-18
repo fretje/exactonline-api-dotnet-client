@@ -3412,6 +3412,12 @@
         <member name="P:ExactOnline.Client.Models.CRM.Quotation.AmountDC">
             <summary>Amount in the default currency of the company</summary>
         </member>
+        <member name="P:ExactOnline.Client.Models.CRM.Quotation.AmountDiscount">
+            <summary>Discount Amount in the currency of the transaction</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.CRM.Quotation.AmountDiscountExclVat">
+            <summary>Discount Amount excluding VAT in the currency of the transaction</summary>
+        </member>
         <member name="P:ExactOnline.Client.Models.CRM.Quotation.AmountFC">
             <summary>Amount in the currency of the transaction</summary>
         </member>
@@ -3511,6 +3517,12 @@
         <member name="P:ExactOnline.Client.Models.CRM.Quotation.OrderAccountName">
             <summary>The name of the order account</summary>
         </member>
+        <member name="P:ExactOnline.Client.Models.CRM.Quotation.PaymentCondition">
+            <summary>Payment condition code</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.CRM.Quotation.PaymentConditionDescription">
+            <summary>Payment condition description</summary>
+        </member>
         <member name="P:ExactOnline.Client.Models.CRM.Quotation.Project">
             <summary>The project linked to the quotation</summary>
         </member>
@@ -3540,6 +3552,12 @@
         </member>
         <member name="P:ExactOnline.Client.Models.CRM.Quotation.SalesPersonFullName">
             <summary>Full name of the sales person</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.CRM.Quotation.ShippingMethod">
+            <summary>Shipping method ID</summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.CRM.Quotation.ShippingMethodDescription">
+            <summary>Shipping method description</summary>
         </member>
         <member name="P:ExactOnline.Client.Models.CRM.Quotation.Status">
             <summary>The status of the quotation version. 5 = Rejected, 6 = Reviewed and closed, 10 = Recovery, 20 = Draft, 25 = Open, 35 = Processing... , 40 = Printed, 50 = Accepted</summary>
