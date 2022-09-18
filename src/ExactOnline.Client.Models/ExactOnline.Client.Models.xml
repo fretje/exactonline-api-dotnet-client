@@ -15428,6 +15428,9 @@
         <member name="P:ExactOnline.Client.Models.Subscription.SubscriptionLine.LineTypeDescription">
             <summary>Description of LineType</summary>
         </member>
+        <member name="P:ExactOnline.Client.Models.Subscription.SubscriptionLine.Modified">
+            <summary>Last modified date</summary>
+        </member>
         <member name="P:ExactOnline.Client.Models.Subscription.SubscriptionLine.NetPrice">
             <summary>Net price in the currency of the transaction</summary>
         </member>

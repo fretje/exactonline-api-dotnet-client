@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ExactOnline.Client.Sdk.Helpers
@@ -15,7 +16,7 @@ namespace ExactOnline.Client.Sdk.Helpers
         private readonly IController<T> _controller;
 
         private string _select;
-        private readonly List<string> _and = new List<string>();
+        private readonly List<string> _and = new();
         private string _skip;
         private string _expand;
         private string _top;
@@ -171,7 +172,8 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <summary>
         /// Count the amount of entities in the the entity
         /// </summary>
-        public Task<int> CountAsync() => _controller.CountAsync(BuildODataQuery(false));
+        public Task<int> CountAsync(CancellationToken ct = default) =>
+			_controller.CountAsync(BuildODataQuery(false), ct);
 
         /// <summary>
         /// Returns a List of entities using the specified query
@@ -210,10 +212,10 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// </summary>
         /// <param name="skipToken">The variable to store the skiptoken in</param>
         /// <param name="endpointType">Which endpoint type to use.</param>
-        public Task<Models.ApiList<T>> GetAsync(string skiptoken = "", EndpointTypeEnum endpointType = EndpointTypeEnum.Single)
+        public Task<Models.ApiList<T>> GetAsync(string skiptoken = "", EndpointTypeEnum endpointType = EndpointTypeEnum.Single, CancellationToken ct = default)
         {
             AddSkipToken(skiptoken);
-            return _controller.GetAsync(BuildODataQuery(true), endpointType);
+            return _controller.GetAsync(BuildODataQuery(true), endpointType, ct);
         }
 
 		private void AddSkipToken(string skipToken)
@@ -239,13 +241,13 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <summary>
         /// Returns one instance of an entity using the specified identifier
         /// </summary>
-        public Task<T> GetEntityAsync(string identifier)
+        public Task<T> GetEntityAsync(string identifier, CancellationToken ct = default)
         {
             if (string.IsNullOrEmpty(identifier))
             {
                 throw new ArgumentException("Get entity: Identifier cannot be empty");
             }
-            return _controller.GetEntityAsync(identifier, BuildODataQuery(false));
+            return _controller.GetEntityAsync(identifier, BuildODataQuery(false), ct);
         }
 
         /// <summary>
@@ -263,13 +265,13 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <summary>
         /// Returns one instance of an entity using the specified identifier
         /// </summary>
-        public Task<T> GetEntityAsync(Guid identifier)
+        public Task<T> GetEntityAsync(Guid identifier, CancellationToken ct = default)
         {
             if (identifier == Guid.Empty)
             {
                 throw new ArgumentException("Get entity: Identifier cannot be empty");
             }
-            return _controller.GetEntityAsync(identifier.ToString(), BuildODataQuery(false));
+            return _controller.GetEntityAsync(identifier.ToString(), BuildODataQuery(false), ct);
         }
 
         /// <summary>
@@ -281,8 +283,8 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <summary>
         /// Returns one instance of an entity using the specified identifier
         /// </summary>
-        public Task<T> GetEntityAsync(int identifier) =>
-            _controller.GetEntityAsync(identifier.ToString(CultureInfo.InvariantCulture), BuildODataQuery(false));
+        public Task<T> GetEntityAsync(int identifier, CancellationToken ct = default) =>
+            _controller.GetEntityAsync(identifier.ToString(CultureInfo.InvariantCulture), BuildODataQuery(false), ct);
 
         /// <summary>
         /// Updates the specified entity
@@ -295,10 +297,10 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <summary>
         /// Updates the specified entity
         /// </summary>
-        public Task<bool> UpdateAsync(T entity) =>
+        public Task<bool> UpdateAsync(T entity, CancellationToken ct = default) =>
             entity == null
                 ? throw new ArgumentException("Update entity: Entity cannot be null")
-                : _controller.UpdateAsync(entity);
+                : _controller.UpdateAsync(entity, ct);
 
         /// <summary>
         /// Deletes the specified entity
@@ -311,10 +313,10 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <summary>
         /// Deletes the specified entity
         /// </summary>
-        public Task<bool> DeleteAsync(T entity) =>
+        public Task<bool> DeleteAsync(T entity, CancellationToken ct = default) =>
             entity == null
                 ? throw new ArgumentException("Delete entity: Entity cannot be null")
-                : _controller.DeleteAsync(entity);
+                : _controller.DeleteAsync(entity, ct);
 
         /// <summary>
         /// Inserts the specified entity into Exact Online
@@ -327,10 +329,10 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <summary>
         /// Inserts the specified entity into Exact Online
         /// </summary>
-        public Task<T> InsertAsync(T entity) =>
+        public Task<T> InsertAsync(T entity, CancellationToken ct = default) =>
             entity == null
                 ? throw new ArgumentException("Insert entity: Entity cannot be null")
-                : _controller.CreateAsync(entity);
+                : _controller.CreateAsync(entity, ct);
 
         /// <summary>
         /// Transforms a given C# expression to an OData-compliant expression
@@ -355,7 +357,7 @@ namespace ExactOnline.Client.Sdk.Helpers
 
             var listArguments = new List<string>();
 
-            if (!(e is MethodCallExpression mce))
+            if (e is not MethodCallExpression mce)
             {
                 throw new ArgumentException($"Invalid expression '{e}': Lambda expression should resolve a property on model type '{nameof(T)}' (with optional extension method calls).", nameof(e));
             }

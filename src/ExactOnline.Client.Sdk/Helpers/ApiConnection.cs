@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using ExactOnline.Client.Sdk.Enums;
 using ExactOnline.Client.Sdk.Interfaces;
@@ -59,7 +60,8 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// </summary>
         /// <param name="parameters">oData Parameters</param>
         /// <returns>Json String</returns>
-        public Task<string> GetAsync(string parameters) => GetAsync(parameters, EndpointTypeEnum.Single);
+        public Task<string> GetAsync(string parameters, CancellationToken ct) =>
+			GetAsync(parameters, EndpointTypeEnum.Single, ct);
 
         /// <summary>
         /// Perform a GET (Read) request on the API
@@ -67,9 +69,9 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <param name="parameters">oData Parameters</param>
         /// <param name="endpointType">Which EndpointType to use</param>
         /// <returns>Json String</returns>
-        public async Task<string> GetAsync(string parameters, EndpointTypeEnum endpointType)
+        public async Task<string> GetAsync(string parameters, EndpointTypeEnum endpointType, CancellationToken ct = default)
         {
-            var response = await _connector.DoGetRequestAsync(EndpointUrl(endpointType), parameters).ConfigureAwait(false);
+            var response = await _connector.DoGetRequestAsync(EndpointUrl(endpointType), parameters, ct).ConfigureAwait(false);
             return response.Contains("Object moved") ? throw new Exception("Invalid Access Token") : response;
         }
 
@@ -83,7 +85,7 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// Perform a GET (Read) request on the API
         /// </summary>
         /// <returns>Stream</returns>
-        public Task<Stream> GetFileAsync() => _connector.DoGetFileRequestAsync(EndpointUrl());
+        public Task<Stream> GetFileAsync(CancellationToken ct = default) => _connector.DoGetFileRequestAsync(EndpointUrl(), ct);
 
         /// <summary>
         /// Performs a GET (Read) request on the API for one specific entity
@@ -102,8 +104,8 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <param name="guid">Global Unique Identifier of the entity</param>
         /// <param name="parameters">Parameters</param>
         /// <returns>Json String</returns>
-        public Task<string> GetEntityAsync(string keyname, string guid, string parameters) =>
-			_connector.DoGetRequestAsync(EndpointUrlWithKey(keyname, guid), parameters);
+        public Task<string> GetEntityAsync(string keyname, string guid, string parameters, CancellationToken ct = default) =>
+			_connector.DoGetRequestAsync(EndpointUrlWithKey(keyname, guid), parameters, ct);
 
 		/// <summary>
 		/// Performs a POST (Create) request on the API
@@ -120,10 +122,10 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// </summary>
         /// <param name="data">Json String that representes new entity</param>
         /// <returns>Result from the API in Json Format</returns>
-        public Task<string> PostAsync(string data) =>
+        public Task<string> PostAsync(string data, CancellationToken ct = default) =>
             string.IsNullOrEmpty(data)
                 ? throw new Exception("No postdata specified")
-                : _connector.DoPostRequestAsync(EndpointUrl(), data);
+                : _connector.DoPostRequestAsync(EndpointUrl(), data, ct);
 
         /// <summary>
         /// Performs a PUT Request (Update) on the API
@@ -149,13 +151,13 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <param name="guid">Global Unique Identifier of the entity</param>
         /// <param name="data">Json String that represents the new state of the entity</param>
         /// <returns>True if succeeded</returns>
-        public async Task<bool> PutAsync(string keyname, string guid, string data)
+        public async Task<bool> PutAsync(string keyname, string guid, string data, CancellationToken ct = default)
         {
 			if (string.IsNullOrEmpty(data))
 			{
 				throw new Exception("No data specified");
 			}
-			var response = await _connector.DoPutRequestAsync(EndpointUrlWithKey(keyname, guid), data).ConfigureAwait(false);
+			var response = await _connector.DoPutRequestAsync(EndpointUrlWithKey(keyname, guid), data, ct).ConfigureAwait(false);
 			return !response.Contains("error");
 		}
 
@@ -174,8 +176,8 @@ namespace ExactOnline.Client.Sdk.Helpers
 		/// <param name="keyname">Name of key field</param>
 		/// <param name="guid">Global Unique Identifier of the entity</param>
 		/// <returns>True if succeeded</returns>
-		public async Task<bool> DeleteAsync(string keyname, string guid) =>
-			string.IsNullOrEmpty(await _connector.DoDeleteRequestAsync(EndpointUrlWithKey(keyname, guid)).ConfigureAwait(false));
+		public async Task<bool> DeleteAsync(string keyname, string guid, CancellationToken ct = default) =>
+			string.IsNullOrEmpty(await _connector.DoDeleteRequestAsync(EndpointUrlWithKey(keyname, guid), ct).ConfigureAwait(false));
 
         /// <summary>
         /// Counts the number of resources/entities, including parameters
@@ -190,8 +192,8 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// </summary>
         /// <param name="parameters">Parameters</param>
         /// <returns></returns>
-        public async Task<int> CountAsync(string parameters) =>
-            int.Parse(await _connector.DoCleanRequestAsync(EndpointUrl() + "/$count", parameters).ConfigureAwait(false));
+        public async Task<int> CountAsync(string parameters, CancellationToken ct = default) =>
+            int.Parse(await _connector.DoCleanRequestAsync(EndpointUrl() + "/$count", parameters, ct).ConfigureAwait(false));
 
         private string EndpointUrl(EndpointTypeEnum endpointType = EndpointTypeEnum.Single)
         {

@@ -9,7 +9,7 @@ namespace ExactOnline.Client.Sdk.Helpers
     /// </summary>
     public class TestApp
     {
-        public Guid ClientId { get; set; }
+        public string ClientId { get; set; }
         public string ClientSecret { get; set; }
         public Uri CallbackUrl { get; set; }
 
@@ -24,7 +24,7 @@ namespace ExactOnline.Client.Sdk.Helpers
         {
             var details = System.IO.File.ReadAllLines(path);
 
-            ClientId = new Guid(details[0]);
+            ClientId = details[0];
             ClientSecret = details[1];
             CallbackUrl = new Uri(details[2]);
         }

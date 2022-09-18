@@ -6,7 +6,7 @@ namespace ExactOnline.Client.Sdk.Sync
 {
 	public static class ExactOnlineSynchronizer
 	{
-		private static readonly Lazy<List<Type>> _supportedModelTypes = new Lazy<List<Type>>(() =>
+		private static readonly Lazy<List<Type>> _supportedModelTypes = new(() =>
 				new Services().ServicesDictionary
 					.Keys
 					.Select(typeName => Type.GetType(typeName + ",ExactOnline.Client.Models"))

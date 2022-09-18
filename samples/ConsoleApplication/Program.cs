@@ -5,57 +5,24 @@ using ExactOnline.Client.Sdk.Enums;
 using ExactOnline.Client.Sdk.Helpers;
 using ExactOnline.Client.Sdk.Sync;
 using ExactOnline.Client.Sdk.Sync.EntityFramework;
+using Samples.Shared;
 using System;
-using System.Globalization;
-using System.IO;
 using System.Linq;
 
 namespace ConsoleApplication
 {
 	internal class Program
 	{
-		private static string _exactOnlineUrl => "https://start.exactonline.be";
-
-		private static readonly string _refreshTokenCacheFile = @"c:\temp\refreshTokenCache";
-		private static readonly string _accessTokenCacheFile = @"c:\temp\accessTokenCache";
-		private static readonly string _accessTokenExpirationUtcCacheFile = @"c:\temp\accessTokenExpirationUtcCache";
-
-		private static string _refreshToken
-		{
-			get => File.Exists(_refreshTokenCacheFile) ? File.ReadAllText(_refreshTokenCacheFile) : null;
-			set => File.WriteAllText(_refreshTokenCacheFile, value);
-		}
-		private static string _accessToken
-		{
-			get => File.Exists(_accessTokenCacheFile) ? File.ReadAllText(_accessTokenCacheFile) : null;
-			set => File.WriteAllText(_accessTokenCacheFile, value);
-		}
-		private static DateTime? _accessTokenExpirationUtc
-		{
-			get => File.Exists(_accessTokenExpirationUtcCacheFile) ? DateTime.Parse(File.ReadAllText(_accessTokenExpirationUtcCacheFile), null, DateTimeStyles.RoundtripKind) : (DateTime?)null;
-			set
-			{
-				if (value.HasValue)
-				{
-					File.WriteAllText(_accessTokenExpirationUtcCacheFile, value.Value.ToString("o"));
-				}
-				else
-				{
-					File.Delete(_accessTokenExpirationUtcCacheFile);
-				}
-			}
-		}
-
 		[STAThread]
 		private static void Main()
 		{
 			// To make this work set the authorisation properties of your test app in the testapp.config.
 			var testApp = new TestApp();
 
-			var authorizer = new ExactOnlineAuthorizer(_exactOnlineUrl, testApp.ClientId.ToString(), testApp.ClientSecret, testApp.CallbackUrl, _refreshToken, _accessToken, _accessTokenExpirationUtc);
-			authorizer.AnyTokenUpdated += (sender, e) => (_refreshToken, _accessToken, _accessTokenExpirationUtc) = (e.NewRefreshToken, e.NewAccessToken, e.NewAccessTokenExpirationUtc);
+			var authorizer = new ExactOnlineAuthorizer(ExactOnlineTest.Url, testApp.ClientId, testApp.ClientSecret, testApp.CallbackUrl, ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessToken, ExactOnlineTest.AccessTokenExpiresAt);
+			authorizer.AnyTokenUpdated += (sender, e) => (ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessToken, ExactOnlineTest.AccessTokenExpiresAt) = (e.NewRefreshToken, e.NewAccessToken, e.NewAccessTokenExpirationUtc);
 
-			var client = new ExactOnlineClient(_exactOnlineUrl, authorizer.GetAccessToken);
+			var client = new ExactOnlineClient(ExactOnlineTest.Url, authorizer.GetAccessTokenAsync);
 
 			// Get the Code and Name of a random account in the administration.
 			var fields = new[] { "Code", "Name" };

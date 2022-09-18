@@ -22,7 +22,7 @@ namespace ExactOnline.Client.Sdk.Sync
 
 	public class ModelInfo
 	{
-		private static readonly Hashtable _modelInfos = new Hashtable();
+		private static readonly Hashtable _modelInfos = new();
 
 		public static ModelInfo For<TModel>() => For(typeof(TModel));
 

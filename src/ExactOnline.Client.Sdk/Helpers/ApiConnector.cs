@@ -1,14 +1,14 @@
-﻿using ExactOnline.Client.Sdk.Controllers;
-using ExactOnline.Client.Sdk.Delegates;
-using ExactOnline.Client.Sdk.Enums;
-using ExactOnline.Client.Sdk.Exceptions;
+﻿using ExactOnline.Client.Sdk.Exceptions;
 using ExactOnline.Client.Sdk.Interfaces;
 using ExactOnline.Client.Sdk.Models;
 using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,8 +20,9 @@ namespace ExactOnline.Client.Sdk.Helpers
 	/// </summary>
 	public class ApiConnector : IApiConnector
     {
-        private readonly AccessTokenManagerDelegate _accessTokenDelegate;
-        private readonly ExactOnlineClient _client;
+        private readonly Func<CancellationToken, Task<string>> _accessTokenFunc;
+		private readonly HttpClient _httpClient;
+		public EolResponseHeader EolResponseHeader { get; set; }
 
 		private int _minutelyRemaining = -1;
 		private DateTime _minutelyResetTime;
@@ -37,12 +38,12 @@ namespace ExactOnline.Client.Sdk.Helpers
 		/// <summary>
 		/// Creates new instance of ApiConnector
 		/// </summary>
-		/// <param name="accessTokenDelegate">Delegate that provides a valid oAuth Access Token</param>
+		/// <param name="accessTokenFunc">Delegate that provides a valid oAuth Access Token</param>
 		/// <param name="client">The ExactOnlineClient this connector is associated with</param>
-		public ApiConnector(AccessTokenManagerDelegate accessTokenDelegate, ExactOnlineClient client)
+		public ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc, HttpClient httpClient)
         {
-            _accessTokenDelegate = accessTokenDelegate ?? throw new ArgumentNullException(nameof(accessTokenDelegate));
-            _client = client;
+            _accessTokenFunc = accessTokenFunc ?? throw new ArgumentNullException(nameof(accessTokenFunc));
+			_httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
 		}
 
 		/// <summary>
@@ -52,7 +53,7 @@ namespace ExactOnline.Client.Sdk.Helpers
 		/// <param name="querystring">querystring</param>
 		/// <returns>String with API Response in Json Format</returns>
 		public string DoGetRequest(string endpoint, string querystring) =>
-            GetResponse(CreateGetRequest(endpoint, querystring));
+            GetResponse(CreateGetRequestAsync(endpoint, querystring).GetAwaiter().GetResult());
 
         /// <summary>
         /// Read Data: Perform a GET Request on the API
@@ -60,8 +61,8 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <param name="endpoint">{URI}/{Division}/{Resource}/{Entity}</param>
         /// <param name="querystring">querystring</param>
         /// <returns>String with API Response in Json Format</returns>
-        public Task<string> DoGetRequestAsync(string endpoint, string querystring) =>
-            GetResponseAsync(CreateGetRequest(endpoint, querystring));
+        public async Task<string> DoGetRequestAsync(string endpoint, string querystring, CancellationToken ct) =>
+            await GetResponseAsync(await CreateGetRequestAsync(endpoint, querystring, ct).ConfigureAwait(false), ct).ConfigureAwait(false);
 
         /// <summary>
         /// Read Data: Perform a GET Request on the API
@@ -69,15 +70,15 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <param name="endpoint">full url</param>
         /// <returns>Stream</returns>
         public Stream DoGetFileRequest(string endpoint) =>
-            GetResponseStream(CreateGetRequest(endpoint));
+            GetResponseStream(CreateGetRequestAsync(endpoint).GetAwaiter().GetResult());
 
         /// <summary>
         /// Read Data: Perform a GET Request on the API
         /// </summary>
         /// <param name="endpoint">full url</param>
         /// <returns>Stream</returns>
-        public Task<Stream> DoGetFileRequestAsync(string endpoint) =>
-            GetResponseStreamAsync(CreateGetRequest(endpoint));
+        public async Task<Stream> DoGetFileRequestAsync(string endpoint, CancellationToken ct) =>
+            await GetResponseStreamAsync(await CreateGetRequestAsync(endpoint, ct: ct).ConfigureAwait(false), ct).ConfigureAwait(false);
 
         /// <summary>
         /// Create Data: Perform a POST Request on the API
@@ -86,7 +87,7 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <param name="postdata">String containing data of new entity in Json format</param>
         /// <returns>String with API Response in Json Format</returns>
         public string DoPostRequest(string endpoint, string postdata) =>
-            GetResponse(CreatePostRequest(endpoint, postdata));
+            GetResponse(CreatePostRequestAsync(endpoint, postdata, default).GetAwaiter().GetResult());
 
         /// <summary>
         /// Create Data: Perform a POST Request on the API
@@ -94,8 +95,8 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <param name="endpoint">{URI}/{Division}/{Resource}/{Entity}</param>
         /// <param name="postdata">String containing data of new entity in Json format</param>
         /// <returns>String with API Response in Json Format</returns>
-        public Task<string> DoPostRequestAsync(string endpoint, string postdata) =>
-            GetResponseAsync(CreatePostRequest(endpoint, postdata));
+        public async Task<string> DoPostRequestAsync(string endpoint, string postdata, CancellationToken ct) =>
+            await GetResponseAsync(await CreatePostRequestAsync(endpoint, postdata, ct).ConfigureAwait(false), ct).ConfigureAwait(false);
 
         /// <summary>
         /// Update data: Perform a PUT Request on API
@@ -104,7 +105,7 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <param name="putData">String containing updated entity data in Json format</param>
         /// <returns>String with API Response in Json Format</returns>
         public string DoPutRequest(string endpoint, string putData) =>
-            GetResponse(CreatePutRequest(endpoint, putData));
+            GetResponse(CreatePutRequestAsync(endpoint, putData, default).GetAwaiter().GetResult());
 
         /// <summary>
         /// Update data: Perform a PUT Request on API
@@ -112,8 +113,8 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <param name="endpoint">{URI}/{Division}/{Resource}/{Entity}</param>
         /// <param name="putData">String containing updated entity data in Json format</param>
         /// <returns>String with API Response in Json Format</returns>
-        public Task<string> DoPutRequestAsync(string endpoint, string putData) =>
-            GetResponseAsync(CreatePutRequest(endpoint, putData));
+        public async Task<string> DoPutRequestAsync(string endpoint, string putData, CancellationToken ct) =>
+            await GetResponseAsync(await CreatePutRequestAsync(endpoint, putData, ct).ConfigureAwait(false), ct).ConfigureAwait(false);
 
         /// <summary>
         /// Delete entity: Perform a DELETE Request on API
@@ -121,15 +122,15 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <param name="endpoint">{URI}/{Division}/{Resource}/{Entity}</param>
         /// <returns>String with API Response in Json Format</returns>
         public string DoDeleteRequest(string endpoint) =>
-            GetResponse(CreateDeleteRequest(endpoint));
+            GetResponse(CreateDeleteRequestAsync(endpoint, default).GetAwaiter().GetResult());
 
-        /// <summary>
-        /// Delete entity: Perform a DELETE Request on API
-        /// </summary>
-        /// <param name="endpoint">{URI}/{Division}/{Resource}/{Entity}</param>
-        /// <returns>String with API Response in Json Format</returns>
-        public Task<string> DoDeleteRequestAsync(string endpoint) =>
-            GetResponseAsync(CreateDeleteRequest(endpoint));
+		/// <summary>
+		/// Delete entity: Perform a DELETE Request on API
+		/// </summary>
+		/// <param name="endpoint">{URI}/{Division}/{Resource}/{Entity}</param>
+		/// <returns>String with API Response in Json Format</returns>
+		public async Task<string> DoDeleteRequestAsync(string endpoint, CancellationToken ct) =>
+			await GetResponseAsync(await CreateDeleteRequestAsync(endpoint, ct).ConfigureAwait(false), ct).ConfigureAwait(false);
 
         /// <summary>
         /// Request without 'Accept' Header, including parameters
@@ -138,7 +139,7 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <param name="querystring">querystring</param>
         /// <returns></returns>
         public string DoCleanRequest(string endpoint, string querystring) =>
-            GetResponse(CreateCleanRequest(endpoint, querystring));
+            GetResponse(CreateCleanRequestAsync(endpoint, querystring, default).GetAwaiter().GetResult());
 
         /// <summary>
         /// Request without 'Accept' Header, including parameters
@@ -146,45 +147,40 @@ namespace ExactOnline.Client.Sdk.Helpers
         /// <param name="endpoint"></param>
         /// <param name="querystring">querystring</param>
         /// <returns></returns>
-        public Task<string> DoCleanRequestAsync(string endpoint, string querystring) =>
-            GetResponseAsync(CreateCleanRequest(endpoint, querystring));
+        public async Task<string> DoCleanRequestAsync(string endpoint, string querystring, CancellationToken ct) =>
+            await GetResponseAsync(await CreateCleanRequestAsync(endpoint, querystring, ct).ConfigureAwait(false), ct).ConfigureAwait(false);
 
-        private HttpWebRequest CreateGetRequest(string endpoint, string querystring = null) =>
-            CreateRequest(RequestTypeEnum.GET, endpoint, querystring);
-        private HttpWebRequest CreatePostRequest(string endpoint, string postdata) =>
-            CreateRequest(RequestTypeEnum.POST, endpoint, data: postdata);
-        private HttpWebRequest CreatePutRequest(string endpoint, string putData) =>
-            CreateRequest(RequestTypeEnum.PUT, endpoint, data: putData);
-        private HttpWebRequest CreateDeleteRequest(string endpoint) =>
-            CreateRequest(RequestTypeEnum.DELETE, endpoint);
-        private HttpWebRequest CreateCleanRequest(string endpoint, string querystring) =>
-            CreateRequest(RequestTypeEnum.GET, endpoint, querystring, acceptContentType: null);
+        private Task<HttpRequestMessage> CreateGetRequestAsync(string endpoint, string querystring = null, CancellationToken ct = default) =>
+            CreateRequestAsync(HttpMethod.Get, endpoint, querystring, ct: ct);
+        private Task<HttpRequestMessage> CreatePostRequestAsync(string endpoint, string postdata, CancellationToken ct) =>
+            CreateRequestAsync(HttpMethod.Post, endpoint, data: postdata, ct: ct);
+        private Task<HttpRequestMessage> CreatePutRequestAsync(string endpoint, string putData, CancellationToken ct) =>
+            CreateRequestAsync(HttpMethod.Put, endpoint, data: putData, ct: ct);
+        private Task<HttpRequestMessage> CreateDeleteRequestAsync(string endpoint, CancellationToken ct) =>
+            CreateRequestAsync(HttpMethod.Delete, endpoint, ct: ct);
+        private Task<HttpRequestMessage> CreateCleanRequestAsync(string endpoint, string querystring, CancellationToken ct) =>
+            CreateRequestAsync(HttpMethod.Get, endpoint, querystring, acceptContentType: null, ct: ct);
 
-        private HttpWebRequest CreateRequest(RequestTypeEnum requestType, string endpoint, string querystring = null, string data = null, string acceptContentType = "application/json")
-        {
+        private async Task<HttpRequestMessage> CreateRequestAsync(HttpMethod method, string endpoint, string querystring = null, string data = null, string acceptContentType = "application/json", CancellationToken ct = default)
+
+		{
             if (string.IsNullOrEmpty(endpoint))
             {
                 throw new BadRequestException("Cannot perform request with empty endpoint");
             }
-            if ((requestType == RequestTypeEnum.POST || requestType == RequestTypeEnum.PUT) && string.IsNullOrEmpty(data))
+            if ((method == HttpMethod.Post || method == HttpMethod.Put) && string.IsNullOrEmpty(data))
             {
                 throw new BadRequestException("Cannot perform request with empty data");
             }
 
-            var request = CreateWebRequest(endpoint, querystring, requestType, acceptContentType);
+            var request = await CreateWebRequestAsync(endpoint, querystring, method, acceptContentType, ct).ConfigureAwait(false);
 
             if (!string.IsNullOrEmpty(data))
             {
-                var bytes = Encoding.GetEncoding("utf-8").GetBytes(data);
-                request.ContentLength = bytes.Length;
-
-                using (var writeStream = request.GetRequestStream())
-                {
-                    writeStream.Write(bytes, 0, bytes.Length);
-                }
+				request.Content = new StringContent(data, Encoding.UTF8, "application/json");
             }
 
-            Debug.Write(requestType.ToString() + " ");
+            Debug.Write(method.ToString() + " ");
             Debug.WriteLine(request.RequestUri);
             if (!string.IsNullOrEmpty(data))
             {
@@ -194,27 +190,28 @@ namespace ExactOnline.Client.Sdk.Helpers
             return request;
         }
 
-        private HttpWebRequest CreateWebRequest(string url, string querystring, RequestTypeEnum method, string acceptContentType = "application/json")
+        private async Task<HttpRequestMessage> CreateWebRequestAsync(string url, string querystring, HttpMethod method, string acceptContentType = "application/json", CancellationToken ct = default)
         {
             if (!string.IsNullOrEmpty(querystring))
             {
                 url += "?" + querystring;
             }
 
-            var request = (HttpWebRequest)WebRequest.Create(url);
-            request.ServicePoint.Expect100Continue = false;
-            request.Method = method.ToString();
-            request.ContentType = "application/json";
-            if (!string.IsNullOrEmpty(acceptContentType))
-            {
-                request.Accept = acceptContentType;
-            }
-            request.Headers.Add("Authorization", "Bearer " + _accessTokenDelegate());
+            var request = new HttpRequestMessage(method, url);
+
+			// request.ServicePoint.Expect100Continue = false;
+
+			if (!string.IsNullOrEmpty(acceptContentType))
+			{
+				request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(acceptContentType));
+			}
+
+			request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", await _accessTokenFunc(ct).ConfigureAwait(false));
 
             return request;
         }
 
-        private string GetResponse(HttpWebRequest request)
+        private string GetResponse(HttpRequestMessage request)
         {
             var responseValue = string.Empty;
 
@@ -235,11 +232,11 @@ namespace ExactOnline.Client.Sdk.Helpers
             return responseValue;
         }
 
-        private async Task<string> GetResponseAsync(HttpWebRequest request)
+        private async Task<string> GetResponseAsync(HttpRequestMessage request, CancellationToken ct)
         {
             var responseValue = string.Empty;
 
-            using (var responseStream = await GetResponseStreamAsync(request).ConfigureAwait(false))
+            using (var responseStream = await GetResponseStreamAsync(request, ct).ConfigureAwait(false))
             {
                 if (responseStream != null)
                 {
@@ -257,7 +254,7 @@ namespace ExactOnline.Client.Sdk.Helpers
             return responseValue;
         }
 
-        private Stream GetResponseStream(HttpWebRequest request)
+        private Stream GetResponseStream(HttpRequestMessage request)
 		{
 			if (_minutelyRemaining == 0)
 			{
@@ -267,19 +264,18 @@ namespace ExactOnline.Client.Sdk.Helpers
 
 			Debug.WriteLine("RESPONSE");
 
-			var response = default(WebResponse);
+			var response = default(HttpResponseMessage);
 
 			// Get response. If this fails: Throw the correct Exception (for testability)
 			try
 			{
-				response = request.GetResponse();
-				return response.GetResponseStream();
-			}
-			catch (WebException ex)
-			{
-				response = ex.Response;
-				ThrowSpecificException(ex);
-				throw;
+				response = _httpClient.SendAsync(request).GetAwaiter().GetResult();
+				if (!response.IsSuccessStatusCode)
+				{
+					ThrowSpecificExceptionAsync(response).GetAwaiter().GetResult();
+
+				}
+				return response.Content.ReadAsStreamAsync().GetAwaiter().GetResult();
 			}
 			finally
 			{
@@ -287,42 +283,40 @@ namespace ExactOnline.Client.Sdk.Helpers
 			}
 		}
 
-		private async Task<Stream> GetResponseStreamAsync(HttpWebRequest request)
-        {
+		private async Task<Stream> GetResponseStreamAsync(HttpRequestMessage request, CancellationToken ct)
+		{
 			if (_minutelyRemaining == 0)
 			{
 				Debug.WriteLine($"WAITING {_minutelyWaitTime} to respect minutely rate limit.");
-				await Task.Delay(_minutelyWaitTime).ConfigureAwait(false);
+				await Task.Delay(_minutelyWaitTime, ct).ConfigureAwait(false);
 			}
 
 			Debug.WriteLine("RESPONSE");
 
-            var response = default(WebResponse);
+			var response = default(HttpResponseMessage);
 
-            // Get response. If this fails: Throw the correct Exception (for testability)
-            try
-            {
-                response = await request.GetResponseAsync().ConfigureAwait(false);
-                return response.GetResponseStream();
-            }
-            catch (WebException ex)
-            {
-                response = ex.Response;
-                ThrowSpecificException(ex);
-                throw;
-            }
-            finally
-            {
-                SetEolResponseHeaders(response);
-            }
-        }
+			// Get response. If this fails: Throw the correct Exception (for testability)
+			try
+			{
+				response = await _httpClient.SendAsync(request, ct).ConfigureAwait(false);
+				if (!response.IsSuccessStatusCode)
+				{
+					await ThrowSpecificExceptionAsync(response);
+				}
+				return await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
+			}
+			finally
+			{
+				SetEolResponseHeaders(response);
+			}
+		}
 
-        private static void ThrowSpecificException(WebException ex)
+		private static async Task ThrowSpecificExceptionAsync(HttpResponseMessage response)
         {
-            var statusCode = ((HttpWebResponse)ex.Response).StatusCode;
-            Debug.WriteLine(ex.Message);
+            var statusCode = response.StatusCode;
+			Debug.WriteLine(response.ReasonPhrase);
 
-            var messageFromServer = new StreamReader(ex.Response.GetResponseStream()).ReadToEnd();
+            var messageFromServer = new StreamReader(await response.Content.ReadAsStreamAsync()).ReadToEnd();
             Debug.WriteLine(messageFromServer);
             Debug.WriteLine("");
 
@@ -336,55 +330,55 @@ namespace ExactOnline.Client.Sdk.Helpers
 			var message = messageError?.Error?.Message?.Value;
 			if (string.IsNullOrEmpty(message))
 			{
-				message = ex.Message;
+				message = response.ReasonPhrase;
 			}
 
 			switch (statusCode)
 			{
 				case HttpStatusCode.BadRequest: // 400
 				case HttpStatusCode.MethodNotAllowed: // 405
-					throw new BadRequestException(message, ex);
+					throw new BadRequestException(message);
 
 				case HttpStatusCode.Unauthorized: //401
-					throw new UnauthorizedException(message, ex); // 401
+					throw new UnauthorizedException(message); // 401
 
 				case HttpStatusCode.Forbidden:
-					throw new ForbiddenException(message, ex); // 403
+					throw new ForbiddenException(message); // 403
 
 				case HttpStatusCode.NotFound:
-					throw new NotFoundException(message, ex); // 404
+					throw new NotFoundException(message); // 404
 
 				case HttpStatusCode.InternalServerError: // 500
-					throw new InternalServerErrorException(message, ex);
+					throw new InternalServerErrorException(message);
 
 				case (HttpStatusCode)429: // 429: too many requests
-                    throw new TooManyRequestsException(message, ex);
+                    throw new TooManyRequestsException(message);
             }
         }
 
-        private void SetEolResponseHeaders(WebResponse response)
+        private void SetEolResponseHeaders(HttpResponseMessage response)
         {
             if (response != null)
 			{
-				_client.EolResponseHeader = new EolResponseHeader
+				EolResponseHeader = new EolResponseHeader
 				{
 					RateLimit = new RateLimit
 					{
-						Limit = response.Headers["X-RateLimit-Limit"].ToNullableInt(),
-						Remaining = response.Headers["X-RateLimit-Remaining"].ToNullableInt(),
-						Reset = response.Headers["X-RateLimit-Reset"].ToNullableLong(),
-						MinutelyLimit = response.Headers["X-RateLimit-Minutely-Limit"].ToNullableInt(),
-						MinutelyRemaining = response.Headers["X-RateLimit-Minutely-Remaining"].ToNullableInt(),
-						MinutelyReset = response.Headers["X-RateLimit-Minutely-Reset"].ToNullableLong()
+						Limit = response.Headers.TryGetValues("X-RateLimit-Limit", out var limitHeaders) && limitHeaders.Any() ? limitHeaders.First().ToNullableInt() : null,
+						Remaining = response.Headers.TryGetValues("X-RateLimit-Remaining", out var remainingHeaders) && remainingHeaders.Any() ? remainingHeaders.First().ToNullableInt() : null,
+						Reset = response.Headers.TryGetValues("X-RateLimit-Reset", out var resetHeaders) && resetHeaders.Any() ? resetHeaders.First().ToNullableLong() : null,
+						MinutelyLimit = response.Headers.TryGetValues("X-RateLimit-Minutely-Limit", out var minutelyLimitHeaders) && minutelyLimitHeaders.Any() ? minutelyLimitHeaders.First().ToNullableInt() : null,
+						MinutelyRemaining = response.Headers.TryGetValues("X-RateLimit-Minutely-Remaining", out var mitutelyRemainingHeaders) && mitutelyRemainingHeaders.Any() ? mitutelyRemainingHeaders.First().ToNullableInt() : null,
+						MinutelyReset = response.Headers.TryGetValues("X-RateLimit-Minutely-Reset", out var minutelyResetHeaders) && minutelyResetHeaders.Any() ? minutelyResetHeaders.First().ToNullableLong() : null
 					}
 				};
 
 				Debug.WriteLine("HEADERS");
-				Debug.WriteLine($"X-RateLimit-Limit: {_client.EolResponseHeader.RateLimit.Limit} - X-RateLimit-Remaining: {_client.EolResponseHeader.RateLimit.Remaining} - X-RateLimit-Reset: {_client.EolResponseHeader.RateLimit.ResetDate}");
-				Debug.WriteLine($"X-RateLimit-Minutely-Limit: {_client.EolResponseHeader.RateLimit.MinutelyLimit} - X-RateLimit-Minutely-Remaining: {_client.EolResponseHeader.RateLimit.MinutelyRemaining} - X-RateLimit-Minutely-Reset: {_client.EolResponseHeader.RateLimit.MinutelyResetDate}");
+				Debug.WriteLine($"X-RateLimit-Limit: {EolResponseHeader.RateLimit.Limit} - X-RateLimit-Remaining: {EolResponseHeader.RateLimit.Remaining} - X-RateLimit-Reset: {EolResponseHeader.RateLimit.ResetDate}");
+				Debug.WriteLine($"X-RateLimit-Minutely-Limit: {EolResponseHeader.RateLimit.MinutelyLimit} - X-RateLimit-Minutely-Remaining: {EolResponseHeader.RateLimit.MinutelyRemaining} - X-RateLimit-Minutely-Reset: {EolResponseHeader.RateLimit.MinutelyResetDate}");
 
-				if (_client.EolResponseHeader.RateLimit.MinutelyLimit is int minutelyLimit &&
-					_client.EolResponseHeader.RateLimit.MinutelyRemaining is int minutelyRemaining)
+				if (EolResponseHeader.RateLimit.MinutelyLimit is int minutelyLimit &&
+					EolResponseHeader.RateLimit.MinutelyRemaining is int minutelyRemaining)
 				{
 					if (_minutelyRemaining == -1 || minutelyRemaining == minutelyLimit - 1) // this means this is the first call of a 1 minute window
 					{

@@ -45,7 +45,7 @@ namespace ExactOnline.Client
 	public class Services
 	{
 		[JsonProperty(PropertyName = "services")]
-		public Dictionary<string, string> ServicesDictionary = new Dictionary<string, string>();
+		public Dictionary<string, string> ServicesDictionary = new();
 
 		public Services()
 		{

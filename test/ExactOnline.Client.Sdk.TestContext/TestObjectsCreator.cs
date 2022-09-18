@@ -1,4 +1,7 @@
-﻿using ExactOnline.Client.OAuth;
+﻿using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+using ExactOnline.Client.OAuth;
 using ExactOnline.Client.Sdk.Controllers;
 using ExactOnline.Client.Sdk.Helpers;
 using ExactOnline.Client.Sdk.Interfaces;
@@ -17,16 +20,16 @@ namespace ExactOnline.Client.Sdk.TestContext
         private IApiConnector _connector;
         private ExactOnlineClient _client;
 
-        public IApiConnector GetApiConnector() => _connector ?? (_connector = new ApiConnector(GetOAuthAuthenticationToken, GetClient()));
+        public IApiConnector GetApiConnector() => _connector ?? (_connector = new ApiConnector(GetOAuthAuthenticationToken, new HttpClient()));
 
         public ExactOnlineClient GetClient() => _client ?? (_client = new ExactOnlineClient(ExactOnlineUrl, GetOAuthAuthenticationToken));
 
-        public static string GetOAuthAuthenticationToken()
+        public static Task<string> GetOAuthAuthenticationToken(CancellationToken ct)
         {
             var testApp = new TestApp();
-            UserAuthorizations.Authorize(_authorization, ExactOnlineUrl, testApp.ClientId.ToString(), testApp.ClientSecret, testApp.CallbackUrl);
+            UserAuthorizations.Authorize(_authorization, ExactOnlineUrl, testApp.ClientId, testApp.ClientSecret, testApp.CallbackUrl);
 
-            return _authorization.AccessToken;
+            return Task.FromResult(_authorization.AccessToken);
         }
 
         public int GetCurrentDivision()

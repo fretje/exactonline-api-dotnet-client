@@ -1,7 +1,6 @@
 ﻿using ExactOnline.Client.Models.CRM;
 using ExactOnline.Client.Models.SalesInvoice;
 using ExactOnline.Client.Sdk.Controllers;
-using ExactOnline.Client.Sdk.Delegates;
 using ExactOnline.Client.Sdk.Exceptions;
 using ExactOnline.Client.Sdk.Helpers;
 using ExactOnline.Client.Sdk.UnitTests.Tools;

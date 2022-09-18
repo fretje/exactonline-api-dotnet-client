@@ -7,7 +7,7 @@ namespace ExactOnline.Client.Sdk.Sync
 {
 	public abstract class SyncTargetBase : ISyncTarget
 	{
-		private readonly Hashtable _controllers = new Hashtable();
+		private readonly Hashtable _controllers = new();
 		private readonly Type _controllerType;
 		private readonly object[] _controllerArgs;
 

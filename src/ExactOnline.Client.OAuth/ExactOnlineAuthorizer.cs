@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ExactOnline.Client.OAuth
 {
@@ -82,7 +84,7 @@ namespace ExactOnline.Client.OAuth
 			FireUpdatedEvents(refreshToken, accessToken);
 		}
 
-		public string GetAccessToken()
+		public Task<string> GetAccessTokenAsync(CancellationToken ct)
 		{
 			var refreshToken = _authorization.RefreshToken;
 			var accessToken = _authorization.AccessToken;
@@ -91,7 +93,7 @@ namespace ExactOnline.Client.OAuth
 
 			FireUpdatedEvents(refreshToken, accessToken);
 
-			return _authorization.AccessToken;
+			return Task.FromResult(_authorization.AccessToken);
 		}
 
 		private void FireUpdatedEvents(string oldRefreshToken, string oldAccessToken)

@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using ExactOnline.Client.Sdk.Interfaces;
 
@@ -107,22 +108,22 @@ namespace ExactOnline.Client.Sdk.UnitTests.MockObjects
 		]
 	}
 }";
-        public Task<string> DoGetRequestAsync(string endpoint, string parameters) => Task.FromResult(DoGetRequest(endpoint, parameters));
+        public Task<string> DoGetRequestAsync(string endpoint, string parameters, CancellationToken ct) => Task.FromResult(DoGetRequest(endpoint, parameters));
 
 		public Stream DoGetFileRequest(string endpoint) => Stream.Null;
-		public Task<Stream> DoGetFileRequestAsync(string endpoint) => Task.FromResult(DoGetFileRequest(endpoint));
+		public Task<Stream> DoGetFileRequestAsync(string endpoint, CancellationToken ct) => Task.FromResult(DoGetFileRequest(endpoint));
 
 		public string DoPostRequest(string endpoint, string postdata) => string.Empty;
-        public Task<string> DoPostRequestAsync(string endpoint, string postdata) => Task.FromResult(DoPostRequest(endpoint, postdata));
+        public Task<string> DoPostRequestAsync(string endpoint, string postdata, CancellationToken ct) => Task.FromResult(DoPostRequest(endpoint, postdata));
 
         public string DoPutRequest(string endpoint, string putData) => string.Empty;
-        public Task<string> DoPutRequestAsync(string endpoint, string putData) => Task.FromResult(DoPutRequest(endpoint, putData));
+        public Task<string> DoPutRequestAsync(string endpoint, string putData, CancellationToken ct) => Task.FromResult(DoPutRequest(endpoint, putData));
 
         public string DoDeleteRequest(string endpoint) => string.Empty;
-        public Task<string> DoDeleteRequestAsync(string endpoint) => Task.FromResult(DoDeleteRequest(endpoint));
+        public Task<string> DoDeleteRequestAsync(string endpoint, CancellationToken ct) => Task.FromResult(DoDeleteRequest(endpoint));
 
 		public string DoCleanRequest(string uri, string oDataQuery) => "";
-		public Task<string> DoCleanRequestAsync(string uri, string oDataQuery) => Task.FromResult(DoCleanRequest(uri, oDataQuery));
+		public Task<string> DoCleanRequestAsync(string uri, string oDataQuery, CancellationToken ct) => Task.FromResult(DoCleanRequest(uri, oDataQuery));
 
 		public int GetCurrentDivision(string website) => -1;
         public Task<int> GetCurrentDivisionAsync(string website) => Task.FromResult(GetCurrentDivision(website));

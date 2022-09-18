@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using ExactOnline.Client.Sdk.Enums;
 using ExactOnline.Client.Sdk.Interfaces;
@@ -12,11 +13,11 @@ namespace ExactOnline.Client.Sdk.UnitTests.MockObjects
         string IApiConnection.Get(string parameters) => throw new NotImplementedException();
         string IApiConnection.Get(string parameters, EndpointTypeEnum endpointType) => throw new NotImplementedException();
 
-        Task<string> IApiConnection.GetAsync(string parameters) => throw new NotImplementedException();
-        Task<string> IApiConnection.GetAsync(string parameters, EndpointTypeEnum endpointType) => throw new NotImplementedException();
+        Task<string> IApiConnection.GetAsync(string parameters, CancellationToken ct) => throw new NotImplementedException();
+        Task<string> IApiConnection.GetAsync(string parameters, EndpointTypeEnum endpointType, CancellationToken ct) => throw new NotImplementedException();
 
         string IApiConnection.GetEntity(string keyname, string guid, string parameters) => throw new NotImplementedException();
-        Task<string> IApiConnection.GetEntityAsync(string keyname, string guid, string parameters) => throw new NotImplementedException();
+        Task<string> IApiConnection.GetEntityAsync(string keyname, string guid, string parameters, CancellationToken ct) => throw new NotImplementedException();
 
         string IApiConnection.Post(string data)
         {
@@ -78,19 +79,19 @@ namespace ExactOnline.Client.Sdk.UnitTests.MockObjects
 				}
 			}";
         }
-        Task<string> IApiConnection.PostAsync(string data) => Task.FromResult((this as IApiConnection).Post(data));
+        Task<string> IApiConnection.PostAsync(string data, CancellationToken ct) => Task.FromResult((this as IApiConnection).Post(data));
 
         bool IApiConnection.Put(string keyName, string guid, string data)
         {
             Data = data;
             return true;
         }
-        Task<bool> IApiConnection.PutAsync(string keyName, string guid, string data) => Task.FromResult((this as IApiConnection).Put(keyName, guid, data));
+        Task<bool> IApiConnection.PutAsync(string keyName, string guid, string data, CancellationToken ct) => Task.FromResult((this as IApiConnection).Put(keyName, guid, data));
 
         bool IApiConnection.Delete(string keyName, string guid) => (keyName.Equals("ID") && guid.Equals("c931ef6c-ecdf-40db-87de-0d2c629ef322"));
-        Task<bool> IApiConnection.DeleteAsync(string keyName, string guid) => Task.FromResult((this as IApiConnection).Delete(keyName, guid));
+        Task<bool> IApiConnection.DeleteAsync(string keyName, string guid, CancellationToken ct) => Task.FromResult((this as IApiConnection).Delete(keyName, guid));
 
         int IApiConnection.Count(string parameters) => 0;
-        Task<int> IApiConnection.CountAsync(string parameters) => Task.FromResult((this as IApiConnection).Count(parameters));
+        Task<int> IApiConnection.CountAsync(string parameters, CancellationToken ct) => Task.FromResult((this as IApiConnection).Count(parameters));
     }
 }

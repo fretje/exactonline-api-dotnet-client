@@ -2,6 +2,7 @@
 using ExactOnline.Client.OAuth;
 using ExactOnline.Client.Sdk.Controllers;
 using ExactOnline.Client.Sdk.Helpers;
+using Samples.Shared;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -10,9 +11,7 @@ using System.Web.Mvc;
 namespace WebApplication.Controllers
 {
 	public class HomeController : Controller
-    {
-		public static string ExactOnlineUrl => "https://start.exactonline.be";
-
+	{
 		// The authorizer is stored in the session state, so as long as that lives the user won't have to log in again.
 		// For the Authorization to live longer than that, you can store the refresh token in safe storage (using the RefresTokenUpdated event)
 		// and as long as you supply that refresh token again in the constructor of the authorizer, the user won't have to log in again.
@@ -25,14 +24,14 @@ namespace WebApplication.Controllers
 					// To make this work set the authorisation properties of your test app in the testapp.config.
 					var path = Path.Combine(Server.MapPath("~"), @"..\..\testapp.config");
 					var testApp = new TestApp(path);
-					authorizer = new ExactOnlineAuthorizer(ExactOnlineUrl, testApp.ClientId.ToString(), testApp.ClientSecret, testApp.CallbackUrl);
+					authorizer = new ExactOnlineAuthorizer(ExactOnlineTest.Url, testApp.ClientId, testApp.ClientSecret, testApp.CallbackUrl);
 					Session["Authorizer"] = authorizer;
 				}
 				return authorizer;
 			}
 		}
 
-        public ActionResult Index()
+		public ActionResult Index()
 		{
 			if (!string.IsNullOrEmpty(Request.QueryString["code"]))
 			{
@@ -50,7 +49,7 @@ namespace WebApplication.Controllers
 			}
 
 			// When we get here, authorization won't be needed, so the winform should never pop up
-			var client = new ExactOnlineClient(ExactOnlineUrl, Authorizer.GetAccessToken);
+			var client = new ExactOnlineClient(ExactOnlineTest.Url, Authorizer.GetAccessTokenAsync);
 
 			// Get the Code and Name of a random account in the administration.
 			var fields = new[] { "Code", "Name" };
@@ -63,17 +62,17 @@ namespace WebApplication.Controllers
 		}
 
 		public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
+		{
+			ViewBag.Message = "Your application description page.";
 
-            return View();
-        }
+			return View();
+		}
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
+		public ActionResult Contact()
+		{
+			ViewBag.Message = "Your contact page.";
 
-            return View();
-        }
-    }
+			return View();
+		}
+	}
 }

@@ -2,11 +2,12 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.0;net472</TargetFrameworks>
+		<LangVersion>10</LangVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-		<PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.9" />
+		<PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.20" />
 	</ItemGroup>
 
 	<ItemGroup>
