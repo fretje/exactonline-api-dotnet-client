@@ -5,7 +5,6 @@ using System.Web.Mvc;
 using ExactOnline.Client.Models.CRM;
 using ExactOnline.Client.OAuth;
 using ExactOnline.Client.Sdk.Controllers;
-using ExactOnline.Client.Sdk.Helpers;
 using ExactOnline.Client.Sdk.Test.Infrastructure;
 
 namespace WebApplication.Controllers;

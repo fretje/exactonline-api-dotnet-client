@@ -1,5 +1,3 @@
-using System;
-
 namespace ExactOnline.Client.Models;
 
 public sealed class SDKFieldType : Attribute

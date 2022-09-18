@@ -7,6 +7,12 @@ public class Quotation : SupportsSync
 	/// <summary>Amount in the default currency of the company</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public double AmountDC { get; set; }
+	/// <summary>Discount Amount in the currency of the transaction</summary>
+	[SDKFieldType(FieldType.ReadOnly)]
+	public double AmountDiscount { get; set; }
+	/// <summary>Discount Amount excluding VAT in the currency of the transaction</summary>
+	[SDKFieldType(FieldType.ReadOnly)]
+	public double AmountDiscountExclVat { get; set; }
 	/// <summary>Amount in the currency of the transaction</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public double AmountFC { get; set; }
@@ -93,6 +99,11 @@ public class Quotation : SupportsSync
 	/// <summary>The name of the order account</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public string OrderAccountName { get; set; }
+	/// <summary>Payment condition code</summary>
+	public string PaymentCondition { get; set; }
+	/// <summary>Payment condition description</summary>
+	[SDKFieldType(FieldType.ReadOnly)]
+	public string PaymentConditionDescription { get; set; }
 	/// <summary>The project linked to the quotation</summary>
 	public Guid? Project { get; set; }
 	/// <summary>The code of the project</summary>
@@ -116,6 +127,11 @@ public class Quotation : SupportsSync
 	/// <summary>Full name of the sales person</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public string SalesPersonFullName { get; set; }
+	/// <summary>Shipping method ID</summary>
+	public Guid? ShippingMethod { get; set; }
+	/// <summary>Shipping method description</summary>
+	[SDKFieldType(FieldType.ReadOnly)]
+	public Guid? ShippingMethodDescription { get; set; }
 	/// <summary>The status of the quotation version. 5 = Rejected, 6 = Reviewed and closed, 10 = Recovery, 20 = Draft, 25 = Open, 35 = Processing... , 40 = Printed, 50 = Accepted</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public short? Status { get; set; }

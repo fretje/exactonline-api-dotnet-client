@@ -1,7 +1,6 @@
 ﻿using ExactOnline.Client.Models.CRM;
 using ExactOnline.Client.OAuth2.WinForms;
 using ExactOnline.Client.Sdk.Controllers;
-using ExactOnline.Client.Sdk.Helpers;
 using ExactOnline.Client.Sdk.Test.Infrastructure;
 
 namespace WinFormsApplication;

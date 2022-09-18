@@ -2,7 +2,6 @@
 using ExactOnline.Client.OAuth;
 using ExactOnline.Client.Sdk.Controllers;
 using ExactOnline.Client.Sdk.Enums;
-using ExactOnline.Client.Sdk.Helpers;
 using ExactOnline.Client.Sdk.Sync;
 using ExactOnline.Client.Sdk.Sync.EntityFramework;
 using ExactOnline.Client.Sdk.Test.Infrastructure;
