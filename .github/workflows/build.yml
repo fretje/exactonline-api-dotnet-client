@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     runs-on: windows-2022
-	timeout-minutes: 15
+    timeout-minutes: 15
     env:
       DOTNET_NOLOGO: 1
       DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
