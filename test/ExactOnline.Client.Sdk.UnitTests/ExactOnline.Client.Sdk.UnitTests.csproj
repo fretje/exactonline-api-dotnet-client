@@ -2,9 +2,6 @@
 
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
-		<IsPackable>false</IsPackable>
-		<EnableNETAnalyzers>true</EnableNETAnalyzers>
-		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 	</PropertyGroup>
 
 	<ItemGroup>

@@ -1,6 +1,8 @@
 <Project>
 
 	<PropertyGroup>
+		<IsPackable>false</IsPackable>
+		
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
 		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 		

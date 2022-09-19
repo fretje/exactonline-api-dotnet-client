@@ -222,7 +222,9 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets'))" />
+    <Error Condition="!Exists('..\..\packages\NuGet.Build.Tasks.Pack.6.3.0\build\NuGet.Build.Tasks.Pack.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\NuGet.Build.Tasks.Pack.6.3.0\build\NuGet.Build.Tasks.Pack.targets'))" />
   </Target>
+  <Import Project="..\..\packages\NuGet.Build.Tasks.Pack.6.3.0\build\NuGet.Build.Tasks.Pack.targets" Condition="Exists('..\..\packages\NuGet.Build.Tasks.Pack.6.3.0\build\NuGet.Build.Tasks.Pack.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -2,8 +2,6 @@
 
 	<PropertyGroup>
 		<TargetFramework>net60-windows</TargetFramework>
-		<EnableNETAnalyzers>true</EnableNETAnalyzers>
-		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 	</PropertyGroup>
 
 	<ItemGroup>
