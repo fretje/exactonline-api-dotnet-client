@@ -8,7 +8,14 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: windows-2022
+	timeout-minutes: 15
+    env:
+      DOTNET_NOLOGO: 1
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+      DOTNET_GENERATE_ASPNET_CERTIFICATE: 0
+      DOTNET_CLI_TELEMETRY_OPTOUT: 1
+      NUGET_CERT_REVOCATION_MODE: "offline"
 
     steps:
       - name: Checkout Code
@@ -24,7 +31,7 @@ jobs:
         run: msbuild ExactOnline.Client.Sdk.sln /t:pack /p:Configuration=Release
 
       - name: Run Unit Tests
-        run: dotnet test src/ExactOnline.Client.Sdk.UnitTests/ --no-restore
+        run: dotnet test test/ExactOnline.Client.Sdk.UnitTests/ --no-restore
 
       - name: Publish the package to nuget.org when we have a new version
         env:
