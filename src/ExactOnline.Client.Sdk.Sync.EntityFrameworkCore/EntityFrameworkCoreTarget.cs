@@ -10,11 +10,10 @@ public class EntityFrameworkCoreTarget : SyncTargetBase
 	public EntityFrameworkCoreTarget(string connectionString) =>
 		_connectionString = connectionString;
 
-	public Task InitializeDatabaseAsync(CancellationToken ct)
+	public async Task InitializeDatabaseAsync(CancellationToken ct)
 	{
 		using var db = new EntityFrameworkCoreDbContext(new DbContextOptionsBuilder().UseSqlServer(_connectionString).Options);
-
-		return db.Database.MigrateAsync(ct);
+		await db.Database.MigrateAsync(ct);
 	}
 
 	protected override ISyncTargetController<TModel> CreateControllerFor<TModel>() =>
