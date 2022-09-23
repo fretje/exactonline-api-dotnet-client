@@ -44,14 +44,14 @@ public class EntityFrameworkTargetController<TModel, TId>
 			.MaxAsync(ct).ConfigureAwait(false);
 	}
 
-	public override int CreateOrUpdateEntities(List<TModel> entities)
+	public override int CreateOrUpdateEntities(List<TModel> entities, string[] fields)
 	{
 		using var db = new EntityFrameworkDbContext(_nameOrConnectionString);
 		CreateOrUpdateEntities(entities, db, GetExistingIds());
 		return db.SaveChanges();
 	}
 
-	public override async Task<int> CreateOrUpdateEntitiesAsync(List<TModel> entities, CancellationToken ct)
+	public override async Task<int> CreateOrUpdateEntitiesAsync(List<TModel> entities, string[] fields, CancellationToken ct)
 	{
 		using var db = new EntityFrameworkDbContext(_nameOrConnectionString);
 		CreateOrUpdateEntities(entities, db, await GetExistingIdsAsync(ct).ConfigureAwait(false));

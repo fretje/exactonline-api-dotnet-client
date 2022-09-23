@@ -11,8 +11,8 @@ public abstract class SyncTargetControllerBase<TModel>
 	public abstract DateTime? GetMaxModified();
 	public abstract Task<DateTime?> GetMaxModifiedAsync(CancellationToken ct);
 
-	public abstract int CreateOrUpdateEntities(List<TModel> entities);
-	public abstract Task<int> CreateOrUpdateEntitiesAsync(List<TModel> entities, CancellationToken ct);
+	public abstract int CreateOrUpdateEntities(List<TModel> entities, string[] fields);
+	public abstract Task<int> CreateOrUpdateEntitiesAsync(List<TModel> entities, string[] fields, CancellationToken ct);
 
 	public abstract int DeleteEntities(Guid[] deleted);
 	public abstract Task<int> DeleteEntitiesAsync(Guid[] deleted, CancellationToken ct);

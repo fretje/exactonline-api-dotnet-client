@@ -9,7 +9,7 @@ namespace ExactOnline.Client.Sdk.Sync;
 
 public static class ExactOnlineQueryExtensions
 {
-	public static SyncResult SynchronizeWith<TModel>(this ExactOnlineQuery<TModel> query, ISyncTarget syncTarget, ExactOnlineClient client)
+	public static SyncResult SynchronizeWith<TModel>(this ExactOnlineQuery<TModel> query, ISyncTarget syncTarget, ExactOnlineClient client, string[] fields = null)
 		where TModel : class
 	{
 		var modelInfo = ModelInfo.For<TModel>();
@@ -47,7 +47,7 @@ public static class ExactOnlineQueryExtensions
 			if (entities.Count > 0)
 			{
 				result.RecordsInsertedOrUpdated += targetController
-					.CreateOrUpdateEntities(entities);
+					.CreateOrUpdateEntities(entities, fields);
 			}
 
 		} while (!string.IsNullOrEmpty(skiptoken));
@@ -73,7 +73,7 @@ public static class ExactOnlineQueryExtensions
 		return result;
 	}
 
-	public static async Task<SyncResult> SynchronizeWithAsync<TModel>(this ExactOnlineQuery<TModel> query, ISyncTarget syncTarget, ExactOnlineClient client, Action<int, int> reportProgress = null, CancellationToken ct = default)
+	public static async Task<SyncResult> SynchronizeWithAsync<TModel>(this ExactOnlineQuery<TModel> query, ISyncTarget syncTarget, ExactOnlineClient client, string[] fields, Action<int, int> reportProgress = null, CancellationToken ct = default)
 		where TModel : class
 	{
 		var modelInfo = ModelInfo.For<TModel>();
@@ -111,13 +111,13 @@ public static class ExactOnlineQueryExtensions
 			{
 				entities = await entities
 					.FilterDoubles(modelInfo.IdentifierName)
-					.ToDynamicListAsync<TModel>().ConfigureAwait(false);
+					.ToDynamicListAsync<TModel>(ct).ConfigureAwait(false);
 			}
 
 			if (entities.Count > 0)
 			{
 				result.RecordsInsertedOrUpdated += await targetController
-					.CreateOrUpdateEntitiesAsync(entities, ct).ConfigureAwait(false);
+					.CreateOrUpdateEntitiesAsync(entities, fields, ct).ConfigureAwait(false);
 			}
 
 			reportProgress?.Invoke(result.RecordsRead, result.RecordsInsertedOrUpdated);
