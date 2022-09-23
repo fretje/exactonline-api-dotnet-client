@@ -5665,106 +5665,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 {
                     ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Backflush = table.Column<byte>(type: "tinyint", nullable: true),
-                    Calculator_FixedCalculator_FixedQuantity = table.Column<double>(type: "float", nullable: true),
-                    Calculator_FixedCalculator_PiecesPerMakeItem = table.Column<double>(type: "float", nullable: true),
-                    Calculator_MaterialsPerPieceCalculator_MaterialsPerPiece = table.Column<double>(type: "float", nullable: true),
-                    Calculator_MaterialsPerPieceCalculator_PiecesPerMakeItem = table.Column<double>(type: "float", nullable: true),
-                    Calculator_PiecesPerMaterialCalculator_PiecesPerMaterial = table.Column<double>(type: "float", nullable: true),
-                    Calculator_PiecesPerMaterialCalculator_PiecesPerMakeItem = table.Column<double>(type: "float", nullable: true),
-                    Calculator_BarCalculator_BarLengthUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calculator_BarCalculator_BarLength = table.Column<double>(type: "float", nullable: true),
-                    Calculator_BarCalculator_BarEnd = table.Column<double>(type: "float", nullable: true),
-                    Calculator_BarCalculator_WeightPerLengthUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calculator_BarCalculator_WeightPerLengthUnitFactor = table.Column<double>(type: "float", nullable: true),
-                    Calculator_BarCalculator_LengthToWeightUnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calculator_BarCalculator_PieceLength = table.Column<double>(type: "float", nullable: true),
-                    Calculator_BarCalculator_PieceFacing = table.Column<double>(type: "float", nullable: true),
-                    Calculator_BarCalculator_PieceCutOff = table.Column<double>(type: "float", nullable: true),
-                    Calculator_BarCalculator_PlannedWeight = table.Column<double>(type: "float", nullable: true),
-                    Calculator_BarCalculator_PlannedWeightUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calculator_BarCalculator_PlannedLength = table.Column<double>(type: "float", nullable: true),
-                    Calculator_BarCalculator_PlannedLengthUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calculator_BarCalculator_WholeBars = table.Column<int>(type: "int", nullable: true),
-                    Calculator_BarCalculator_WholePiecesPerBar = table.Column<int>(type: "int", nullable: true),
-                    Calculator_BarCalculator_PlannedBars = table.Column<double>(type: "float", nullable: true),
-                    Calculator_BarCalculator_PiecesPerBar = table.Column<double>(type: "float", nullable: true),
-                    Calculator_BarCalculator_IsCalculated = table.Column<bool>(type: "bit", nullable: true),
-                    Calculator_BarCalculator_ItemStockUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calculator_BarCalculator_ShapeUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calculator_BarCalculator_ConversionUnitFactor = table.Column<double>(type: "float", nullable: true),
-                    Calculator_BarCalculator_ConversionUnitFactorType = table.Column<int>(type: "int", nullable: true),
-                    Calculator_BarCalculator_ConversionUnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calculator_BarCalculator_PiecesPerMakeItem = table.Column<double>(type: "float", nullable: true),
-                    Calculator_SheetCalculator_SheetLengthUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calculator_SheetCalculator_SheetLength = table.Column<double>(type: "float", nullable: true),
-                    Calculator_SheetCalculator_SheetWidth = table.Column<double>(type: "float", nullable: true),
-                    Calculator_SheetCalculator_Margin = table.Column<double>(type: "float", nullable: true),
-                    Calculator_SheetCalculator_WeightPerAreaUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calculator_SheetCalculator_WeightPerAreaUnitFactor = table.Column<double>(type: "float", nullable: true),
-                    Calculator_SheetCalculator_AreaToWeightUnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calculator_SheetCalculator_PieceLength = table.Column<double>(type: "float", nullable: true),
-                    Calculator_SheetCalculator_PieceWidth = table.Column<double>(type: "float", nullable: true),
-                    Calculator_SheetCalculator_Allowance = table.Column<double>(type: "float", nullable: true),
-                    Calculator_SheetCalculator_PlannedWeight = table.Column<double>(type: "float", nullable: true),
-                    Calculator_SheetCalculator_PlannedWeightUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calculator_SheetCalculator_PlannedArea = table.Column<double>(type: "float", nullable: true),
-                    Calculator_SheetCalculator_PlannedAreaUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calculator_SheetCalculator_WholeSheets = table.Column<int>(type: "int", nullable: true),
-                    Calculator_SheetCalculator_WholePiecesPerSheet = table.Column<int>(type: "int", nullable: true),
-                    Calculator_SheetCalculator_PlannedSheets = table.Column<double>(type: "float", nullable: true),
-                    Calculator_SheetCalculator_PiecesPerSheet = table.Column<double>(type: "float", nullable: true),
-                    Calculator_SheetCalculator_IsCalculated = table.Column<bool>(type: "bit", nullable: true),
-                    Calculator_SheetCalculator_ItemStockUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calculator_SheetCalculator_ShapeUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calculator_SheetCalculator_ConversionUnitFactor = table.Column<double>(type: "float", nullable: true),
-                    Calculator_SheetCalculator_ConversionUnitFactorType = table.Column<int>(type: "int", nullable: true),
-                    Calculator_SheetCalculator_ConversionUnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calculator_SheetCalculator_PiecesPerMakeItem = table.Column<double>(type: "float", nullable: true),
-                    Calculator_CoilWireLengthCalculator_LengthUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calculator_CoilWireLengthCalculator_CoilWireLength = table.Column<double>(type: "float", nullable: true),
-                    Calculator_CoilWireLengthCalculator_CoilWireWidth = table.Column<double>(type: "float", nullable: true),
-                    Calculator_CoilWireLengthCalculator_WeightPerLengthUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calculator_CoilWireLengthCalculator_WeightPerLengthUnitFactor = table.Column<double>(type: "float", nullable: true),
-                    Calculator_CoilWireLengthCalculator_LengthToWeightUnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calculator_CoilWireLengthCalculator_PieceLength = table.Column<double>(type: "float", nullable: true),
-                    Calculator_CoilWireLengthCalculator_PiecesAcross = table.Column<double>(type: "float", nullable: true),
-                    Calculator_CoilWireLengthCalculator_Allowance = table.Column<double>(type: "float", nullable: true),
-                    Calculator_CoilWireLengthCalculator_PlannedWeight = table.Column<double>(type: "float", nullable: true),
-                    Calculator_CoilWireLengthCalculator_PlannedWeightUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calculator_CoilWireLengthCalculator_PlannedLength = table.Column<double>(type: "float", nullable: true),
-                    Calculator_CoilWireLengthCalculator_PlannedLengthUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calculator_CoilWireLengthCalculator_IsCalculated = table.Column<bool>(type: "bit", nullable: true),
-                    Calculator_CoilWireLengthCalculator_ItemStockUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calculator_CoilWireLengthCalculator_ShapeUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calculator_CoilWireLengthCalculator_ConversionUnitFactor = table.Column<double>(type: "float", nullable: true),
-                    Calculator_CoilWireLengthCalculator_ConversionUnitFactorType = table.Column<int>(type: "int", nullable: true),
-                    Calculator_CoilWireLengthCalculator_ConversionUnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calculator_CoilWireLengthCalculator_PiecesPerMakeItem = table.Column<double>(type: "float", nullable: true),
-                    Calculator_CoilWireWeightCalculator_WeightUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calculator_CoilWireWeightCalculator_PieceWeight = table.Column<double>(type: "float", nullable: true),
-                    Calculator_CoilWireWeightCalculator_PlannedWeight = table.Column<double>(type: "float", nullable: true),
-                    Calculator_CoilWireWeightCalculator_PlannedWeightUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calculator_CoilWireWeightCalculator_IsCalculated = table.Column<bool>(type: "bit", nullable: true),
-                    Calculator_CoilWireWeightCalculator_ItemStockUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calculator_CoilWireWeightCalculator_ShapeUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calculator_CoilWireWeightCalculator_ConversionUnitFactor = table.Column<double>(type: "float", nullable: true),
-                    Calculator_CoilWireWeightCalculator_ConversionUnitFactorType = table.Column<int>(type: "int", nullable: true),
-                    Calculator_CoilWireWeightCalculator_ConversionUnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calculator_CoilWireWeightCalculator_PiecesPerMakeItem = table.Column<double>(type: "float", nullable: true),
-                    Calculator_VolumeCalculator_LengthUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calculator_VolumeCalculator_Length = table.Column<double>(type: "float", nullable: true),
-                    Calculator_VolumeCalculator_Width = table.Column<double>(type: "float", nullable: true),
-                    Calculator_VolumeCalculator_Depth = table.Column<double>(type: "float", nullable: true),
-                    Calculator_VolumeCalculator_PieceLength = table.Column<double>(type: "float", nullable: true),
-                    Calculator_VolumeCalculator_PieceFacing = table.Column<double>(type: "float", nullable: true),
-                    Calculator_VolumeCalculator_PieceCutOff = table.Column<double>(type: "float", nullable: true),
-                    Calculator_VolumeCalculator_IsCalculated = table.Column<bool>(type: "bit", nullable: true),
-                    Calculator_VolumeCalculator_ItemStockUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calculator_VolumeCalculator_ShapeUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calculator_VolumeCalculator_ConversionUnitFactor = table.Column<double>(type: "float", nullable: true),
-                    Calculator_VolumeCalculator_ConversionUnitFactorType = table.Column<int>(type: "int", nullable: true),
-                    Calculator_VolumeCalculator_ConversionUnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calculator_VolumeCalculator_PiecesPerMakeItem = table.Column<double>(type: "float", nullable: true),
                     CalculatorType = table.Column<int>(type: "int", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
@@ -7341,55 +7241,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 {
                     table.PrimaryKey("PK_Workcenter", x => x.ID);
                 });
-
-            migrationBuilder.CreateTable(
-                name: "BatchQuantitiesPerLocation",
-                columns: table => new
-                {
-                    BatchNumberId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    AvailableQuantity = table.Column<double>(type: "float", nullable: false),
-                    StorageLocation = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    StorageLocationCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StorageLocationDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Warehouse = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    WarehouseCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    WarehouseDescription = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BatchQuantitiesPerLocation", x => new { x.BatchNumberId, x.Id });
-                    table.ForeignKey(
-                        name: "FK_BatchQuantitiesPerLocation_BatchNumber_BatchNumberId",
-                        column: x => x.BatchNumberId,
-                        principalTable: "BatchNumber",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BatchQuantitiesPerWarehouse",
-                columns: table => new
-                {
-                    BatchNumberId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    AvailableQuantity = table.Column<double>(type: "float", nullable: false),
-                    Warehouse = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    WarehouseCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    WarehouseDescription = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BatchQuantitiesPerWarehouse", x => new { x.BatchNumberId, x.Id });
-                    table.ForeignKey(
-                        name: "FK_BatchQuantitiesPerWarehouse_BatchNumber_BatchNumberId",
-                        column: x => x.BatchNumberId,
-                        principalTable: "BatchNumber",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -7464,10 +7315,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 name: "BankEntryLine");
 
             migrationBuilder.DropTable(
-                name: "BatchQuantitiesPerLocation");
-
-            migrationBuilder.DropTable(
-                name: "BatchQuantitiesPerWarehouse");
+                name: "BatchNumber");
 
             migrationBuilder.DropTable(
                 name: "BillOfMaterialMaterial");
@@ -8041,9 +7889,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
             migrationBuilder.DropTable(
                 name: "Workcenter");
-
-            migrationBuilder.DropTable(
-                name: "BatchNumber");
         }
     }
 }
