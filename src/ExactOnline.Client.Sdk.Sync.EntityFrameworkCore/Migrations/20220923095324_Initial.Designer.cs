@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(EntityFrameworkCoreDbContext))]
-    [Migration("20220918224940_Initial")]
+    [Migration("20220923095324_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -242,12 +242,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<string>("ModifierFullName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("UserID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("ID");
-
-                    b.HasIndex("UserID");
 
                     b.ToTable("InvolvedUserRole");
                 });
@@ -2624,9 +2619,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<Guid?>("Account")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("AccountID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("AccountName")
                         .HasColumnType("nvarchar(max)");
 
@@ -2691,8 +2683,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("AccountID");
 
                     b.ToTable("BankAccount");
                 });
@@ -3717,8 +3707,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("QuotationID");
 
                     b.ToTable("QuotationLine");
                 });
@@ -5293,9 +5281,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<string>("AssetDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("BankEntryEntryID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("CostCenter")
                         .HasColumnType("nvarchar(max)");
 
@@ -5399,8 +5384,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("BankEntryEntryID");
 
                     b.ToTable("BankEntryLine");
                 });
@@ -5486,9 +5469,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<string>("AssetDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("CashEntryEntryID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("CostCenter")
                         .HasColumnType("nvarchar(max)");
 
@@ -5592,8 +5572,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("CashEntryEntryID");
 
                     b.ToTable("CashEntryLine");
                 });
@@ -5874,9 +5852,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<string>("TrackingNumberDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("TransactionEntryID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
@@ -5896,8 +5871,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("TransactionEntryID");
 
                     b.ToTable("TransactionLine");
                 });
@@ -6071,9 +6044,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<string>("GLAccountDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("GeneralJournalEntryEntryID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int?>("LineNumber")
                         .HasColumnType("int");
 
@@ -6126,8 +6096,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("GeneralJournalEntryEntryID");
 
                     b.ToTable("GeneralJournalEntryLine");
                 });
@@ -6201,9 +6169,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<Guid>("AbsenceRegistration")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("AbsenceRegistrationID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
@@ -6259,8 +6224,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                         .HasColumnType("smallint");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("AbsenceRegistrationID");
 
                     b.ToTable("AbsenceRegistrationTransaction");
                 });
@@ -6420,9 +6383,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<int?>("DescriptionTermID")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("DivisionClassNameID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("Modified")
                         .HasColumnType("datetime2");
 
@@ -6436,8 +6396,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("DivisionClassNameID");
 
                     b.ToTable("DivisionClass");
                 });
@@ -6487,31 +6445,16 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<Guid>("ID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("Class_01ID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("Class_01_ID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("Class_02ID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("Class_02_ID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("Class_03ID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("Class_03_ID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("Class_04ID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("Class_04_ID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("Class_05ID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("Class_05_ID")
@@ -6542,16 +6485,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("Class_01ID");
-
-                    b.HasIndex("Class_02ID");
-
-                    b.HasIndex("Class_03ID");
-
-                    b.HasIndex("Class_04ID");
-
-                    b.HasIndex("Class_05ID");
 
                     b.ToTable("DivisionClassValue");
                 });
@@ -7176,9 +7109,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<string>("ItemUnitDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("ShopOrderMaterialPlanDetailID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<double?>("Stock")
                         .HasColumnType("float");
 
@@ -7201,8 +7131,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("ShopOrderMaterialPlanDetailID");
 
                     b.ToTable("ItemWarehouseStorageLocation");
                 });
@@ -7312,12 +7240,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("GoodsDeliveryLineID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("GoodsReceiptLineID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<byte?>("IsBlocked")
                         .HasColumnType("tinyint");
 
@@ -7351,9 +7273,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<Guid?>("StockCountLine")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("StockCountLineID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("StockTransactionID")
                         .HasColumnType("uniqueidentifier");
 
@@ -7379,12 +7298,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("GoodsDeliveryLineID");
-
-                    b.HasIndex("GoodsReceiptLineID");
-
-                    b.HasIndex("StockCountLineID");
 
                     b.ToTable("StockBatchNumber");
                 });
@@ -7547,8 +7460,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("StockCountID");
-
                     b.ToTable("StockCountLine");
                 });
 
@@ -7574,12 +7485,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("GoodsDeliveryLineID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("GoodsReceiptLineID")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<byte?>("IsBlocked")
                         .HasColumnType("tinyint");
@@ -7620,9 +7525,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<Guid?>("StockCountLine")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("StockCountLineID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("StockTransactionID")
                         .HasColumnType("uniqueidentifier");
 
@@ -7648,12 +7550,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("GoodsDeliveryLineID");
-
-                    b.HasIndex("GoodsReceiptLineID");
-
-                    b.HasIndex("StockCountLineID");
 
                     b.ToTable("StockSerialNumber");
                 });
@@ -7912,12 +7808,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<string>("UnitDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("WarehouseTransferTransferID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("ID");
-
-                    b.HasIndex("WarehouseTransferTransferID");
 
                     b.ToTable("WarehouseTransferLine");
                 });
@@ -8262,12 +8153,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<int>("ItemAssortmentCode")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("ItemAssortmentID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("ID");
-
-                    b.HasIndex("ItemAssortmentID");
 
                     b.ToTable("ItemAssortmentProperty");
                 });
@@ -10166,9 +10052,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<Guid?>("ShopOrder")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ShopOrderID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int?>("Status")
                         .HasColumnType("int");
 
@@ -10185,8 +10068,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("ShopOrderID");
 
                     b.ToTable("ShopOrderMaterialPlan");
                 });
@@ -10616,9 +10497,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<Guid?>("ShopOrder")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ShopOrderID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int?>("Status")
                         .HasColumnType("int");
 
@@ -10641,8 +10519,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("ShopOrderID");
 
                     b.ToTable("ShopOrderRoutingStepPlan");
                 });
@@ -12433,9 +12309,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<string>("ProjectDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("ProjectID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("VATCode")
                         .HasColumnType("nvarchar(max)");
 
@@ -12446,8 +12319,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("ProjectID");
 
                     b.ToTable("InvoiceTerm");
                 });
@@ -12663,12 +12534,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<string>("ProjectDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("ProjectID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("ID");
-
-                    b.HasIndex("ProjectID");
 
                     b.ToTable("ProjectHourBudget");
                 });
@@ -12977,12 +12843,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<string>("ProjectDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("ProjectID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("ID");
-
-                    b.HasIndex("ProjectID");
 
                     b.ToTable("ProjectRestrictionEmployee");
                 });
@@ -13034,12 +12895,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<string>("ProjectDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("ProjectID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("ID");
-
-                    b.HasIndex("ProjectID");
 
                     b.ToTable("ProjectRestrictionItem");
                 });
@@ -13088,12 +12944,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<string>("ProjectDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("ProjectID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("ID");
-
-                    b.HasIndex("ProjectID");
 
                     b.ToTable("ProjectRestrictionRebilling");
                 });
@@ -13748,9 +13599,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<Guid?>("Project")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("PurchaseInvoiceID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("PurchaseOrderLine")
                         .HasColumnType("uniqueidentifier");
 
@@ -13776,8 +13624,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("PurchaseInvoiceID");
 
                     b.ToTable("PurchaseInvoiceLine");
                 });
@@ -13995,9 +13841,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<string>("ProjectDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("PurchaseEntryEntryID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<double?>("Quantity")
                         .HasColumnType("float");
 
@@ -14065,8 +13908,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("PurchaseEntryEntryID");
 
                     b.ToTable("PurchaseEntryLine");
                 });
@@ -14237,8 +14078,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("GoodsReceiptID");
 
                     b.ToTable("GoodsReceiptLine");
                 });
@@ -14544,8 +14383,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("PurchaseOrderID");
 
                     b.ToTable("PurchaseOrderLine");
                 });
@@ -14970,9 +14807,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<double?>("Quantity")
                         .HasColumnType("float");
 
-                    b.Property<Guid?>("SalesEntryEntryID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("SerialNumber")
                         .HasColumnType("nvarchar(max)");
 
@@ -15031,8 +14865,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("SalesEntryEntryID");
 
                     b.ToTable("SalesEntryLine");
                 });
@@ -15377,9 +15209,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<double?>("Quantity")
                         .HasColumnType("float");
 
-                    b.Property<Guid?>("SalesInvoiceInvoiceID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("SalesOrder")
                         .HasColumnType("uniqueidentifier");
 
@@ -15435,8 +15264,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("SalesInvoiceInvoiceID");
 
                     b.ToTable("SalesInvoiceLine");
                 });
@@ -15561,9 +15388,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<Guid?>("EntryID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("GoodsDeliveryEntryID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("Item")
                         .HasColumnType("uniqueidentifier");
 
@@ -15622,8 +15446,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("GoodsDeliveryEntryID");
 
                     b.ToTable("GoodsDeliveryLine");
                 });
@@ -15925,13 +15747,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<double?>("QuantityInvoiced")
                         .HasColumnType("float");
 
-                    b.Property<Guid?>("SalesOrderOrderID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("ShopOrder")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("ShopOrderID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UnitCode")
@@ -15959,10 +15775,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("SalesOrderOrderID");
-
-                    b.HasIndex("ShopOrderID");
 
                     b.ToTable("SalesOrderLine");
                 });
@@ -16153,9 +15965,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<double>("Quantity")
                         .HasColumnType("float");
 
-                    b.Property<Guid?>("SubscriptionEntryID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime?>("ToDate")
                         .HasColumnType("datetime2");
 
@@ -16178,8 +15987,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("SubscriptionEntryID");
 
                     b.ToTable("SubscriptionLine");
                 });
@@ -16281,15 +16088,10 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<string>("SubscriptionDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("SubscriptionEntryID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("SubscriptionNumber")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("SubscriptionEntryID");
 
                     b.ToTable("SubscriptionRestrictionEmployee");
                 });
@@ -16335,15 +16137,10 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<string>("SubscriptionDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("SubscriptionEntryID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("SubscriptionNumber")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("SubscriptionEntryID");
 
                     b.ToTable("SubscriptionRestrictionItem");
                 });
@@ -16743,8 +16540,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("UserID");
-
                     b.ToTable("UserRolesPerDivision");
                 });
 
@@ -16921,8 +16716,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("VATCodeID");
-
                     b.ToTable("VatPercentage");
                 });
 
@@ -16965,20 +16758,11 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<Guid>("ID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CommunicationNoteID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("ComplaintID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int?>("Division")
                         .HasColumnType("int");
 
                     b.Property<string>("DownloadUrl")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("EventID")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("FileName")
                         .HasColumnType("nvarchar(max)");
@@ -16989,123 +16773,9 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Property<Guid?>("Request")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ServiceRequestID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("TaskID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("ID");
 
-                    b.HasIndex("CommunicationNoteID");
-
-                    b.HasIndex("ComplaintID");
-
-                    b.HasIndex("EventID");
-
-                    b.HasIndex("ServiceRequestID");
-
-                    b.HasIndex("TaskID");
-
                     b.ToTable("RequestAttachment");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Accountancy.InvolvedUserRole", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.Users.User", null)
-                        .WithMany("UserRoles")
-                        .HasForeignKey("UserID");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.CRM.BankAccount", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.CRM.Account", null)
-                        .WithMany("BankAccounts")
-                        .HasForeignKey("AccountID");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.CRM.QuotationLine", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.CRM.Quotation", null)
-                        .WithMany("QuotationLines")
-                        .HasForeignKey("QuotationID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.FinancialTransaction.BankEntryLine", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.FinancialTransaction.BankEntry", null)
-                        .WithMany("BankEntryLines")
-                        .HasForeignKey("BankEntryEntryID");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.FinancialTransaction.CashEntryLine", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.FinancialTransaction.CashEntry", null)
-                        .WithMany("CashEntryLines")
-                        .HasForeignKey("CashEntryEntryID");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.FinancialTransaction.TransactionLine", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.FinancialTransaction.Transaction", null)
-                        .WithMany("TransactionLines")
-                        .HasForeignKey("TransactionEntryID");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.GeneralJournalEntry.GeneralJournalEntryLine", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.GeneralJournalEntry.GeneralJournalEntry", null)
-                        .WithMany("GeneralJournalEntryLines")
-                        .HasForeignKey("GeneralJournalEntryEntryID");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.HRM.AbsenceRegistrationTransaction", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.HRM.AbsenceRegistration", null)
-                        .WithMany("AbsenceRegistrationTransactions")
-                        .HasForeignKey("AbsenceRegistrationID");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.HRM.DivisionClass", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.HRM.DivisionClassName", null)
-                        .WithMany("DivisionClasses")
-                        .HasForeignKey("DivisionClassNameID");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.HRM.DivisionClassValue", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.HRM.DivisionClass", "Class_01")
-                        .WithMany()
-                        .HasForeignKey("Class_01ID");
-
-                    b.HasOne("ExactOnline.Client.Models.HRM.DivisionClass", "Class_02")
-                        .WithMany()
-                        .HasForeignKey("Class_02ID");
-
-                    b.HasOne("ExactOnline.Client.Models.HRM.DivisionClass", "Class_03")
-                        .WithMany()
-                        .HasForeignKey("Class_03ID");
-
-                    b.HasOne("ExactOnline.Client.Models.HRM.DivisionClass", "Class_04")
-                        .WithMany()
-                        .HasForeignKey("Class_04ID");
-
-                    b.HasOne("ExactOnline.Client.Models.HRM.DivisionClass", "Class_05")
-                        .WithMany()
-                        .HasForeignKey("Class_05ID");
-
-                    b.Navigation("Class_01");
-
-                    b.Navigation("Class_02");
-
-                    b.Navigation("Class_03");
-
-                    b.Navigation("Class_04");
-
-                    b.Navigation("Class_05");
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Inventory.BatchNumber", b =>
@@ -17184,71 +16854,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                     b.Navigation("StorageLocations");
 
                     b.Navigation("Warehouses");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Inventory.ItemWarehouseStorageLocation", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.Manufacturing.ShopOrderMaterialPlanDetail", null)
-                        .WithMany("StockLocations")
-                        .HasForeignKey("ShopOrderMaterialPlanDetailID");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Inventory.StockBatchNumber", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.SalesOrder.GoodsDeliveryLine", null)
-                        .WithMany("BatchNumbers")
-                        .HasForeignKey("GoodsDeliveryLineID");
-
-                    b.HasOne("ExactOnline.Client.Models.PurchaseOrder.GoodsReceiptLine", null)
-                        .WithMany("BatchNumbers")
-                        .HasForeignKey("GoodsReceiptLineID");
-
-                    b.HasOne("ExactOnline.Client.Models.Inventory.StockCountLine", null)
-                        .WithMany("BatchNumbers")
-                        .HasForeignKey("StockCountLineID");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Inventory.StockCountLine", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.Inventory.StockCount", null)
-                        .WithMany("StockCountLines")
-                        .HasForeignKey("StockCountID");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Inventory.StockSerialNumber", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.SalesOrder.GoodsDeliveryLine", null)
-                        .WithMany("SerialNumbers")
-                        .HasForeignKey("GoodsDeliveryLineID");
-
-                    b.HasOne("ExactOnline.Client.Models.PurchaseOrder.GoodsReceiptLine", null)
-                        .WithMany("SerialNumbers")
-                        .HasForeignKey("GoodsReceiptLineID");
-
-                    b.HasOne("ExactOnline.Client.Models.Inventory.StockCountLine", null)
-                        .WithMany("SerialNumbers")
-                        .HasForeignKey("StockCountLineID");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Inventory.WarehouseTransferLine", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.Inventory.WarehouseTransfer", null)
-                        .WithMany("WarehouseTransferLines")
-                        .HasForeignKey("WarehouseTransferTransferID");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Logistics.ItemAssortmentProperty", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.Logistics.ItemAssortment", null)
-                        .WithMany("Properties")
-                        .HasForeignKey("ItemAssortmentID");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Manufacturing.ShopOrderMaterialPlan", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.Manufacturing.ShopOrder", null)
-                        .WithMany("ShopOrderMaterialPlans")
-                        .HasForeignKey("ShopOrderID");
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Manufacturing.ShopOrderMaterialPlanDetail", b =>
@@ -17696,359 +17301,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.Navigation("Calculator")
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Manufacturing.ShopOrderRoutingStepPlan", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.Manufacturing.ShopOrder", null)
-                        .WithMany("ShopOrderRoutingStepPlans")
-                        .HasForeignKey("ShopOrderID");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Project.InvoiceTerm", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.Project.Project", null)
-                        .WithMany("InvoiceTerms")
-                        .HasForeignKey("ProjectID");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Project.ProjectHourBudget", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.Project.Project", null)
-                        .WithMany("BudgetedHoursPerHourType")
-                        .HasForeignKey("ProjectID");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Project.ProjectRestrictionEmployee", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.Project.Project", null)
-                        .WithMany("ProjectRestrictionEmployees")
-                        .HasForeignKey("ProjectID");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Project.ProjectRestrictionItem", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.Project.Project", null)
-                        .WithMany("ProjectRestrictionItems")
-                        .HasForeignKey("ProjectID");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Project.ProjectRestrictionRebilling", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.Project.Project", null)
-                        .WithMany("ProjectRestrictionRebillings")
-                        .HasForeignKey("ProjectID");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Purchase.PurchaseInvoiceLine", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.Purchase.PurchaseInvoice", null)
-                        .WithMany("PurchaseInvoiceLines")
-                        .HasForeignKey("PurchaseInvoiceID");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.PurchaseEntry.PurchaseEntryLine", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.PurchaseEntry.PurchaseEntry", null)
-                        .WithMany("PurchaseEntryLines")
-                        .HasForeignKey("PurchaseEntryEntryID");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.PurchaseOrder.GoodsReceiptLine", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.PurchaseOrder.GoodsReceipt", null)
-                        .WithMany("GoodsReceiptLines")
-                        .HasForeignKey("GoodsReceiptID");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.PurchaseOrder.PurchaseOrderLine", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.PurchaseOrder.PurchaseOrder", null)
-                        .WithMany("PurchaseOrderLines")
-                        .HasForeignKey("PurchaseOrderID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.SalesEntry.SalesEntryLine", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.SalesEntry.SalesEntry", null)
-                        .WithMany("SalesEntryLines")
-                        .HasForeignKey("SalesEntryEntryID");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.SalesInvoice.SalesInvoiceLine", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.SalesInvoice.SalesInvoice", null)
-                        .WithMany("SalesInvoiceLines")
-                        .HasForeignKey("SalesInvoiceInvoiceID");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.SalesOrder.GoodsDeliveryLine", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.SalesOrder.GoodsDelivery", null)
-                        .WithMany("GoodsDeliveryLines")
-                        .HasForeignKey("GoodsDeliveryEntryID");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.SalesOrder.SalesOrderLine", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.SalesOrder.SalesOrder", null)
-                        .WithMany("SalesOrderLines")
-                        .HasForeignKey("SalesOrderOrderID");
-
-                    b.HasOne("ExactOnline.Client.Models.Manufacturing.ShopOrder", null)
-                        .WithMany("SalesOrderLines")
-                        .HasForeignKey("ShopOrderID");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Subscription.SubscriptionLine", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.Subscription.Subscription", null)
-                        .WithMany("SubscriptionLines")
-                        .HasForeignKey("SubscriptionEntryID");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Subscription.SubscriptionRestrictionEmployee", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.Subscription.Subscription", null)
-                        .WithMany("SubscriptionRestrictionEmployees")
-                        .HasForeignKey("SubscriptionEntryID");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Subscription.SubscriptionRestrictionItem", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.Subscription.Subscription", null)
-                        .WithMany("SubscriptionRestrictionItems")
-                        .HasForeignKey("SubscriptionEntryID");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Users.UserRolesPerDivision", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.Users.User", null)
-                        .WithMany("UserRolesPerDivision")
-                        .HasForeignKey("UserID");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.VAT.VatPercentage", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.VAT.VATCode", null)
-                        .WithMany("VATPercentages")
-                        .HasForeignKey("VATCodeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Workflow.RequestAttachment", b =>
-                {
-                    b.HasOne("ExactOnline.Client.Models.Activities.CommunicationNote", null)
-                        .WithMany("Attachments")
-                        .HasForeignKey("CommunicationNoteID");
-
-                    b.HasOne("ExactOnline.Client.Models.Activities.Complaint", null)
-                        .WithMany("Attachments")
-                        .HasForeignKey("ComplaintID");
-
-                    b.HasOne("ExactOnline.Client.Models.Activities.Event", null)
-                        .WithMany("Attachments")
-                        .HasForeignKey("EventID");
-
-                    b.HasOne("ExactOnline.Client.Models.Activities.ServiceRequest", null)
-                        .WithMany("Attachments")
-                        .HasForeignKey("ServiceRequestID");
-
-                    b.HasOne("ExactOnline.Client.Models.Activities.Task", null)
-                        .WithMany("Attachments")
-                        .HasForeignKey("TaskID");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Activities.CommunicationNote", b =>
-                {
-                    b.Navigation("Attachments");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Activities.Complaint", b =>
-                {
-                    b.Navigation("Attachments");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Activities.Event", b =>
-                {
-                    b.Navigation("Attachments");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Activities.ServiceRequest", b =>
-                {
-                    b.Navigation("Attachments");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Activities.Task", b =>
-                {
-                    b.Navigation("Attachments");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.CRM.Account", b =>
-                {
-                    b.Navigation("BankAccounts");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.CRM.Quotation", b =>
-                {
-                    b.Navigation("QuotationLines");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.FinancialTransaction.BankEntry", b =>
-                {
-                    b.Navigation("BankEntryLines");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.FinancialTransaction.CashEntry", b =>
-                {
-                    b.Navigation("CashEntryLines");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.FinancialTransaction.Transaction", b =>
-                {
-                    b.Navigation("TransactionLines");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.GeneralJournalEntry.GeneralJournalEntry", b =>
-                {
-                    b.Navigation("GeneralJournalEntryLines");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.HRM.AbsenceRegistration", b =>
-                {
-                    b.Navigation("AbsenceRegistrationTransactions");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.HRM.DivisionClassName", b =>
-                {
-                    b.Navigation("DivisionClasses");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Inventory.StockCount", b =>
-                {
-                    b.Navigation("StockCountLines");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Inventory.StockCountLine", b =>
-                {
-                    b.Navigation("BatchNumbers");
-
-                    b.Navigation("SerialNumbers");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Inventory.WarehouseTransfer", b =>
-                {
-                    b.Navigation("WarehouseTransferLines");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Logistics.ItemAssortment", b =>
-                {
-                    b.Navigation("Properties");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Manufacturing.ShopOrder", b =>
-                {
-                    b.Navigation("SalesOrderLines");
-
-                    b.Navigation("ShopOrderMaterialPlans");
-
-                    b.Navigation("ShopOrderRoutingStepPlans");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Manufacturing.ShopOrderMaterialPlanDetail", b =>
-                {
-                    b.Navigation("StockLocations");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Project.Project", b =>
-                {
-                    b.Navigation("BudgetedHoursPerHourType");
-
-                    b.Navigation("InvoiceTerms");
-
-                    b.Navigation("ProjectRestrictionEmployees");
-
-                    b.Navigation("ProjectRestrictionItems");
-
-                    b.Navigation("ProjectRestrictionRebillings");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Purchase.PurchaseInvoice", b =>
-                {
-                    b.Navigation("PurchaseInvoiceLines");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.PurchaseEntry.PurchaseEntry", b =>
-                {
-                    b.Navigation("PurchaseEntryLines");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.PurchaseOrder.GoodsReceipt", b =>
-                {
-                    b.Navigation("GoodsReceiptLines");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.PurchaseOrder.GoodsReceiptLine", b =>
-                {
-                    b.Navigation("BatchNumbers");
-
-                    b.Navigation("SerialNumbers");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.PurchaseOrder.PurchaseOrder", b =>
-                {
-                    b.Navigation("PurchaseOrderLines");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.SalesEntry.SalesEntry", b =>
-                {
-                    b.Navigation("SalesEntryLines");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.SalesInvoice.SalesInvoice", b =>
-                {
-                    b.Navigation("SalesInvoiceLines");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.SalesOrder.GoodsDelivery", b =>
-                {
-                    b.Navigation("GoodsDeliveryLines");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.SalesOrder.GoodsDeliveryLine", b =>
-                {
-                    b.Navigation("BatchNumbers");
-
-                    b.Navigation("SerialNumbers");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.SalesOrder.SalesOrder", b =>
-                {
-                    b.Navigation("SalesOrderLines");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Subscription.Subscription", b =>
-                {
-                    b.Navigation("SubscriptionLines");
-
-                    b.Navigation("SubscriptionRestrictionEmployees");
-
-                    b.Navigation("SubscriptionRestrictionItems");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.Users.User", b =>
-                {
-                    b.Navigation("UserRoles");
-
-                    b.Navigation("UserRolesPerDivision");
-                });
-
-            modelBuilder.Entity("ExactOnline.Client.Models.VAT.VATCode", b =>
-                {
-                    b.Navigation("VATPercentages");
                 });
 #pragma warning restore 612, 618
         }

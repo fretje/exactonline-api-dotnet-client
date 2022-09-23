@@ -38,6 +38,36 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AbsenceRegistrationTransaction",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AbsenceRegistration = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Division = table.Column<int>(type: "int", nullable: false),
+                    EndTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ExpectedEndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Hours = table.Column<double>(type: "float", nullable: false),
+                    HoursFirstDay = table.Column<double>(type: "float", nullable: true),
+                    HoursLastDay = table.Column<double>(type: "float", nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NotificationMoment = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PercentageDisablement = table.Column<double>(type: "float", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    StartTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Status = table.Column<short>(type: "smallint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AbsenceRegistrationTransaction", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Account",
                 columns: table => new
                 {
@@ -695,6 +725,39 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BankAccount",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Account = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    AccountName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Bank = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    BankAccountName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BankAccountHolderName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BankDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BankName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BICCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Division = table.Column<int>(type: "int", nullable: true),
+                    Format = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IBAN = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Main = table.Column<bool>(type: "bit", nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PaymentServiceAccount = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TypeDescription = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BankAccount", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BankEntry",
                 columns: table => new
                 {
@@ -719,6 +782,60 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BankEntry", x => x.EntryID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BankEntryLine",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Account = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    AccountCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AccountName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AmountDC = table.Column<double>(type: "float", nullable: true),
+                    AmountFC = table.Column<double>(type: "float", nullable: true),
+                    AmountVATFC = table.Column<double>(type: "float", nullable: true),
+                    Asset = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    AssetCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AssetDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostCenter = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostCenterDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostUnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Division = table.Column<int>(type: "int", nullable: true),
+                    Document = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DocumentNumber = table.Column<int>(type: "int", nullable: true),
+                    DocumentSubject = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EntryID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    EntryNumber = table.Column<int>(type: "int", nullable: true),
+                    ExchangeRate = table.Column<double>(type: "float", nullable: true),
+                    GLAccount = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    GLAccountCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GLAccountDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LineNumber = table.Column<int>(type: "int", nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OffsetID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    OurRef = table.Column<int>(type: "int", nullable: true),
+                    Project = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ProjectCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProjectDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Quantity = table.Column<double>(type: "float", nullable: true),
+                    VATCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VATCodeDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VATPercentage = table.Column<double>(type: "float", nullable: true),
+                    VATType = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BankEntryLine", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -951,6 +1068,60 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CashEntry", x => x.EntryID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CashEntryLine",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Account = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    AccountCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AccountName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AmountDC = table.Column<double>(type: "float", nullable: true),
+                    AmountFC = table.Column<double>(type: "float", nullable: true),
+                    AmountVATFC = table.Column<double>(type: "float", nullable: true),
+                    Asset = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    AssetCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AssetDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostCenter = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostCenterDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostUnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Division = table.Column<int>(type: "int", nullable: true),
+                    Document = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DocumentNumber = table.Column<int>(type: "int", nullable: true),
+                    DocumentSubject = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EntryID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    EntryNumber = table.Column<int>(type: "int", nullable: true),
+                    ExchangeRate = table.Column<double>(type: "float", nullable: true),
+                    GLAccount = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    GLAccountCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GLAccountDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LineNumber = table.Column<int>(type: "int", nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OffsetID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    OurRef = table.Column<int>(type: "int", nullable: true),
+                    Project = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ProjectCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProjectDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Quantity = table.Column<double>(type: "float", nullable: true),
+                    VATCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VATCodeDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VATPercentage = table.Column<double>(type: "float", nullable: true),
+                    VATType = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CashEntryLine", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -1359,6 +1530,30 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DivisionClass",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ClassNameCustomer = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ClassNameDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClassNameID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DescriptionTermID = table.Column<int>(type: "int", nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SequenceNr = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DivisionClass", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "DivisionClassName",
                 columns: table => new
                 {
@@ -1377,6 +1572,30 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DivisionClassName", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DivisionClassValue",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Class_01_ID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Class_02_ID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Class_03_ID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Class_04_ID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Class_05_ID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Customer = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Division = table.Column<int>(type: "int", nullable: false),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DivisionClassValue", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -1926,6 +2145,62 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "GeneralJournalEntryLine",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Account = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    AccountCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AccountName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AmountDC = table.Column<double>(type: "float", nullable: true),
+                    AmountFC = table.Column<double>(type: "float", nullable: true),
+                    AmountVATDC = table.Column<double>(type: "float", nullable: true),
+                    AmountVATFC = table.Column<double>(type: "float", nullable: true),
+                    Asset = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    AssetCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AssetDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostCenter = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostCenterDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostUnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Division = table.Column<int>(type: "int", nullable: true),
+                    Document = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DocumentNumber = table.Column<int>(type: "int", nullable: true),
+                    DocumentSubject = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EntryID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    EntryNumber = table.Column<int>(type: "int", nullable: true),
+                    GLAccount = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    GLAccountCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GLAccountDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LineNumber = table.Column<int>(type: "int", nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OffsetID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    OurRef = table.Column<int>(type: "int", nullable: true),
+                    Project = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ProjectCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProjectDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Quantity = table.Column<double>(type: "float", nullable: true),
+                    VATBaseAmountDC = table.Column<double>(type: "float", nullable: true),
+                    VATBaseAmountFC = table.Column<double>(type: "float", nullable: true),
+                    VATCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VATCodeDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VATPercentage = table.Column<double>(type: "float", nullable: true),
+                    VATType = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GeneralJournalEntryLine", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "GLAccount",
                 columns: table => new
                 {
@@ -2083,6 +2358,43 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "GoodsDeliveryLine",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeliveryDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Division = table.Column<int>(type: "int", nullable: true),
+                    EntryID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LineNumber = table.Column<int>(type: "int", nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    QuantityDelivered = table.Column<double>(type: "float", nullable: true),
+                    QuantityOrdered = table.Column<double>(type: "float", nullable: true),
+                    SalesOrderLineID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    SalesOrderLineNumber = table.Column<int>(type: "int", nullable: true),
+                    SalesOrderNumber = table.Column<int>(type: "int", nullable: true),
+                    StorageLocation = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    StorageLocationCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StorageLocationDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TrackingNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Unitcode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Timestamp = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GoodsDeliveryLine", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "GoodsReceipt",
                 columns: table => new
                 {
@@ -2114,6 +2426,44 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_GoodsReceipt", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GoodsReceiptLine",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Division = table.Column<int>(type: "int", nullable: false),
+                    GoodsReceiptID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ItemUnitCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LineNumber = table.Column<int>(type: "int", nullable: false),
+                    Location = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    LocationCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LocationDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Project = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ProjectCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProjectDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PurchaseOrderID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PurchaseOrderLineID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    PurchaseOrderNumber = table.Column<int>(type: "int", nullable: false),
+                    QuantityOrdered = table.Column<double>(type: "float", nullable: true),
+                    QuantityReceived = table.Column<double>(type: "float", nullable: true),
+                    SupplierItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GoodsReceiptLine", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -2236,6 +2586,39 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "InvoiceTerm",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Amount = table.Column<double>(type: "float", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Deliverable = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Division = table.Column<int>(type: "int", nullable: true),
+                    ExecutionFromDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ExecutionToDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    InvoiceDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Percentage = table.Column<double>(type: "float", nullable: true),
+                    Project = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ProjectDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VATCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VATCodeDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VATPercentage = table.Column<double>(type: "float", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InvoiceTerm", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "InvolvedUser",
                 columns: table => new
                 {
@@ -2267,6 +2650,27 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_InvolvedUser", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "InvolvedUserRole",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DescriptionTermID = table.Column<int>(type: "int", nullable: true),
+                    Division = table.Column<int>(type: "int", nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InvolvedUserRole", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -2390,6 +2794,21 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ItemAssortment", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ItemAssortmentProperty",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Division = table.Column<int>(type: "int", nullable: false),
+                    ItemAssortmentCode = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ItemAssortmentProperty", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -2528,6 +2947,31 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ItemWarehousePlanningDetail", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ItemWarehouseStorageLocation",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsFractionAllowedItem = table.Column<byte>(type: "tinyint", nullable: false),
+                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ItemBarcode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ItemUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ItemUnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Stock = table.Column<double>(type: "float", nullable: true),
+                    StorageLocation = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    StorageLocationCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StorageLocationDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Warehouse = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    WarehouseCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    WarehouseDescription = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ItemWarehouseStorageLocation", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -3611,6 +4055,31 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ProjectHourBudget",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Budget = table.Column<double>(type: "float", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Division = table.Column<int>(type: "int", nullable: false),
+                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Project = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProjectCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProjectDescription = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProjectHourBudget", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ProjectPlanning",
                 columns: table => new
                 {
@@ -3713,6 +4182,79 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ProjectRestrictionEmployee",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Division = table.Column<int>(type: "int", nullable: true),
+                    Employee = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    EmployeeFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmployeeHID = table.Column<int>(type: "int", nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Project = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ProjectCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProjectDescription = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProjectRestrictionEmployee", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProjectRestrictionItem",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Division = table.Column<int>(type: "int", nullable: true),
+                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ItemIsTime = table.Column<byte>(type: "tinyint", nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Project = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ProjectCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProjectDescription = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProjectRestrictionItem", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProjectRestrictionRebilling",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CostTypeRebill = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CostTypeRebillCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostTypeRebillDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Division = table.Column<int>(type: "int", nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Project = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ProjectCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProjectDescription = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProjectRestrictionRebilling", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PurchaseEntry",
                 columns: table => new
                 {
@@ -3766,6 +4308,63 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PurchaseEntryLine",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AmountDC = table.Column<double>(type: "float", nullable: false),
+                    AmountFC = table.Column<double>(type: "float", nullable: false),
+                    Asset = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    AssetDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostCenter = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostCenterDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostUnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Division = table.Column<int>(type: "int", nullable: false),
+                    EntryID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    From = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    GLAccount = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    GLAccountCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GLAccountDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IntraStatArea = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IntraStatCountry = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IntraStatDeliveryTerm = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IntraStatTransactionA = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IntraStatTransportMethod = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LineNumber = table.Column<int>(type: "int", nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Project = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ProjectDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Quantity = table.Column<double>(type: "float", nullable: true),
+                    SerialNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StatisticalNetWeight = table.Column<double>(type: "float", nullable: true),
+                    StatisticalNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StatisticalQuantity = table.Column<double>(type: "float", nullable: true),
+                    StatisticalValue = table.Column<double>(type: "float", nullable: true),
+                    Subscription = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    SubscriptionDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    To = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    TrackingNumber = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    TrackingNumberDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Type = table.Column<int>(type: "int", nullable: true),
+                    VATAmountDC = table.Column<double>(type: "float", nullable: true),
+                    VATAmountFC = table.Column<double>(type: "float", nullable: true),
+                    VATBaseAmountDC = table.Column<double>(type: "float", nullable: true),
+                    VATBaseAmountFC = table.Column<double>(type: "float", nullable: true),
+                    VATCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VATCodeDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VATNonDeductiblePercentage = table.Column<double>(type: "float", nullable: true),
+                    VATPercentage = table.Column<double>(type: "float", nullable: true),
+                    WithholdingAmountDC = table.Column<double>(type: "float", nullable: true),
+                    WithholdingTax = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PurchaseEntryLine", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PurchaseInvoice",
                 columns: table => new
                 {
@@ -3797,6 +4396,39 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PurchaseInvoice", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PurchaseInvoiceLine",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Amount = table.Column<double>(type: "float", nullable: false),
+                    CostCenter = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Discount = table.Column<double>(type: "float", nullable: true),
+                    InvoiceID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ItemUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LineNumber = table.Column<int>(type: "int", nullable: false),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    NetPrice = table.Column<double>(type: "float", nullable: false),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Project = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    PurchaseOrderLine = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Quantity = table.Column<double>(type: "float", nullable: true),
+                    QuantityInDefaultUnits = table.Column<double>(type: "float", nullable: true),
+                    Unit = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UnitPrice = table.Column<double>(type: "float", nullable: true),
+                    VATAmount = table.Column<double>(type: "float", nullable: true),
+                    VATCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VATPercentage = table.Column<double>(type: "float", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PurchaseInvoiceLine", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -3855,6 +4487,65 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PurchaseOrder", x => x.PurchaseOrderID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PurchaseOrderLine",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AmountDC = table.Column<double>(type: "float", nullable: true),
+                    AmountFC = table.Column<double>(type: "float", nullable: true),
+                    CostCenter = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostCenterDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostUnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Discount = table.Column<double>(type: "float", nullable: true),
+                    Division = table.Column<int>(type: "int", nullable: true),
+                    Expense = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ExpenseDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    InStock = table.Column<double>(type: "float", nullable: true),
+                    InvoicedQuantity = table.Column<double>(type: "float", nullable: true),
+                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ItemDivisable = table.Column<bool>(type: "bit", nullable: true),
+                    LineNumber = table.Column<int>(type: "int", nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NetPrice = table.Column<double>(type: "float", nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Project = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ProjectCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProjectDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProjectedStock = table.Column<double>(type: "float", nullable: true),
+                    PurchaseOrderID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Quantity = table.Column<double>(type: "float", nullable: true),
+                    QuantityInPurchaseUnits = table.Column<double>(type: "float", nullable: true),
+                    Rebill = table.Column<bool>(type: "bit", nullable: true),
+                    ReceiptDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ReceivedQuantity = table.Column<double>(type: "float", nullable: true),
+                    SalesOrder = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    SalesOrderLine = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    SalesOrderLineNumber = table.Column<int>(type: "int", nullable: true),
+                    SalesOrderNumber = table.Column<int>(type: "int", nullable: true),
+                    SupplierItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Unit = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UnitPrice = table.Column<double>(type: "float", nullable: true),
+                    VATAmount = table.Column<double>(type: "float", nullable: true),
+                    VATCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VATDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VATPercentage = table.Column<double>(type: "float", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PurchaseOrderLine", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -3920,6 +4611,38 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Quotation", x => x.QuotationID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "QuotationLine",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AmountDC = table.Column<double>(type: "float", nullable: false),
+                    AmountFC = table.Column<double>(type: "float", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Discount = table.Column<double>(type: "float", nullable: true),
+                    Division = table.Column<int>(type: "int", nullable: false),
+                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LineNumber = table.Column<int>(type: "int", nullable: false),
+                    NetPrice = table.Column<double>(type: "float", nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Quantity = table.Column<double>(type: "float", nullable: true),
+                    QuotationID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    QuotationNumber = table.Column<int>(type: "int", nullable: false),
+                    UnitCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UnitPrice = table.Column<double>(type: "float", nullable: true),
+                    VATAmountFC = table.Column<double>(type: "float", nullable: true),
+                    VATCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VATDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VATPercentage = table.Column<double>(type: "float", nullable: true),
+                    VersionNumber = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QuotationLine", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -4209,6 +4932,22 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "RequestAttachment",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Division = table.Column<int>(type: "int", nullable: true),
+                    DownloadUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FileName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FileSize = table.Column<double>(type: "float", nullable: false),
+                    Request = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RequestAttachment", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Return",
                 columns: table => new
                 {
@@ -4304,6 +5043,63 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SalesEntryLine",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AmountDC = table.Column<double>(type: "float", nullable: false),
+                    AmountFC = table.Column<double>(type: "float", nullable: false),
+                    Asset = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    AssetDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostCenter = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostCenterDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostUnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Division = table.Column<int>(type: "int", nullable: false),
+                    EntryID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ExtraDutyAmountFC = table.Column<double>(type: "float", nullable: true),
+                    ExtraDutyPercentage = table.Column<double>(type: "float", nullable: true),
+                    From = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    GLAccount = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    GLAccountCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GLAccountDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IntraStatArea = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IntraStatCountry = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IntraStatDeliveryTerm = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IntraStatTransactionA = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IntraStatTransportMethod = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LineNumber = table.Column<int>(type: "int", nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Project = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ProjectDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Quantity = table.Column<double>(type: "float", nullable: true),
+                    SerialNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StatisticalNetWeight = table.Column<double>(type: "float", nullable: true),
+                    StatisticalNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StatisticalQuantity = table.Column<double>(type: "float", nullable: true),
+                    StatisticalValue = table.Column<double>(type: "float", nullable: true),
+                    Subscription = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    SubscriptionDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TaxSchedule = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    To = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    TrackingNumber = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    TrackingNumberDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Type = table.Column<int>(type: "int", nullable: true),
+                    VATAmountDC = table.Column<double>(type: "float", nullable: true),
+                    VATAmountFC = table.Column<double>(type: "float", nullable: true),
+                    VATBaseAmountDC = table.Column<double>(type: "float", nullable: true),
+                    VATBaseAmountFC = table.Column<double>(type: "float", nullable: true),
+                    VATCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VATCodeDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VATPercentage = table.Column<double>(type: "float", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SalesEntryLine", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "SalesInvoice",
                 columns: table => new
                 {
@@ -4377,6 +5173,66 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SalesInvoice", x => x.InvoiceID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SalesInvoiceLine",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AmountDC = table.Column<double>(type: "float", nullable: true),
+                    AmountFC = table.Column<double>(type: "float", nullable: true),
+                    CostCenter = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostCenterDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostUnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeliveryDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Discount = table.Column<double>(type: "float", nullable: true),
+                    Division = table.Column<int>(type: "int", nullable: true),
+                    Employee = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    EmployeeFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EndTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ExtraDutyAmountFC = table.Column<double>(type: "float", nullable: true),
+                    ExtraDutyPercentage = table.Column<double>(type: "float", nullable: true),
+                    GLAccount = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    GLAccountDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    InvoiceID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LineNumber = table.Column<int>(type: "int", nullable: true),
+                    NetPrice = table.Column<double>(type: "float", nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Pricelist = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    PricelistDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Project = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ProjectDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProjectWBS = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ProjectWBSDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Quantity = table.Column<double>(type: "float", nullable: true),
+                    SalesOrder = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    SalesOrderLine = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    SalesOrderLineNumber = table.Column<int>(type: "int", nullable: true),
+                    SalesOrderNumber = table.Column<int>(type: "int", nullable: true),
+                    StartTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Subscription = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    SubscriptionDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TaxSchedule = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    TaxScheduleCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TaxScheduleDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UnitCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UnitPrice = table.Column<double>(type: "float", nullable: true),
+                    VATAmountDC = table.Column<double>(type: "float", nullable: true),
+                    VATAmountFC = table.Column<double>(type: "float", nullable: true),
+                    VATCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VATCodeDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VATPercentage = table.Column<double>(type: "float", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SalesInvoiceLine", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -4483,6 +5339,59 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SalesOrder", x => x.OrderID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SalesOrderLine",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AmountDC = table.Column<double>(type: "float", nullable: false),
+                    AmountFC = table.Column<double>(type: "float", nullable: false),
+                    CostCenter = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostCenterDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostPriceFC = table.Column<double>(type: "float", nullable: true),
+                    CostUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostUnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeliveryDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Discount = table.Column<double>(type: "float", nullable: true),
+                    Division = table.Column<int>(type: "int", nullable: false),
+                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ItemVersion = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ItemVersionDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LineNumber = table.Column<int>(type: "int", nullable: false),
+                    Margin = table.Column<double>(type: "float", nullable: true),
+                    NetPrice = table.Column<double>(type: "float", nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OrderID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OrderNumber = table.Column<int>(type: "int", nullable: false),
+                    Pricelist = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    PricelistDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Project = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ProjectDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PurchaseOrder = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    PurchaseOrderLine = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    PurchaseOrderLineNumber = table.Column<int>(type: "int", nullable: true),
+                    PurchaseOrderNumber = table.Column<int>(type: "int", nullable: true),
+                    Quantity = table.Column<double>(type: "float", nullable: true),
+                    QuantityDelivered = table.Column<double>(type: "float", nullable: true),
+                    QuantityInvoiced = table.Column<double>(type: "float", nullable: true),
+                    ShopOrder = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UnitCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UnitPrice = table.Column<double>(type: "float", nullable: true),
+                    UseDropShipment = table.Column<byte>(type: "tinyint", nullable: false),
+                    VATAmount = table.Column<double>(type: "float", nullable: true),
+                    VATCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VATCodeDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VATPercentage = table.Column<double>(type: "float", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SalesOrderLine", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -4712,6 +5621,45 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ShopOrderMaterialPlan",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Backflush = table.Column<byte>(type: "tinyint", nullable: true),
+                    CalculatorType = table.Column<int>(type: "int", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DetailDrawing = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Division = table.Column<int>(type: "int", nullable: true),
+                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ItemPictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LineNumber = table.Column<int>(type: "int", nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PlannedAmountFC = table.Column<double>(type: "float", nullable: true),
+                    PlannedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    PlannedPriceFC = table.Column<double>(type: "float", nullable: true),
+                    PlannedQuantity = table.Column<double>(type: "float", nullable: true),
+                    PlannedQuantityFactor = table.Column<double>(type: "float", nullable: true),
+                    ShopOrder = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: true),
+                    StatusDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Type = table.Column<int>(type: "int", nullable: true),
+                    Unit = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShopOrderMaterialPlan", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ShopOrderMaterialPlanDetail",
                 columns: table => new
                 {
@@ -4937,6 +5885,62 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ShopOrderRoutingStepPlan",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Account = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    AccountName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AccountNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AttendedPercentage = table.Column<double>(type: "float", nullable: true),
+                    Backflush = table.Column<byte>(type: "tinyint", nullable: true),
+                    CostPerItem = table.Column<double>(type: "float", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Division = table.Column<int>(type: "int", nullable: true),
+                    EfficiencyPercentage = table.Column<double>(type: "float", nullable: true),
+                    FactorType = table.Column<int>(type: "int", nullable: true),
+                    LineNumber = table.Column<int>(type: "int", nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Operation = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    OperationCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OperationDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OperationResource = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    PlannedEndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    PlannedRunHours = table.Column<double>(type: "float", nullable: true),
+                    PlannedSetupHours = table.Column<double>(type: "float", nullable: true),
+                    PlannedStartDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    PlannedTotalHours = table.Column<double>(type: "float", nullable: true),
+                    PurchaseUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PurchaseUnitFactor = table.Column<double>(type: "float", nullable: true),
+                    PurchaseUnitPriceFC = table.Column<double>(type: "float", nullable: true),
+                    PurchaseUnitQuantity = table.Column<double>(type: "float", nullable: true),
+                    RoutingStepType = table.Column<int>(type: "int", nullable: true),
+                    Run = table.Column<double>(type: "float", nullable: true),
+                    RunMethod = table.Column<int>(type: "int", nullable: true),
+                    RunMethodDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Setup = table.Column<double>(type: "float", nullable: true),
+                    SetupUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ShopOrder = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: true),
+                    StatusDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SubcontractedLeadDays = table.Column<int>(type: "int", nullable: true),
+                    TotalCostDC = table.Column<double>(type: "float", nullable: true),
+                    Workcenter = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    WorkcenterCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    WorkcenterDescription = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShopOrderRoutingStepPlan", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "SolutionLink",
                 columns: table => new
                 {
@@ -5083,6 +6087,44 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "StockBatchNumber",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BatchNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BatchNumberID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Division = table.Column<int>(type: "int", nullable: true),
+                    DraftStockTransactionID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsBlocked = table.Column<byte>(type: "tinyint", nullable: true),
+                    IsDraft = table.Column<byte>(type: "tinyint", nullable: true),
+                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Quantity = table.Column<double>(type: "float", nullable: true),
+                    Remarks = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StockCountLine = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    StockTransactionID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    StockTransactionType = table.Column<int>(type: "int", nullable: true),
+                    StorageLocation = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    StorageLocationCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StorageLocationDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Warehouse = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    WarehouseCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    WarehouseDescription = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StockBatchNumber", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "StockCount",
                 columns: table => new
                 {
@@ -5111,6 +6153,82 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_StockCount", x => x.StockCountID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StockCountLine",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CostPrice = table.Column<double>(type: "float", nullable: true),
+                    CountedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Division = table.Column<int>(type: "int", nullable: true),
+                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ItemBarcode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ItemCostPrice = table.Column<double>(type: "float", nullable: true),
+                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ItemDivisable = table.Column<bool>(type: "bit", nullable: true),
+                    LineNumber = table.Column<int>(type: "int", nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    QuantityDifference = table.Column<double>(type: "float", nullable: true),
+                    QuantityInStock = table.Column<double>(type: "float", nullable: true),
+                    QuantityNew = table.Column<double>(type: "float", nullable: true),
+                    Source = table.Column<short>(type: "smallint", nullable: true),
+                    Status = table.Column<short>(type: "smallint", nullable: true),
+                    StockCountID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    StockKeepingUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StorageLocation = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    StorageLocationCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StorageLocationDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Warehouse = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StockCountLine", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StockSerialNumber",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Division = table.Column<int>(type: "int", nullable: true),
+                    DraftStockTransactionID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsBlocked = table.Column<byte>(type: "tinyint", nullable: true),
+                    IsDraft = table.Column<byte>(type: "tinyint", nullable: true),
+                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Remarks = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SerialNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SerialNumberID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    StockCountLine = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    StockTransactionID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    StockTransactionType = table.Column<int>(type: "int", nullable: true),
+                    StorageLocation = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    StorageLocationCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StorageLocationDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Warehouse = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    WarehouseCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    WarehouseDescription = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StockSerialNumber", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -5260,6 +6378,42 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SubscriptionLine",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AmountDC = table.Column<double>(type: "float", nullable: false),
+                    AmountFC = table.Column<double>(type: "float", nullable: false),
+                    Costcenter = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Costunit = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Discount = table.Column<double>(type: "float", nullable: true),
+                    Division = table.Column<int>(type: "int", nullable: false),
+                    EntryID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FromDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LineNumber = table.Column<int>(type: "int", nullable: false),
+                    LineType = table.Column<short>(type: "smallint", nullable: true),
+                    LineTypeDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    NetPrice = table.Column<double>(type: "float", nullable: false),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Quantity = table.Column<double>(type: "float", nullable: false),
+                    ToDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UnitCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UnitPrice = table.Column<double>(type: "float", nullable: false),
+                    VATAmountFC = table.Column<double>(type: "float", nullable: true),
+                    VATCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VATCodeDescription = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubscriptionLine", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "SubscriptionLineType",
                 columns: table => new
                 {
@@ -5291,6 +6445,54 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SubscriptionReasonCode", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SubscriptionRestrictionEmployee",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Division = table.Column<int>(type: "int", nullable: false),
+                    Employee = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    EmployeeFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmployeeHID = table.Column<int>(type: "int", nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Subscription = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SubscriptionDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SubscriptionNumber = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubscriptionRestrictionEmployee", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SubscriptionRestrictionItem",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Division = table.Column<int>(type: "int", nullable: false),
+                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Subscription = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SubscriptionDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SubscriptionNumber = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubscriptionRestrictionItem", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -5731,6 +6933,85 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TransactionLine",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Account = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    AccountCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AccountName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AmountDC = table.Column<double>(type: "float", nullable: false),
+                    AmountFC = table.Column<double>(type: "float", nullable: false),
+                    AmountVATBaseFC = table.Column<double>(type: "float", nullable: true),
+                    AmountVATFC = table.Column<double>(type: "float", nullable: true),
+                    Asset = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    AssetCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AssetDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostCenter = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostCenterDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostUnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Division = table.Column<int>(type: "int", nullable: false),
+                    Document = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DocumentNumber = table.Column<int>(type: "int", nullable: true),
+                    DocumentSubject = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DueDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    EntryID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    EntryNumber = table.Column<int>(type: "int", nullable: true),
+                    ExchangeRate = table.Column<double>(type: "float", nullable: true),
+                    ExtraDutyAmountFC = table.Column<double>(type: "float", nullable: true),
+                    ExtraDutyPercentage = table.Column<double>(type: "float", nullable: true),
+                    FinancialPeriod = table.Column<short>(type: "smallint", nullable: true),
+                    FinancialYear = table.Column<short>(type: "smallint", nullable: true),
+                    GLAccount = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    GLAccountCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GLAccountDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    InvoiceNumber = table.Column<int>(type: "int", nullable: true),
+                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    JournalCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    JournalDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LineNumber = table.Column<int>(type: "int", nullable: true),
+                    LineType = table.Column<short>(type: "smallint", nullable: false),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OffsetID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    OrderNumber = table.Column<int>(type: "int", nullable: true),
+                    PaymentDiscountAmount = table.Column<double>(type: "float", nullable: true),
+                    PaymentReference = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Project = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ProjectCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProjectDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Quantity = table.Column<double>(type: "float", nullable: true),
+                    SerialNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<short>(type: "smallint", nullable: true),
+                    Subscription = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    SubscriptionDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TrackingNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TrackingNumberDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Type = table.Column<int>(type: "int", nullable: false),
+                    VATCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VATCodeDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VATPercentage = table.Column<double>(type: "float", nullable: true),
+                    VATType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    YourRef = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Timestamp = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TransactionLine", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Unit",
                 columns: table => new
                 {
@@ -5816,6 +7097,30 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserRolesPerDivision",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Division = table.Column<int>(type: "int", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Role = table.Column<int>(type: "int", nullable: false),
+                    RoleLevel = table.Column<int>(type: "int", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserRolesPerDivision", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "VATCode",
                 columns: table => new
                 {
@@ -5863,6 +7168,30 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_VATCode", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "VatPercentage",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Division = table.Column<int>(type: "int", nullable: true),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LineNumber = table.Column<int>(type: "int", nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Percentage = table.Column<double>(type: "float", nullable: true),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Type = table.Column<short>(type: "smallint", nullable: false),
+                    VATCodeID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VatPercentage", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -5926,6 +7255,39 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "WarehouseTransferLine",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Division = table.Column<int>(type: "int", nullable: true),
+                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LineNumber = table.Column<int>(type: "int", nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Quantity = table.Column<double>(type: "float", nullable: true),
+                    StorageLocationFrom = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    StorageLocationFromCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StorageLocationFromDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StorageLocationTo = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    StorageLocationToCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StorageLocationToDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TransferID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UnitCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WarehouseTransferLine", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "WebhookSubscription",
                 columns: table => new
                 {
@@ -5981,141 +7343,6 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AbsenceRegistrationTransaction",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AbsenceRegistration = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Division = table.Column<int>(type: "int", nullable: false),
-                    EndTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ExpectedEndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Hours = table.Column<double>(type: "float", nullable: false),
-                    HoursFirstDay = table.Column<double>(type: "float", nullable: true),
-                    HoursLastDay = table.Column<double>(type: "float", nullable: true),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NotificationMoment = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PercentageDisablement = table.Column<double>(type: "float", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    StartTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Status = table.Column<short>(type: "smallint", nullable: false),
-                    AbsenceRegistrationID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AbsenceRegistrationTransaction", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_AbsenceRegistrationTransaction_AbsenceRegistration_AbsenceRegistrationID",
-                        column: x => x.AbsenceRegistrationID,
-                        principalTable: "AbsenceRegistration",
-                        principalColumn: "ID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BankAccount",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Account = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    AccountName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Bank = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    BankAccountName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BankAccountHolderName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BankDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BankName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BICCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Division = table.Column<int>(type: "int", nullable: true),
-                    Format = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IBAN = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Main = table.Column<bool>(type: "bit", nullable: true),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PaymentServiceAccount = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TypeDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AccountID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BankAccount", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_BankAccount_Account_AccountID",
-                        column: x => x.AccountID,
-                        principalTable: "Account",
-                        principalColumn: "ID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BankEntryLine",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Account = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    AccountCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AccountName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AmountDC = table.Column<double>(type: "float", nullable: true),
-                    AmountFC = table.Column<double>(type: "float", nullable: true),
-                    AmountVATFC = table.Column<double>(type: "float", nullable: true),
-                    Asset = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    AssetCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AssetDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostCenter = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostCenterDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostUnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Division = table.Column<int>(type: "int", nullable: true),
-                    Document = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    DocumentNumber = table.Column<int>(type: "int", nullable: true),
-                    DocumentSubject = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EntryID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    EntryNumber = table.Column<int>(type: "int", nullable: true),
-                    ExchangeRate = table.Column<double>(type: "float", nullable: true),
-                    GLAccount = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    GLAccountCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GLAccountDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LineNumber = table.Column<int>(type: "int", nullable: true),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    OffsetID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    OurRef = table.Column<int>(type: "int", nullable: true),
-                    Project = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ProjectCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProjectDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Quantity = table.Column<double>(type: "float", nullable: true),
-                    VATCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VATCodeDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VATPercentage = table.Column<double>(type: "float", nullable: true),
-                    VATType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BankEntryEntryID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BankEntryLine", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_BankEntryLine_BankEntry_BankEntryEntryID",
-                        column: x => x.BankEntryEntryID,
-                        principalTable: "BankEntry",
-                        principalColumn: "EntryID");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "BatchQuantitiesPerLocation",
                 columns: table => new
                 {
@@ -6163,1786 +7390,18 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateTable(
-                name: "CashEntryLine",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Account = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    AccountCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AccountName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AmountDC = table.Column<double>(type: "float", nullable: true),
-                    AmountFC = table.Column<double>(type: "float", nullable: true),
-                    AmountVATFC = table.Column<double>(type: "float", nullable: true),
-                    Asset = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    AssetCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AssetDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostCenter = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostCenterDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostUnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Division = table.Column<int>(type: "int", nullable: true),
-                    Document = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    DocumentNumber = table.Column<int>(type: "int", nullable: true),
-                    DocumentSubject = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EntryID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    EntryNumber = table.Column<int>(type: "int", nullable: true),
-                    ExchangeRate = table.Column<double>(type: "float", nullable: true),
-                    GLAccount = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    GLAccountCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GLAccountDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LineNumber = table.Column<int>(type: "int", nullable: true),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    OffsetID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    OurRef = table.Column<int>(type: "int", nullable: true),
-                    Project = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ProjectCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProjectDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Quantity = table.Column<double>(type: "float", nullable: true),
-                    VATCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VATCodeDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VATPercentage = table.Column<double>(type: "float", nullable: true),
-                    VATType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CashEntryEntryID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CashEntryLine", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_CashEntryLine_CashEntry_CashEntryEntryID",
-                        column: x => x.CashEntryEntryID,
-                        principalTable: "CashEntry",
-                        principalColumn: "EntryID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DivisionClass",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ClassNameCustomer = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ClassNameDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ClassNameID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DescriptionTermID = table.Column<int>(type: "int", nullable: true),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SequenceNr = table.Column<int>(type: "int", nullable: false),
-                    DivisionClassNameID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DivisionClass", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_DivisionClass_DivisionClassName_DivisionClassNameID",
-                        column: x => x.DivisionClassNameID,
-                        principalTable: "DivisionClassName",
-                        principalColumn: "ID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "GeneralJournalEntryLine",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Account = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    AccountCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AccountName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AmountDC = table.Column<double>(type: "float", nullable: true),
-                    AmountFC = table.Column<double>(type: "float", nullable: true),
-                    AmountVATDC = table.Column<double>(type: "float", nullable: true),
-                    AmountVATFC = table.Column<double>(type: "float", nullable: true),
-                    Asset = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    AssetCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AssetDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostCenter = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostCenterDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostUnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Division = table.Column<int>(type: "int", nullable: true),
-                    Document = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    DocumentNumber = table.Column<int>(type: "int", nullable: true),
-                    DocumentSubject = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EntryID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    EntryNumber = table.Column<int>(type: "int", nullable: true),
-                    GLAccount = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    GLAccountCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GLAccountDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LineNumber = table.Column<int>(type: "int", nullable: true),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    OffsetID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    OurRef = table.Column<int>(type: "int", nullable: true),
-                    Project = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ProjectCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProjectDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Quantity = table.Column<double>(type: "float", nullable: true),
-                    VATBaseAmountDC = table.Column<double>(type: "float", nullable: true),
-                    VATBaseAmountFC = table.Column<double>(type: "float", nullable: true),
-                    VATCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VATCodeDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VATPercentage = table.Column<double>(type: "float", nullable: true),
-                    VATType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GeneralJournalEntryEntryID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GeneralJournalEntryLine", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_GeneralJournalEntryLine_GeneralJournalEntry_GeneralJournalEntryEntryID",
-                        column: x => x.GeneralJournalEntryEntryID,
-                        principalTable: "GeneralJournalEntry",
-                        principalColumn: "EntryID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "GoodsDeliveryLine",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DeliveryDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Division = table.Column<int>(type: "int", nullable: true),
-                    EntryID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LineNumber = table.Column<int>(type: "int", nullable: true),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    QuantityDelivered = table.Column<double>(type: "float", nullable: true),
-                    QuantityOrdered = table.Column<double>(type: "float", nullable: true),
-                    SalesOrderLineID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    SalesOrderLineNumber = table.Column<int>(type: "int", nullable: true),
-                    SalesOrderNumber = table.Column<int>(type: "int", nullable: true),
-                    StorageLocation = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    StorageLocationCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StorageLocationDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TrackingNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Unitcode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GoodsDeliveryEntryID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Timestamp = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GoodsDeliveryLine", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_GoodsDeliveryLine_GoodsDelivery_GoodsDeliveryEntryID",
-                        column: x => x.GoodsDeliveryEntryID,
-                        principalTable: "GoodsDelivery",
-                        principalColumn: "EntryID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "GoodsReceiptLine",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Division = table.Column<int>(type: "int", nullable: false),
-                    GoodsReceiptID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ItemUnitCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LineNumber = table.Column<int>(type: "int", nullable: false),
-                    Location = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    LocationCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LocationDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Project = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ProjectCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProjectDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PurchaseOrderID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PurchaseOrderLineID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    PurchaseOrderNumber = table.Column<int>(type: "int", nullable: false),
-                    QuantityOrdered = table.Column<double>(type: "float", nullable: true),
-                    QuantityReceived = table.Column<double>(type: "float", nullable: true),
-                    SupplierItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GoodsReceiptLine", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_GoodsReceiptLine_GoodsReceipt_GoodsReceiptID",
-                        column: x => x.GoodsReceiptID,
-                        principalTable: "GoodsReceipt",
-                        principalColumn: "ID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ItemAssortmentProperty",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Division = table.Column<int>(type: "int", nullable: false),
-                    ItemAssortmentCode = table.Column<int>(type: "int", nullable: false),
-                    ItemAssortmentID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ItemAssortmentProperty", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_ItemAssortmentProperty_ItemAssortment_ItemAssortmentID",
-                        column: x => x.ItemAssortmentID,
-                        principalTable: "ItemAssortment",
-                        principalColumn: "ID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "InvoiceTerm",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Amount = table.Column<double>(type: "float", nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Deliverable = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Division = table.Column<int>(type: "int", nullable: true),
-                    ExecutionFromDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ExecutionToDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    InvoiceDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Percentage = table.Column<double>(type: "float", nullable: true),
-                    Project = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ProjectDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VATCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VATCodeDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VATPercentage = table.Column<double>(type: "float", nullable: true),
-                    ProjectID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_InvoiceTerm", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_InvoiceTerm_Project_ProjectID",
-                        column: x => x.ProjectID,
-                        principalTable: "Project",
-                        principalColumn: "ID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProjectHourBudget",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Budget = table.Column<double>(type: "float", nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Division = table.Column<int>(type: "int", nullable: false),
-                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Project = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ProjectCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProjectDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProjectID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProjectHourBudget", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_ProjectHourBudget_Project_ProjectID",
-                        column: x => x.ProjectID,
-                        principalTable: "Project",
-                        principalColumn: "ID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProjectRestrictionEmployee",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Division = table.Column<int>(type: "int", nullable: true),
-                    Employee = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    EmployeeFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EmployeeHID = table.Column<int>(type: "int", nullable: true),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Project = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ProjectCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProjectDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProjectID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProjectRestrictionEmployee", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_ProjectRestrictionEmployee_Project_ProjectID",
-                        column: x => x.ProjectID,
-                        principalTable: "Project",
-                        principalColumn: "ID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProjectRestrictionItem",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Division = table.Column<int>(type: "int", nullable: true),
-                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ItemIsTime = table.Column<byte>(type: "tinyint", nullable: true),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Project = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ProjectCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProjectDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProjectID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProjectRestrictionItem", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_ProjectRestrictionItem_Project_ProjectID",
-                        column: x => x.ProjectID,
-                        principalTable: "Project",
-                        principalColumn: "ID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProjectRestrictionRebilling",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CostTypeRebill = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CostTypeRebillCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostTypeRebillDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Division = table.Column<int>(type: "int", nullable: true),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Project = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ProjectCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProjectDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProjectID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProjectRestrictionRebilling", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_ProjectRestrictionRebilling_Project_ProjectID",
-                        column: x => x.ProjectID,
-                        principalTable: "Project",
-                        principalColumn: "ID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PurchaseEntryLine",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AmountDC = table.Column<double>(type: "float", nullable: false),
-                    AmountFC = table.Column<double>(type: "float", nullable: false),
-                    Asset = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    AssetDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostCenter = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostCenterDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostUnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Division = table.Column<int>(type: "int", nullable: false),
-                    EntryID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    From = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    GLAccount = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    GLAccountCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GLAccountDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IntraStatArea = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IntraStatCountry = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IntraStatDeliveryTerm = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IntraStatTransactionA = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IntraStatTransportMethod = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LineNumber = table.Column<int>(type: "int", nullable: true),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Project = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ProjectDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Quantity = table.Column<double>(type: "float", nullable: true),
-                    SerialNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StatisticalNetWeight = table.Column<double>(type: "float", nullable: true),
-                    StatisticalNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StatisticalQuantity = table.Column<double>(type: "float", nullable: true),
-                    StatisticalValue = table.Column<double>(type: "float", nullable: true),
-                    Subscription = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    SubscriptionDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    To = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    TrackingNumber = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    TrackingNumberDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Type = table.Column<int>(type: "int", nullable: true),
-                    VATAmountDC = table.Column<double>(type: "float", nullable: true),
-                    VATAmountFC = table.Column<double>(type: "float", nullable: true),
-                    VATBaseAmountDC = table.Column<double>(type: "float", nullable: true),
-                    VATBaseAmountFC = table.Column<double>(type: "float", nullable: true),
-                    VATCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VATCodeDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VATNonDeductiblePercentage = table.Column<double>(type: "float", nullable: true),
-                    VATPercentage = table.Column<double>(type: "float", nullable: true),
-                    WithholdingAmountDC = table.Column<double>(type: "float", nullable: true),
-                    WithholdingTax = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PurchaseEntryEntryID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PurchaseEntryLine", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_PurchaseEntryLine_PurchaseEntry_PurchaseEntryEntryID",
-                        column: x => x.PurchaseEntryEntryID,
-                        principalTable: "PurchaseEntry",
-                        principalColumn: "EntryID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PurchaseInvoiceLine",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Amount = table.Column<double>(type: "float", nullable: false),
-                    CostCenter = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Discount = table.Column<double>(type: "float", nullable: true),
-                    InvoiceID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ItemUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LineNumber = table.Column<int>(type: "int", nullable: false),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    NetPrice = table.Column<double>(type: "float", nullable: false),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Project = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    PurchaseOrderLine = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Quantity = table.Column<double>(type: "float", nullable: true),
-                    QuantityInDefaultUnits = table.Column<double>(type: "float", nullable: true),
-                    Unit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UnitPrice = table.Column<double>(type: "float", nullable: true),
-                    VATAmount = table.Column<double>(type: "float", nullable: true),
-                    VATCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VATPercentage = table.Column<double>(type: "float", nullable: true),
-                    PurchaseInvoiceID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PurchaseInvoiceLine", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_PurchaseInvoiceLine_PurchaseInvoice_PurchaseInvoiceID",
-                        column: x => x.PurchaseInvoiceID,
-                        principalTable: "PurchaseInvoice",
-                        principalColumn: "ID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PurchaseOrderLine",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AmountDC = table.Column<double>(type: "float", nullable: true),
-                    AmountFC = table.Column<double>(type: "float", nullable: true),
-                    CostCenter = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostCenterDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostUnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Discount = table.Column<double>(type: "float", nullable: true),
-                    Division = table.Column<int>(type: "int", nullable: true),
-                    Expense = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ExpenseDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    InStock = table.Column<double>(type: "float", nullable: true),
-                    InvoicedQuantity = table.Column<double>(type: "float", nullable: true),
-                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ItemDivisable = table.Column<bool>(type: "bit", nullable: true),
-                    LineNumber = table.Column<int>(type: "int", nullable: true),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NetPrice = table.Column<double>(type: "float", nullable: true),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Project = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ProjectCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProjectDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProjectedStock = table.Column<double>(type: "float", nullable: true),
-                    PurchaseOrderID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Quantity = table.Column<double>(type: "float", nullable: true),
-                    QuantityInPurchaseUnits = table.Column<double>(type: "float", nullable: true),
-                    Rebill = table.Column<bool>(type: "bit", nullable: true),
-                    ReceiptDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ReceivedQuantity = table.Column<double>(type: "float", nullable: true),
-                    SalesOrder = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    SalesOrderLine = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    SalesOrderLineNumber = table.Column<int>(type: "int", nullable: true),
-                    SalesOrderNumber = table.Column<int>(type: "int", nullable: true),
-                    SupplierItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Unit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UnitPrice = table.Column<double>(type: "float", nullable: true),
-                    VATAmount = table.Column<double>(type: "float", nullable: true),
-                    VATCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VATDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VATPercentage = table.Column<double>(type: "float", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PurchaseOrderLine", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_PurchaseOrderLine_PurchaseOrder_PurchaseOrderID",
-                        column: x => x.PurchaseOrderID,
-                        principalTable: "PurchaseOrder",
-                        principalColumn: "PurchaseOrderID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "QuotationLine",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AmountDC = table.Column<double>(type: "float", nullable: false),
-                    AmountFC = table.Column<double>(type: "float", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Discount = table.Column<double>(type: "float", nullable: true),
-                    Division = table.Column<int>(type: "int", nullable: false),
-                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LineNumber = table.Column<int>(type: "int", nullable: false),
-                    NetPrice = table.Column<double>(type: "float", nullable: true),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Quantity = table.Column<double>(type: "float", nullable: true),
-                    QuotationID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    QuotationNumber = table.Column<int>(type: "int", nullable: false),
-                    UnitCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UnitPrice = table.Column<double>(type: "float", nullable: true),
-                    VATAmountFC = table.Column<double>(type: "float", nullable: true),
-                    VATCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VATDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VATPercentage = table.Column<double>(type: "float", nullable: true),
-                    VersionNumber = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_QuotationLine", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_QuotationLine_Quotation_QuotationID",
-                        column: x => x.QuotationID,
-                        principalTable: "Quotation",
-                        principalColumn: "QuotationID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SalesEntryLine",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AmountDC = table.Column<double>(type: "float", nullable: false),
-                    AmountFC = table.Column<double>(type: "float", nullable: false),
-                    Asset = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    AssetDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostCenter = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostCenterDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostUnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Division = table.Column<int>(type: "int", nullable: false),
-                    EntryID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ExtraDutyAmountFC = table.Column<double>(type: "float", nullable: true),
-                    ExtraDutyPercentage = table.Column<double>(type: "float", nullable: true),
-                    From = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    GLAccount = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    GLAccountCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GLAccountDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IntraStatArea = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IntraStatCountry = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IntraStatDeliveryTerm = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IntraStatTransactionA = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IntraStatTransportMethod = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LineNumber = table.Column<int>(type: "int", nullable: true),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Project = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ProjectDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Quantity = table.Column<double>(type: "float", nullable: true),
-                    SerialNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StatisticalNetWeight = table.Column<double>(type: "float", nullable: true),
-                    StatisticalNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StatisticalQuantity = table.Column<double>(type: "float", nullable: true),
-                    StatisticalValue = table.Column<double>(type: "float", nullable: true),
-                    Subscription = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    SubscriptionDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TaxSchedule = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    To = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    TrackingNumber = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    TrackingNumberDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Type = table.Column<int>(type: "int", nullable: true),
-                    VATAmountDC = table.Column<double>(type: "float", nullable: true),
-                    VATAmountFC = table.Column<double>(type: "float", nullable: true),
-                    VATBaseAmountDC = table.Column<double>(type: "float", nullable: true),
-                    VATBaseAmountFC = table.Column<double>(type: "float", nullable: true),
-                    VATCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VATCodeDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VATPercentage = table.Column<double>(type: "float", nullable: true),
-                    SalesEntryEntryID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SalesEntryLine", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_SalesEntryLine_SalesEntry_SalesEntryEntryID",
-                        column: x => x.SalesEntryEntryID,
-                        principalTable: "SalesEntry",
-                        principalColumn: "EntryID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SalesInvoiceLine",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AmountDC = table.Column<double>(type: "float", nullable: true),
-                    AmountFC = table.Column<double>(type: "float", nullable: true),
-                    CostCenter = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostCenterDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostUnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DeliveryDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Discount = table.Column<double>(type: "float", nullable: true),
-                    Division = table.Column<int>(type: "int", nullable: true),
-                    Employee = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    EmployeeFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EndTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ExtraDutyAmountFC = table.Column<double>(type: "float", nullable: true),
-                    ExtraDutyPercentage = table.Column<double>(type: "float", nullable: true),
-                    GLAccount = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    GLAccountDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    InvoiceID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LineNumber = table.Column<int>(type: "int", nullable: true),
-                    NetPrice = table.Column<double>(type: "float", nullable: true),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Pricelist = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    PricelistDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Project = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ProjectDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProjectWBS = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ProjectWBSDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Quantity = table.Column<double>(type: "float", nullable: true),
-                    SalesOrder = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    SalesOrderLine = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    SalesOrderLineNumber = table.Column<int>(type: "int", nullable: true),
-                    SalesOrderNumber = table.Column<int>(type: "int", nullable: true),
-                    StartTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Subscription = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    SubscriptionDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TaxSchedule = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    TaxScheduleCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TaxScheduleDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UnitCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UnitPrice = table.Column<double>(type: "float", nullable: true),
-                    VATAmountDC = table.Column<double>(type: "float", nullable: true),
-                    VATAmountFC = table.Column<double>(type: "float", nullable: true),
-                    VATCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VATCodeDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VATPercentage = table.Column<double>(type: "float", nullable: true),
-                    SalesInvoiceInvoiceID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SalesInvoiceLine", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_SalesInvoiceLine_SalesInvoice_SalesInvoiceInvoiceID",
-                        column: x => x.SalesInvoiceInvoiceID,
-                        principalTable: "SalesInvoice",
-                        principalColumn: "InvoiceID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SalesOrderLine",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AmountDC = table.Column<double>(type: "float", nullable: false),
-                    AmountFC = table.Column<double>(type: "float", nullable: false),
-                    CostCenter = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostCenterDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostPriceFC = table.Column<double>(type: "float", nullable: true),
-                    CostUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostUnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DeliveryDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Discount = table.Column<double>(type: "float", nullable: true),
-                    Division = table.Column<int>(type: "int", nullable: false),
-                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ItemVersion = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ItemVersionDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LineNumber = table.Column<int>(type: "int", nullable: false),
-                    Margin = table.Column<double>(type: "float", nullable: true),
-                    NetPrice = table.Column<double>(type: "float", nullable: true),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    OrderID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OrderNumber = table.Column<int>(type: "int", nullable: false),
-                    Pricelist = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    PricelistDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Project = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ProjectDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PurchaseOrder = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    PurchaseOrderLine = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    PurchaseOrderLineNumber = table.Column<int>(type: "int", nullable: true),
-                    PurchaseOrderNumber = table.Column<int>(type: "int", nullable: true),
-                    Quantity = table.Column<double>(type: "float", nullable: true),
-                    QuantityDelivered = table.Column<double>(type: "float", nullable: true),
-                    QuantityInvoiced = table.Column<double>(type: "float", nullable: true),
-                    ShopOrder = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UnitCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UnitPrice = table.Column<double>(type: "float", nullable: true),
-                    UseDropShipment = table.Column<byte>(type: "tinyint", nullable: false),
-                    VATAmount = table.Column<double>(type: "float", nullable: true),
-                    VATCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VATCodeDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VATPercentage = table.Column<double>(type: "float", nullable: true),
-                    SalesOrderOrderID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ShopOrderID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SalesOrderLine", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_SalesOrderLine_SalesOrder_SalesOrderOrderID",
-                        column: x => x.SalesOrderOrderID,
-                        principalTable: "SalesOrder",
-                        principalColumn: "OrderID");
-                    table.ForeignKey(
-                        name: "FK_SalesOrderLine_ShopOrder_ShopOrderID",
-                        column: x => x.ShopOrderID,
-                        principalTable: "ShopOrder",
-                        principalColumn: "ID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ShopOrderMaterialPlan",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Backflush = table.Column<byte>(type: "tinyint", nullable: true),
-                    CalculatorType = table.Column<int>(type: "int", nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DetailDrawing = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Division = table.Column<int>(type: "int", nullable: true),
-                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ItemPictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LineNumber = table.Column<int>(type: "int", nullable: true),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PlannedAmountFC = table.Column<double>(type: "float", nullable: true),
-                    PlannedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    PlannedPriceFC = table.Column<double>(type: "float", nullable: true),
-                    PlannedQuantity = table.Column<double>(type: "float", nullable: true),
-                    PlannedQuantityFactor = table.Column<double>(type: "float", nullable: true),
-                    ShopOrder = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Status = table.Column<int>(type: "int", nullable: true),
-                    StatusDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Type = table.Column<int>(type: "int", nullable: true),
-                    Unit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ShopOrderID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ShopOrderMaterialPlan", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_ShopOrderMaterialPlan_ShopOrder_ShopOrderID",
-                        column: x => x.ShopOrderID,
-                        principalTable: "ShopOrder",
-                        principalColumn: "ID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ShopOrderRoutingStepPlan",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Account = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    AccountName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AccountNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AttendedPercentage = table.Column<double>(type: "float", nullable: true),
-                    Backflush = table.Column<byte>(type: "tinyint", nullable: true),
-                    CostPerItem = table.Column<double>(type: "float", nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Division = table.Column<int>(type: "int", nullable: true),
-                    EfficiencyPercentage = table.Column<double>(type: "float", nullable: true),
-                    FactorType = table.Column<int>(type: "int", nullable: true),
-                    LineNumber = table.Column<int>(type: "int", nullable: true),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Operation = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    OperationCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    OperationDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    OperationResource = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    PlannedEndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    PlannedRunHours = table.Column<double>(type: "float", nullable: true),
-                    PlannedSetupHours = table.Column<double>(type: "float", nullable: true),
-                    PlannedStartDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    PlannedTotalHours = table.Column<double>(type: "float", nullable: true),
-                    PurchaseUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PurchaseUnitFactor = table.Column<double>(type: "float", nullable: true),
-                    PurchaseUnitPriceFC = table.Column<double>(type: "float", nullable: true),
-                    PurchaseUnitQuantity = table.Column<double>(type: "float", nullable: true),
-                    RoutingStepType = table.Column<int>(type: "int", nullable: true),
-                    Run = table.Column<double>(type: "float", nullable: true),
-                    RunMethod = table.Column<int>(type: "int", nullable: true),
-                    RunMethodDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Setup = table.Column<double>(type: "float", nullable: true),
-                    SetupUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ShopOrder = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Status = table.Column<int>(type: "int", nullable: true),
-                    StatusDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SubcontractedLeadDays = table.Column<int>(type: "int", nullable: true),
-                    TotalCostDC = table.Column<double>(type: "float", nullable: true),
-                    Workcenter = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    WorkcenterCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    WorkcenterDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ShopOrderID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ShopOrderRoutingStepPlan", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_ShopOrderRoutingStepPlan_ShopOrder_ShopOrderID",
-                        column: x => x.ShopOrderID,
-                        principalTable: "ShopOrder",
-                        principalColumn: "ID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ItemWarehouseStorageLocation",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsFractionAllowedItem = table.Column<byte>(type: "tinyint", nullable: false),
-                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ItemBarcode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ItemUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ItemUnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Stock = table.Column<double>(type: "float", nullable: true),
-                    StorageLocation = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    StorageLocationCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StorageLocationDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Warehouse = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    WarehouseCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    WarehouseDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ShopOrderMaterialPlanDetailID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ItemWarehouseStorageLocation", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_ItemWarehouseStorageLocation_ShopOrderMaterialPlanDetail_ShopOrderMaterialPlanDetailID",
-                        column: x => x.ShopOrderMaterialPlanDetailID,
-                        principalTable: "ShopOrderMaterialPlanDetail",
-                        principalColumn: "ID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "StockCountLine",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CostPrice = table.Column<double>(type: "float", nullable: true),
-                    CountedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Division = table.Column<int>(type: "int", nullable: true),
-                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ItemBarcode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ItemCostPrice = table.Column<double>(type: "float", nullable: true),
-                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ItemDivisable = table.Column<bool>(type: "bit", nullable: true),
-                    LineNumber = table.Column<int>(type: "int", nullable: true),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    QuantityDifference = table.Column<double>(type: "float", nullable: true),
-                    QuantityInStock = table.Column<double>(type: "float", nullable: true),
-                    QuantityNew = table.Column<double>(type: "float", nullable: true),
-                    Source = table.Column<short>(type: "smallint", nullable: true),
-                    Status = table.Column<short>(type: "smallint", nullable: true),
-                    StockCountID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    StockKeepingUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StorageLocation = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    StorageLocationCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StorageLocationDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Warehouse = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StockCountLine", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_StockCountLine_StockCount_StockCountID",
-                        column: x => x.StockCountID,
-                        principalTable: "StockCount",
-                        principalColumn: "StockCountID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SubscriptionLine",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AmountDC = table.Column<double>(type: "float", nullable: false),
-                    AmountFC = table.Column<double>(type: "float", nullable: false),
-                    Costcenter = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Costunit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Discount = table.Column<double>(type: "float", nullable: true),
-                    Division = table.Column<int>(type: "int", nullable: false),
-                    EntryID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FromDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LineNumber = table.Column<int>(type: "int", nullable: false),
-                    LineType = table.Column<short>(type: "smallint", nullable: true),
-                    LineTypeDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    NetPrice = table.Column<double>(type: "float", nullable: false),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Quantity = table.Column<double>(type: "float", nullable: false),
-                    ToDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UnitCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UnitPrice = table.Column<double>(type: "float", nullable: false),
-                    VATAmountFC = table.Column<double>(type: "float", nullable: true),
-                    VATCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VATCodeDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SubscriptionEntryID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SubscriptionLine", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_SubscriptionLine_Subscription_SubscriptionEntryID",
-                        column: x => x.SubscriptionEntryID,
-                        principalTable: "Subscription",
-                        principalColumn: "EntryID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SubscriptionRestrictionEmployee",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Division = table.Column<int>(type: "int", nullable: false),
-                    Employee = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    EmployeeFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EmployeeHID = table.Column<int>(type: "int", nullable: true),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Subscription = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SubscriptionDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SubscriptionNumber = table.Column<int>(type: "int", nullable: false),
-                    SubscriptionEntryID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SubscriptionRestrictionEmployee", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_SubscriptionRestrictionEmployee_Subscription_SubscriptionEntryID",
-                        column: x => x.SubscriptionEntryID,
-                        principalTable: "Subscription",
-                        principalColumn: "EntryID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SubscriptionRestrictionItem",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Division = table.Column<int>(type: "int", nullable: false),
-                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Subscription = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SubscriptionDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SubscriptionNumber = table.Column<int>(type: "int", nullable: false),
-                    SubscriptionEntryID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SubscriptionRestrictionItem", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_SubscriptionRestrictionItem_Subscription_SubscriptionEntryID",
-                        column: x => x.SubscriptionEntryID,
-                        principalTable: "Subscription",
-                        principalColumn: "EntryID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RequestAttachment",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Division = table.Column<int>(type: "int", nullable: true),
-                    DownloadUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FileName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FileSize = table.Column<double>(type: "float", nullable: false),
-                    Request = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CommunicationNoteID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ComplaintID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    EventID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ServiceRequestID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    TaskID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RequestAttachment", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_RequestAttachment_CommunicationNote_CommunicationNoteID",
-                        column: x => x.CommunicationNoteID,
-                        principalTable: "CommunicationNote",
-                        principalColumn: "ID");
-                    table.ForeignKey(
-                        name: "FK_RequestAttachment_Complaint_ComplaintID",
-                        column: x => x.ComplaintID,
-                        principalTable: "Complaint",
-                        principalColumn: "ID");
-                    table.ForeignKey(
-                        name: "FK_RequestAttachment_Event_EventID",
-                        column: x => x.EventID,
-                        principalTable: "Event",
-                        principalColumn: "ID");
-                    table.ForeignKey(
-                        name: "FK_RequestAttachment_ServiceRequest_ServiceRequestID",
-                        column: x => x.ServiceRequestID,
-                        principalTable: "ServiceRequest",
-                        principalColumn: "ID");
-                    table.ForeignKey(
-                        name: "FK_RequestAttachment_Task_TaskID",
-                        column: x => x.TaskID,
-                        principalTable: "Task",
-                        principalColumn: "ID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TransactionLine",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Account = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    AccountCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AccountName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AmountDC = table.Column<double>(type: "float", nullable: false),
-                    AmountFC = table.Column<double>(type: "float", nullable: false),
-                    AmountVATBaseFC = table.Column<double>(type: "float", nullable: true),
-                    AmountVATFC = table.Column<double>(type: "float", nullable: true),
-                    Asset = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    AssetCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AssetDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostCenter = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostCenterDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CostUnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Division = table.Column<int>(type: "int", nullable: false),
-                    Document = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    DocumentNumber = table.Column<int>(type: "int", nullable: true),
-                    DocumentSubject = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DueDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    EntryID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    EntryNumber = table.Column<int>(type: "int", nullable: true),
-                    ExchangeRate = table.Column<double>(type: "float", nullable: true),
-                    ExtraDutyAmountFC = table.Column<double>(type: "float", nullable: true),
-                    ExtraDutyPercentage = table.Column<double>(type: "float", nullable: true),
-                    FinancialPeriod = table.Column<short>(type: "smallint", nullable: true),
-                    FinancialYear = table.Column<short>(type: "smallint", nullable: true),
-                    GLAccount = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    GLAccountCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GLAccountDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    InvoiceNumber = table.Column<int>(type: "int", nullable: true),
-                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    JournalCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    JournalDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LineNumber = table.Column<int>(type: "int", nullable: true),
-                    LineType = table.Column<short>(type: "smallint", nullable: false),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    OffsetID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    OrderNumber = table.Column<int>(type: "int", nullable: true),
-                    PaymentDiscountAmount = table.Column<double>(type: "float", nullable: true),
-                    PaymentReference = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Project = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ProjectCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProjectDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Quantity = table.Column<double>(type: "float", nullable: true),
-                    SerialNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Status = table.Column<short>(type: "smallint", nullable: true),
-                    Subscription = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    SubscriptionDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TrackingNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TrackingNumberDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Type = table.Column<int>(type: "int", nullable: false),
-                    VATCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VATCodeDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VATPercentage = table.Column<double>(type: "float", nullable: true),
-                    VATType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    YourRef = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TransactionEntryID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Timestamp = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TransactionLine", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_TransactionLine_Transaction_TransactionEntryID",
-                        column: x => x.TransactionEntryID,
-                        principalTable: "Transaction",
-                        principalColumn: "EntryID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "InvolvedUserRole",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DescriptionTermID = table.Column<int>(type: "int", nullable: true),
-                    Division = table.Column<int>(type: "int", nullable: true),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_InvolvedUserRole", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_InvolvedUserRole_User_UserID",
-                        column: x => x.UserID,
-                        principalTable: "User",
-                        principalColumn: "UserID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserRolesPerDivision",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Division = table.Column<int>(type: "int", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Role = table.Column<int>(type: "int", nullable: false),
-                    RoleLevel = table.Column<int>(type: "int", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserRolesPerDivision", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_UserRolesPerDivision_User_UserID",
-                        column: x => x.UserID,
-                        principalTable: "User",
-                        principalColumn: "UserID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "VatPercentage",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Division = table.Column<int>(type: "int", nullable: true),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    LineNumber = table.Column<int>(type: "int", nullable: true),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Percentage = table.Column<double>(type: "float", nullable: true),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Type = table.Column<short>(type: "smallint", nullable: false),
-                    VATCodeID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_VatPercentage", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_VatPercentage_VATCode_VATCodeID",
-                        column: x => x.VATCodeID,
-                        principalTable: "VATCode",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "WarehouseTransferLine",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Division = table.Column<int>(type: "int", nullable: true),
-                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LineNumber = table.Column<int>(type: "int", nullable: true),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Quantity = table.Column<double>(type: "float", nullable: true),
-                    StorageLocationFrom = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    StorageLocationFromCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StorageLocationFromDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StorageLocationTo = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    StorageLocationToCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StorageLocationToDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TransferID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UnitCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UnitDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    WarehouseTransferTransferID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_WarehouseTransferLine", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_WarehouseTransferLine_WarehouseTransfer_WarehouseTransferTransferID",
-                        column: x => x.WarehouseTransferTransferID,
-                        principalTable: "WarehouseTransfer",
-                        principalColumn: "TransferID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DivisionClassValue",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Class_01ID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Class_01_ID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Class_02ID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Class_02_ID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Class_03ID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Class_03_ID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Class_04ID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Class_04_ID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Class_05ID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Class_05_ID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Customer = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Division = table.Column<int>(type: "int", nullable: false),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DivisionClassValue", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_DivisionClassValue_DivisionClass_Class_01ID",
-                        column: x => x.Class_01ID,
-                        principalTable: "DivisionClass",
-                        principalColumn: "ID");
-                    table.ForeignKey(
-                        name: "FK_DivisionClassValue_DivisionClass_Class_02ID",
-                        column: x => x.Class_02ID,
-                        principalTable: "DivisionClass",
-                        principalColumn: "ID");
-                    table.ForeignKey(
-                        name: "FK_DivisionClassValue_DivisionClass_Class_03ID",
-                        column: x => x.Class_03ID,
-                        principalTable: "DivisionClass",
-                        principalColumn: "ID");
-                    table.ForeignKey(
-                        name: "FK_DivisionClassValue_DivisionClass_Class_04ID",
-                        column: x => x.Class_04ID,
-                        principalTable: "DivisionClass",
-                        principalColumn: "ID");
-                    table.ForeignKey(
-                        name: "FK_DivisionClassValue_DivisionClass_Class_05ID",
-                        column: x => x.Class_05ID,
-                        principalTable: "DivisionClass",
-                        principalColumn: "ID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "StockBatchNumber",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BatchNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BatchNumberID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Division = table.Column<int>(type: "int", nullable: true),
-                    DraftStockTransactionID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsBlocked = table.Column<byte>(type: "tinyint", nullable: true),
-                    IsDraft = table.Column<byte>(type: "tinyint", nullable: true),
-                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Quantity = table.Column<double>(type: "float", nullable: true),
-                    Remarks = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StockCountLine = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    StockTransactionID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    StockTransactionType = table.Column<int>(type: "int", nullable: true),
-                    StorageLocation = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    StorageLocationCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StorageLocationDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Warehouse = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    WarehouseCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    WarehouseDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GoodsDeliveryLineID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    GoodsReceiptLineID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    StockCountLineID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StockBatchNumber", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_StockBatchNumber_GoodsDeliveryLine_GoodsDeliveryLineID",
-                        column: x => x.GoodsDeliveryLineID,
-                        principalTable: "GoodsDeliveryLine",
-                        principalColumn: "ID");
-                    table.ForeignKey(
-                        name: "FK_StockBatchNumber_GoodsReceiptLine_GoodsReceiptLineID",
-                        column: x => x.GoodsReceiptLineID,
-                        principalTable: "GoodsReceiptLine",
-                        principalColumn: "ID");
-                    table.ForeignKey(
-                        name: "FK_StockBatchNumber_StockCountLine_StockCountLineID",
-                        column: x => x.StockCountLineID,
-                        principalTable: "StockCountLine",
-                        principalColumn: "ID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "StockSerialNumber",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Creator = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatorFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Division = table.Column<int>(type: "int", nullable: true),
-                    DraftStockTransactionID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsBlocked = table.Column<byte>(type: "tinyint", nullable: true),
-                    IsDraft = table.Column<byte>(type: "tinyint", nullable: true),
-                    Item = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ItemCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Modifier = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ModifierFullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Remarks = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SerialNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SerialNumberID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    StockCountLine = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    StockTransactionID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    StockTransactionType = table.Column<int>(type: "int", nullable: true),
-                    StorageLocation = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    StorageLocationCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StorageLocationDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Warehouse = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    WarehouseCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    WarehouseDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GoodsDeliveryLineID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    GoodsReceiptLineID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    StockCountLineID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StockSerialNumber", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_StockSerialNumber_GoodsDeliveryLine_GoodsDeliveryLineID",
-                        column: x => x.GoodsDeliveryLineID,
-                        principalTable: "GoodsDeliveryLine",
-                        principalColumn: "ID");
-                    table.ForeignKey(
-                        name: "FK_StockSerialNumber_GoodsReceiptLine_GoodsReceiptLineID",
-                        column: x => x.GoodsReceiptLineID,
-                        principalTable: "GoodsReceiptLine",
-                        principalColumn: "ID");
-                    table.ForeignKey(
-                        name: "FK_StockSerialNumber_StockCountLine_StockCountLineID",
-                        column: x => x.StockCountLineID,
-                        principalTable: "StockCountLine",
-                        principalColumn: "ID");
-                });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AbsenceRegistrationTransaction_AbsenceRegistrationID",
-                table: "AbsenceRegistrationTransaction",
-                column: "AbsenceRegistrationID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_BankAccount_AccountID",
-                table: "BankAccount",
-                column: "AccountID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_BankEntryLine_BankEntryEntryID",
-                table: "BankEntryLine",
-                column: "BankEntryEntryID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CashEntryLine_CashEntryEntryID",
-                table: "CashEntryLine",
-                column: "CashEntryEntryID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DivisionClass_DivisionClassNameID",
-                table: "DivisionClass",
-                column: "DivisionClassNameID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DivisionClassValue_Class_01ID",
-                table: "DivisionClassValue",
-                column: "Class_01ID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DivisionClassValue_Class_02ID",
-                table: "DivisionClassValue",
-                column: "Class_02ID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DivisionClassValue_Class_03ID",
-                table: "DivisionClassValue",
-                column: "Class_03ID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DivisionClassValue_Class_04ID",
-                table: "DivisionClassValue",
-                column: "Class_04ID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DivisionClassValue_Class_05ID",
-                table: "DivisionClassValue",
-                column: "Class_05ID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_GeneralJournalEntryLine_GeneralJournalEntryEntryID",
-                table: "GeneralJournalEntryLine",
-                column: "GeneralJournalEntryEntryID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_GoodsDeliveryLine_GoodsDeliveryEntryID",
-                table: "GoodsDeliveryLine",
-                column: "GoodsDeliveryEntryID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_GoodsReceiptLine_GoodsReceiptID",
-                table: "GoodsReceiptLine",
-                column: "GoodsReceiptID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_InvoiceTerm_ProjectID",
-                table: "InvoiceTerm",
-                column: "ProjectID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_InvolvedUserRole_UserID",
-                table: "InvolvedUserRole",
-                column: "UserID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ItemAssortmentProperty_ItemAssortmentID",
-                table: "ItemAssortmentProperty",
-                column: "ItemAssortmentID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ItemWarehouseStorageLocation_ShopOrderMaterialPlanDetailID",
-                table: "ItemWarehouseStorageLocation",
-                column: "ShopOrderMaterialPlanDetailID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProjectHourBudget_ProjectID",
-                table: "ProjectHourBudget",
-                column: "ProjectID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProjectRestrictionEmployee_ProjectID",
-                table: "ProjectRestrictionEmployee",
-                column: "ProjectID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProjectRestrictionItem_ProjectID",
-                table: "ProjectRestrictionItem",
-                column: "ProjectID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProjectRestrictionRebilling_ProjectID",
-                table: "ProjectRestrictionRebilling",
-                column: "ProjectID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PurchaseEntryLine_PurchaseEntryEntryID",
-                table: "PurchaseEntryLine",
-                column: "PurchaseEntryEntryID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PurchaseInvoiceLine_PurchaseInvoiceID",
-                table: "PurchaseInvoiceLine",
-                column: "PurchaseInvoiceID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PurchaseOrderLine_PurchaseOrderID",
-                table: "PurchaseOrderLine",
-                column: "PurchaseOrderID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_QuotationLine_QuotationID",
-                table: "QuotationLine",
-                column: "QuotationID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RequestAttachment_CommunicationNoteID",
-                table: "RequestAttachment",
-                column: "CommunicationNoteID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RequestAttachment_ComplaintID",
-                table: "RequestAttachment",
-                column: "ComplaintID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RequestAttachment_EventID",
-                table: "RequestAttachment",
-                column: "EventID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RequestAttachment_ServiceRequestID",
-                table: "RequestAttachment",
-                column: "ServiceRequestID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RequestAttachment_TaskID",
-                table: "RequestAttachment",
-                column: "TaskID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SalesEntryLine_SalesEntryEntryID",
-                table: "SalesEntryLine",
-                column: "SalesEntryEntryID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SalesInvoiceLine_SalesInvoiceInvoiceID",
-                table: "SalesInvoiceLine",
-                column: "SalesInvoiceInvoiceID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SalesOrderLine_SalesOrderOrderID",
-                table: "SalesOrderLine",
-                column: "SalesOrderOrderID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SalesOrderLine_ShopOrderID",
-                table: "SalesOrderLine",
-                column: "ShopOrderID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ShopOrderMaterialPlan_ShopOrderID",
-                table: "ShopOrderMaterialPlan",
-                column: "ShopOrderID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ShopOrderRoutingStepPlan_ShopOrderID",
-                table: "ShopOrderRoutingStepPlan",
-                column: "ShopOrderID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StockBatchNumber_GoodsDeliveryLineID",
-                table: "StockBatchNumber",
-                column: "GoodsDeliveryLineID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StockBatchNumber_GoodsReceiptLineID",
-                table: "StockBatchNumber",
-                column: "GoodsReceiptLineID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StockBatchNumber_StockCountLineID",
-                table: "StockBatchNumber",
-                column: "StockCountLineID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StockCountLine_StockCountID",
-                table: "StockCountLine",
-                column: "StockCountID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StockSerialNumber_GoodsDeliveryLineID",
-                table: "StockSerialNumber",
-                column: "GoodsDeliveryLineID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StockSerialNumber_GoodsReceiptLineID",
-                table: "StockSerialNumber",
-                column: "GoodsReceiptLineID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StockSerialNumber_StockCountLineID",
-                table: "StockSerialNumber",
-                column: "StockCountLineID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SubscriptionLine_SubscriptionEntryID",
-                table: "SubscriptionLine",
-                column: "SubscriptionEntryID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SubscriptionRestrictionEmployee_SubscriptionEntryID",
-                table: "SubscriptionRestrictionEmployee",
-                column: "SubscriptionEntryID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SubscriptionRestrictionItem_SubscriptionEntryID",
-                table: "SubscriptionRestrictionItem",
-                column: "SubscriptionEntryID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TransactionLine_TransactionEntryID",
-                table: "TransactionLine",
-                column: "TransactionEntryID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserRolesPerDivision_UserID",
-                table: "UserRolesPerDivision",
-                column: "UserID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_VatPercentage_VATCodeID",
-                table: "VatPercentage",
-                column: "VATCodeID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_WarehouseTransferLine_WarehouseTransferTransferID",
-                table: "WarehouseTransferLine",
-                column: "WarehouseTransferTransferID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "AbsenceRegistration");
+
+            migrationBuilder.DropTable(
                 name: "AbsenceRegistrationTransaction");
+
+            migrationBuilder.DropTable(
+                name: "Account");
 
             migrationBuilder.DropTable(
                 name: "AccountantInfo");
@@ -7999,6 +7458,9 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 name: "BankAccount");
 
             migrationBuilder.DropTable(
+                name: "BankEntry");
+
+            migrationBuilder.DropTable(
                 name: "BankEntryLine");
 
             migrationBuilder.DropTable(
@@ -8023,7 +7485,16 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 name: "ByProductReversal");
 
             migrationBuilder.DropTable(
+                name: "CashEntry");
+
+            migrationBuilder.DropTable(
                 name: "CashEntryLine");
+
+            migrationBuilder.DropTable(
+                name: "CommunicationNote");
+
+            migrationBuilder.DropTable(
+                name: "Complaint");
 
             migrationBuilder.DropTable(
                 name: "Contact");
@@ -8057,6 +7528,12 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
             migrationBuilder.DropTable(
                 name: "Division");
+
+            migrationBuilder.DropTable(
+                name: "DivisionClass");
+
+            migrationBuilder.DropTable(
+                name: "DivisionClassName");
 
             migrationBuilder.DropTable(
                 name: "DivisionClassValue");
@@ -8110,10 +7587,16 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 name: "EmploymentSalary");
 
             migrationBuilder.DropTable(
+                name: "Event");
+
+            migrationBuilder.DropTable(
                 name: "ExchangeRate");
 
             migrationBuilder.DropTable(
                 name: "FinancialPeriod");
+
+            migrationBuilder.DropTable(
+                name: "GeneralJournalEntry");
 
             migrationBuilder.DropTable(
                 name: "GeneralJournalEntryLine");
@@ -8129,6 +7612,18 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
             migrationBuilder.DropTable(
                 name: "GLTransactionType");
+
+            migrationBuilder.DropTable(
+                name: "GoodsDelivery");
+
+            migrationBuilder.DropTable(
+                name: "GoodsDeliveryLine");
+
+            migrationBuilder.DropTable(
+                name: "GoodsReceipt");
+
+            migrationBuilder.DropTable(
+                name: "GoodsReceiptLine");
 
             migrationBuilder.DropTable(
                 name: "HostingOpportunity");
@@ -8153,6 +7648,9 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
             migrationBuilder.DropTable(
                 name: "Item");
+
+            migrationBuilder.DropTable(
+                name: "ItemAssortment");
 
             migrationBuilder.DropTable(
                 name: "ItemAssortmentProperty");
@@ -8269,6 +7767,9 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 name: "ProfitLossOverview");
 
             migrationBuilder.DropTable(
+                name: "Project");
+
+            migrationBuilder.DropTable(
                 name: "ProjectBudgetType");
 
             migrationBuilder.DropTable(
@@ -8290,13 +7791,25 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 name: "ProjectRestrictionRebilling");
 
             migrationBuilder.DropTable(
+                name: "PurchaseEntry");
+
+            migrationBuilder.DropTable(
                 name: "PurchaseEntryLine");
+
+            migrationBuilder.DropTable(
+                name: "PurchaseInvoice");
 
             migrationBuilder.DropTable(
                 name: "PurchaseInvoiceLine");
 
             migrationBuilder.DropTable(
+                name: "PurchaseOrder");
+
+            migrationBuilder.DropTable(
                 name: "PurchaseOrderLine");
+
+            migrationBuilder.DropTable(
+                name: "Quotation");
 
             migrationBuilder.DropTable(
                 name: "QuotationLine");
@@ -8332,13 +7845,22 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 name: "RevenueList");
 
             migrationBuilder.DropTable(
+                name: "SalesEntry");
+
+            migrationBuilder.DropTable(
                 name: "SalesEntryLine");
+
+            migrationBuilder.DropTable(
+                name: "SalesInvoice");
 
             migrationBuilder.DropTable(
                 name: "SalesInvoiceLine");
 
             migrationBuilder.DropTable(
                 name: "SalesItemPrice");
+
+            migrationBuilder.DropTable(
+                name: "SalesOrder");
 
             migrationBuilder.DropTable(
                 name: "SalesOrderLine");
@@ -8353,10 +7875,19 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 name: "SerialNumber");
 
             migrationBuilder.DropTable(
+                name: "ServiceRequest");
+
+            migrationBuilder.DropTable(
                 name: "ShippingMethod");
 
             migrationBuilder.DropTable(
+                name: "ShopOrder");
+
+            migrationBuilder.DropTable(
                 name: "ShopOrderMaterialPlan");
+
+            migrationBuilder.DropTable(
+                name: "ShopOrderMaterialPlanDetail");
 
             migrationBuilder.DropTable(
                 name: "ShopOrderReceipt");
@@ -8383,6 +7914,12 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 name: "StockBatchNumber");
 
             migrationBuilder.DropTable(
+                name: "StockCount");
+
+            migrationBuilder.DropTable(
+                name: "StockCountLine");
+
+            migrationBuilder.DropTable(
                 name: "StockSerialNumber");
 
             migrationBuilder.DropTable(
@@ -8393,6 +7930,9 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
             migrationBuilder.DropTable(
                 name: "SubOrderReversal");
+
+            migrationBuilder.DropTable(
+                name: "Subscription");
 
             migrationBuilder.DropTable(
                 name: "SubscriptionLine");
@@ -8414,6 +7954,9 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
             migrationBuilder.DropTable(
                 name: "SupplierItem");
+
+            migrationBuilder.DropTable(
+                name: "Task");
 
             migrationBuilder.DropTable(
                 name: "TaskType");
@@ -8461,10 +8004,16 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 name: "TimeTransaction");
 
             migrationBuilder.DropTable(
+                name: "Transaction");
+
+            migrationBuilder.DropTable(
                 name: "TransactionLine");
 
             migrationBuilder.DropTable(
                 name: "Unit");
+
+            migrationBuilder.DropTable(
+                name: "User");
 
             migrationBuilder.DropTable(
                 name: "UserRole");
@@ -8473,10 +8022,16 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 name: "UserRolesPerDivision");
 
             migrationBuilder.DropTable(
+                name: "VATCode");
+
+            migrationBuilder.DropTable(
                 name: "VatPercentage");
 
             migrationBuilder.DropTable(
                 name: "Warehouse");
+
+            migrationBuilder.DropTable(
+                name: "WarehouseTransfer");
 
             migrationBuilder.DropTable(
                 name: "WarehouseTransferLine");
@@ -8488,109 +8043,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
                 name: "Workcenter");
 
             migrationBuilder.DropTable(
-                name: "AbsenceRegistration");
-
-            migrationBuilder.DropTable(
-                name: "Account");
-
-            migrationBuilder.DropTable(
-                name: "BankEntry");
-
-            migrationBuilder.DropTable(
                 name: "BatchNumber");
-
-            migrationBuilder.DropTable(
-                name: "CashEntry");
-
-            migrationBuilder.DropTable(
-                name: "DivisionClass");
-
-            migrationBuilder.DropTable(
-                name: "GeneralJournalEntry");
-
-            migrationBuilder.DropTable(
-                name: "ItemAssortment");
-
-            migrationBuilder.DropTable(
-                name: "ShopOrderMaterialPlanDetail");
-
-            migrationBuilder.DropTable(
-                name: "Project");
-
-            migrationBuilder.DropTable(
-                name: "PurchaseEntry");
-
-            migrationBuilder.DropTable(
-                name: "PurchaseInvoice");
-
-            migrationBuilder.DropTable(
-                name: "PurchaseOrder");
-
-            migrationBuilder.DropTable(
-                name: "Quotation");
-
-            migrationBuilder.DropTable(
-                name: "CommunicationNote");
-
-            migrationBuilder.DropTable(
-                name: "Complaint");
-
-            migrationBuilder.DropTable(
-                name: "Event");
-
-            migrationBuilder.DropTable(
-                name: "ServiceRequest");
-
-            migrationBuilder.DropTable(
-                name: "Task");
-
-            migrationBuilder.DropTable(
-                name: "SalesEntry");
-
-            migrationBuilder.DropTable(
-                name: "SalesInvoice");
-
-            migrationBuilder.DropTable(
-                name: "SalesOrder");
-
-            migrationBuilder.DropTable(
-                name: "ShopOrder");
-
-            migrationBuilder.DropTable(
-                name: "GoodsDeliveryLine");
-
-            migrationBuilder.DropTable(
-                name: "GoodsReceiptLine");
-
-            migrationBuilder.DropTable(
-                name: "StockCountLine");
-
-            migrationBuilder.DropTable(
-                name: "Subscription");
-
-            migrationBuilder.DropTable(
-                name: "Transaction");
-
-            migrationBuilder.DropTable(
-                name: "User");
-
-            migrationBuilder.DropTable(
-                name: "VATCode");
-
-            migrationBuilder.DropTable(
-                name: "WarehouseTransfer");
-
-            migrationBuilder.DropTable(
-                name: "DivisionClassName");
-
-            migrationBuilder.DropTable(
-                name: "GoodsDelivery");
-
-            migrationBuilder.DropTable(
-                name: "GoodsReceipt");
-
-            migrationBuilder.DropTable(
-                name: "StockCount");
         }
     }
 }

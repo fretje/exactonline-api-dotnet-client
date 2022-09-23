@@ -7,7 +7,7 @@ public class EntityFrameworkCoreTargetTests
 	[Fact]
 	public async Task ShouldInitializeDatabase()
 	{
-		var connectionString = "Data Source=.\\sqlexpress;Initial Catalog=exacttest;Integrated Security=True";
+		var connectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=ExactOnlineClientSdkSyncTest;Integrated Security=True";
 		var sut = new EntityFrameworkCoreTarget(connectionString);
 
 		await sut.InitializeDatabaseAsync(default);
