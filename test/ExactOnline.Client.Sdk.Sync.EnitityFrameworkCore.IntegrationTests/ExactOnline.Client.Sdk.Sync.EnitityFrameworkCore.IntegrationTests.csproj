@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFramework>net6.0-windows</TargetFramework>
 		<Nullable>enable</Nullable>
 
 		<IsPackable>false</IsPackable>
@@ -22,6 +22,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\ExactOnline.Client.Sdk.Sync.EntityFrameworkCore\ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.csproj" />
+		<ProjectReference Include="..\ExactOnline.Client.Sdk.TestContext\ExactOnline.Client.Sdk.TestContext.csproj" />
 	</ItemGroup>
 
 </Project>

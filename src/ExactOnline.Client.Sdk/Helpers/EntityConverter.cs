@@ -98,7 +98,7 @@ public static class EntityConverter
 	{
 		try
 		{
-			return JsonConvert.DeserializeObject<List<T>>(json);
+			return JsonConvert.DeserializeObject<List<T>>(json, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore });
 		}
 		catch (Exception)
 		{

@@ -35,6 +35,7 @@ app.MapGet("/", async (CancellationToken ct) =>
 	}
 
 	var client = new ExactOnlineClient(ExactOnlineTest.Url, authorizer.GetAccessTokenAsync);
+	await client.InitializeDivisionAsync(ct);
 
 	// Get the Code and Name of a random account in the administration.
 	var fields = new[] { "Code", "Name" };
