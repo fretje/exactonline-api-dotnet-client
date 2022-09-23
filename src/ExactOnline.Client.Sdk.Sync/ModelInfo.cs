@@ -213,7 +213,9 @@ public class ModelInfo
 
 	private FieldInfo[] FieldsForSync() =>
 		_fields.Value.Where(field =>
-			!(_modelType == typeof(Client.Models.CRM.Quotation) &&
+			!(_modelType == typeof(Client.Models.Manufacturing.ShopOrderMaterialPlanDetail) &&
+					field.Name == "Calculator" ||
+			  _modelType == typeof(Client.Models.CRM.Quotation) &&
 					field.Name == "QuotationLines" ||
 			  _modelType == typeof(Client.Models.SalesInvoice.SalesInvoice) &&
 					field.Name == "SalesInvoiceLines" ||
