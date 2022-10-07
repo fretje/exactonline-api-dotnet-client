@@ -208,7 +208,7 @@ public abstract class OAuth2Client : IClient
 		TokenType = ParseTokenResponse(response.Content, TokenTypeKey);
 
 		if (int.TryParse(ParseTokenResponse(response.Content, ExpiresKey), out int expiresIn))
-			ExpiresAt = DateTime.Now.AddSeconds(expiresIn);
+			ExpiresAt = DateTime.Now.AddSeconds(expiresIn - 5); // subtract 5 seconds otherwise a token can sometimes already be expired by the time a call is being executed, resulting in an "unauthorized" status code.
 
 		OnAfterTokensChanged();
 	}
