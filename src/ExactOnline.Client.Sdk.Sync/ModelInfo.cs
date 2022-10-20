@@ -100,7 +100,7 @@ public class ModelInfo
 	public Expression<Func<TModel, DateTime?>> ModifiedLambda<TModel>() =>
 		_modifiedLambda.Value as Expression<Func<TModel, DateTime?>>;
 
-	public FieldInfo[] Fields(bool forSync = false) => forSync ? FieldsForSync() : _fields.Value;
+	public FieldInfo[] Fields(bool forSync = false) => forSync ? FieldsForSync() : _fields.Value.Where(f => f.Name != "Timestamp").ToArray();
 	public string[] FieldNames(bool forSync = false) => Fields(forSync).Select(f => f.Name).ToArray();
 
 	public bool HasDeletedEntityType =>

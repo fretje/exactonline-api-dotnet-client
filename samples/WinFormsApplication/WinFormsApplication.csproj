@@ -10,6 +10,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\ExactOnline.Client.Models\ExactOnline.Client.Models.csproj" />
 		<ProjectReference Include="..\..\src\ExactOnline.Client.OAuth2.WinForms\ExactOnline.Client.OAuth2.WinForms.csproj" />
+		<ProjectReference Include="..\..\src\ExactOnline.Client.Sdk.Sync.EntityFrameworkCore\ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.csproj" />
 		<ProjectReference Include="..\..\src\ExactOnline.Client.Sdk\ExactOnline.Client.Sdk.csproj" />
 		<ProjectReference Include="..\..\test\ExactOnline.Client.Sdk.Test.Infrastructure\ExactOnline.Client.Sdk.Test.Infrastructure.csproj" />
 	</ItemGroup>

@@ -11,14 +11,14 @@ public partial class LoginForm : Form
 
 	public string? AuthorizationCode => HttpUtility.ParseQueryString(AuthorizationUri.Query)["code"];
 
-	public LoginForm(Uri authorizationUri, Uri redirectUri)
-		: this() =>
-		(AuthorizationUri, _redirectUri) = (authorizationUri, redirectUri);
-
 	public LoginForm() => InitializeComponent();
 
-	private void LoginForm_Load(object sender, EventArgs e) =>
+	public LoginForm(Uri authorizationUri, Uri redirectUri)
+		: this()
+	{
+		(AuthorizationUri, _redirectUri) = (authorizationUri, redirectUri);
 		webView.Source = AuthorizationUri;
+	}
 
 	private void WebView_NavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs e)
 	{
