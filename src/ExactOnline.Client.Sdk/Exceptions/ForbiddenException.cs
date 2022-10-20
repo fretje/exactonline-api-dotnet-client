@@ -3,7 +3,7 @@
 namespace ExactOnline.Client.Sdk.Exceptions;
 
 [Serializable]
-public class ForbiddenException : Exception // HTTP: 403 
+public class ForbiddenException : ExceptionBase // HTTP: 403
 {
 	public ForbiddenException() { }
 	public ForbiddenException(string message) : base(message) { }
