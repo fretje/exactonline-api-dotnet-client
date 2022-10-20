@@ -1,5 +1,4 @@
-﻿using ExactOnline.Client.Models.Accountancy;
-using ExactOnline.Client.Models.Activities;
+﻿using ExactOnline.Client.Models.Activities;
 using ExactOnline.Client.Models.CRM;
 using ExactOnline.Client.Models.FinancialTransaction;
 using ExactOnline.Client.Models.GeneralJournalEntry;

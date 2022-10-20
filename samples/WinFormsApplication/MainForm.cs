@@ -28,6 +28,12 @@ public partial class MainForm : Form
 			// Get the Code and Name of a random account in the administration.
 			var fields = new[] { "Code", "Name" };
 			var account = (await client.For<Account>().Top(1).Select(fields).GetAsync()).List.FirstOrDefault();
+
+			// test
+			//var transactionlines = await client.For<TransactionLine>()
+			//	.Select(ModelInfo.For<TransactionLine>().FieldNames())
+			//	.Where(t => t.EntryNumber, 22010134, OperatorEnum.Eq)
+			//	.GetAsync();
 		}
 		catch (Exception ex)
 		{

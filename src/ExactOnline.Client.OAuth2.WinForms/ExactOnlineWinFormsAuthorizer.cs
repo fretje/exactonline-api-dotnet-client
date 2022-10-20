@@ -9,19 +9,19 @@ public class ExactOnlineWinFormsAuthorizer : ExactOnlineAuthorizer
 
 	public override async Task<string?> GetAccessTokenAsync(CancellationToken ct)
 	{
-		if (await IsAuthorizationNeededAsync(ct).ConfigureAwait(false))
+		if (await IsAuthorizationNeededAsync(ct))
 		{
-			var authorizationUri = await GetLoginLinkUriAsync(ct: ct).ConfigureAwait(false);
+			var authorizationUri = await GetLoginLinkUriAsync(ct: ct);
 
 			using var loginDialog = new LoginForm(new(authorizationUri), new(Configuration.RedirectUri));
 			loginDialog.ShowDialog();
 
 			if (loginDialog.AuthorizationCode is string code && !string.IsNullOrWhiteSpace(code))
 			{
-				await ProcessAuthorizationAsync(code, ct).ConfigureAwait(false);
+				await ProcessAuthorizationAsync(code, ct);
 			}
 		}
 
-		return await base.GetAccessTokenAsync(ct).ConfigureAwait(false);
+		return await base.GetAccessTokenAsync(ct);
 	}
 }
