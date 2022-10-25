@@ -1,5 +1,6 @@
 ﻿using ExactOnline.Client.Models.CRM;
 using ExactOnline.Client.Sdk.Controllers;
+using ExactOnline.Client.Sdk.Test.Infrastructure;
 
 namespace ExactOnline.Client.Sdk.UserAcceptanceTests.UserLevel;
 
@@ -20,7 +21,8 @@ public class RobustEndpoints
 	[TestCategory("User Acceptance Tests")]
 	public async Task TestWithoutDivision()
 	{
-		var client = new ExactOnlineClient(TestObjectsCreator.ExactOnlineUrl, TestObjectsCreator.GetOAuthAuthenticationToken);
+		var client = new ExactOnlineClient(TestObjectsCreator.ExactOnlineUrl, TestObjectsCreator.GetOAuthAuthenticationToken, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
+		client.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
 		await client.InitializeDivisionAsync();
 		client.For<Account>().Select("Code").Get();
 	}
@@ -29,7 +31,8 @@ public class RobustEndpoints
 	[TestCategory("User Acceptance Tests")]
 	public void TestWithDivision()
 	{
-		var client = new ExactOnlineClient(TestObjectsCreator.ExactOnlineUrl, _currentDivision, TestObjectsCreator.GetOAuthAuthenticationToken);
+		var client = new ExactOnlineClient(TestObjectsCreator.ExactOnlineUrl, _currentDivision, TestObjectsCreator.GetOAuthAuthenticationToken, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
+		client.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
 		client.For<Account>().Select("Code").Get();
 	}
 
@@ -37,7 +40,8 @@ public class RobustEndpoints
 	[TestCategory("User Acceptance Tests")]
 	public void TestWithSlash()
 	{
-		var client = new ExactOnlineClient($"{TestObjectsCreator.ExactOnlineUrl}/", _currentDivision, TestObjectsCreator.GetOAuthAuthenticationToken);
+		var client = new ExactOnlineClient($"{TestObjectsCreator.ExactOnlineUrl}/", _currentDivision, TestObjectsCreator.GetOAuthAuthenticationToken, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
+		client.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
 		client.For<Account>().Select("Code").Get();
 	}
 }

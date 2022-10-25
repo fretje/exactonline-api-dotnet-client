@@ -9,6 +9,8 @@ public static class ExactOnlineTest
 	private static readonly string _refreshTokenCacheFile = @"c:\temp\refreshTokenCache";
 	private static readonly string _accessTokenCacheFile = @"c:\temp\accessTokenCache";
 	private static readonly string _accessTokenExpiresAtCacheFile = @"c:\temp\accessTokenExpiresAtCache";
+	private static readonly string _minutelyRemainingCacheFile = @"c:\temp\minutelyRemainingCache";
+	private static readonly string _minutelyResetTimeCacheFile = @"c:\temp\minutelyResetTimeCache";
 
 	public static string RefreshToken
 	{
@@ -55,6 +57,33 @@ public static class ExactOnlineTest
 			{
 				File.Delete(_accessTokenExpiresAtCacheFile);
 			}
+		}
+	}
+
+	public static int MinutelyRemaining
+	{
+		get => File.Exists(_minutelyRemainingCacheFile) ? int.Parse(File.ReadAllText(_minutelyRemainingCacheFile)) : -1;
+		set
+		{
+			File.WriteAllText(_minutelyRemainingCacheFile, $"{value}");
+		}
+	}
+
+	public static DateTime MinutelyResetTime
+	{
+		get => File.Exists(_minutelyResetTimeCacheFile) ? DateTime.Parse(File.ReadAllText(_minutelyResetTimeCacheFile), null, DateTimeStyles.RoundtripKind) : default;
+		set
+		{
+			File.WriteAllText(_minutelyResetTimeCacheFile, value.ToString("o"));
+		}
+	}
+
+	public static TimeSpan MinutelyWaitTime
+	{
+		get
+		{
+			var waitTime = MinutelyResetTime - DateTime.Now;
+			return waitTime < TimeSpan.Zero ? TimeSpan.Zero : waitTime;
 		}
 	}
 }

@@ -27,7 +27,7 @@ public class HomeController : Controller
 				var testApp = new TestApp(path);
 				authorizer = new ExactOnlineAuthorizer(testApp.ClientId, testApp.ClientSecret, testApp.CallbackUrl,
 					ExactOnlineTest.Url, ExactOnlineTest.AccessToken, ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessTokenExpiresAt);
-				authorizer.TokensChanged += (sender, e) =>
+				authorizer.TokensChanged += (_, e) =>
 					(ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessToken, ExactOnlineTest.AccessTokenExpiresAt) =
 					(e.NewRefreshToken, e.NewAccessToken, e.NewExpiresAt);
 				Session["Authorizer"] = authorizer;
@@ -45,7 +45,8 @@ public class HomeController : Controller
 		}
 
 		// When we get here, that means the authorizer is authorized and we can use its GetAccessTokenAsync method for the exactOnlineclient
-		var client = new ExactOnlineClient(ExactOnlineTest.Url, Authorizer.GetAccessTokenAsync);
+		var client = new ExactOnlineClient(ExactOnlineTest.Url, Authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
+		client.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
 		await client.InitializeDivisionAsync();
 
 		// Get the Code and Name of a random account in the administration.

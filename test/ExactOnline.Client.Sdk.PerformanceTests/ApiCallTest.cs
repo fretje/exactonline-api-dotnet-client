@@ -1,6 +1,7 @@
 ﻿using ExactOnline.Client.Models.CRM;
 using ExactOnline.Client.Sdk.Interfaces;
 using ExactOnline.Client.Sdk.PerformanceTests.Helpers;
+using ExactOnline.Client.Sdk.Test.Infrastructure;
 using ExactOnline.Client.Sdk.TestContext;
 
 namespace ExactOnline.Client.Sdk.PerformanceTests;
@@ -25,8 +26,13 @@ public class ApiCallTest
 
 	[TestCategory("Performance Test")]
 	[TestMethod]
-	public void TestPerformanceApiCallGet()
+	public async Task TestPerformanceApiCallGet()
 	{
+		if (ExactOnlineTest.MinutelyRemaining < 10)
+		{
+			await Task.Delay(ExactOnlineTest.MinutelyWaitTime);
+		}
+
 		var originalprocesstime = TimeSpan.FromSeconds(5.5);
 		var currentprocesstime = TestTimer.Time(DoGetRequest);
 		Assert.IsTrue(currentprocesstime < originalprocesstime);
@@ -34,8 +40,13 @@ public class ApiCallTest
 
 	[TestCategory("Performance Test")]
 	[TestMethod]
-	public void TestPerformanceApiCallPost()
+	public async Task TestPerformanceApiCallPost()
 	{
+		if (ExactOnlineTest.MinutelyRemaining < 10)
+		{
+			await Task.Delay(ExactOnlineTest.MinutelyWaitTime);
+		}
+
 		var originalprocesstime = TimeSpan.FromSeconds(5.8);
 		var currentprocesstime = TestTimer.Time(DoPostRequest);
 		Assert.IsTrue(currentprocesstime < originalprocesstime);
@@ -48,6 +59,11 @@ public class ApiCallTest
 		var client = await _toc.GetClientAsync();
 		var account = client.For<Account>().Select("ID").Where("Name+eq+'43905139517985179437'").Get().First();
 
+		if (ExactOnlineTest.MinutelyRemaining < 10)
+		{
+			await Task.Delay(ExactOnlineTest.MinutelyWaitTime);
+		}
+
 		var originalprocesstime = TimeSpan.FromSeconds(11.8);
 		var currentprocesstime = TestTimer.Time(() => DoPutRequest(account));
 		Assert.IsTrue(currentprocesstime < originalprocesstime);
@@ -59,6 +75,11 @@ public class ApiCallTest
 	{
 		var client = await _toc.GetClientAsync();
 		var account = client.For<Account>().Select("ID").Where("Name+eq+'43905139517985179437'").Get().FirstOrDefault();
+
+		if (ExactOnlineTest.MinutelyRemaining < 1)
+		{
+			await Task.Delay(ExactOnlineTest.MinutelyWaitTime);
+		}
 
 		var originalprocesstime = TimeSpan.FromSeconds(13.0);
 		var currentprocesstime = TestTimer.Time(() => DoDeleteRequest(account));
