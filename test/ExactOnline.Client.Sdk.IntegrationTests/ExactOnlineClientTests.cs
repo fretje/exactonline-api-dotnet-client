@@ -1,6 +1,4 @@
 ﻿using ExactOnline.Client.Sdk.Controllers;
-using ExactOnline.Client.Sdk.TestContext;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ExactOnline.Client.Sdk.IntegrationTests;
 

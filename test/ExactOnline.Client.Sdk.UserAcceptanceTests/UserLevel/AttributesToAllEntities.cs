@@ -16,8 +16,6 @@ using ExactOnline.Client.Models.SalesEntry;
 using ExactOnline.Client.Models.SalesInvoice;
 using ExactOnline.Client.Models.Users;
 using ExactOnline.Client.Models.VAT;
-using ExactOnline.Client.Sdk.TestContext;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ExactOnline.Client.Sdk.UserAcceptanceTests.UserLevel;
 

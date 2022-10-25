@@ -2,7 +2,6 @@
 using ExactOnline.Client.Sdk.Interfaces;
 using ExactOnline.Client.Sdk.PerformanceTests.Helpers;
 using ExactOnline.Client.Sdk.TestContext;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ExactOnline.Client.Sdk.PerformanceTests;
 

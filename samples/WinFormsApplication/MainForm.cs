@@ -29,7 +29,7 @@ public partial class MainForm : Form
 			var fields = new[] { "Code", "Name" };
 			var account = (await client.For<Account>().Top(1).Select(fields).GetAsync()).List.FirstOrDefault();
 
-			// test
+			// Get transaction lines for a specific entry number.
 			//var transactionlines = await client.For<TransactionLine>()
 			//	.Select(ModelInfo.For<TransactionLine>().FieldNames())
 			//	.Where(t => t.EntryNumber, 22010134, OperatorEnum.Eq)

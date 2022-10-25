@@ -78,7 +78,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinFormsApplication", "samp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExactOnline.Client.Sdk.Test.Infrastructure", "test\ExactOnline.Client.Sdk.Test.Infrastructure\ExactOnline.Client.Sdk.Test.Infrastructure.csproj", "{18751CD9-0ABA-4362-ABC6-5A36547C9E80}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExactOnline.Client.Sdk.Sync.EnitityFrameworkCore.IntegrationTests", "test\ExactOnline.Client.Sdk.Sync.EnitityFrameworkCore.IntegrationTests\ExactOnline.Client.Sdk.Sync.EnitityFrameworkCore.IntegrationTests.csproj", "{DF95C3BD-C447-4557-9B59-0A3A4C839326}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExactOnline.Client.Sdk.Sync.EnitityFrameworkCore.IntegrationTests", "test\ExactOnline.Client.Sdk.Sync.EnitityFrameworkCore.IntegrationTests\ExactOnline.Client.Sdk.Sync.EnitityFrameworkCore.IntegrationTests.csproj", "{DF95C3BD-C447-4557-9B59-0A3A4C839326}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplicationCore", "samples\ConsoleApplicationCore\ConsoleApplicationCore.csproj", "{CCBF2078-9877-4602-A578-ADD483D683F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -162,6 +164,10 @@ Global
 		{DF95C3BD-C447-4557-9B59-0A3A4C839326}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF95C3BD-C447-4557-9B59-0A3A4C839326}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF95C3BD-C447-4557-9B59-0A3A4C839326}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCBF2078-9877-4602-A578-ADD483D683F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCBF2078-9877-4602-A578-ADD483D683F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCBF2078-9877-4602-A578-ADD483D683F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCBF2078-9877-4602-A578-ADD483D683F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -187,6 +193,7 @@ Global
 		{67352998-7CCF-4925-8AC2-21ACCBE8DCEC} = {0BA111AB-03C5-4737-86A9-3312281C9A79}
 		{18751CD9-0ABA-4362-ABC6-5A36547C9E80} = {52F4B6BF-44A4-4B20-BFBD-0A0117020DE0}
 		{DF95C3BD-C447-4557-9B59-0A3A4C839326} = {52F4B6BF-44A4-4B20-BFBD-0A0117020DE0}
+		{CCBF2078-9877-4602-A578-ADD483D683F0} = {0BA111AB-03C5-4737-86A9-3312281C9A79}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {613D81F0-C68D-4C03-B06E-527DDD2CE2A6}

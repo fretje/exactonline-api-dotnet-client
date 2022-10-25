@@ -1,7 +1,5 @@
 ﻿using ExactOnline.Client.Models.CRM;
 using ExactOnline.Client.Sdk.Controllers;
-using ExactOnline.Client.Sdk.TestContext;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ExactOnline.Client.Sdk.UserAcceptanceTests.UserLevel;
 

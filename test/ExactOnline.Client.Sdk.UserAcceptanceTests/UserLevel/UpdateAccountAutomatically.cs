@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace ExactOnline.Client.Sdk.UserAcceptanceTests.UserLevel;
+﻿namespace ExactOnline.Client.Sdk.UserAcceptanceTests.UserLevel;
 
 [TestClass]
 public class UpdateAccountAutomatically184246
