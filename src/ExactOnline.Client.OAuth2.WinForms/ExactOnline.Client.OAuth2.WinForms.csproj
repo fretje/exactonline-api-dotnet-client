@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net6.0-windows</TargetFramework>
+		<TargetFrameworks>net6.0-windows;net472</TargetFrameworks>
 		<Nullable>enable</Nullable>
 		<UseWindowsForms>true</UseWindowsForms>
 	</PropertyGroup>
@@ -12,6 +12,10 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\ExactOnline.Client.OAuth2\ExactOnline.Client.OAuth2.csproj" />
+	</ItemGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net472' ">
+		<Reference Include="System.Web" />
 	</ItemGroup>
 
 </Project>
