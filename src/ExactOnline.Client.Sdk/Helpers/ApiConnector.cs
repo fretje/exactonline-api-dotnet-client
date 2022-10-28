@@ -346,8 +346,12 @@ public class ApiConnector : IApiConnector
 			case HttpStatusCode.InternalServerError: // 500
 				throw new InternalServerErrorException(message);
 
-			case (HttpStatusCode)429: // 429: too many requests
-				throw new TooManyRequestsException(message);
+			case (HttpStatusCode) 429: // 429: too many requests
+				DateTime? rateLimitResetTime = null;
+				if (response.Headers.TryGetValues("x-ratelimit-reset", out var values) && long.TryParse(values.First(), out var resetTime))
+					rateLimitResetTime = DateTimeOffset.FromUnixTimeMilliseconds(resetTime).UtcDateTime;
+
+				throw new TooManyRequestsException(message, rateLimitResetTime);
 		}
 	}
 
