@@ -3,7 +3,7 @@
 namespace ExactOnline.Client.Sdk.Exceptions;
 
 [Serializable]
-public class NotFoundException : ExceptionBase // HTTP: 404
+public class NotFoundException : ExactOnlineClientException // HTTP: 404
 {
 	public NotFoundException() { }
 	public NotFoundException(string message) : base(message) { }

@@ -3,7 +3,7 @@
 namespace ExactOnline.Client.Sdk.Exceptions;
 
 [Serializable]
-public class UnauthorizedException : ExceptionBase // HTTP: 401
+public class UnauthorizedException : ExactOnlineClientException // HTTP: 401
 {
 	public UnauthorizedException() { }
 	public UnauthorizedException(string message) : base(message) { }
