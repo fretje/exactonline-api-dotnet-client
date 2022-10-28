@@ -23,7 +23,7 @@ var testApp = new TestApp(@"..\..\testapp.config");
 var authorizer = new ExactOnlineAuthorizer(testApp.ClientId.ToString(), testApp.ClientSecret, testApp.CallbackUrl,
 	ExactOnlineTest.Url, ExactOnlineTest.AccessToken, ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessTokenExpiresAt);
 
-authorizer.TokensChanged += (sender, e) =>
+authorizer.TokensChanged += (_, e) =>
 	(ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessToken, ExactOnlineTest.AccessTokenExpiresAt) =
 	(e.NewRefreshToken, e.NewAccessToken, e.NewExpiresAt);
 
@@ -34,7 +34,8 @@ app.MapGet("/", async (CancellationToken ct) =>
 		return Results.Redirect(await authorizer.GetLoginLinkUriAsync(ct: ct));
 	}
 
-	var client = new ExactOnlineClient(ExactOnlineTest.Url, authorizer.GetAccessTokenAsync);
+	var client = new ExactOnlineClient(ExactOnlineTest.Url, authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
+	client.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
 	await client.InitializeDivisionAsync(ct);
 
 	// Get the Code and Name of a random account in the administration.
@@ -61,7 +62,9 @@ app.MapGet("/sync", async (CancellationToken ct) =>
 		return Results.Redirect(await authorizer.GetLoginLinkUriAsync("/sync", ct: ct));
 	}
 
-	var client = new ExactOnlineClient(ExactOnlineTest.Url, authorizer.GetAccessTokenAsync);
+	var client = new ExactOnlineClient(ExactOnlineTest.Url, authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
+	client.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
+	await client.InitializeDivisionAsync();
 
 	// How to use SynchronizeWith functionality
 

@@ -1,6 +1,4 @@
 ﻿using ExactOnline.Client.Sdk.Helpers;
-using ExactOnline.Client.Sdk.TestContext;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 
 namespace ExactOnline.Client.Sdk.UserAcceptanceTests.LowLevel;

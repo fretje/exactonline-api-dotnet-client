@@ -1,6 +1,4 @@
 ﻿using ExactOnline.Client.Models.Current;
-using ExactOnline.Client.Sdk.TestContext;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ExactOnline.Client.Sdk.UserAcceptanceTests.UserLevel;
 

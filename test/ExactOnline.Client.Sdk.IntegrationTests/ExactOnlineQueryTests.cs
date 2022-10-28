@@ -1,8 +1,6 @@
 ﻿using ExactOnline.Client.Models.CRM;
 using ExactOnline.Client.Models.Financial;
 using ExactOnline.Client.Sdk.Exceptions;
-using ExactOnline.Client.Sdk.TestContext;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ExactOnline.Client.Sdk.IntegrationTests;
 

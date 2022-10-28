@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net6.0-windows</TargetFramework>
+		<TargetFrameworks>net6.0-windows;net472</TargetFrameworks>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -11,7 +11,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\ExactOnline.Client.Sdk.TestContext\ExactOnline.Client.Sdk.TestContext.csproj" />
+		<ProjectReference Include="..\ExactOnline.Client.Sdk.TestContext\ExactOnline.Client.Sdk.TestContext.csproj" />
 	</ItemGroup>
 
 </Project>

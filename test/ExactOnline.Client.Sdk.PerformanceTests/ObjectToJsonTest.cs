@@ -2,7 +2,6 @@
 using ExactOnline.Client.Sdk.Controllers;
 using ExactOnline.Client.Sdk.PerformanceTests.Helpers;
 using ExactOnline.Client.Sdk.Test.Infrastructure.MockObjects;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ExactOnline.Client.Sdk.PerformanceTests;
 

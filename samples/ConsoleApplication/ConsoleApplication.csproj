@@ -6,9 +6,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\src\ExactOnline.Client.OAuth\ExactOnline.Client.OAuth.csproj" />
+	  <ProjectReference Include="..\..\src\ExactOnline.Client.OAuth2.WinForms\ExactOnline.Client.OAuth2.WinForms.csproj" />
 	  <ProjectReference Include="..\..\src\ExactOnline.Client.Sdk.Sync.EntityFramework\ExactOnline.Client.Sdk.Sync.EntityFramework.csproj" />
 	  <ProjectReference Include="..\..\test\ExactOnline.Client.Sdk.Test.Infrastructure\ExactOnline.Client.Sdk.Test.Infrastructure.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Reference Include="System.Windows.Forms" />
 	</ItemGroup>
 
 </Project>

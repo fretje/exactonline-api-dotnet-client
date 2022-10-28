@@ -13,7 +13,8 @@ public class ExactOnlineWinFormsAuthorizer : ExactOnlineAuthorizer
 		{
 			var authorizationUri = await GetLoginLinkUriAsync(ct: ct);
 
-			using var loginDialog = new LoginForm(new(authorizationUri), new(Configuration.RedirectUri));
+			var loginDialog = new LoginForm(new(authorizationUri), new(Configuration.RedirectUri));
+
 			loginDialog.ShowDialog();
 
 			if (loginDialog.AuthorizationCode is string code && !string.IsNullOrWhiteSpace(code))
