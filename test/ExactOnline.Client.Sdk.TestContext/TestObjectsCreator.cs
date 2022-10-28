@@ -19,21 +19,30 @@ public class TestObjectsCreator
 	{
 		var testApp = new TestApp();
 		_authorizer = new(testApp.ClientId, testApp.ClientSecret, testApp.CallbackUrl, ExactOnlineUrl, ExactOnlineTest.AccessToken, ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessTokenExpiresAt);
-		_authorizer.TokensChanged += (sender, args) =>
+		_authorizer.TokensChanged += (_, args) =>
 			(ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessToken, ExactOnlineTest.AccessTokenExpiresAt) =
 			(args.NewRefreshToken, args.NewAccessToken, args.NewExpiresAt);
 	}
 
-	private IApiConnector _connector;
+	private ApiConnector _connector;
 	private ExactOnlineClient _client;
 
-	public IApiConnector GetApiConnector() => _connector ??= new ApiConnector(GetOAuthAuthenticationToken, new HttpClient());
+	public IApiConnector GetApiConnector()
+	{
+		if (_connector is null)
+		{
+			_connector = new ApiConnector(GetOAuthAuthenticationToken, new HttpClient(), ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
+			_connector.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
+		}
+		return _connector;
+	}
 
 	public async Task<ExactOnlineClient> GetClientAsync(CancellationToken ct = default)
 	{
 		if (_client == null)
 		{
-			_client = new ExactOnlineClient(ExactOnlineUrl, GetOAuthAuthenticationToken);
+			_client = new ExactOnlineClient(ExactOnlineUrl, GetOAuthAuthenticationToken, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
+			_client.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
 			await _client.InitializeDivisionAsync(ct).ConfigureAwait(false);
 		}
 		return _client;

@@ -9,6 +9,8 @@ namespace WebApplication
 		{
 			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+			routes.MapRoute("callback", "callback", new { controller = "Home", action = "Callback" });
+
 			routes.MapRoute(
 				name: "Default",
 				url: "{controller}/{action}/{id}",

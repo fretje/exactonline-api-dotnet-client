@@ -22,15 +22,19 @@ public class ApiConnector : IApiConnector
 
 	public EolResponseHeader EolResponseHeader { get; set; }
 
+	public event EventHandler<MinutelyChangedEventArgs> MinutelyChanged;
+
 	/// <summary>
 	/// Creates new instance of ApiConnector
 	/// </summary>
 	/// <param name="accessTokenFunc">Delegate that provides a valid oAuth Access Token</param>
 	/// <param name="client">The ExactOnlineClient this connector is associated with</param>
-	public ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc, HttpClient httpClient)
+	public ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc, HttpClient httpClient, int minutelyRemaining, DateTime minutelyResetTime)
 	{
 		_accessTokenFunc = accessTokenFunc ?? throw new ArgumentNullException(nameof(accessTokenFunc));
 		_httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+		_minutelyRemaining = minutelyRemaining;
+		_minutelyResetTime = minutelyResetTime;
 	}
 
 	/// <summary>
@@ -376,7 +380,12 @@ public class ApiConnector : IApiConnector
 					_minutelyResetTime = DateTime.Now + TimeSpan.FromMinutes(1); // set the reset time to one minute from now
 				}
 				_minutelyRemaining = minutelyRemaining;
+
+				OnMinutelyChanged();
 			}
 		}
 	}
+
+	private void OnMinutelyChanged() =>
+		MinutelyChanged?.Invoke(this, new MinutelyChangedEventArgs(_minutelyRemaining, _minutelyResetTime));
 }

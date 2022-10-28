@@ -1,7 +1,4 @@
-﻿using ExactOnline.Client.Sdk.TestContext;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace ExactOnline.Client.Sdk.IntegrationTests;
+﻿namespace ExactOnline.Client.Sdk.IntegrationTests;
 
 [TestClass]
 public class ResponseValidatorTests

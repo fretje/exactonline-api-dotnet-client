@@ -1,7 +1,6 @@
 ﻿using System.Net;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace User_Acceptance_Tests;
 

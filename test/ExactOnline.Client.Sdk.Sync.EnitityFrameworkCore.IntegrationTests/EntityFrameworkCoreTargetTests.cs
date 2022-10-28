@@ -17,7 +17,7 @@ public class EntityFrameworkCoreTargetTests
 		// toso: check if the database actually exists with the right amount of tables
 	}
 
-	[Fact]
+	[StaFact]
 	public async Task ShouldSynchronizeTable()
 	{
 		var connectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=ExactOnlineClientSdkSyncTest;Integrated Security=True";

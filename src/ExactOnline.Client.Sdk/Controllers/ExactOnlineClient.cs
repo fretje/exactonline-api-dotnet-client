@@ -20,13 +20,19 @@ public class ExactOnlineClient
 
 	public EolResponseHeader EolResponseHeader => _apiConnector.EolResponseHeader;
 
+	public event EventHandler<MinutelyChangedEventArgs> MinutelyChanged
+	{
+		add => _apiConnector.MinutelyChanged += value;
+		remove => _apiConnector.MinutelyChanged -= value;
+	}
+
 	/// <summary>
 	/// Create instance of ExactClient
 	/// </summary>
 	/// <param name="exactOnlineUrl">{URI}/</param>
 	/// <param name="accesstokenFunc">Valid oAuth AccessToken</param>
-	public ExactOnlineClient(string exactOnlineUrl, Func<CancellationToken, Task<string>> accesstokenFunc, HttpClient httpClient = null)
-		: this(exactOnlineUrl, 0, accesstokenFunc, httpClient)
+	public ExactOnlineClient(string exactOnlineUrl, Func<CancellationToken, Task<string>> accesstokenFunc, HttpClient httpClient = null, int minutelyRemaining = -1, DateTime minutelyResetTime = default)
+		: this(exactOnlineUrl, 0, accesstokenFunc, httpClient, minutelyRemaining, minutelyResetTime)
 	{ }
 
 	/// <summary>
@@ -35,7 +41,7 @@ public class ExactOnlineClient
 	/// <param name="exactOnlineUrl">The Exact Online URL for your country</param>
 	/// <param name="division">Division number</param>
 	/// <param name="accesstokenFunc">Delegate that will be executed the access token is expired</param>
-	public ExactOnlineClient(string exactOnlineUrl, int division, Func<CancellationToken, Task<string>> accesstokenFunc, HttpClient httpClient = null)
+	public ExactOnlineClient(string exactOnlineUrl, int division, Func<CancellationToken, Task<string>> accesstokenFunc, HttpClient httpClient = null, int minutelyRemaining = -1, DateTime minutelyResetTime = default)
 	{
 		if (!exactOnlineUrl.EndsWith("/"))
 		{
@@ -44,7 +50,7 @@ public class ExactOnlineClient
 
 		ExactOnlineApiUrl = exactOnlineUrl + "api/v1/";
 
-		_apiConnector = new ApiConnector(accesstokenFunc, httpClient ?? new HttpClient());
+		_apiConnector = new ApiConnector(accesstokenFunc, httpClient ?? new HttpClient(), minutelyRemaining, minutelyResetTime);
 
 		Division = division;
 
