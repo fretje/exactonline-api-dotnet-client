@@ -3,7 +3,7 @@
 namespace ExactOnline.Client.Sdk.Exceptions;
 
 [Serializable]
-public class TooManyRequestsException : Exception
+public class TooManyRequestsException : ExactOnlineClientException
 {
 	public TooManyRequestsException() { }
 	public TooManyRequestsException(string message) : base(message) { }

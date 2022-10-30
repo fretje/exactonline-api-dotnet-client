@@ -3,7 +3,7 @@
 namespace ExactOnline.Client.Sdk.Exceptions;
 
 [Serializable]
-public class IncorrectJsonException : Exception
+public class IncorrectJsonException : ExactOnlineClientException
 {
 	public IncorrectJsonException() { }
 	public IncorrectJsonException(string message) : base(message) { }
