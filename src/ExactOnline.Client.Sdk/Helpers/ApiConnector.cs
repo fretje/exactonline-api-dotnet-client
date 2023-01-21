@@ -153,7 +153,6 @@ public class ApiConnector : IApiConnector
 		CreateRequestAsync(HttpMethod.Get, endpoint, querystring, acceptContentType: null, ct: ct);
 
 	private async Task<HttpRequestMessage> CreateRequestAsync(HttpMethod method, string endpoint, string querystring = null, string data = null, string acceptContentType = "application/json", CancellationToken ct = default)
-
 	{
 		if (string.IsNullOrEmpty(endpoint))
 		{
@@ -183,6 +182,13 @@ public class ApiConnector : IApiConnector
 
 	private async Task<HttpRequestMessage> CreateWebRequestAsync(string url, string querystring, HttpMethod method, string acceptContentType = "application/json", CancellationToken ct = default)
 	{
+		if (_minutelyRemaining == 0)
+		{
+			var minutelyWaitTime = GetMinutelyWaitTime();
+			Debug.WriteLine($"WAITING {minutelyWaitTime} to respect minutely rate limit.");
+			await Task.Delay(minutelyWaitTime, ct).ConfigureAwait(false);
+		}
+
 		if (!string.IsNullOrEmpty(querystring))
 		{
 			url += "?" + querystring;
@@ -243,13 +249,6 @@ public class ApiConnector : IApiConnector
 
 	private Stream GetResponseStream(HttpRequestMessage request)
 	{
-		if (_minutelyRemaining == 0)
-		{
-			var minutelyWaitTime = GetMinutelyWaitTime();
-			Debug.WriteLine($"WAITING {minutelyWaitTime} to respect minutely rate limit.");
-			Thread.Sleep(minutelyWaitTime);
-		}
-
 		Debug.WriteLine("RESPONSE");
 
 		var response = default(HttpResponseMessage);
@@ -273,13 +272,6 @@ public class ApiConnector : IApiConnector
 
 	private async Task<Stream> GetResponseStreamAsync(HttpRequestMessage request, CancellationToken ct)
 	{
-		if (_minutelyRemaining == 0)
-		{
-			var minutelyWaitTime = GetMinutelyWaitTime();
-			Debug.WriteLine($"WAITING {minutelyWaitTime} to respect minutely rate limit.");
-			await Task.Delay(minutelyWaitTime, ct).ConfigureAwait(false);
-		}
-
 		Debug.WriteLine("RESPONSE");
 
 		var response = default(HttpResponseMessage);
