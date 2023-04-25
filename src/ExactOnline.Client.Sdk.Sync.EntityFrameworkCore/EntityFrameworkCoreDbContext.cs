@@ -32,50 +32,35 @@ public class EntityFrameworkCoreDbContext : DbContext
 	{
 		foreach (var type in EntityFrameworkCoreTarget.SupportedModelTypes)
 		{
+			// set the key's according to the ModelInfo
+			var entityTypeBuilder = modelBuilder.Entity(type);
 			var identifierName = ModelInfo.For(type).IdentifierName;
 			var identifierNames = !string.IsNullOrEmpty(identifierName) ? identifierName.Split(',') : null;
 			if (identifierNames?.Length > 0)
 			{
-				var entityTypeBuilder = modelBuilder.Entity(type);
 				entityTypeBuilder.HasKey(identifierNames);
 				foreach (var identifier in identifierNames)
 				{
 					entityTypeBuilder.Property(identifier).ValueGeneratedNever();
 				}
 			}
+
+			// set a default value for non nullable fields
+			foreach (var prop in entityTypeBuilder.Metadata.GetProperties())
+			{
+				if (!prop.IsNullable && !prop.IsKey() && prop.PropertyInfo is not null)
+				{
+					prop.SetDefaultValue(Activator.CreateInstance(prop.PropertyInfo.PropertyType));
+				}
+			}
 		}
-
-		//modelBuilder.Entity<ShopOrderMaterialPlanDetail>().OwnsOne(d => d.Calculator, c =>
-		//{
-		//	c.OwnsOne(d => d.FixedCalculator);
-		//	c.Navigation(e => e.FixedCalculator).IsRequired();
-		//	c.OwnsOne(d => d.MaterialsPerPieceCalculator);
-		//	c.Navigation(e => e.MaterialsPerPieceCalculator).IsRequired();
-		//	c.OwnsOne(d => d.PiecesPerMaterialCalculator);
-		//	c.Navigation(e => e.PiecesPerMaterialCalculator).IsRequired();
-		//	c.OwnsOne(d => d.BarCalculator);
-		//	c.Navigation(e => e.BarCalculator).IsRequired();
-		//	c.OwnsOne(d => d.SheetCalculator);
-		//	c.Navigation(e => e.SheetCalculator).IsRequired();
-		//	c.OwnsOne(d => d.CoilWireLengthCalculator);
-		//	c.Navigation(e => e.CoilWireLengthCalculator).IsRequired();
-		//	c.OwnsOne(d => d.CoilWireWeightCalculator);
-		//	c.Navigation(e => e.CoilWireWeightCalculator).IsRequired();
-		//	c.OwnsOne(d => d.VolumeCalculator);
-		//	c.Navigation(e => e.VolumeCalculator).IsRequired();
-		//});
-		//modelBuilder.Entity<ShopOrderMaterialPlanDetail>().Navigation(d => d.Calculator).IsRequired();
-		//modelBuilder.Entity<BatchNumber>().OwnsMany(b => b.StorageLocations);
-		//modelBuilder.Entity<BatchNumber>().OwnsMany(b => b.Warehouses);
-
-		modelBuilder.Entity<ShopOrderMaterialPlanDetail>().Ignore(a => a.Calculator);
-		modelBuilder.Entity<BatchNumber>().Ignore(a => a.StorageLocations);
-		modelBuilder.Entity<BatchNumber>().Ignore(a => a.Warehouses);
 
 		// remove foreign key constraints
 		modelBuilder.Entity<AbsenceRegistration>().Ignore(a => a.AbsenceRegistrationTransactions);
 		modelBuilder.Entity<Account>().Ignore(a => a.BankAccounts);
 		modelBuilder.Entity<BankEntry>().Ignore(a => a.BankEntryLines);
+		modelBuilder.Entity<BatchNumber>().Ignore(a => a.StorageLocations);
+		modelBuilder.Entity<BatchNumber>().Ignore(a => a.Warehouses);
 		modelBuilder.Entity<CashEntry>().Ignore(a => a.CashEntryLines);
 		modelBuilder.Entity<CommunicationNote>().Ignore(a => a.Attachments);
 		modelBuilder.Entity<Complaint>().Ignore(a => a.Attachments);
@@ -110,6 +95,7 @@ public class EntityFrameworkCoreDbContext : DbContext
 		modelBuilder.Entity<ShopOrder>().Ignore(a => a.SalesOrderLines);
 		modelBuilder.Entity<ShopOrder>().Ignore(a => a.ShopOrderMaterialPlans);
 		modelBuilder.Entity<ShopOrder>().Ignore(a => a.ShopOrderRoutingStepPlans);
+		modelBuilder.Entity<ShopOrderMaterialPlanDetail>().Ignore(a => a.Calculator);
 		modelBuilder.Entity<ShopOrderMaterialPlanDetail>().Ignore(a => a.StockLocations);
 		modelBuilder.Entity<ShopOrderRoutingStepPlan>().Ignore(s => s.TimeTransactions);
 		modelBuilder.Entity<StockCount>().Ignore(a => a.StockCountLines);

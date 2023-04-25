@@ -14,7 +14,7 @@ public class EntityFrameworkCoreTargetTests
 
 		await sut.InitializeDatabaseAsync(default);
 
-		// toso: check if the database actually exists with the right amount of tables
+		// todo: check if the database actually exists with the right amount of tables
 	}
 
 	[StaFact]
@@ -25,6 +25,5 @@ public class EntityFrameworkCoreTargetTests
 
 		var client = await new TestObjectsCreator().GetClientAsync();
 		await client.SynchronizeWithAsync<Quotation>(target, ModelInfo.For<Quotation>().FieldNames(true));
-
 	}
 }
