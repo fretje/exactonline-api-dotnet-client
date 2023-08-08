@@ -2,7 +2,7 @@ namespace ExactOnline.Client.Models.CRM;
 
 [SupportedActionsSDK(true, true, true, true, canBulkRead: true)]
 [DataServiceKey("QuotationID")]
-public class Quotation : SupportsSync
+public class Quotation
 {
 	/// <summary>Amount in the default currency of the company</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
