@@ -1,6 +1,7 @@
 ﻿using ExactOnline.Client.Models.Current;
 using ExactOnline.Client.Sdk.Helpers;
 using ExactOnline.Client.Sdk.Models;
+using Microsoft.Extensions.Logging;
 
 namespace ExactOnline.Client.Sdk.Controllers;
 
@@ -20,6 +21,8 @@ public class ExactOnlineClient
 
 	public EolResponseHeader EolResponseHeader => _apiConnector.EolResponseHeader;
 
+	public ILogger Log { get; }
+
 	public event EventHandler<MinutelyChangedEventArgs> MinutelyChanged
 	{
 		add => _apiConnector.MinutelyChanged += value;
@@ -31,9 +34,11 @@ public class ExactOnlineClient
 	/// </summary>
 	/// <param name="exactOnlineUrl">{URI}/</param>
 	/// <param name="accesstokenFunc">Valid oAuth AccessToken</param>
-	public ExactOnlineClient(string exactOnlineUrl, Func<CancellationToken, Task<string>> accesstokenFunc, HttpClient httpClient = null, int minutelyRemaining = -1, DateTime minutelyResetTime = default)
-		: this(exactOnlineUrl, 0, accesstokenFunc, httpClient, minutelyRemaining, minutelyResetTime)
-	{ }
+	public ExactOnlineClient(string exactOnlineUrl, Func<CancellationToken, Task<string>> accesstokenFunc, HttpClient httpClient = null, int minutelyRemaining = -1, DateTime minutelyResetTime = default, ILogger log = default)
+		: this(exactOnlineUrl, 0, accesstokenFunc, httpClient, minutelyRemaining, minutelyResetTime, log)
+	{
+		Log = log;
+	}
 
 	/// <summary>
 	/// Create instance of ExactClient
@@ -41,7 +46,7 @@ public class ExactOnlineClient
 	/// <param name="exactOnlineUrl">The Exact Online URL for your country</param>
 	/// <param name="division">Division number</param>
 	/// <param name="accesstokenFunc">Delegate that will be executed the access token is expired</param>
-	public ExactOnlineClient(string exactOnlineUrl, int division, Func<CancellationToken, Task<string>> accesstokenFunc, HttpClient httpClient = null, int minutelyRemaining = -1, DateTime minutelyResetTime = default)
+	public ExactOnlineClient(string exactOnlineUrl, int division, Func<CancellationToken, Task<string>> accesstokenFunc, HttpClient httpClient = null, int minutelyRemaining = -1, DateTime minutelyResetTime = default, ILogger log = default)
 	{
 		if (!exactOnlineUrl.EndsWith("/"))
 		{
@@ -50,10 +55,10 @@ public class ExactOnlineClient
 
 		ExactOnlineApiUrl = exactOnlineUrl + "api/v1/";
 
-		_apiConnector = new ApiConnector(accesstokenFunc, httpClient ?? new HttpClient(), minutelyRemaining, minutelyResetTime);
+		_apiConnector = new ApiConnector(accesstokenFunc, httpClient ?? new HttpClient(), minutelyRemaining, minutelyResetTime, log);
 
 		Division = division;
-
+		Log = log;
 		if (Division > 0)
 		{
 			var baseUrl = ExactOnlineApiUrl + Division + "/";

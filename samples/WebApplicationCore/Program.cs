@@ -27,14 +27,14 @@ authorizer.TokensChanged += (_, e) =>
 	(ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessToken, ExactOnlineTest.AccessTokenExpiresAt) =
 	(e.NewRefreshToken, e.NewAccessToken, e.NewExpiresAt);
 
-app.MapGet("/", async (CancellationToken ct) =>
+app.MapGet("/", async (ILogger<Program> logger, CancellationToken ct) =>
 {
 	if (await authorizer.IsAuthorizationNeededAsync(ct))
 	{
 		return Results.Redirect(await authorizer.GetLoginLinkUriAsync(ct: ct));
 	}
 
-	var client = new ExactOnlineClient(ExactOnlineTest.Url, authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
+	var client = new ExactOnlineClient(ExactOnlineTest.Url, authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, logger);
 	client.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
 	await client.InitializeDivisionAsync(ct);
 
@@ -55,14 +55,14 @@ app.MapGet("/callback", async (string code, string? state, CancellationToken ct)
 	return Results.LocalRedirect(string.IsNullOrWhiteSpace(state) ? "/" : state);
 });
 
-app.MapGet("/sync", async (CancellationToken ct) =>
+app.MapGet("/sync", async (ILogger<Program> logger, CancellationToken ct) =>
 {
 	if (await authorizer.IsAuthorizationNeededAsync(ct))
 	{
 		return Results.Redirect(await authorizer.GetLoginLinkUriAsync("/sync", ct: ct));
 	}
 
-	var client = new ExactOnlineClient(ExactOnlineTest.Url, authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
+	var client = new ExactOnlineClient(ExactOnlineTest.Url, authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, logger);
 	client.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
 	await client.InitializeDivisionAsync();
 

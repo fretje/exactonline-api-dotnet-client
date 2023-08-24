@@ -5,6 +5,8 @@ using ExactOnline.Client.Sdk.Enums;
 using ExactOnline.Client.Sdk.Sync;
 using ExactOnline.Client.Sdk.Sync.EntityFrameworkCore;
 using ExactOnline.Client.Sdk.Test.Infrastructure;
+using Serilog;
+using Serilog.Extensions.Logging;
 
 internal class Program
 {
@@ -22,7 +24,14 @@ internal class Program
 			var authorizer = new ExactOnlineWinFormsAuthorizer(testApp.ClientId, testApp.ClientSecret, testApp.CallbackUrl, ExactOnlineTest.Url, ExactOnlineTest.AccessToken, ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessTokenExpiresAt);
 			authorizer.TokensChanged += (_, e) => (ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessToken, ExactOnlineTest.AccessTokenExpiresAt) = (e.NewRefreshToken, e.NewAccessToken, e.NewExpiresAt);
 
-			var client = new ExactOnlineClient(ExactOnlineTest.Url, authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
+			var seriLogger = new LoggerConfiguration()
+				.MinimumLevel.Debug()
+				.WriteTo.Debug()
+				.WriteTo.Console()
+				.CreateLogger();
+			var logger = new SerilogLoggerFactory(seriLogger).CreateLogger("ExactOnline Sdk");			
+
+			var client = new ExactOnlineClient(ExactOnlineTest.Url, authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, logger);
 			client.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
 			await client.InitializeDivisionAsync();
 

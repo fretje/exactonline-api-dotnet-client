@@ -1,9 +1,9 @@
-﻿using System.Diagnostics;
-using System.Linq.Dynamic.Core;
+﻿using System.Linq.Dynamic.Core;
 using ExactOnline.Client.Models.Sync;
 using ExactOnline.Client.Sdk.Controllers;
 using ExactOnline.Client.Sdk.Enums;
 using ExactOnline.Client.Sdk.Helpers;
+using Microsoft.Extensions.Logging;
 
 namespace ExactOnline.Client.Sdk.Sync;
 
@@ -68,7 +68,10 @@ public static class ExactOnlineQueryExtensions
 			}
 		}
 
-		Debug.WriteLine(result);
+		if (client.Log is not null)
+		{
+			client.Log.LogInformation("ExactOnline Sdk: {SyncResult}", result);
+		}
 
 		return result;
 	}
@@ -143,7 +146,10 @@ public static class ExactOnlineQueryExtensions
 			}
 		}
 
-		Debug.WriteLine(result);
+		if (client.Log is not null)
+		{
+			client.Log.LogInformation("ExactOnline Sdk: {SyncResult}", result);
+		}
 
 		return result;
 	}

@@ -5,6 +5,7 @@ using System.Text;
 using ExactOnline.Client.Sdk.Exceptions;
 using ExactOnline.Client.Sdk.Interfaces;
 using ExactOnline.Client.Sdk.Models;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace ExactOnline.Client.Sdk.Helpers;
@@ -19,6 +20,7 @@ public class ApiConnector : IApiConnector
 
 	private int _minutelyRemaining = -1;
 	private DateTime _minutelyResetTime;
+	private readonly ILogger _log;
 
 	public EolResponseHeader EolResponseHeader { get; set; }
 
@@ -29,12 +31,13 @@ public class ApiConnector : IApiConnector
 	/// </summary>
 	/// <param name="accessTokenFunc">Delegate that provides a valid oAuth Access Token</param>
 	/// <param name="client">The ExactOnlineClient this connector is associated with</param>
-	public ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc, HttpClient httpClient, int minutelyRemaining, DateTime minutelyResetTime)
+	public ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc, HttpClient httpClient, int minutelyRemaining, DateTime minutelyResetTime, ILogger log = default)
 	{
 		_accessTokenFunc = accessTokenFunc ?? throw new ArgumentNullException(nameof(accessTokenFunc));
 		_httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
 		_minutelyRemaining = minutelyRemaining;
 		_minutelyResetTime = minutelyResetTime;
+		_log = log;
 	}
 
 	/// <summary>
@@ -170,11 +173,13 @@ public class ApiConnector : IApiConnector
 			request.Content = new StringContent(data, Encoding.UTF8, "application/json");
 		}
 
-		Debug.Write(method.ToString() + " ");
-		Debug.WriteLine(request.RequestUri);
-		if (!string.IsNullOrEmpty(data))
+		if (_log is not null)
 		{
-			Debug.WriteLine(data);
+			_log.LogInformation("ExactOnline Sdk: Executing Request: {Method} {Url}", method, request.RequestUri);
+			if (!string.IsNullOrEmpty(data))
+			{
+				_log.LogDebug("ExactOnline Sdk: Request Data: {Data}", data);
+			}
 		}
 
 		return request;
@@ -185,7 +190,10 @@ public class ApiConnector : IApiConnector
 		if (_minutelyRemaining == 0)
 		{
 			var minutelyWaitTime = GetMinutelyWaitTime();
-			Debug.WriteLine($"WAITING {minutelyWaitTime} to respect minutely rate limit.");
+			if (_log is not null)
+			{
+				_log.LogInformation("ExactOnline Sdk: WAITING {MinutelyWaitTime} to respect minutely rate limit.", minutelyWaitTime);
+			}
 			await Task.Delay(minutelyWaitTime, ct).ConfigureAwait(false);
 		}
 
@@ -221,8 +229,10 @@ public class ApiConnector : IApiConnector
 			}
 		}
 
-		Debug.WriteLine(responseValue);
-		Debug.WriteLine("");
+		if (_log is not null)
+		{
+			_log.LogDebug("ExactOnline Sdk: Response Body: {Response}", responseValue);
+		}
 
 		return responseValue;
 	}
@@ -240,17 +250,16 @@ public class ApiConnector : IApiConnector
 			}
 		}
 
-		Debug.WriteLine("BODY");
-		Debug.WriteLine(responseValue);
-		Debug.WriteLine("");
+		if (_log is not null)
+		{
+			_log.LogDebug("ExactOnline Sdk: Response Body: {Response}", responseValue);
+		}
 
 		return responseValue;
 	}
 
 	private Stream GetResponseStream(HttpRequestMessage request)
 	{
-		Debug.WriteLine("RESPONSE");
-
 		var response = default(HttpResponseMessage);
 
 		// Get response. If this fails: Throw the correct Exception (for testability)
@@ -260,7 +269,6 @@ public class ApiConnector : IApiConnector
 			if (!response.IsSuccessStatusCode)
 			{
 				ThrowSpecificExceptionAsync(response).GetAwaiter().GetResult();
-
 			}
 			return response.Content.ReadAsStreamAsync().GetAwaiter().GetResult();
 		}
@@ -272,8 +280,6 @@ public class ApiConnector : IApiConnector
 
 	private async Task<Stream> GetResponseStreamAsync(HttpRequestMessage request, CancellationToken ct)
 	{
-		Debug.WriteLine("RESPONSE");
-
 		var response = default(HttpResponseMessage);
 
 		// Get response. If this fails: Throw the correct Exception (for testability)
@@ -298,14 +304,15 @@ public class ApiConnector : IApiConnector
 		return waitTime < TimeSpan.Zero ? TimeSpan.Zero : waitTime;
 	}
 
-	private static async Task ThrowSpecificExceptionAsync(HttpResponseMessage response)
+	private async Task ThrowSpecificExceptionAsync(HttpResponseMessage response)
 	{
 		var statusCode = response.StatusCode;
-		Debug.WriteLine(response.ReasonPhrase);
-
 		var messageFromServer = new StreamReader(await response.Content.ReadAsStreamAsync().ConfigureAwait(false)).ReadToEnd();
-		Debug.WriteLine(messageFromServer);
-		Debug.WriteLine("");
+		if (_log is not null)
+		{
+			_log.LogError("ExactOnline Sdk: Request Failed: {Response}", response.ReasonPhrase);
+			_log.LogError("ExactOnline Sdk: Message from Server: {MessageFromServer}", messageFromServer);
+		}
 
 		var messageError = default(ServerMessage);
 		try
@@ -360,9 +367,18 @@ public class ApiConnector : IApiConnector
 				}
 			};
 
-			Debug.WriteLine("HEADERS");
-			Debug.WriteLine($"X-RateLimit-Limit: {EolResponseHeader.RateLimit.Limit} - X-RateLimit-Remaining: {EolResponseHeader.RateLimit.Remaining} - X-RateLimit-Reset: {EolResponseHeader.RateLimit.ResetDate}");
-			Debug.WriteLine($"X-RateLimit-Minutely-Limit: {EolResponseHeader.RateLimit.MinutelyLimit} - X-RateLimit-Minutely-Remaining: {EolResponseHeader.RateLimit.MinutelyRemaining} - X-RateLimit-Minutely-Reset: {EolResponseHeader.RateLimit.MinutelyResetDate}");
+			if (_log is not null)
+			{
+				_log.LogDebug(@"ExactOnline Sdk: Response Headers: 
+    X-RateLimit-Limit: {RateLimitLimit}
+    X-RateLimit-Remaining: {RateLimitRemaining}
+    X-RateLimit-Reset: {RateLimitResetDate}
+    X-RateLimit-Minutely-Limit: {RateLimitMinutelyLimit}
+    X-RateLimit-Minutely-Remaining: {RateLimitMinutelyRemaining}
+    X-RateLimit-Minutely-Reset: {RateLimitMinutelyResetDate}",
+					EolResponseHeader.RateLimit.Limit, EolResponseHeader.RateLimit.Remaining, EolResponseHeader.RateLimit.ResetDate,
+					EolResponseHeader.RateLimit.MinutelyLimit, EolResponseHeader.RateLimit.MinutelyRemaining, EolResponseHeader.RateLimit.MinutelyResetDate);
+			}
 
 			if (EolResponseHeader.RateLimit.MinutelyLimit is int minutelyLimit &&
 				EolResponseHeader.RateLimit.MinutelyRemaining is int minutelyRemaining)
