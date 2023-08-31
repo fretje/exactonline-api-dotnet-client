@@ -181,9 +181,8 @@ public static class ExactOnlineQueryExtensions
 				query.Select(item);
 				fields.Add(item);
 			}
-		};
+		}
 		
-
 		if (endpointType == EndpointTypeEnum.Sync)
 		{
 			if (!fields.Contains(ModelInfo.TimestampName))
