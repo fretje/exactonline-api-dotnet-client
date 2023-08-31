@@ -28,7 +28,8 @@ public static class ExactOnlineQueryExtensions
 			maxModified = targetController.GetMaxModified();
 		}
 
-		query.PrepareForSync(modelInfo, endpointType, maxTimestamp, maxModified);
+		var fieldsList = fields.ToList();
+		query.PrepareForSync(modelInfo, fieldsList, endpointType, maxTimestamp, maxModified);
 
 		var skiptoken = default(string);
 		do
@@ -47,7 +48,7 @@ public static class ExactOnlineQueryExtensions
 			if (entities.Count > 0)
 			{
 				result.RecordsInsertedOrUpdated += targetController
-					.CreateOrUpdateEntities(entities, fields);
+					.CreateOrUpdateEntities(entities, fieldsList.ToArray());
 			}
 
 		} while (!string.IsNullOrEmpty(skiptoken));
@@ -95,7 +96,8 @@ public static class ExactOnlineQueryExtensions
 			maxModified = await targetController.GetMaxModifiedAsync(ct).ConfigureAwait(false);
 		}
 
-		PrepareForSync(query, modelInfo, endpointType, maxTimestamp, maxModified);
+		var fieldsList = fields.ToList();
+		PrepareForSync(query, modelInfo, fieldsList, endpointType, maxTimestamp, maxModified);
 
 		var skiptoken = default(string);
 		do
@@ -120,7 +122,7 @@ public static class ExactOnlineQueryExtensions
 			if (entities.Count > 0)
 			{
 				result.RecordsInsertedOrUpdated += await targetController
-					.CreateOrUpdateEntitiesAsync(entities, fields, ct).ConfigureAwait(false);
+					.CreateOrUpdateEntitiesAsync(entities, fieldsList.ToArray(), ct).ConfigureAwait(false);
 			}
 
 			reportProgress?.Invoke(result.RecordsRead, result.RecordsInsertedOrUpdated);
@@ -167,21 +169,36 @@ public static class ExactOnlineQueryExtensions
 							   : EndpointTypeEnum.Single;
 
 	// Make sure we select all the necessary fields (add id and timestamp/modified fields)
+	// This also updates the fields list that is then sent later to the CreateOrUpdateEntities method
 	// And filter the query according to maxTimestamp or maxModified
-	private static void PrepareForSync<TModel>(this ExactOnlineQuery<TModel> query, ModelInfo modelInfo, EndpointTypeEnum endpointType, long maxTimestamp, DateTime? maxModified)
+	private static void PrepareForSync<TModel>(this ExactOnlineQuery<TModel> query, ModelInfo modelInfo, List<string> fields, EndpointTypeEnum endpointType, long maxTimestamp, DateTime? maxModified)
 		where TModel : class
 	{
-		// IdentifierName can have multiple fields separated by ',' but this is no problem for this kind of select here
-		query.Select(modelInfo.IdentifierName);
-
+		foreach (var item in modelInfo.IdentifierName.Split(','))
+		{
+			if (!fields.Contains(item))
+			{
+				query.Select(item);
+				fields.Add(item);
+			}
+		}
+		
 		if (endpointType == EndpointTypeEnum.Sync)
 		{
-			query.Select(ModelInfo.TimestampName);
+			if (!fields.Contains(ModelInfo.TimestampName))
+			{
+				query.Select(ModelInfo.TimestampName);
+				fields.Add(ModelInfo.TimestampName);
+			}
 			query.Where(modelInfo.TimestampLambda<TModel>(), maxTimestamp, OperatorEnum.Gt);
 		}
 		else if (modelInfo.HasModifiedProperty)
 		{
-			query.Select(ModelInfo.ModifiedName);
+			if (!fields.Contains(ModelInfo.ModifiedName))
+			{
+				query.Select(ModelInfo.ModifiedName);
+				fields.Add(ModelInfo.ModifiedName);
+			}
 			if (maxModified.HasValue)
 			{
 				query.Where(modelInfo.ModifiedLambda<TModel>(), maxModified, OperatorEnum.Gt);
