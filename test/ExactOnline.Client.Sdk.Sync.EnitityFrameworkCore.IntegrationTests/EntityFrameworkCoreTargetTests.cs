@@ -24,6 +24,6 @@ public class EntityFrameworkCoreTargetTests
 		var target = new EntityFrameworkCoreTarget(connectionString);
 
 		var client = await new TestObjectsCreator().GetClientAsync();
-		await client.SynchronizeWithAsync<Quotation>(target, ModelInfo.For<Quotation>().FieldNames(true));
+		await client.SynchronizeWithAsync<Account>(target, ModelInfo.For<Account>().FieldNames(true));
 	}
 }

@@ -1,4 +1,5 @@
-﻿using ExactOnline.Client.OAuth2.WinForms;
+﻿using System.Net.Http;
+using ExactOnline.Client.OAuth2.WinForms;
 using ExactOnline.Client.Sdk.Controllers;
 using ExactOnline.Client.Sdk.Helpers;
 using ExactOnline.Client.Sdk.Interfaces;

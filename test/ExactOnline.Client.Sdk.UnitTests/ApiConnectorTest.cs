@@ -1,6 +1,6 @@
-﻿using ExactOnline.Client.Sdk.Exceptions;
+﻿using System.Net.Http;
+using ExactOnline.Client.Sdk.Exceptions;
 using ExactOnline.Client.Sdk.Helpers;
-using ExactOnline.Client.Sdk.Interfaces;
 using ExactOnline.Client.Sdk.Test.Infrastructure;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
