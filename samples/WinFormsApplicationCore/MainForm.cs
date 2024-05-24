@@ -29,6 +29,7 @@ public partial class MainForm : Form
 			// Get the Code and Name of a random account in the administration.
 			var fields = new[] { "Code", "Name" };
 			var account = (await client.For<Account>().Top(1).Select(fields).GetAsync()).List.FirstOrDefault();
+			MessageBox.Show(account?.Name);
 
 			// Get transaction lines for a specific entry number.
 			//var transactionlines = await client.For<TransactionLine>()

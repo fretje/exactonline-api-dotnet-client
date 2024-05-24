@@ -28,7 +28,7 @@ public static class ExactOnlineQueryExtensions
 			maxModified = targetController.GetMaxModified();
 		}
 
-		var fieldsList = fields.ToList();
+		var fieldsList = fields?.ToList() ?? new();
 		query.PrepareForSync(modelInfo, fieldsList, endpointType, maxTimestamp, maxModified);
 
 		var skiptoken = default(string);
@@ -69,15 +69,12 @@ public static class ExactOnlineQueryExtensions
 			}
 		}
 
-		if (client.Log is not null)
-		{
-			client.Log.LogInformation("ExactOnline Sdk: {SyncResult}", result);
-		}
+		client.Log?.LogInformation("ExactOnline Sdk: {SyncResult}", result);
 
 		return result;
 	}
 
-	public static async Task<SyncResult> SynchronizeWithAsync<TModel>(this ExactOnlineQuery<TModel> query, ISyncTarget syncTarget, ExactOnlineClient client, string[] fields, Action<int, int> reportProgress = null, CancellationToken ct = default)
+	public static async Task<SyncResult> SynchronizeWithAsync<TModel>(this ExactOnlineQuery<TModel> query, ISyncTarget syncTarget, ExactOnlineClient client, string[] fields = null, Action<int, int> reportProgress = null, CancellationToken ct = default)
 		where TModel : class
 	{
 		var modelInfo = ModelInfo.For<TModel>();
@@ -96,7 +93,7 @@ public static class ExactOnlineQueryExtensions
 			maxModified = await targetController.GetMaxModifiedAsync(ct).ConfigureAwait(false);
 		}
 
-		var fieldsList = fields.ToList();
+		var fieldsList = fields?.ToList() ?? new();
 		PrepareForSync(query, modelInfo, fieldsList, endpointType, maxTimestamp, maxModified);
 
 		var skiptoken = default(string);
@@ -148,10 +145,7 @@ public static class ExactOnlineQueryExtensions
 			}
 		}
 
-		if (client.Log is not null)
-		{
-			client.Log.LogInformation("ExactOnline Sdk: {SyncResult}", result);
-		}
+		client.Log?.LogInformation("ExactOnline Sdk: {SyncResult}", result);
 
 		return result;
 	}
