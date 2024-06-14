@@ -28,7 +28,7 @@ public static class ExactOnlineQueryExtensions
 			maxModified = targetController.GetMaxModified();
 		}
 
-		var fieldsList = fields?.ToList() ?? new();
+		var fieldsList = fields?.ToList() ?? [];
 		query.PrepareForSync(modelInfo, fieldsList, endpointType, maxTimestamp, maxModified);
 
 		var skiptoken = default(string);
@@ -48,7 +48,7 @@ public static class ExactOnlineQueryExtensions
 			if (entities.Count > 0)
 			{
 				result.RecordsInsertedOrUpdated += targetController
-					.CreateOrUpdateEntities(entities, fieldsList.ToArray());
+					.CreateOrUpdateEntities(entities, [.. fieldsList]);
 			}
 
 		} while (!string.IsNullOrEmpty(skiptoken));
@@ -93,7 +93,7 @@ public static class ExactOnlineQueryExtensions
 			maxModified = await targetController.GetMaxModifiedAsync(ct).ConfigureAwait(false);
 		}
 
-		var fieldsList = fields?.ToList() ?? new();
+		var fieldsList = fields?.ToList() ?? [];
 		PrepareForSync(query, modelInfo, fieldsList, endpointType, maxTimestamp, maxModified);
 
 		var skiptoken = default(string);
@@ -119,7 +119,7 @@ public static class ExactOnlineQueryExtensions
 			if (entities.Count > 0)
 			{
 				result.RecordsInsertedOrUpdated += await targetController
-					.CreateOrUpdateEntitiesAsync(entities, fieldsList.ToArray(), ct).ConfigureAwait(false);
+					.CreateOrUpdateEntitiesAsync(entities, [.. fieldsList], ct).ConfigureAwait(false);
 			}
 
 			reportProgress?.Invoke(result.RecordsRead, result.RecordsInsertedOrUpdated);

@@ -5,14 +5,12 @@ namespace ExactOnline.Client.Sdk.Controllers;
 /// <summary>
 /// Lets the developer get dynamic objects with output from the API
 /// </summary>
-public class SimpleController
+/// <remarks>
+/// Create new instance of AccountController
+/// </remarks>
+public class SimpleController(ApiConnection conn)
 {
-	private readonly ApiConnection _conn;
-
-	/// <summary>
-	/// Create new instance of AccountController
-	/// </summary>
-	public SimpleController(ApiConnection conn) => _conn = conn;
+	private readonly ApiConnection _conn = conn;
 
 	/// <summary>
 	/// Returns a list of dynamic objects

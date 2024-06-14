@@ -97,7 +97,7 @@ public class ExactOnlineJsonConverter : JsonConverter
 	private static bool IsWriteField(PropertyInfo pi) =>
 		!pi.GetCustomAttributes().OfType<SDKFieldType>().Any(a => a.TypeOfField == FieldType.ReadOnly);
 
-	private IEnumerable<PropertyInfo> GetUpdatedFields(PropertyInfo[] writeableFields, object value)
+	private PropertyInfo[] GetUpdatedFields(PropertyInfo[] writeableFields, object value)
 	{
 		// Check if this is an object where only the json for updated fields have to be created
 		writeableFields = value.GetType().GetProperties().Where(property => IsUpdatedField(value, property)).ToArray();
@@ -169,7 +169,7 @@ public class ExactOnlineJsonConverter : JsonConverter
 		writer.WriteEndArray();
 	}
 
-	private JsonConverter GetCorrectConverter(object entity)
+	private ExactOnlineJsonConverter GetCorrectConverter(object entity)
 	{
 		ExactOnlineJsonConverter converter;
 

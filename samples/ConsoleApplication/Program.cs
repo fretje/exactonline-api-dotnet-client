@@ -17,7 +17,7 @@ internal class Program
 	private static async Task Main()
 	{
 		// We need a WinFormsApartment (message loop) to be able to use the WinFormsAuthorizer
-		using var apartment = new WinFormsApartment(() => new Form());
+		using var apartment = new WinFormsApartment(() => new Form { Width = 0, Height = 0 });
 
 		await apartment.Run(async () =>
 		{

@@ -7,20 +7,12 @@ namespace ExactOnline.Client.Sdk.Helpers;
 /// <summary>
 /// Manages instances of controllers
 /// </summary>
-public class ControllerList
+public class ControllerList(IApiConnector connector, string baseurl)
 {
-	private readonly IApiConnector _connector;
-	private readonly string _baseUrl;
-	private readonly Hashtable _controllers;
-	private readonly Dictionary<string, string> _services;
-
-	public ControllerList(IApiConnector connector, string baseurl)
-	{
-		_connector = connector;
-		_baseUrl = baseurl;
-		_controllers = new Hashtable();
-		_services = new Services().ServicesDictionary;
-	}
+	private readonly IApiConnector _connector = connector;
+	private readonly string _baseUrl = baseurl;
+	private readonly Hashtable _controllers = [];
+	private readonly Dictionary<string, string> _services = new Services().ServicesDictionary;
 
 	/// <summary>
 	/// Method for getting the correct EntityManager. This method is used as a Delegate
@@ -46,8 +38,8 @@ public class ControllerList
 			var connection =
 				typename == typeof(Client.Models.Current.Me).FullName
 					? new ApiConnection(_connector, "system/Me", _baseUrl)
-					: _services.ContainsKey(typename)
-						? new ApiConnection(_connector, _services[typename], _baseUrl)
+					: _services.TryGetValue(typename, out string value)
+						? new ApiConnection(_connector, value, _baseUrl)
 						: throw new InvalidOperationException("Specified entity is not known in Exact Online. Please check the reference documentation");
 
 			controller = new Controller<T>(connection, GetEntityManager);

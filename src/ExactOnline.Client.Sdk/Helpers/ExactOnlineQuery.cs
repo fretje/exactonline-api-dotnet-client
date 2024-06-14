@@ -6,24 +6,21 @@ using ExactOnline.Client.Sdk.Interfaces;
 
 namespace ExactOnline.Client.Sdk.Helpers;
 
-public class ExactOnlineQuery<T>
+/// <summary>
+/// Creates a new instance of ExactOnlineQuery
+/// </summary>
+public class ExactOnlineQuery<T>(IController<T> controller)
 {
-	private readonly IController<T> _controller;
+	private readonly IController<T> _controller = controller ?? throw new ArgumentNullException(nameof(controller));
 
 	private string _select;
-	private readonly List<string> _and = new();
+	private readonly List<string> _and = [];
 	private string _skip;
 	private string _expand;
 	private string _top;
 	private string _orderby;
 	private string _where;
 	private string _skipToken;
-
-	/// <summary>
-	/// Creates a new instance of ExactOnlineQuery
-	/// </summary>
-	public ExactOnlineQuery(IController<T> controller) =>
-		_controller = controller ?? throw new ArgumentNullException(nameof(controller));
 
 	/// <summary>
 	/// Creates a 'where' clause for the query

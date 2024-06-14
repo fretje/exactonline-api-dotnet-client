@@ -23,7 +23,7 @@ public class RateLimit
 	/// The time at which the rate limit window resets in UTC epoch seconds.
 	/// </summary>
 	public long? Reset { get; set; }
-	public DateTimeOffset? ResetDate => Reset.HasValue ? DateTimeOffset.FromUnixTimeMilliseconds(Reset.Value) : (DateTimeOffset?)null;
+	public DateTimeOffset? ResetDate => Reset.HasValue ? DateTimeOffset.FromUnixTimeMilliseconds(Reset.Value) : null;
 
 	/// <summary>
 	/// The maximum number of API calls that your app is permitted to make per company, per minute.
@@ -39,5 +39,5 @@ public class RateLimit
 	/// The time at which the minutely rate limit window resets in UTC epoch seconds.
 	/// </summary>
 	public long? MinutelyReset { get; set; }
-	public DateTimeOffset? MinutelyResetDate => MinutelyReset.HasValue ? DateTimeOffset.FromUnixTimeMilliseconds(MinutelyReset.Value) : (DateTimeOffset?)null;
+	public DateTimeOffset? MinutelyResetDate => MinutelyReset.HasValue ? DateTimeOffset.FromUnixTimeMilliseconds(MinutelyReset.Value) : null;
 }

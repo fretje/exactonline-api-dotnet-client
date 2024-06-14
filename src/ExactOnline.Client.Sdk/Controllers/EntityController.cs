@@ -7,31 +7,22 @@ namespace ExactOnline.Client.Sdk.Controllers;
 /// <summary>
 /// Controls the state of an entity to create the functionality for only sending altered fields to the API
 /// </summary>
-public class EntityController
+/// <remarks>
+/// Creates an instance of EntityController
+/// </remarks>
+/// <param name="entity">An instance of an Entity that must be managed</param>
+/// <param name="keyName">Name of the keyname field of the entity (mostly ID)</param>
+/// <param name="identifier">Name of the identifier field of the entity (mostly ID)</param>
+/// <param name="connection">Instance of IApiConnection to connect to the specific part of the API</param>
+/// <param name="getEntityControllerFunc">Delegate that gets the entity controller</param>
+public class EntityController(object entity, string keyName, string identifier, IApiConnection connection, Func<object, EntityController> getEntityControllerFunc)
 {
-	private readonly string _keyName; // Name of the field that identifies the entity
-	private readonly string _identifier; // Value of the field that identifies the entity 
-	private readonly IApiConnection _connection;
-	private readonly Func<object, EntityController> _getEntityControllerFunc;
+	private readonly string _keyName = keyName; // Name of the field that identifies the entity
+	private readonly string _identifier = identifier; // Value of the field that identifies the entity 
+	private readonly IApiConnection _connection = connection;
+	private readonly Func<object, EntityController> _getEntityControllerFunc = getEntityControllerFunc;
 
-	/// <summary>
-	/// Creates an instance of EntityController
-	/// </summary>
-	/// <param name="entity">An instance of an Entity that must be managed</param>
-	/// <param name="keyName">Name of the keyname field of the entity (mostly ID)</param>
-	/// <param name="identifier">Name of the identifier field of the entity (mostly ID)</param>
-	/// <param name="connection">Instance of IApiConnection to connect to the specific part of the API</param>
-	/// <param name="getEntityControllerFunc">Delegate that gets the entity controller</param>
-	public EntityController(object entity, string keyName, string identifier, IApiConnection connection, Func<object, EntityController> getEntityControllerFunc)
-	{
-		OriginalEntity = Clone(entity);
-		_keyName = keyName;
-		_identifier = identifier;
-		_connection = connection;
-		_getEntityControllerFunc = getEntityControllerFunc;
-	}
-
-	public object OriginalEntity { get; private set; }
+	public object OriginalEntity { get; private set; } = Clone(entity);
 
 	/// <summary>
 	/// Indicates if an entity is updated 

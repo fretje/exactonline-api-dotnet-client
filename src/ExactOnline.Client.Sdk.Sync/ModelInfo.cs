@@ -20,7 +20,7 @@ public class FieldInfo
 
 public class ModelInfo
 {
-	private static readonly Hashtable _modelInfos = new();
+	private static readonly Hashtable _modelInfos = [];
 
 	public static ModelInfo For<TModel>() => For(typeof(TModel));
 

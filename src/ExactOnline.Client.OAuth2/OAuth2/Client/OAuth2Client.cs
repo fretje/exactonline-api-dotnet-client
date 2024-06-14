@@ -131,7 +131,7 @@ public abstract class OAuth2Client : IClient
 			return AccessToken;
 		}
 
-		NameValueCollection parameters = new();
+		NameValueCollection parameters = [];
 		if (!string.IsNullOrEmpty(refreshToken))
 		{
 			parameters.Add("refresh_token", refreshToken);

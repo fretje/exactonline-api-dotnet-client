@@ -17,7 +17,7 @@ public class ExactOnlineQueryTests
 			.Select("Code")
 			.Get();
 
-		if (!accounts.Any())
+		if (accounts.Count == 0)
 		{
 			throw new Exception("The collection of Account entities is empty");
 		}
@@ -34,7 +34,7 @@ public class ExactOnlineQueryTests
 			.Where($"Description+eq+'{TestObjectsCreator.SpecificGLAccountDescription}'")
 			.Get();
 
-		if (!accounts.Any())
+		if (accounts.Count == 0)
 		{
 			throw new Exception("The collection of Account entities is empty");
 		}
@@ -52,7 +52,7 @@ public class ExactOnlineQueryTests
 			.And($"Code+eq+'{TestObjectsCreator.SpecificGLAccountCode}'")
 			.Get();
 
-		if (!accounts.Any())
+		if (accounts.Count == 0)
 		{
 			throw new Exception("The collection of Account entities is empty");
 		}
@@ -94,7 +94,7 @@ public class ExactOnlineQueryTests
 		var client = await new TestObjectsCreator().GetClientAsync();
 
 		var accounts = client.For<Account>()
-			.Select(new[] { "Code" })
+			.Select("Code")
 			.Get();
 
 		Assert.IsTrue(accounts.Count > 1);
@@ -106,6 +106,6 @@ public class ExactOnlineQueryTests
 	{
 		var client = await new TestObjectsCreator().GetClientAsync();
 
-		client.For<Account>().Select(new[] { "Xxx" }).Get();
+		client.For<Account>().Select("Xxx").Get();
 	}
 }

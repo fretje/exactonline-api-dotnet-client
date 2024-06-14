@@ -70,9 +70,7 @@ public class EntityFrameworkCoreTargetController<TModel, TId>
 	{
 		using var db = new EntityFrameworkCoreDbContext(new DbContextOptionsBuilder().UseSqlServer(_nameOrConnectionString).Options);
 
-		return db.Set<TModel>()
-			.Select(ModelInfo.IdentifierLambda<TModel, TId>())
-			.ToArray();
+		return [.. db.Set<TModel>().Select(ModelInfo.IdentifierLambda<TModel, TId>())];
 	}
 
 	private async Task<TId[]> GetExistingIdsAsync(CancellationToken ct)

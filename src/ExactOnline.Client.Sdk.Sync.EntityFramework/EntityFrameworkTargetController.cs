@@ -61,9 +61,7 @@ public class EntityFrameworkTargetController<TModel, TId>
 	private TId[] GetExistingIds()
 	{
 		using var db = new EntityFrameworkDbContext(_nameOrConnectionString);
-		return db.Set<TModel>()
-			.Select(ModelInfo.IdentifierLambda<TModel, TId>())
-			.ToArray();
+		return [.. db.Set<TModel>().Select(ModelInfo.IdentifierLambda<TModel, TId>())];
 	}
 
 	private async Task<TId[]> GetExistingIdsAsync(CancellationToken ct)

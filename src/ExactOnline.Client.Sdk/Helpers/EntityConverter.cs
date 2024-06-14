@@ -33,7 +33,7 @@ public static class EntityConverter
 		try
 		{
 			JArray array = JsonConvert.DeserializeObject<dynamic>(json);
-			return array.ToList<dynamic>();
+			return [.. array];
 		}
 		catch
 		{

@@ -12,32 +12,23 @@ namespace ExactOnline.Client.Sdk.Helpers;
 /// <summary>
 /// Class for doing request to REST API
 /// </summary>
-public class ApiConnector : IApiConnector
+/// <remarks>
+/// Creates new instance of ApiConnector
+/// </remarks>
+/// <param name="accessTokenFunc">Delegate that provides a valid oAuth Access Token</param>
+/// <param name="client">The ExactOnlineClient this connector is associated with</param>
+public class ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc, HttpClient httpClient, int minutelyRemaining, DateTime minutelyResetTime, ILogger log = default) : IApiConnector
 {
-	private readonly Func<CancellationToken, Task<string>> _accessTokenFunc;
-	private readonly HttpClient _httpClient;
+	private readonly Func<CancellationToken, Task<string>> _accessTokenFunc = accessTokenFunc ?? throw new ArgumentNullException(nameof(accessTokenFunc));
+	private readonly HttpClient _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
 
-	private int _minutelyRemaining = -1;
-	private DateTime _minutelyResetTime;
-	private readonly ILogger _log;
+	private int _minutelyRemaining = minutelyRemaining;
+	private DateTime _minutelyResetTime = minutelyResetTime;
+	private readonly ILogger _log = log;
 
 	public EolResponseHeader EolResponseHeader { get; set; }
 
 	public event EventHandler<MinutelyChangedEventArgs> MinutelyChanged;
-
-	/// <summary>
-	/// Creates new instance of ApiConnector
-	/// </summary>
-	/// <param name="accessTokenFunc">Delegate that provides a valid oAuth Access Token</param>
-	/// <param name="client">The ExactOnlineClient this connector is associated with</param>
-	public ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc, HttpClient httpClient, int minutelyRemaining, DateTime minutelyResetTime, ILogger log = default)
-	{
-		_accessTokenFunc = accessTokenFunc ?? throw new ArgumentNullException(nameof(accessTokenFunc));
-		_httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
-		_minutelyRemaining = minutelyRemaining;
-		_minutelyResetTime = minutelyResetTime;
-		_log = log;
-	}
 
 	/// <summary>
 	/// Read Data: Perform a GET Request on the API
@@ -189,10 +180,7 @@ public class ApiConnector : IApiConnector
 		if (_minutelyRemaining == 0)
 		{
 			var minutelyWaitTime = GetMinutelyWaitTime();
-			if (_log is not null)
-			{
-				_log.LogInformation("ExactOnline Sdk: WAITING {MinutelyWaitTime} to respect minutely rate limit.", minutelyWaitTime);
-			}
+			_log?.LogInformation("ExactOnline Sdk: WAITING {MinutelyWaitTime} to respect minutely rate limit.", minutelyWaitTime);
 			await Task.Delay(minutelyWaitTime, ct).ConfigureAwait(false);
 		}
 
@@ -228,10 +216,7 @@ public class ApiConnector : IApiConnector
 			}
 		}
 
-		if (_log is not null)
-		{
-			_log.LogTrace("ExactOnline Sdk: Response Body: {Response}", responseValue);
-		}
+		_log?.LogTrace("ExactOnline Sdk: Response Body: {Response}", responseValue);
 
 		return responseValue;
 	}
@@ -249,52 +234,33 @@ public class ApiConnector : IApiConnector
 			}
 		}
 
-		if (_log is not null)
-		{
-			_log.LogTrace("ExactOnline Sdk: Response Body: {Response}", responseValue);
-		}
+		_log?.LogTrace("ExactOnline Sdk: Response Body: {Response}", responseValue);
 
 		return responseValue;
 	}
 
 	private Stream GetResponseStream(HttpRequestMessage request)
 	{
-		var response = default(HttpResponseMessage);
-
 		// Get response. If this fails: Throw the correct Exception (for testability)
-		try
+		var response = _httpClient.SendAsync(request).GetAwaiter().GetResult();
+		SetEolResponseHeaders(response);
+		if (!response.IsSuccessStatusCode)
 		{
-			response = _httpClient.SendAsync(request).GetAwaiter().GetResult();
-			if (!response.IsSuccessStatusCode)
-			{
-				ThrowSpecificExceptionAsync(response).GetAwaiter().GetResult();
-			}
-			return response.Content.ReadAsStreamAsync().GetAwaiter().GetResult();
+			ThrowSpecificExceptionAsync(response).GetAwaiter().GetResult();
 		}
-		finally
-		{
-			SetEolResponseHeaders(response);
-		}
+		return response.Content.ReadAsStreamAsync().GetAwaiter().GetResult();
 	}
 
 	private async Task<Stream> GetResponseStreamAsync(HttpRequestMessage request, CancellationToken ct)
 	{
-		var response = default(HttpResponseMessage);
-
 		// Get response. If this fails: Throw the correct Exception (for testability)
-		try
+		var response = await _httpClient.SendAsync(request, ct).ConfigureAwait(false);
+		SetEolResponseHeaders(response);
+		if (!response.IsSuccessStatusCode)
 		{
-			response = await _httpClient.SendAsync(request, ct).ConfigureAwait(false);
-			if (!response.IsSuccessStatusCode)
-			{
-				await ThrowSpecificExceptionAsync(response).ConfigureAwait(false);
-			}
-			return await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
+			await ThrowSpecificExceptionAsync(response).ConfigureAwait(false);
 		}
-		finally
-		{
-			SetEolResponseHeaders(response);
-		}
+		return await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
 	}
 
 	private TimeSpan GetMinutelyWaitTime()
@@ -366,18 +332,17 @@ public class ApiConnector : IApiConnector
 				}
 			};
 
-			if (_log is not null)
-			{
-				_log.LogDebug(@"ExactOnline Sdk: Response Headers: 
-    X-RateLimit-Limit: {RateLimitLimit}
-    X-RateLimit-Remaining: {RateLimitRemaining}
-    X-RateLimit-Reset: {RateLimitResetDate}
-    X-RateLimit-Minutely-Limit: {RateLimitMinutelyLimit}
-    X-RateLimit-Minutely-Remaining: {RateLimitMinutelyRemaining}
-    X-RateLimit-Minutely-Reset: {RateLimitMinutelyResetDate}",
-					EolResponseHeader.RateLimit.Limit, EolResponseHeader.RateLimit.Remaining, EolResponseHeader.RateLimit.ResetDate,
-					EolResponseHeader.RateLimit.MinutelyLimit, EolResponseHeader.RateLimit.MinutelyRemaining, EolResponseHeader.RateLimit.MinutelyResetDate);
-			}
+			_log?.LogDebug("""
+				ExactOnline Sdk: Response Headers: 
+					X-RateLimit-Limit: {RateLimitLimit}
+					X-RateLimit-Remaining: {RateLimitRemaining}
+					X-RateLimit-Reset: {RateLimitResetDate}
+					X-RateLimit-Minutely-Limit: {RateLimitMinutelyLimit}
+					X-RateLimit-Minutely-Remaining: {RateLimitMinutelyRemaining}
+					X-RateLimit-Minutely-Reset: {RateLimitMinutelyResetDate}
+				""",
+				EolResponseHeader.RateLimit.Limit, EolResponseHeader.RateLimit.Remaining, EolResponseHeader.RateLimit.ResetDate,
+				EolResponseHeader.RateLimit.MinutelyLimit, EolResponseHeader.RateLimit.MinutelyRemaining, EolResponseHeader.RateLimit.MinutelyResetDate);
 
 			if (EolResponseHeader.RateLimit.MinutelyLimit is int minutelyLimit &&
 				EolResponseHeader.RateLimit.MinutelyRemaining is int minutelyRemaining)

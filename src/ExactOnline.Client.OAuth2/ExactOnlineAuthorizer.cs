@@ -6,33 +6,30 @@ namespace ExactOnline.Client.OAuth2;
 
 /// <summary>
 /// </summary>
-public class ExactOnlineAuthorizer : OAuth2Client
-{
-	private readonly string _baseUrl;
-
-	/// <summary>
-	/// Initializes a new instance of the <see cref="ExactOnlineAuthorizer"/> class.
-	/// </summary>
-	public ExactOnlineAuthorizer(
-		string clientId,
-		string clientSecret,
-		Uri callbackUrl,
-		string baseUrl = "https://start.exactonline.be",
-		string? accessToken = null,
-		string? refreshToken = null,
-		DateTime? expiresAt = null)
-		: base(
-			new RequestFactory(),
-			new ClientConfiguration
+/// <remarks>
+/// Initializes a new instance of the <see cref="ExactOnlineAuthorizer"/> class.
+/// </remarks>
+public class ExactOnlineAuthorizer(
+	string clientId,
+	string clientSecret,
+	Uri callbackUrl,
+	string baseUrl = "https://start.exactonline.be",
+	string? accessToken = null,
+	string? refreshToken = null,
+	DateTime? expiresAt = null)
+	: OAuth2Client(
+		new RequestFactory(),
+		new ClientConfiguration
 			{
 				ClientId = clientId,
 				ClientSecret = clientSecret,
 				RedirectUri = callbackUrl.ToString()
 			},
-			accessToken,
-			refreshToken,
-			expiresAt) =>
-			_baseUrl = baseUrl;
+		accessToken,
+		refreshToken,
+		expiresAt)
+{
+	private readonly string _baseUrl = baseUrl;
 
 	public event EventHandler<TokensChangedEventArgs>? TokensChanged;
 

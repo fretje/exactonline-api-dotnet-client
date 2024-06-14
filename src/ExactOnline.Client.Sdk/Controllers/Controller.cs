@@ -11,7 +11,7 @@ namespace ExactOnline.Client.Sdk.Controllers;
 /// </summary>
 public class Controller<T> : IController<T>, IEntityManager where T : class
 {
-	private readonly Hashtable _entityControllers = new();
+	private readonly Hashtable _entityControllers = [];
 	private readonly IApiConnection _conn;
 	private readonly Func<Type, IEntityManager> _getEntityManager;
 	private readonly string _keyname;
@@ -447,11 +447,8 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 	public bool AddEntityToManagedEntitiesCollection(object entity)
 	{
 		var returnValue = false;
-		var entityIdentifier = GetIdentifierValue(entity);
-		if (entityIdentifier == null)
-		{
-			throw new ArgumentException("Cannot add an entity without an entity identifier", nameof(entity));
-		}
+		var entityIdentifier = GetIdentifierValue(entity)
+			?? throw new ArgumentException("Cannot add an entity without an entity identifier", nameof(entity));
 
 		if (!_entityControllers.Contains(entityIdentifier))
 		{
