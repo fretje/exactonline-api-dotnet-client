@@ -231,7 +231,7 @@ public class ApiConnector : IApiConnector
 
 		if (_log is not null)
 		{
-			_log.LogDebug("ExactOnline Sdk: Response Body: {Response}", responseValue);
+			_log.LogTrace("ExactOnline Sdk: Response Body: {Response}", responseValue);
 		}
 
 		return responseValue;
@@ -252,7 +252,7 @@ public class ApiConnector : IApiConnector
 
 		if (_log is not null)
 		{
-			_log.LogDebug("ExactOnline Sdk: Response Body: {Response}", responseValue);
+			_log.LogTrace("ExactOnline Sdk: Response Body: {Response}", responseValue);
 		}
 
 		return responseValue;
