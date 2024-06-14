@@ -7,5 +7,6 @@ internal sealed class Configuration : DbMigrationsConfiguration<EntityFrameworkD
 	public Configuration()
 	{
 		AutomaticMigrationsEnabled = true;
+		AutomaticMigrationDataLossAllowed = true;
 	}
 }
