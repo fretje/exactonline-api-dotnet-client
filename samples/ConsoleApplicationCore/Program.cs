@@ -14,7 +14,7 @@ internal class Program
 	private static async Task Main()
 	{
 		// We need a WinFormsApartment (message loop) to be able to use the WinFormsAuthorizer
-		using var apartment = new WinFormsApartment(() => new Form());
+		using var apartment = new WinFormsApartment(() => new Form { Width = 0, Height = 0 });
 
 		await apartment.Run(async () =>
 		{
@@ -29,7 +29,7 @@ internal class Program
 				.WriteTo.Debug()
 				.WriteTo.Console()
 				.CreateLogger();
-			var logger = new SerilogLoggerFactory(seriLogger).CreateLogger("ExactOnline Sdk");			
+			var logger = new SerilogLoggerFactory(seriLogger).CreateLogger("ExactOnline Sdk");
 
 			var client = new ExactOnlineClient(ExactOnlineTest.Url, authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, logger);
 			client.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
@@ -55,6 +55,9 @@ internal class Program
 			// Or you can also supply a connectionstring in the constructor for more control.
 			var efTarget = new EntityFrameworkCoreTarget("Data Source=(localdb)\\mssqllocaldb;Initial Catalog=ExactOnlineClientSdkSyncTest;Integrated Security=True;MultipleActiveResultSets=True");
 
+			// Initialize the database so potential migrations are applied.
+			await efTarget.InitializeDatabaseAsync(default);
+
 			// Synchronize a single full entity
 			await client.SynchronizeWithAsync<Account>(efTarget, ModelInfo.For<Account>().FieldNames(true));
 
@@ -69,7 +72,7 @@ internal class Program
 
 			// There's also an override that takes a type in case you want to run the synchronization dynamically (for a given modeltype)
 			// E.g. use the following code to synchronize all supported modeltypes
-			//foreach (var modelType in EntityFrameworkTarget.SupportedModelTypes)
+			//foreach (var modelType in EntityFrameworkCoreTarget.SupportedModelTypes)
 			//{
 			//	// These give an 'unauthorized exception' apparently...
 			//	if (modelType == typeof(ExactOnline.Client.Models.Accountancy.AccountInvolvedAccount) ||

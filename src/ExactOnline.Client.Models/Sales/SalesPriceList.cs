@@ -2,7 +2,7 @@ namespace ExactOnline.Client.Models.Sales;
 
 [SupportedActionsSDK(false, true, false, false)]
 [DataServiceKey("ID")]
-public class PriceList
+public class SalesPriceList
 {
 	/// <summary>Code to indicate the price list</summary>
 	public string Code { get; set; }
@@ -22,9 +22,6 @@ public class PriceList
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? Division { get; set; }
-	/// <summary>Description of Division</summary>
-	[SDKFieldType(FieldType.ReadOnly)]
-	public string DivisionDescription { get; set; }
 	/// <summary>Indicates the entity (Item, Item group, ..) on which this price list is based</summary>
 	public short? Entity { get; set; }
 	/// <summary>Primary key</summary>
@@ -40,4 +37,6 @@ public class PriceList
 	public string ModifierFullName { get; set; }
 	/// <summary>Explanation or extra information can be stored in the notes</summary>
 	public string Notes { get; set; }
+	/// <summary>Indicates the type (1 - Customer, 2 - Standard) on which this price list applies</summary>
+	public int Type { get; set; }
 }

@@ -249,8 +249,8 @@ public class Services
 		ServicesDictionary.Add(typeof(GoodsReceiptLine).FullName, "PurchaseOrder/GoodsReceiptLines");
 		ServicesDictionary.Add(typeof(PurchaseOrder).FullName, "PurchaseOrder/PurchaseOrders");
 		ServicesDictionary.Add(typeof(PurchaseOrderLine).FullName, "PurchaseOrder/PurchaseOrderLines");
-		ServicesDictionary.Add(typeof(PriceList).FullName, "Sales/PriceLists");
-		ServicesDictionary.Add(typeof(SalesPriceListDetail).FullName, "Sales/SalesPriceListDetails");
+		ServicesDictionary.Add(typeof(SalesPriceList).FullName, "Sales/SalesPriceLists");
+		ServicesDictionary.Add(typeof(SalesPriceListVolumeDiscount).FullName, "Sales/SalesPriceListVolumeDiscounts");
 		ServicesDictionary.Add(typeof(ShippingMethod).FullName, "Sales/ShippingMethods");
 		ServicesDictionary.Add(typeof(SalesEntry).FullName, "SalesEntry/SalesEntries");
 		ServicesDictionary.Add(typeof(SalesEntryLine).FullName, "SalesEntry/SalesEntryLines");

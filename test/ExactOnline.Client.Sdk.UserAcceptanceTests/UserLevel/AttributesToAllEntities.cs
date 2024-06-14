@@ -69,7 +69,7 @@ public class AttributesToAllEntities
 		_ = client.For<OpportunityContact>().Select("ID").Top(1);
 		_ = client.For<OutstandingInvoicesOverview>().Select("CurrencyCode").Top(1);
 		_ = client.For<PaymentCondition>().Select("ID").Top(1);
-		_ = client.For<PriceList>().Select("ID").Top(1);
+		_ = client.For<SalesPriceList>().Select("ID").Top(1);
 		_ = client.For<ProductionArea>().Select("ID").Top(1);
 		_ = client.For<SalesEntry>().Select("EntryID").Top(1);
 		_ = client.For<SalesEntryLine>().Select("ID").Top(1);

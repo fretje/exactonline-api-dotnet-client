@@ -1,11 +1,10 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 {
-    public partial class AddDefaults : Migration
+	public partial class AddDefaults : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

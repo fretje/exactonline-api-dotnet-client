@@ -166,4 +166,8 @@ public class Contact : SupportsSync
 	public string State { get; set; }
 	/// <summary>Title</summary>
 	public string Title { get; set; }
+	/// <summary>Title abbreviation</summary>
+	public string TitleAbbreviation { get; set; }
+	/// <summary>Title description</summary>
+	public string TitleDescription { get; set; }
 }

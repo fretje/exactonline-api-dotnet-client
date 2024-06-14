@@ -2,7 +2,7 @@ namespace ExactOnline.Client.Models.Project;
 
 [SupportedActionsSDK(true, true, true, true)]
 [DataServiceKey("ID")]
-public class Project
+public class Project : SupportsSync
 {
 	/// <summary>The account for this project</summary>
 	public Guid? Account { get; set; }
