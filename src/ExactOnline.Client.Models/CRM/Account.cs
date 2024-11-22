@@ -124,6 +124,8 @@ public class Account : SupportsSync
 	public string DunsNumber { get; set; }
 	/// <summary>E-Mail address of the account</summary>
 	public string Email { get; set; }
+	/// <summary>Indicates whether payment link is activated for sales</summary>
+	public bool? EnableSalesPaymentLink { get; set; }
 	/// <summary>Determines in combination with the start date if the account is active. If the current date is &gt; end date the account is inactive</summary>
 	public DateTime? EndDate { get; set; }
 	/// <summary>RegistrationDate</summary>
