@@ -8,6 +8,14 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.11" />
+	  <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
+	  <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
+	  <PackageReference Include="System.Text.Encodings.Web" Version="8.0.0" />
+	  <PackageReference Include="System.Text.Json" Version="8.0.5" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<ProjectReference Include="..\..\src\ExactOnline.Client.Models\ExactOnline.Client.Models.csproj" />
 		<ProjectReference Include="..\..\src\ExactOnline.Client.OAuth2.WinForms\ExactOnline.Client.OAuth2.WinForms.csproj" />
 		<ProjectReference Include="..\..\src\ExactOnline.Client.Sdk.Sync.EntityFrameworkCore\ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.csproj" />

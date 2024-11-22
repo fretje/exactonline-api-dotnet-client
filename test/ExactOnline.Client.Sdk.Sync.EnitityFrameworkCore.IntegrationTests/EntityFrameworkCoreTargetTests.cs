@@ -22,6 +22,7 @@ public class EntityFrameworkCoreTargetTests
 	{
 		var connectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=ExactOnlineClientSdkSyncTest;Integrated Security=True";
 		var target = new EntityFrameworkCoreTarget(connectionString);
+		await target.InitializeDatabaseAsync(default);
 
 		var client = await new TestObjectsCreator().GetClientAsync();
 		await client.SynchronizeWithAsync<Account>(target, ModelInfo.For<Account>().FieldNames(true));

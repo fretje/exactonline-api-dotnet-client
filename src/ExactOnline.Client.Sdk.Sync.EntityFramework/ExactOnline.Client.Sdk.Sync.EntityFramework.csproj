@@ -5,7 +5,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="EntityFramework" Version="6.4.4" />
+	  <PackageReference Include="EntityFramework" Version="6.5.1" />
+	  <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
+	  <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>
