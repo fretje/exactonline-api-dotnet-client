@@ -187,14 +187,13 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
-/.vs/config/applicationhost.config
-/.vs/ClientSdk/v15/Server/sqlite3
 
 # Test application details
 testapp.config
 
 *.lock
-/.vs
+.vs/
+ILLink/
 
 # built nuget packages
 src/*.nupkg

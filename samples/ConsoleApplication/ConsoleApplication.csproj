@@ -6,23 +6,23 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
-	  <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
-	  <PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
-	  <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
-	  <PackageReference Include="Serilog.Sinks.Debug" Version="3.0.0" />
-	  <PackageReference Include="System.Text.Encodings.Web" Version="8.0.0" />
-	  <PackageReference Include="System.Text.Json" Version="8.0.5" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.2" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="9.0.2" />
+		<PackageReference Include="Serilog.Extensions.Logging" Version="9.0.0" />
+		<PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+		<PackageReference Include="Serilog.Sinks.Debug" Version="3.0.0" />
+		<PackageReference Include="System.Text.Encodings.Web" Version="9.0.2" />
+		<PackageReference Include="System.Text.Json" Version="9.0.2" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\src\ExactOnline.Client.OAuth2.WinForms\ExactOnline.Client.OAuth2.WinForms.csproj" />
-	  <ProjectReference Include="..\..\src\ExactOnline.Client.Sdk.Sync.EntityFramework\ExactOnline.Client.Sdk.Sync.EntityFramework.csproj" />
-	  <ProjectReference Include="..\..\test\ExactOnline.Client.Sdk.Test.Infrastructure\ExactOnline.Client.Sdk.Test.Infrastructure.csproj" />
+		<ProjectReference Include="..\..\src\ExactOnline.Client.OAuth2.WinForms\ExactOnline.Client.OAuth2.WinForms.csproj" />
+		<ProjectReference Include="..\..\src\ExactOnline.Client.Sdk.Sync.EntityFramework\ExactOnline.Client.Sdk.Sync.EntityFramework.csproj" />
+		<ProjectReference Include="..\..\test\ExactOnline.Client.Sdk.Test.Infrastructure\ExactOnline.Client.Sdk.Test.Infrastructure.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Reference Include="System.Windows.Forms" />
+		<Reference Include="System.Windows.Forms" />
 	</ItemGroup>
 
 </Project>

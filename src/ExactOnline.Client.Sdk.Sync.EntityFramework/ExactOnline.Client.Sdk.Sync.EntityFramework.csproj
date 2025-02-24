@@ -5,13 +5,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="EntityFramework" Version="6.5.1" />
-	  <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
-	  <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
+		<PackageReference Include="EntityFramework" Version="6.5.1" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.2" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="9.0.2" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\ExactOnline.Client.Sdk.Sync\ExactOnline.Client.Sdk.Sync.csproj" />
+		<ProjectReference Include="..\ExactOnline.Client.Sdk.Sync\ExactOnline.Client.Sdk.Sync.csproj" />
 	</ItemGroup>
 
 </Project>

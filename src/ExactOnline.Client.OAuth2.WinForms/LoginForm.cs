@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System.ComponentModel;
+using System.Web;
 using Microsoft.Web.WebView2.Core;
 
 namespace ExactOnline.Client.OAuth2.WinForms;
@@ -7,6 +8,7 @@ public partial class LoginForm : Form
 {
 	private readonly Uri _redirectUri = default!;
 
+	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public Uri AuthorizationUri { get; private set; } = default!;
 
 	public string? AuthorizationCode => HttpUtility.ParseQueryString(AuthorizationUri.Query)["code"];
