@@ -255,6 +255,10 @@ public class Account : SupportsSync
 	/// <summary>Description of PaymentConditionSales</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public string PaymentConditionSalesDescription { get; set; }
+	/// <summary>Peppol identifier user entered manually, corresponds to picked peppol adress </summary>
+	public string PeppolIdentifier { get; set; }
+	/// <summary>Peppol identifier type that user picked manually - GLN, COC, etc </summary>
+	public int PeppolIdentifierType { get; set; }
 	/// <summary>Phone number</summary>
 	public string Phone { get; set; }
 	/// <summary>Phone number extention</summary>
