@@ -1,6 +1,6 @@
 namespace ExactOnline.Client.Models.PurchaseOrder;
 
-[SupportedActionsSDK(true, true, false, true)]
+[SupportedActionsSDK(true, true, true, true)]
 [DataServiceKey("PurchaseOrderID")]
 public class PurchaseOrder
 {
