@@ -100,23 +100,15 @@ public sealed class WinFormsApartment : IDisposable
 	}
 
 	// Task.Factory.StartNew wrappers
-	public Task Run(Action action, CancellationToken token = default)
-	{
-		return Task.Factory.StartNew(action, token, TaskCreationOptions.None, _taskScheduler);
-	}
+	public Task Run(Action action, CancellationToken token = default) =>
+		Task.Factory.StartNew(action, token, TaskCreationOptions.None, _taskScheduler);
 
-	public Task<TResult> Run<TResult>(Func<TResult> action, CancellationToken token = default)
-	{
-		return Task.Factory.StartNew(action, token, TaskCreationOptions.None, _taskScheduler);
-	}
+	public Task<TResult> Run<TResult>(Func<TResult> action, CancellationToken token = default) =>
+		Task.Factory.StartNew(action, token, TaskCreationOptions.None, _taskScheduler);
 
-	public Task Run(Func<Task> action, CancellationToken token = default)
-	{
-		return Task.Factory.StartNew(action, token, TaskCreationOptions.None, _taskScheduler).Unwrap();
-	}
+	public Task Run(Func<Task> action, CancellationToken token = default) =>
+		Task.Factory.StartNew(action, token, TaskCreationOptions.None, _taskScheduler).Unwrap();
 
-	public Task<TResult> Run<TResult>(Func<Task<TResult>> action, CancellationToken token = default)
-	{
-		return Task.Factory.StartNew(action, token, TaskCreationOptions.None, _taskScheduler).Unwrap();
-	}
+	public Task<TResult> Run<TResult>(Func<Task<TResult>> action, CancellationToken token = default) =>
+		Task.Factory.StartNew(action, token, TaskCreationOptions.None, _taskScheduler).Unwrap();
 }

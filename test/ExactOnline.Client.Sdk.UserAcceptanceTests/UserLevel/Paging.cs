@@ -5,11 +5,13 @@ namespace ExactOnline.Client.Sdk.UserAcceptanceTests.UserLevel;
 [TestClass]
 public class Paging
 {
+	public TestContext TestContext { get; set; }
+
 	[TestMethod]
 	[TestCategory("User Acceptance Tests")]
 	public async Task PagingResults()
 	{
-		var client = await new TestObjectsCreator().GetClientAsync();
+		var client = await new TestObjectsCreator().GetClientAsync(TestContext.CancellationToken);
 
 		//// Get enumerator
 		//var count = client.For<Account>().Count();

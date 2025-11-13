@@ -2,7 +2,6 @@
 using ExactOnline.Client.Sdk.Exceptions;
 using ExactOnline.Client.Sdk.Helpers;
 using ExactOnline.Client.Sdk.Test.Infrastructure;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ExactOnline.Client.Sdk.UnitTests;
 
@@ -21,14 +20,14 @@ public class ApiConnectorTest
 	}
 
 	[TestMethod]
-	[TestCategory("Unit Test"), ExpectedException(typeof(ArgumentNullException))]
+	[TestCategory("Unit Test")]
 	public void ApiConnector_Constructor_WithoutDelegate_Fails() =>
-		_ = new ApiConnector(null, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
+		Assert.Throws<ArgumentNullException>(() => new ApiConnector(null, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime));
 
 	[TestMethod]
-	[TestCategory("Unit Test"), ExpectedException(typeof(ArgumentNullException))]
+	[TestCategory("Unit Test")]
 	public void ApiConnector_Constructor_WithoutHttpClient_Fails() =>
-		_ = new ApiConnector(GetAccessToken, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
+		Assert.Throws<ArgumentNullException>(() => new ApiConnector(GetAccessToken, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime));
 
 	[TestMethod]
 	[TestCategory("Unit Test")]
@@ -36,12 +35,12 @@ public class ApiConnectorTest
 		_ = new ApiConnector(GetAccessToken, new HttpClient(), ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
 
 	[TestMethod]
-	[TestCategory("Unit Test"), ExpectedException(typeof(BadRequestException))]
+	[TestCategory("Unit Test")]
 	public void ApiConnector_DoDeleteRequest_With_EmptyValues_Fails() =>
-		_connector.DoDeleteRequest(string.Empty);
+		Assert.Throws<BadRequestException>(() => _connector.DoDeleteRequest(string.Empty));
 
 	[TestMethod]
-	[TestCategory("Unit Test"), ExpectedException(typeof(BadRequestException))]
-	public async Task ApiConnector_DoDeleteRequest_With_EmptyValues_FailsAsync() =>
-		await _connector.DoDeleteRequestAsync(string.Empty, default);
+	[TestCategory("Unit Test")]
+	public Task ApiConnector_DoDeleteRequest_With_EmptyValues_FailsAsync() =>
+		Assert.ThrowsAsync<BadRequestException>(() => _connector.DoDeleteRequestAsync(string.Empty, default));
 }

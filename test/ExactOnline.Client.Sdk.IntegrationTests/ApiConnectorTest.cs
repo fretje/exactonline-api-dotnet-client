@@ -19,7 +19,6 @@ public class ApiConnectorTest
 		_currentDivision = await _toc.GetCurrentDivisionAsync();
 	}
 
-	#region DoRequest Tests
 	/// <summary>
 	///A test for Do Request
 	///</summary>
@@ -35,37 +34,34 @@ public class ApiConnectorTest
 	/// Test if a user can do a request without a endpoint specified
 	/// </summary>
 	[TestCategory("Integration Tests")]
-	[TestMethod, ExpectedException(typeof(BadRequestException))]
+	[TestMethod]
 	public void DoGetRequest_WithoutEndpoint_ThrowsExcepion()
 	{
 		var connector = _toc.GetApiConnector();
-		connector.DoGetRequest(null, string.Empty);
+		Assert.Throws<BadRequestException>(() => connector.DoGetRequest(null, string.Empty));
 	}
 
 	/// <summary>
 	/// Test if a get request can be made without a valid divisionnumber
 	/// </summary>
 	[TestCategory("Integration Tests")]
-	[TestMethod, ExpectedException(typeof(ForbiddenException))]
+	[TestMethod]
 	public void DoGetRequest_WithWrongDivisionNumber_ThrowsException()
 	{
 		var connector = _toc.GetApiConnector();
-		connector.DoGetRequest(TestObjectsCreator.UriCrmAccount(999), string.Empty);
+		Assert.Throws<ForbiddenException>(() => connector.DoGetRequest(TestObjectsCreator.UriCrmAccount(999), string.Empty));
 	}
-	#endregion
 
-	#region Put Tests
-
-	[TestMethod, ExpectedException(typeof(BadRequestException))]
+	[TestMethod]
 	[TestCategory("Integration Tests")]
 	public void DoPutRequestWithoutGuid_ThrowsException()
 	{
 		const string putData = "{\"Description\":\"Test\"}";
 		var connector = _toc.GetApiConnector();
-		connector.DoPutRequest(TestObjectsCreator.UriGlAccount(_currentDivision), putData);
+		Assert.Throws<BadRequestException>(() => connector.DoPutRequest(TestObjectsCreator.UriGlAccount(_currentDivision), putData));
 	}
 
-	[TestMethod, ExpectedException(typeof(BadRequestException))]
+	[TestMethod]
 	[TestCategory("Integration Tests")]
 	public void DoPutRequestWithoutData_ThrowsException()
 	{
@@ -73,30 +69,24 @@ public class ApiConnectorTest
 		const string putData = "";
 		var endpoint = string.Format("{0}(guid'{1}')", TestObjectsCreator.UriGlAccount(_currentDivision), id);
 		var connector = _toc.GetApiConnector();
-		connector.DoPutRequest(endpoint, putData);
+		Assert.Throws<BadRequestException>(() => connector.DoPutRequest(endpoint, putData));
 	}
-	#endregion
 
-	#region Delete Tests
-
-	[TestMethod, ExpectedException(typeof(ForbiddenException))]
+	[TestMethod]
 	[TestCategory("Integration Tests")]
 	public void DoDeleteRequestWithNonExistingGuid_ThrowsException()
 	{
 		var connector = _toc.GetApiConnector();
-		connector.DoDeleteRequest(TestObjectsCreator.UriGlAccount(_currentDivision) + "(guid'223F2BDD-5BD3-4CAC-8E46-1CA28C5A01F2')");
+		Assert.Throws<ForbiddenException>(() => connector.DoDeleteRequest(TestObjectsCreator.UriGlAccount(_currentDivision) + "(guid'223F2BDD-5BD3-4CAC-8E46-1CA28C5A01F2')"));
 	}
 
-	[TestMethod, ExpectedException(typeof(BadRequestException))]
+	[TestMethod]
 	[TestCategory("Integration Tests")]
 	public void DoDeleteRequestWithoutGuid_ThrowsException()
 	{
 		var connector = _toc.GetApiConnector();
-		connector.DoDeleteRequest(TestObjectsCreator.UriGlAccount(_currentDivision));
+		Assert.Throws<BadRequestException>(() => connector.DoDeleteRequest(TestObjectsCreator.UriGlAccount(_currentDivision)));
 	}
-	#endregion
-
-	#region Post Tests
 
 	// Commented out because this only makes an entity. The next time it will run, it will try to make an entity with the same code
 	[TestMethod, Ignore]
@@ -109,22 +99,21 @@ public class ApiConnectorTest
 	}
 
 	// Ignored because this is too low level test
-	[TestMethod, ExpectedException(typeof(InternalServerErrorException)), Ignore]
+	[TestMethod, Ignore]
 	[TestCategory("Integration Tests")]
 	public void DoPostRequestWithExistingCode_Succeeds()
 	{
 		const string postdata = "{\"Code\":\"123\",\"Description\":\"Test\"}";
 		var connector = _toc.GetApiConnector();
-		connector.DoPostRequest(TestObjectsCreator.UriGlAccount(_currentDivision), postdata);
+		Assert.Throws<InternalServerErrorException>(() => connector.DoPostRequest(TestObjectsCreator.UriGlAccount(_currentDivision), postdata));
 	}
 
-	[TestMethod, ExpectedException(typeof(BadRequestException))]
+	[TestMethod]
 	[TestCategory("Integration Tests")]
 	public void DoPostRequestWithoutData_ThrowsException()
 	{
 		const string postdata = "";
 		var connector = _toc.GetApiConnector();
-		connector.DoPostRequest(TestObjectsCreator.UriGlAccount(_currentDivision), postdata);
+		Assert.Throws<BadRequestException>(() => connector.DoPostRequest(TestObjectsCreator.UriGlAccount(_currentDivision), postdata));
 	}
-	#endregion
 }

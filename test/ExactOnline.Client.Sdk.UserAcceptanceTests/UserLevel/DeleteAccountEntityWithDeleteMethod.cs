@@ -5,11 +5,13 @@ namespace ExactOnline.Client.Sdk.UserAcceptanceTests.UserLevel;
 [TestClass]
 public class DeleteAccountEntityWithDeleteMethod
 {
+	public TestContext TestContext { get; set; }
+
 	[TestMethod]
 	[TestCategory("User Acceptance Tests")]
 	public async Task DeleteAccountWithDeleteMethod()
 	{
-		var client = await new TestObjectsCreator().GetClientAsync();
+		var client = await new TestObjectsCreator().GetClientAsync(TestContext.CancellationToken);
 
 		// Create new account
 		var newAccount = new Account { Name = "Test account" };

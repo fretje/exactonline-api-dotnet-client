@@ -6,12 +6,14 @@ namespace ExactOnline.Client.Sdk.UserAcceptanceTests.LowLevel;
 [TestClass]
 public class GetCollectionOfAccountsInJsonFormat
 {
+	public TestContext TestContext { get; set; }
+
 	[TestCategory("User Acceptance Tests")]
 	[TestMethod]
 	public async Task GetCollectionOfAccountsInJsonFormat_Succeeds()
 	{
 		var toc = new TestObjectsCreator();
-		var conn = new ApiConnection(toc.GetApiConnector(), TestObjectsCreator.UriCrmAccount(await toc.GetCurrentDivisionAsync()));
+		var conn = new ApiConnection(toc.GetApiConnector(), TestObjectsCreator.UriCrmAccount(await toc.GetCurrentDivisionAsync(TestContext.CancellationToken)));
 
 		var c = new SimpleController(conn);
 		var accounts = c.GetDynamic(string.Empty);

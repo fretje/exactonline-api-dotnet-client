@@ -64,7 +64,7 @@ internal class Program
 			// Or create a filter first and then call SynchronizeWith on the ExactOnlineQuery.
 			// In this case you have to provide the client as a parameter because SynchronizeWith
 			// needs access to the Sync.Deleted entities in case we're dealing with a sync endpoint.
-			fields = new[] { "AddressLine1", "AddressLine2", "AddressLine3" };
+			fields = ["AddressLine1", "AddressLine2", "AddressLine3"];
 			await client.For<Account>()
 				.Select(fields)
 				.Where(a => a.StartDate, new DateTime(2000, 1, 1), OperatorEnum.Gt)

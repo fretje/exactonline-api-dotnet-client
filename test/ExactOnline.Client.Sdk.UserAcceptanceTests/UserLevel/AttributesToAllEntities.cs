@@ -22,11 +22,13 @@ namespace ExactOnline.Client.Sdk.UserAcceptanceTests.UserLevel;
 [TestClass]
 public class AttributesToAllEntities
 {
+	public TestContext TestContext { get; set; }
+
 	[TestMethod]
 	[TestCategory("User Acceptance Tests")]
 	public async Task ReadAllEntities()
 	{
-		var client = await new TestObjectsCreator().GetClientAsync();
+		var client = await new TestObjectsCreator().GetClientAsync(TestContext.CancellationToken);
 
 		// Not supported entities
 		//var printedSalesInvoiceCollection = client.For<PrintedSalesInvoice>().Top(1); // Does only support post		

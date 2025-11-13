@@ -5,7 +5,6 @@ using ExactOnline.Client.Sdk.Exceptions;
 using ExactOnline.Client.Sdk.Helpers;
 using ExactOnline.Client.Sdk.Test.Infrastructure.MockObjects;
 using ExactOnline.Client.Sdk.UnitTests.Tools;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ExactOnline.Client.Sdk.UnitTests;
 
@@ -16,7 +15,6 @@ namespace ExactOnline.Client.Sdk.UnitTests;
 [TestClass]
 public class EntityConverterTest
 {
-	#region Json To Object Test
 	[TestCategory("Unit Test")]
 	[TestMethod]
 	public void EntityConverter_ConvertJsonToObjectList_WithCorrectInput_Succeeds()
@@ -41,7 +39,6 @@ public class EntityConverterTest
 		}
 	}
 
-	// Test for manditory fields (in constructor)
 	[TestCategory("Unit Test")]
 	[TestMethod]
 	public void EntityConverter_ConvertJsonToObjectList_WithEmptyJson_Fails()
@@ -50,17 +47,12 @@ public class EntityConverterTest
 		Assert.IsNull(accounts);
 	}
 
-	#endregion
-
-	#region Object to Json Test
 	[TestCategory("Unit Test")]
 	[TestMethod]
 	public void EntityConverter_ConvertObjectToJson_ForCreating_Succeeds()
 	{
 		// Test if objects is converted to json correctly
 		var dateTimeEpoc = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-
-		#region Client Object and Json
 
 		var simpleEntity = new SimpleEntity()
 		{
@@ -76,7 +68,6 @@ public class EntityConverterTest
 		};
 
 		const string expected = "{\"Code\":\"123\",\"Description\":\"FOO\",\"Id\":\"53697fab-137f-4242-b710-0139886b50f4\",\"StartDate\":\"2013-12-16T10:10:17.287\",\"EndDate\":null,\"Boolean\":true,\"NullableBoolean\":null,\"Integer\":5,\"NullableInteger\":null}";
-		#endregion
 
 		var result = EntityConverter.ConvertObjectToJson(simpleEntity);
 
@@ -144,9 +135,6 @@ public class EntityConverterTest
 		Assert.AreEqual(expected, result);
 	}
 
-	#endregion
-
-	#region Dynamic to Json Tests
 	[TestCategory("Unit Test")]
 	[TestMethod]
 	public void EntityConverter_ConvertDynamicObjectToJson_WithCorrectDynamicObject_Succeeds()
@@ -183,9 +171,7 @@ public class EntityConverterTest
 		var json = EntityConverter.ConvertObjectToJson(new BankAccount(), bankaccount, null);
 		Assert.AreEqual(jsonValue, json);
 	}
-	#endregion
 
-	#region Json to Dynamic Tests
 	[TestCategory("Unit Test")]
 	[TestMethod]
 	public void EntityConverter_ConvertJsonToDynamicObject_WithCorrectJson_Succeeds()
@@ -197,48 +183,46 @@ public class EntityConverterTest
 		Assert.AreEqual("D", (string)glaccountObject.BalanceSide);
 		Assert.AreEqual("W", (string)glaccountObject.BalanceType);
 		Assert.AreEqual("4406", (string)glaccountObject.Code);
-		Assert.AreEqual(false, (bool)glaccountObject.Compress);
-		Assert.AreEqual(null, (string)glaccountObject.Costcenter);
-		Assert.AreEqual(null, (string)glaccountObject.CostcenterDescription);
+		Assert.IsFalse((bool)glaccountObject.Compress);
+		Assert.IsNull((string)glaccountObject.Costcenter);
+		Assert.IsNull((string)glaccountObject.CostcenterDescription);
 		Assert.AreEqual("10/25/2013 02:24:29", (string)glaccountObject.Created);
 		Assert.AreEqual("99d87844-e4ef-4ac5-968c-fb863eaced16", (string)glaccountObject.Creator);
-		Assert.AreEqual(null, (string)glaccountObject.CreatorFullName);
+		Assert.IsNull((string)glaccountObject.CreatorFullName);
 		Assert.AreEqual("Test", (string)glaccountObject.Description);
 		Assert.AreEqual("499156", (string)glaccountObject.Division);
 		Assert.AreEqual("0", (string)glaccountObject.ExcludeVATListing);
 		Assert.AreEqual("0", (string)glaccountObject.ExpenseNonDeductiblePercentage);
 		Assert.AreEqual("3c534e79-c4fe-44d2-9765-00b30573c2de", (string)glaccountObject.ID);
-		Assert.AreEqual(false, (bool)glaccountObject.IsBlocked);
-		Assert.AreEqual(false, (bool)glaccountObject.Matching);
+		Assert.IsFalse((bool)glaccountObject.IsBlocked);
+		Assert.IsFalse((bool)glaccountObject.Matching);
 		Assert.AreEqual("12/02/2013 13:44:27", (string)glaccountObject.Modified);
 		Assert.AreEqual("10091f1b-4661-4854-9fd0-cf5f5f668cbd", (string)glaccountObject.Modifier);
 		Assert.AreEqual("Edward Jackson", (string)glaccountObject.ModifierFullName);
-		Assert.AreEqual(null, (string)glaccountObject.PrivateGLAccount);
+		Assert.IsNull((string)glaccountObject.PrivateGLAccount);
 		Assert.AreEqual("0", (string)glaccountObject.PrivatePercentage);
-		Assert.AreEqual(null, (string)glaccountObject.ReportingCode);
-		Assert.AreEqual(false, (bool)glaccountObject.RevalueCurrency);
+		Assert.IsNull((string)glaccountObject.ReportingCode);
+		Assert.IsFalse((bool)glaccountObject.RevalueCurrency);
 		Assert.AreEqual("RENTE    ", (string)glaccountObject.SearchCode);
 		Assert.AreEqual("120", (string)glaccountObject.Type);
 		Assert.AreEqual("Other costs", (string)glaccountObject.TypeDescription);
 		Assert.AreEqual("0", (string)glaccountObject.UseCostcenter);
 		Assert.AreEqual("0", (string)glaccountObject.UseCostunit);
-		Assert.AreEqual(null, (string)glaccountObject.VATCode);
-		Assert.AreEqual(null, (string)glaccountObject.VATDescription);
-		Assert.AreEqual(null, (string)glaccountObject.VATGLAccountType);
-		Assert.AreEqual(null, (string)glaccountObject.VATNonDeductibleGLAccount);
+		Assert.IsNull((string)glaccountObject.VATCode);
+		Assert.IsNull((string)glaccountObject.VATDescription);
+		Assert.IsNull((string)glaccountObject.VATGLAccountType);
+		Assert.IsNull((string)glaccountObject.VATNonDeductibleGLAccount);
 		Assert.AreEqual("0", (string)glaccountObject.VATNonDeductiblePercentage);
-		Assert.AreEqual(null, (string)glaccountObject.YearEndCostGLAccount);
-		Assert.AreEqual(null, (string)glaccountObject.YearEndReflectionGLAccount);
+		Assert.IsNull((string)glaccountObject.YearEndCostGLAccount);
+		Assert.IsNull((string)glaccountObject.YearEndReflectionGLAccount);
 	}
 
 	[TestCategory("Unit Test")]
-	[TestMethod, ExpectedException(typeof(IncorrectJsonException))]
+	[TestMethod]
 	public void EntityConverter_ConvertJsonToDynamicObject_WithIncorrectJson_Fails()
 	{
 		var json = JsonFileReader.GetJsonFromFile("Response_Json_Object_GLAccount_WithCorruptJson.txt");
-		dynamic glaccountObject = EntityConverter.ConvertJsonToDynamicObject(json);
-		Assert.AreEqual("D", (string)glaccountObject.BalanceSide);
-		Assert.AreEqual("W", (string)glaccountObject.BalanceType);
+		Assert.Throws<IncorrectJsonException>(() => EntityConverter.ConvertJsonToDynamicObject(json));
 	}
 
 	[TestCategory("Unit Test")]
@@ -257,24 +241,21 @@ public class EntityConverterTest
 	}
 
 	[TestCategory("Unit Test")]
-	[TestMethod, ExpectedException(typeof(IncorrectJsonException))]
+	[TestMethod]
 	public void EntityConverter_ConvertJsonToDynamicObjectCollection_WithEmptyJson_Fails()
 	{
 		const string json = "";
-		_ = EntityConverter.ConvertJsonToDynamicObjectList(json);
+		Assert.Throws<IncorrectJsonException>(() => EntityConverter.ConvertJsonToDynamicObjectList(json));
 	}
 
 	[TestCategory("Unit Test")]
-	[TestMethod, ExpectedException(typeof(IncorrectJsonException))]
+	[TestMethod]
 	public void EntityConverter_ConvertJsonToDynamicObjectCollection_WithEmptyJsonEntities_Fails()
 	{
 		const string json = "{[{},{}]}";
-		_ = EntityConverter.ConvertJsonToDynamicObjectList(json);
+		Assert.Throws<IncorrectJsonException>(() => EntityConverter.ConvertJsonToDynamicObjectList(json));
 	}
 
-	#endregion
-
-	#region Linked Entity Json to Object
 	[TestCategory("Unit Test")]
 	[TestMethod]
 	public void EntityConverter_ConvertLinkedEntityJsonArrayToObjects_Succeeds()
@@ -285,7 +266,7 @@ public class EntityConverterTest
 		foreach (var invoice in invoices)
 		{
 			var sil = (List<SalesInvoiceLine>)invoice.SalesInvoiceLines;
-			Assert.IsTrue(sil.Count > 0);
+			Assert.IsNotEmpty(sil);
 		}
 	}
 
@@ -299,11 +280,9 @@ public class EntityConverterTest
 		var lines = (List<SalesInvoiceLine>)invoice.SalesInvoiceLines;
 
 		Assert.IsNotNull(invoice);
-		Assert.IsTrue(lines.Count > 0);
+		Assert.IsNotEmpty(lines);
 	}
-	#endregion
 
-	#region Linked Entities To Json
 	[TestCategory("Unit Test")]
 	[TestMethod]
 	public void EntityConverter_ConvertLinkedObjectToJson_Succeeds()
@@ -338,7 +317,7 @@ public class EntityConverterTest
 		// Create Object
 		var newInvoice = new SalesInvoice { InvoiceID = new Guid("4f68481a-7a2c-4fbc-a3a0-0c494df3fa0d") };
 		var newInvoiceLine = new SalesInvoiceLine { Description = "NewInvoiceForEntityWithCollection" };
-		newInvoice.SalesInvoiceLines = new List<SalesInvoiceLine> { newInvoiceLine };
+		newInvoice.SalesInvoiceLines = [newInvoiceLine];
 
 		var entityController = new EntityController(newInvoice, "ID", "4f68481a-7a2c-4fbc-a3a0-0c494df3fa0d", new ApiConnectionMock(), null);
 		return entityController;
@@ -351,7 +330,7 @@ public class EntityConverterTest
 		// Create Object
 		var newInvoice = new SalesInvoice { InvoiceID = new Guid("4f68481a-7a2c-4fbc-a3a0-0c494df3fa0d") };
 		var newInvoiceLine = new SalesInvoiceLine { Description = "NewInvoiceForEntityWithCollection" };
-		newInvoice.SalesInvoiceLines = new List<SalesInvoiceLine> { newInvoiceLine };
+		newInvoice.SalesInvoiceLines = [newInvoiceLine];
 
 		//ControllerSingleton.GetInstance(new MockObjects.MAPIConnector_Controller(), "www.dummy.com/");
 		var entityController = new EntityController(newInvoice, "ID", "4f68481a-7a2c-4fbc-a3a0-0c494df3fa0d", new ApiConnectionMock(), null);
@@ -384,18 +363,14 @@ public class EntityConverterTest
 		var expected = JsonFileReader.GetJsonFromFileWithoutWhiteSpace("Expected_Json_Object_ComplexEntity_WithEmptyLinkedEntities.txt");
 		Assert.AreEqual(expected, json);
 	}
-	#endregion
 
-	#region Interpreting Long Json
 	[TestCategory("Unit Test")]
-	[TestMethod, ExpectedException(typeof(IncorrectJsonException))]
+	[TestMethod]
 	public void EntityConverter_ConvertLongJson_Fails()
 	{
 		var json = JsonFileReader.GetJsonFromFile("Response_Json_Array_Account_Long.txt");
-		_ = EntityConverter.ConvertJsonArrayToObjectList<Account>(json);
+		Assert.Throws<IncorrectJsonException>(() => EntityConverter.ConvertJsonArrayToObjectList<Account>(json));
 	}
-	#endregion
-
 }
 
 public class SimpleEntity

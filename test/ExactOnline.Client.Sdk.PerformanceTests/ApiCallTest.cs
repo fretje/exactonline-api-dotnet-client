@@ -1,8 +1,8 @@
 ﻿using ExactOnline.Client.Models.CRM;
 using ExactOnline.Client.Sdk.Interfaces;
 using ExactOnline.Client.Sdk.PerformanceTests.Helpers;
+using ExactOnline.Client.Sdk.Test.Context;
 using ExactOnline.Client.Sdk.Test.Infrastructure;
-using ExactOnline.Client.Sdk.TestContext;
 
 namespace ExactOnline.Client.Sdk.PerformanceTests;
 
@@ -15,6 +15,8 @@ public class ApiCallTest
 	TestObjectsCreator _toc;
 	IApiConnector _conn;
 	private int _currentDivision;
+
+	public TestContext TestContext { get; set; }
 
 	[TestInitialize()]
 	public async Task Setup()
@@ -30,7 +32,7 @@ public class ApiCallTest
 	{
 		if (ExactOnlineTest.MinutelyRemaining < 10)
 		{
-			await Task.Delay(ExactOnlineTest.MinutelyWaitTime);
+			await Task.Delay(ExactOnlineTest.MinutelyWaitTime, TestContext.CancellationToken);
 		}
 
 		var originalprocesstime = TimeSpan.FromSeconds(5.5);
@@ -44,7 +46,7 @@ public class ApiCallTest
 	{
 		if (ExactOnlineTest.MinutelyRemaining < 10)
 		{
-			await Task.Delay(ExactOnlineTest.MinutelyWaitTime);
+			await Task.Delay(ExactOnlineTest.MinutelyWaitTime, TestContext.CancellationToken);
 		}
 
 		var originalprocesstime = TimeSpan.FromSeconds(5.8);
@@ -56,12 +58,12 @@ public class ApiCallTest
 	[TestMethod]
 	public async Task TestPerformanceApiCallPut()
 	{
-		var client = await _toc.GetClientAsync();
+		var client = await _toc.GetClientAsync(TestContext.CancellationToken);
 		var account = client.For<Account>().Select("ID").Where("Name+eq+'43905139517985179437'").Get().First();
 
 		if (ExactOnlineTest.MinutelyRemaining < 10)
 		{
-			await Task.Delay(ExactOnlineTest.MinutelyWaitTime);
+			await Task.Delay(ExactOnlineTest.MinutelyWaitTime, TestContext.CancellationToken);
 		}
 
 		var originalprocesstime = TimeSpan.FromSeconds(11.8);
@@ -73,12 +75,12 @@ public class ApiCallTest
 	[TestMethod]
 	public async Task TestPerformanceApiCallDelete()
 	{
-		var client = await _toc.GetClientAsync();
+		var client = await _toc.GetClientAsync(TestContext.CancellationToken);
 		var account = client.For<Account>().Select("ID").Where("Name+eq+'43905139517985179437'").Get().FirstOrDefault();
 
 		if (ExactOnlineTest.MinutelyRemaining < 1)
 		{
-			await Task.Delay(ExactOnlineTest.MinutelyWaitTime);
+			await Task.Delay(ExactOnlineTest.MinutelyWaitTime, TestContext.CancellationToken);
 		}
 
 		var originalprocesstime = TimeSpan.FromSeconds(13.0);

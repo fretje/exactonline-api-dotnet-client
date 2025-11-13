@@ -6,8 +6,8 @@ using ExactOnline.Client.Sdk.Enums;
 using ExactOnline.Client.Sdk.Sync;
 using ExactOnline.Client.Sdk.Sync.EntityFramework;
 using ExactOnline.Client.Sdk.Test.Infrastructure;
-using Serilog.Extensions.Logging;
 using Serilog;
+using Serilog.Extensions.Logging;
 
 namespace ConsoleApplication;
 

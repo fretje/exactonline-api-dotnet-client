@@ -6,6 +6,8 @@ namespace ExactOnline.Client.Sdk.UserAcceptanceTests.LowLevel;
 [TestClass]
 public class GetApiResponseAfterGetCall
 {
+	public TestContext TestContext { get; set; }
+
 	/// <summary>
 	/// User Story: Get a text response in JSON format from the API after 
 	/// executing a REST GET call so that I can read data from Exact Online.
@@ -17,7 +19,7 @@ public class GetApiResponseAfterGetCall
 	{
 		//APIConnector connector = new APIConnector(accesstoken);
 		var toc = new TestObjectsCreator();
-		var conn = new ApiConnection(toc.GetApiConnector(), TestObjectsCreator.UriCrmAccount(await toc.GetCurrentDivisionAsync()));
+		var conn = new ApiConnection(toc.GetApiConnector(), TestObjectsCreator.UriCrmAccount(await toc.GetCurrentDivisionAsync(TestContext.CancellationToken)));
 
 		var result = conn.Get(string.Empty);
 		if (string.IsNullOrEmpty(result))

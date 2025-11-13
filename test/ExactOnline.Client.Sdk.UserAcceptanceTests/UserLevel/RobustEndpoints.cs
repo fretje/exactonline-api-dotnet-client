@@ -10,6 +10,8 @@ public class RobustEndpoints
 	private TestObjectsCreator _toc;
 	private int _currentDivision;
 
+	public TestContext TestContext { get; set; }
+
 	[TestInitialize]
 	public async Task InitializeSharedTestObjects()
 	{
@@ -23,7 +25,7 @@ public class RobustEndpoints
 	{
 		var client = new ExactOnlineClient(TestObjectsCreator.ExactOnlineUrl, TestObjectsCreator.GetOAuthAuthenticationToken, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
 		client.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
-		await client.InitializeDivisionAsync();
+		await client.InitializeDivisionAsync(TestContext.CancellationToken);
 		client.For<Account>().Select("Code").Get();
 	}
 

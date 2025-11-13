@@ -5,11 +5,13 @@ namespace ExactOnline.Client.Sdk.UserAcceptanceTests.UserLevel;
 [TestClass]
 public class AccessLinkedEntities
 {
+	public TestContext TestContext { get; set; }
+
 	[TestMethod]
 	[TestCategory("User Acceptance Tests")]
 	public async Task AccessLinkedEntities_Succeeds()
 	{
-		var client = await new TestObjectsCreator().GetClientAsync();
+		var client = await new TestObjectsCreator().GetClientAsync(TestContext.CancellationToken);
 
 		var salesinvoices = client.For<SalesInvoice>()
 			.Select("InvoiceID,SalesInvoiceLines/ID")
@@ -19,6 +21,6 @@ public class AccessLinkedEntities
 		Assert.IsNotNull(salesinvoices);
 
 		var salesinvoicelines = (List<SalesInvoiceLine>)salesinvoices.First().SalesInvoiceLines;
-		Assert.IsTrue(salesinvoicelines.Count > 0);
+		Assert.IsNotEmpty(salesinvoicelines);
 	}
 }

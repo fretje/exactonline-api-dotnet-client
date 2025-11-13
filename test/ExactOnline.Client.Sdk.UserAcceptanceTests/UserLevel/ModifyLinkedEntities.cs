@@ -8,12 +8,13 @@ namespace ExactOnline.Client.Sdk.UserAcceptanceTests.UserLevel;
 [TestClass]
 public class ModifyLinkedEntities
 {
+	public TestContext TestContext { get; set; }
 
 	[TestMethod]
 	[TestCategory("User Acceptance Tests")]
 	public async Task UpdateLinkedEntities()
 	{
-		var client = await new TestObjectsCreator().GetClientAsync();
+		var client = await new TestObjectsCreator().GetClientAsync(TestContext.CancellationToken);
 
 		var salesInvoiceId = CreateSalesInvoice(client, 1);
 
@@ -40,7 +41,7 @@ public class ModifyLinkedEntities
 	[TestCategory("User Acceptance Tests")]
 	public async Task CreateLinkedEntities()
 	{
-		var client = await new TestObjectsCreator().GetClientAsync();
+		var client = await new TestObjectsCreator().GetClientAsync(TestContext.CancellationToken);
 
 		// Fetch sales invoice
 		var salesInvoiceId = CreateSalesInvoice(client, 1);
@@ -63,7 +64,7 @@ public class ModifyLinkedEntities
 	[TestCategory("User Acceptance Tests")]
 	public async Task DeleteLinkedEntities()
 	{
-		var client = await new TestObjectsCreator().GetClientAsync();
+		var client = await new TestObjectsCreator().GetClientAsync(TestContext.CancellationToken);
 
 		// Create a sales invoice with 2 lines
 		var salesInvoiceId = CreateSalesInvoice(client, 2);

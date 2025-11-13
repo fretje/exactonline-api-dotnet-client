@@ -9,11 +9,13 @@ public class UserDocument
 {
 	Guid _documentId;
 
+	public TestContext TestContext { get; set; }
+
 	[TestCategory("User Acceptance Tests")]
 	[TestMethod]
 	public async Task CreateUserDocument()
 	{
-		var client = await new TestObjectsCreator().GetClientAsync();
+		var client = await new TestObjectsCreator().GetClientAsync(TestContext.CancellationToken);
 
 		var created = CreateDocument(client);
 
@@ -24,7 +26,7 @@ public class UserDocument
 	[TestMethod]
 	public async Task GetUserDocument()
 	{
-		var client = await new TestObjectsCreator().GetClientAsync();
+		var client = await new TestObjectsCreator().GetClientAsync(TestContext.CancellationToken);
 
 		var document = GetDocument(client);
 
@@ -36,7 +38,7 @@ public class UserDocument
 	[TestMethod]
 	public async Task UpdateUserDocument()
 	{
-		var client = await new TestObjectsCreator().GetClientAsync();
+		var client = await new TestObjectsCreator().GetClientAsync(TestContext.CancellationToken);
 
 		var document = GetDocument(client);
 		const string subject = "User Acceptance Test Document Updated";
@@ -52,17 +54,17 @@ public class UserDocument
 	}
 
 	[TestCategory("User Acceptance Tests")]
-	[TestMethod, ExpectedException(typeof(NotFoundException))]
+	[TestMethod]
 	public async Task DeleteUserDocument()
 	{
-		var client = await new TestObjectsCreator().GetClientAsync();
+		var client = await new TestObjectsCreator().GetClientAsync(TestContext.CancellationToken);
 
 		var document = GetDocument(client);
 		var result = client.For<Document>().Delete(document);
 
 		Assert.IsTrue(result);
 		// Document does not exist anymore so it throws an exception
-		client.For<Document>().GetEntity(document.ID);
+		Assert.Throws<NotFoundException>(() => client.For<Document>().GetEntity(document.ID));
 	}
 
 	private Document GetDocument(ExactOnlineClient client)

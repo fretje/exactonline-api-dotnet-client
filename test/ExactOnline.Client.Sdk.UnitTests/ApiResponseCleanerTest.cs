@@ -1,7 +1,6 @@
 ﻿using ExactOnline.Client.Sdk.Exceptions;
 using ExactOnline.Client.Sdk.Helpers;
 using ExactOnline.Client.Sdk.UnitTests.Tools;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ExactOnline.Client.Sdk.UnitTests;
 
@@ -16,14 +15,14 @@ public class ApiResponseCleanerTest
 		ApiResponseCleaner.GetJsonArray(JsonFileReader.GetJsonFromFile("ApiResponse_Json_Array.txt"));
 
 	[TestCategory("Unit Test")]
-	[TestMethod, ExpectedException(typeof(IncorrectJsonException))]
+	[TestMethod]
 	public void ApiResponseCleaner_FetchJsonArray_WithOutDKeyValuePair_Fails() =>
-		ApiResponseCleaner.GetJsonArray(JsonFileReader.GetJsonFromFile("ApiResponse_Json_Array_WithoutDTag.txt"));
+		Assert.Throws<IncorrectJsonException>(() => ApiResponseCleaner.GetJsonArray(JsonFileReader.GetJsonFromFile("ApiResponse_Json_Array_WithoutDTag.txt")));
 
 	[TestCategory("Unit Test")]
-	[TestMethod, ExpectedException(typeof(IncorrectJsonException))]
+	[TestMethod]
 	public void ApiResponseCleaner_FetchJsonArray_WithOutResultsKeyValuePair_Fails() =>
-		ApiResponseCleaner.GetJsonArray(JsonFileReader.GetJsonFromFile("ApiResponse_Json_Array_WithoutResultsTag.txt"));
+		Assert.Throws<IncorrectJsonException>(() => ApiResponseCleaner.GetJsonArray(JsonFileReader.GetJsonFromFile("ApiResponse_Json_Array_WithoutResultsTag.txt")));
 
 	[TestCategory("Unit Test")]
 	[TestMethod]
@@ -53,7 +52,7 @@ public class ApiResponseCleanerTest
 	}
 
 	[TestCategory("Unit Test")]
-	[TestMethod, ExpectedException(typeof(IncorrectJsonException))]
+	[TestMethod]
 	public void ApiResponseCleaner_FetchJsonObject_WithoutDKeyValuePair_Fails() =>
-		ApiResponseCleaner.GetJsonObject(JsonFileReader.GetJsonFromFile("ApiResponse_Json_Object_WithoutD.txt"));
+		Assert.Throws<IncorrectJsonException>(() => ApiResponseCleaner.GetJsonObject(JsonFileReader.GetJsonFromFile("ApiResponse_Json_Object_WithoutD.txt")));
 }

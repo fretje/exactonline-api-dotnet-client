@@ -5,11 +5,13 @@ namespace ExactOnline.Client.Sdk.UserAcceptanceTests.UserLevel;
 [TestClass]
 public class AlterStateAccountObjectDirectly
 {
+	public TestContext TestContext { get; set; }
+
 	[TestMethod]
 	[TestCategory("User Acceptance Tests")]
 	public async Task AlterStateAccountObjectDirectly_Succeeds()
 	{
-		var client = await new TestObjectsCreator().GetClientAsync();
+		var client = await new TestObjectsCreator().GetClientAsync(TestContext.CancellationToken);
 
 		// Get account to update
 		var accounts = client.For<Account>().Top(1).Select("ID").Get();

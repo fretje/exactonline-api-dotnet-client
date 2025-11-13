@@ -1,3 +1,4 @@
-﻿global using Microsoft.VisualStudio.TestTools.UnitTesting;
-global using ExactOnline.Client.Sdk.TestContext;
-global using TestMethodAttribute = ExactOnline.Client.Sdk.TestContext.TestMethodAttribute;
+﻿global using ExactOnline.Client.Sdk.Test.Context;
+global using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+[assembly: DoNotParallelize]

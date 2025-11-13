@@ -5,11 +5,13 @@ namespace ExactOnline.Client.Sdk.UserAcceptanceTests.UserLevel;
 [TestClass]
 public class SendReadonlyFieldsToApiTest
 {
+	public TestContext TestContext { get; set; }
+
 	[TestMethod]
 	[TestCategory("User Acceptance Tests")]
 	public async Task UpdateReadonlyFields_IgnoresReadonlyFields()
 	{
-		var client = await new TestObjectsCreator().GetClientAsync();
+		var client = await new TestObjectsCreator().GetClientAsync(TestContext.CancellationToken);
 
 		var account = client.For<Account>().Top(1).Select("ID,Name").Get().First();
 		var originalName = account.Name;

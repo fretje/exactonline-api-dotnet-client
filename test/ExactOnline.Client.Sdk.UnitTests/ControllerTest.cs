@@ -5,7 +5,6 @@ using ExactOnline.Client.Sdk.Controllers;
 using ExactOnline.Client.Sdk.Helpers;
 using ExactOnline.Client.Sdk.Interfaces;
 using ExactOnline.Client.Sdk.Test.Infrastructure.MockObjects;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ExactOnline.Client.Sdk.UnitTests;
 
@@ -13,6 +12,8 @@ namespace ExactOnline.Client.Sdk.UnitTests;
 public class ControllerTest
 {
 	IApiConnection _mockConnection;
+
+	public TestContext TestContext { get; set; }
 
 	[TestInitialize]
 	public void Setup() => _mockConnection = new ApiConnectionMock();
@@ -23,14 +24,14 @@ public class ControllerTest
 		_ = new Controller<Account>(_mockConnection);
 
 	[TestMethod]
-	[TestCategory("Unit Test"), ExpectedException(typeof(Exception))]
+	[TestCategory("Unit Test")]
 	public void Controller_Constructor_WithoutValidType_Fails() =>
-		_ = new Controller<object>(_mockConnection);
+		Assert.Throws<Exception>(() => new Controller<object>(_mockConnection));
 
 	[TestMethod]
-	[TestCategory("Unit Test"), ExpectedException(typeof(ArgumentException))]
+	[TestCategory("Unit Test")]
 	public void Controller_Create_WithoutValidTypeAndConnection_Fails() =>
-		_ = new Controller<object>(null);
+		Assert.Throws<ArgumentException>(() => new Controller<object>(null));
 
 	[TestMethod]
 	[TestCategory("Unit Test")]
@@ -62,27 +63,27 @@ public class ControllerTest
 	public async Task Controller_Delete_WithEntity_SucceedsAsync()
 	{
 		var accountController = new Controller<Account>(_mockConnection);
-		var testAccount = await accountController.GetEntityAsync("dummyGUID", string.Empty);
+		var testAccount = await accountController.GetEntityAsync("dummyGUID", string.Empty, TestContext.CancellationToken);
 
 		// Delete Entity and Test if Entity still exists
-		Assert.IsTrue(await accountController.DeleteAsync(testAccount));
+		Assert.IsTrue(await accountController.DeleteAsync(testAccount, TestContext.CancellationToken));
 		Assert.IsFalse(accountController.IsManagedEntity(testAccount));
 	}
 
 	[TestMethod]
-	[TestCategory("Unit Test"), ExpectedException(typeof(ArgumentException))]
+	[TestCategory("Unit Test")]
 	public void Controller_Delete_WithoutEntity_Fails()
 	{
 		var accountController = new Controller<Account>(_mockConnection);
-		accountController.Delete(null);
+		Assert.Throws<ArgumentException>(() => accountController.Delete(null));
 	}
 
 	[TestMethod]
-	[TestCategory("Unit Test"), ExpectedException(typeof(ArgumentException))]
+	[TestCategory("Unit Test")]
 	public async Task Controller_Delete_WithoutEntity_FailsAsync()
 	{
 		var accountController = new Controller<Account>(_mockConnection);
-		await accountController.DeleteAsync(null);
+		await Assert.ThrowsAsync<ArgumentException>(() => accountController.DeleteAsync(null, TestContext.CancellationToken));
 	}
 
 	[TestMethod]
@@ -98,7 +99,7 @@ public class ControllerTest
 	public async Task Controller_Get_SucceedsAsync()
 	{
 		var accountController = new Controller<Account>(_mockConnection);
-		await accountController.GetAsync(string.Empty);
+		await accountController.GetAsync(string.Empty, TestContext.CancellationToken);
 	}
 
 	[TestMethod]
@@ -118,23 +119,23 @@ public class ControllerTest
 		var accountController = new Controller<Account>(_mockConnection);
 
 		// Get accounts again to test for double entitycontrollers
-		_ = await accountController.GetAsync(string.Empty);
+		_ = await accountController.GetAsync(string.Empty, TestContext.CancellationToken);
 	}
 
 	[TestMethod]
-	[TestCategory("Unit Test"), ExpectedException(typeof(ArgumentException))]
+	[TestCategory("Unit Test")]
 	public void Controller_Update_WithoutEntity_Fails()
 	{
 		var accountController = new Controller<Account>(_mockConnection);
-		Assert.IsFalse(accountController.Update(null));
+		Assert.Throws<ArgumentException>(() => accountController.Update(null));
 	}
 
 	[TestMethod]
-	[TestCategory("Unit Test"), ExpectedException(typeof(ArgumentException))]
+	[TestCategory("Unit Test")]
 	public async Task Controller_Update_WithoutEntity_FailsAsync()
 	{
 		var accountController = new Controller<Account>(_mockConnection);
-		Assert.IsFalse(await accountController.UpdateAsync(null));
+		await Assert.ThrowsAsync<ArgumentException>(() => accountController.UpdateAsync(null, TestContext.CancellationToken));
 	}
 
 	[TestMethod]
@@ -151,8 +152,8 @@ public class ControllerTest
 	public async Task Controller_Update_WithEntity_SucceedsAsync()
 	{
 		var accountController = new Controller<Account>(_mockConnection);
-		var testAccount = await accountController.GetEntityAsync("dummyGUID", string.Empty);
-		Assert.IsTrue(await accountController.UpdateAsync(testAccount));
+		var testAccount = await accountController.GetEntityAsync("dummyGUID", string.Empty, TestContext.CancellationToken);
+		Assert.IsTrue(await accountController.UpdateAsync(testAccount, TestContext.CancellationToken));
 	}
 
 	[TestMethod]
@@ -184,7 +185,7 @@ public class ControllerTest
 		var invoicelines = (Controller<SalesInvoiceLine>)controllerList.GetController<SalesInvoiceLine>();
 
 		// Verify if sales invoice lines are registrated entities
-		var invoice = (await salesinvoicecontroller.GetAsync("")).List[0];
+		var invoice = (await salesinvoicecontroller.GetAsync("", TestContext.CancellationToken)).List[0];
 		var line = ((List<SalesInvoiceLine>)invoice.SalesInvoiceLines)[0];
 		Assert.IsTrue(invoicelines.IsManagedEntity(line), "SalesInvoiceLine isn't a managed entity");
 	}

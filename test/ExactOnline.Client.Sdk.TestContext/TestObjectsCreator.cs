@@ -5,7 +5,7 @@ using ExactOnline.Client.Sdk.Helpers;
 using ExactOnline.Client.Sdk.Interfaces;
 using ExactOnline.Client.Sdk.Test.Infrastructure;
 
-namespace ExactOnline.Client.Sdk.TestContext;
+namespace ExactOnline.Client.Sdk.Test.Context;
 
 public class TestObjectsCreator
 {

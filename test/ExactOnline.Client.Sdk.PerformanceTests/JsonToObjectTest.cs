@@ -514,7 +514,7 @@ public class JsonToObjectTest
 			foreach (var invoice in invoices)
 			{
 				var sil = (List<SalesInvoiceLine>)invoice.SalesInvoiceLines;
-				Assert.IsTrue(sil.Count > 0);
+				Assert.IsNotEmpty(sil);
 			}
 		}
 	}

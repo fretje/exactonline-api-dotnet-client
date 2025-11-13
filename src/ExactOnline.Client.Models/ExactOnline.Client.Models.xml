@@ -2092,6 +2092,12 @@
         <member name="P:ExactOnline.Client.Models.CRM.Account.PaymentConditionSalesDescription">
             <summary>Description of PaymentConditionSales</summary>
         </member>
+        <member name="P:ExactOnline.Client.Models.CRM.Account.PeppolIdentifier">
+            <summary>Peppol identifier user entered manually, corresponds to picked peppol adress </summary>
+        </member>
+        <member name="P:ExactOnline.Client.Models.CRM.Account.PeppolIdentifierType">
+            <summary>Peppol identifier type that user picked manually - GLN, COC, etc </summary>
+        </member>
         <member name="P:ExactOnline.Client.Models.CRM.Account.Phone">
             <summary>Phone number</summary>
         </member>

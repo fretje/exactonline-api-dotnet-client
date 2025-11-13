@@ -3,6 +3,8 @@
 [TestClass]
 public class ResponseValidatorTests
 {
+	public TestContext TestContext { get; set; }
+
 	[TestCategory("Integration Tests")]
 	[TestMethod]
 	// Tests if the API returns '"d"' and 'results' tags. If not, the controllers will not work correctly
@@ -10,7 +12,7 @@ public class ResponseValidatorTests
 	{
 		var toc = new TestObjectsCreator();
 		var conn = toc.GetApiConnector();
-		var currentDivision = await toc.GetCurrentDivisionAsync();
+		var currentDivision = await toc.GetCurrentDivisionAsync(TestContext.CancellationToken);
 
 		var response = conn.DoGetRequest(TestObjectsCreator.UriGlAccount(currentDivision), string.Empty);
 
