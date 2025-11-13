@@ -25,7 +25,7 @@ public class EntityControllerTest
 		// Change State
 		invoice.Description = "Description2";
 		var line = new SalesInvoiceLine { Description = "InvoiceLine2" };
-		invoice.SalesInvoiceLines = [line];
+		invoice.SalesInvoiceLines = (List<SalesInvoiceLine>)[line];
 
 		entityController.Update(invoice);
 
@@ -49,7 +49,7 @@ public class EntityControllerTest
 		// Change State
 		invoice.Description = "Description2";
 		var line = new SalesInvoiceLine { Description = "InvoiceLine2" };
-		invoice.SalesInvoiceLines = [line];
+		invoice.SalesInvoiceLines = (List<SalesInvoiceLine>)[line];
 
 		await entityController.UpdateAsync(invoice, TestContext.CancellationToken);
 
@@ -68,7 +68,7 @@ public class EntityControllerTest
 
 		var invoice = new SalesInvoice { Description = "New Description" };
 		var line = new SalesInvoiceLine { Description = "InvoiceLine" };
-		invoice.SalesInvoiceLines = [line];
+		invoice.SalesInvoiceLines = (List<SalesInvoiceLine>)[line];
 
 		var controller = (Controller<SalesInvoice>)controllerList.GetController<SalesInvoice>();
 		var entityController = new EntityController(invoice, "ID", invoice.InvoiceID.ToString(), controllerMock, controller.GetEntityController);
@@ -93,7 +93,7 @@ public class EntityControllerTest
 
 		var invoice = new SalesInvoice { Description = "New Description" };
 		var line = new SalesInvoiceLine { Description = "InvoiceLine" };
-		invoice.SalesInvoiceLines = [line];
+		invoice.SalesInvoiceLines = (List<SalesInvoiceLine>)[line];
 
 		var controller = (Controller<SalesInvoice>)controllerList.GetController<SalesInvoice>();
 		var entityController = new EntityController(invoice, "ID", invoice.InvoiceID.ToString(), controllerMock, controller.GetEntityController);
@@ -118,7 +118,7 @@ public class EntityControllerTest
 
 		var invoice = new SalesInvoice { Description = "New Description" };
 		var line = new SalesInvoiceLine { Description = "Invoice Line" };
-		invoice.SalesInvoiceLines = [line];
+		invoice.SalesInvoiceLines = (List<SalesInvoiceLine>)[line];
 
 		var controller = (Controller<SalesInvoice>)controllerList.GetController<SalesInvoice>();
 		var entityController = new EntityController(invoice, "ID", invoice.InvoiceID.ToString(), controllerMock, controller.GetEntityController);
@@ -141,7 +141,7 @@ public class EntityControllerTest
 
 		var invoice = new SalesInvoice { Description = "New Description" };
 		var line = new SalesInvoiceLine { Description = "Invoice Line" };
-		invoice.SalesInvoiceLines = [line];
+		invoice.SalesInvoiceLines = (List<SalesInvoiceLine>)[line];
 
 		var controller = (Controller<SalesInvoice>)controllerList.GetController<SalesInvoice>();
 		var entityController = new EntityController(invoice, "ID", invoice.InvoiceID.ToString(), controllerMock, controller.GetEntityController);
@@ -164,7 +164,7 @@ public class EntityControllerTest
 
 		var invoice = new SalesInvoice { Description = "New Description" };
 		var line = new SalesInvoiceLine { Description = "InvoiceLine" };
-		invoice.SalesInvoiceLines = [line];
+		invoice.SalesInvoiceLines = (List<SalesInvoiceLine>)[line];
 
 		var controller = (Controller<SalesInvoice>)controllerList.GetController<SalesInvoice>();
 		var ec = new EntityController(invoice, "ID", invoice.InvoiceID.ToString(), controllerMock, controller.GetEntityController);
@@ -189,7 +189,7 @@ public class EntityControllerTest
 
 		var invoice = new SalesInvoice { Description = "New Description" };
 		var line = new SalesInvoiceLine { Description = "InvoiceLine" };
-		invoice.SalesInvoiceLines = [line];
+		invoice.SalesInvoiceLines = (List<SalesInvoiceLine>)[line];
 
 		var controller = (Controller<SalesInvoice>)controllerList.GetController<SalesInvoice>();
 		var ec = new EntityController(invoice, "ID", invoice.InvoiceID.ToString(), controllerMock, controller.GetEntityController);

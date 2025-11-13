@@ -54,17 +54,20 @@ public class EntityController(object entity, string keyName, string identifier, 
 			var value = property.GetValue(entity);
 			if (value != null && value.GetType().IsGenericType && value is IEnumerable enumerable)
 			{
-				// Create linked entity
-				var newValue = (IList)Activator.CreateInstance(value.GetType());
-
+				var elementType = value.GetType().GetGenericArguments()[0];
+				var listType = typeof(List<>).MakeGenericType(elementType);
+				var newValue = (IList)Activator.CreateInstance(listType);
 				foreach (var item in enumerable)
 				{
 					newValue.Add(Clone(item));
 				}
+
 				value = newValue;
 			}
+
 			clonedEntity.GetType().GetProperty(property.Name).SetValue(clonedEntity, value);
 		}
+
 		return clonedEntity;
 	}
 
