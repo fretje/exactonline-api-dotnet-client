@@ -1,15 +1,15 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>netstandard2.0</TargetFramework>
+		<TargetFrameworks>netstandard2.0;net9.0;net10.0</TargetFrameworks>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
-		<PackageReference Include="RestSharp" Version="112.1.0" />
-		<PackageReference Include="System.Text.Encodings.Web" Version="9.0.11" />
-		<PackageReference Include="System.Text.Json" Version="9.0.11" />
+		<PackageReference Include="Newtonsoft.Json" />
+		<PackageReference Include="RestSharp" />
+		<PackageReference Include="System.Text.Encodings.Web" />
+		<PackageReference Include="System.Text.Json" />
 	</ItemGroup>
 
 </Project>
