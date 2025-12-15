@@ -1,0 +1,40 @@
+<Project>
+	<PropertyGroup>
+		<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+		<CentralPackageTransitivePinningEnabled>false</CentralPackageTransitivePinningEnabled>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageVersion Include="coverlet.collector" Version="6.0.4" />
+		<PackageVersion Include="EntityFramework" Version="6.5.1" />
+		<PackageVersion Include="Microsoft.CSharp" Version="4.7.0" />
+		<PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.0" />
+		<PackageVersion Include="Microsoft.Extensions.Http" Version="10.0.0" />
+		<PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
+		<PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
+		<PackageVersion Include="Microsoft.Web.WebView2" Version="1.0.3595.46" />
+		<PackageVersion Include="MSTest.TestAdapter" Version="4.0.2" />
+		<PackageVersion Include="MSTest.TestFramework" Version="4.0.2" />
+		<PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
+		<PackageVersion Include="RestSharp" Version="112.1.0" />
+		<PackageVersion Include="Serilog.Extensions.Logging" Version="9.0.2" />
+		<PackageVersion Include="Serilog.Sinks.Console" Version="6.1.1" />
+		<PackageVersion Include="Serilog.Sinks.Debug" Version="3.0.0" />
+		<PackageVersion Include="System.Linq.Dynamic.Core" Version="1.6.10" />
+		<PackageVersion Include="System.Text.Encodings.Web" Version="10.0.0" />
+		<PackageVersion Include="System.Text.Json" Version="10.0.0" />
+		<PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5" />
+		<PackageVersion Include="Xunit.StaFact" Version="3.0.13" />
+		<PackageVersion Include="xunit.v3" Version="3.2.0" />
+	</ItemGroup>
+
+	<!-- Pin ef core version to runtime version -->
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net9.0' ">
+		<PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.11" />
+		<PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.11" />
+	</ItemGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net10.0' ">
+		<PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.0" />
+		<PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.0" />
+	</ItemGroup>
+</Project>

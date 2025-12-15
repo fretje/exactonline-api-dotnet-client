@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace ExactOnline.Client.Sdk.Exceptions;
+﻿namespace ExactOnline.Client.Sdk.Exceptions;
 
 [Serializable]
 public class ForbiddenException : ExactOnlineClientException // HTTP: 403
@@ -9,6 +7,4 @@ public class ForbiddenException : ExactOnlineClientException // HTTP: 403
 	public ForbiddenException(string message) : base(message) { }
 	public ForbiddenException(string message, Exception inner)
 		: base(message, inner) { }
-	protected ForbiddenException(SerializationInfo info, StreamingContext context)
-		: base(info, context) { }
 }

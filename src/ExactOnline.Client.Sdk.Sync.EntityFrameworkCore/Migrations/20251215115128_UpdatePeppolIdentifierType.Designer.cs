@@ -4,6 +4,7 @@ using ExactOnline.Client.Sdk.Sync.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(EntityFrameworkCoreDbContext))]
-    partial class EntityFrameworkCoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251215115128_UpdatePeppolIdentifierType")]
+    partial class UpdatePeppolIdentifierType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

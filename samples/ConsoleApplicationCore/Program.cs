@@ -31,7 +31,7 @@ internal class Program
 				.CreateLogger();
 			var logger = new SerilogLoggerFactory(seriLogger).CreateLogger("ExactOnline Sdk");
 
-			var client = new ExactOnlineClient(ExactOnlineTest.Url, authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, logger);
+			var client = new ExactOnlineClient(ExactOnlineTest.Url, authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, ExactOnlineTest.CustomDescriptionLanguage, logger);
 			client.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
 			await client.InitializeDivisionAsync();
 
