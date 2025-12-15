@@ -15,24 +15,24 @@ public class ApiConnectorTest
 	[TestInitialize]
 	public void Setup()
 	{
-		_connector = new ApiConnector(GetAccessToken, new HttpClient(), ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
+		_connector = new ApiConnector(GetAccessToken, new HttpClient(), ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, ExactOnlineTest.CustomDescriptionLanguage);
 		_connector.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
 	}
 
 	[TestMethod]
 	[TestCategory("Unit Test")]
 	public void ApiConnector_Constructor_WithoutDelegate_Fails() =>
-		Assert.Throws<ArgumentNullException>(() => new ApiConnector(null, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime));
+		Assert.Throws<ArgumentNullException>(() => new ApiConnector(null, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, ExactOnlineTest.CustomDescriptionLanguage));
 
 	[TestMethod]
 	[TestCategory("Unit Test")]
 	public void ApiConnector_Constructor_WithoutHttpClient_Fails() =>
-		Assert.Throws<ArgumentNullException>(() => new ApiConnector(GetAccessToken, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime));
+		Assert.Throws<ArgumentNullException>(() => new ApiConnector(GetAccessToken, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, ExactOnlineTest.CustomDescriptionLanguage));
 
 	[TestMethod]
 	[TestCategory("Unit Test")]
 	public void ApiConnector_Constructor_WithDelegateAndHttpClient_Succeeds() =>
-		_ = new ApiConnector(GetAccessToken, new HttpClient(), ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
+		_ = new ApiConnector(GetAccessToken, new HttpClient(), ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, ExactOnlineTest.CustomDescriptionLanguage);
 
 	[TestMethod]
 	[TestCategory("Unit Test")]

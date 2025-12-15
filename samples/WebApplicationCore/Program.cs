@@ -34,7 +34,7 @@ app.MapGet("/", async (ILogger<Program> logger, CancellationToken ct) =>
 		return Results.Redirect(await authorizer.GetLoginLinkUriAsync(ct: ct));
 	}
 
-	var client = new ExactOnlineClient(ExactOnlineTest.Url, authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, logger);
+	var client = new ExactOnlineClient(ExactOnlineTest.Url, authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, ExactOnlineTest.CustomDescriptionLanguage, logger);
 	client.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
 	await client.InitializeDivisionAsync(ct);
 
@@ -62,7 +62,7 @@ app.MapGet("/sync", async (ILogger<Program> logger, CancellationToken ct) =>
 		return Results.Redirect(await authorizer.GetLoginLinkUriAsync("/sync", ct: ct));
 	}
 
-	var client = new ExactOnlineClient(ExactOnlineTest.Url, authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, logger);
+	var client = new ExactOnlineClient(ExactOnlineTest.Url, authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, ExactOnlineTest.CustomDescriptionLanguage, logger);
 	client.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
 	await client.InitializeDivisionAsync();
 
