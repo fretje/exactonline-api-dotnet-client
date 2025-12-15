@@ -17,14 +17,15 @@ namespace ExactOnline.Client.Sdk.Helpers;
 /// </remarks>
 /// <param name="accessTokenFunc">Delegate that provides a valid oAuth Access Token</param>
 /// <param name="client">The ExactOnlineClient this connector is associated with</param>
-public class ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc, HttpClient httpClient, int minutelyRemaining, DateTime minutelyResetTime, ILogger log = default) : IApiConnector
+public class ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc, HttpClient httpClient, int minutelyRemaining, DateTime minutelyResetTime, string customDescriptionLanguage, ILogger log = null) : IApiConnector
 {
 	private readonly Func<CancellationToken, Task<string>> _accessTokenFunc = accessTokenFunc ?? throw new ArgumentNullException(nameof(accessTokenFunc));
 	private readonly HttpClient _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+	private readonly string _customDescriptionLanguage = customDescriptionLanguage;
+	private readonly ILogger _log = log;
 
 	private int _minutelyRemaining = minutelyRemaining;
 	private DateTime _minutelyResetTime = minutelyResetTime;
-	private readonly ILogger _log = log;
 
 	public EolResponseHeader EolResponseHeader { get; set; }
 
@@ -198,6 +199,11 @@ public class ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc,
 			request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(acceptContentType));
 		}
 
+		if (!string.IsNullOrEmpty(_customDescriptionLanguage))
+		{
+			request.Headers.Add("CustomDescriptionLanguage", _customDescriptionLanguage);
+		}
+
 		request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", await _accessTokenFunc(ct).ConfigureAwait(false));
 
 		return request;
@@ -282,7 +288,7 @@ public class ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc,
 		var messageError = default(ServerMessage);
 		try
 		{
-			messageError = JsonConvert.DeserializeObject(messageFromServer, typeof(ServerMessage)) as ServerMessage;
+			messageError = JsonConvert.DeserializeObject<ServerMessage>(messageFromServer);
 		}
 		catch { /* the response might not be a json payload */ }
 

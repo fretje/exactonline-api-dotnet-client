@@ -32,7 +32,7 @@ public class TestObjectsCreator
 	{
 		if (_connector is null)
 		{
-			_connector = new ApiConnector(GetOAuthAuthenticationToken, new HttpClient(), ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
+			_connector = new ApiConnector(GetOAuthAuthenticationToken, new HttpClient(), ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, ExactOnlineTest.CustomDescriptionLanguage);
 			_connector.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
 		}
 		return _connector;
@@ -42,7 +42,7 @@ public class TestObjectsCreator
 	{
 		if (_client == null)
 		{
-			_client = new ExactOnlineClient(ExactOnlineUrl, GetOAuthAuthenticationToken, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
+			_client = new ExactOnlineClient(ExactOnlineUrl, GetOAuthAuthenticationToken, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, ExactOnlineTest.CustomDescriptionLanguage);
 			_client.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
 			await _client.InitializeDivisionAsync(ct).ConfigureAwait(false);
 		}
