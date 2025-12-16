@@ -9,17 +9,17 @@ public class Schedule
 	/// <summary>Average hours per week in a schedule</summary>
 	public double? AverageHours { get; set; }
 	/// <summary>Schedule code</summary>
-	public string Code { get; set; }
+	public string? Code { get; set; }
 	/// <summary>Creation date</summary>
 	public DateTime? Created { get; set; }
 	/// <summary>ID of creator</summary>
 	public Guid? Creator { get; set; }
 	/// <summary>Name of the creator</summary>
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Average days per week in the schedule</summary>
 	public double? Days { get; set; }
 	/// <summary>Description of the schedule</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Division code</summary>
 	public int? Division { get; set; }
 	/// <summary>Employment ID for schedule</summary>
@@ -41,13 +41,13 @@ public class Schedule
 	/// <summary>ID of modifier</summary>
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of the modifier</summary>
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Part-time factor for payroll calculation. Value between 0 and 1</summary>
 	public double? PaymentParttimeFactor { get; set; }
 	/// <summary>Type of schedule. 1 = Hours and average days, 2 = Hours and specific days, 3 = Hours per day, 4 = Time frames per day</summary>
 	public int? ScheduleType { get; set; }
 	/// <summary>Description of the schedule type</summary>
-	public string ScheduleTypeDescription { get; set; }
+	public string? ScheduleTypeDescription { get; set; }
 	/// <summary>Week in the schedule which is used to start with. By default the number will be 1.</summary>
 	public DateTime? StartDate { get; set; }
 	/// <summary>Week to start the schedule from for an employee</summary>

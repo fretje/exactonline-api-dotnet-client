@@ -5,19 +5,19 @@ namespace ExactOnline.Client.Models.Financial;
 public class PayablesList
 {
 	/// <summary>Code of Account</summary>
-	public string AccountCode { get; set; }
+	public string? AccountCode { get; set; }
 	/// <summary>Reference to the account</summary>
 	public Guid AccountId { get; set; }
 	/// <summary>Name of Account</summary>
-	public string AccountName { get; set; }
+	public string? AccountName { get; set; }
 	/// <summary>Amount</summary>
 	public double Amount { get; set; }
 	/// <summary>Amount in transit</summary>
 	public double AmountInTransit { get; set; }
 	/// <summary>Code of Currency</summary>
-	public string CurrencyCode { get; set; }
+	public string? CurrencyCode { get; set; }
 	/// <summary>Description</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Date the invoice should be paid</summary>
 	public DateTime DueDate { get; set; }
 	/// <summary>Entry number</summary>
@@ -31,9 +31,9 @@ public class PayablesList
 	/// <summary>Invoice number. The value is 0 when the invoice number of the linked transaction is empty.</summary>
 	public int InvoiceNumber { get; set; }
 	/// <summary>Code of Journal</summary>
-	public string JournalCode { get; set; }
+	public string? JournalCode { get; set; }
 	/// <summary>Description of Journal</summary>
-	public string JournalDescription { get; set; }
+	public string? JournalDescription { get; set; }
 	/// <summary>Your reference</summary>
-	public string YourRef { get; set; }
+	public string? YourRef { get; set; }
 }

@@ -5,17 +5,17 @@ namespace ExactOnline.Client.Models.Manufacturing;
 public class ShopOrder
 {
 	/// <summary>URL to CAD Drawing Specified on Manufacturing Bill of Material</summary>
-	public string CADDrawingURL { get; set; }
+	public string? CADDrawingURL { get; set; }
 	/// <summary>The cost center linked to the shop order</summary>
-	public string Costcenter { get; set; }
+	public string? Costcenter { get; set; }
 	/// <summary>Description of Costcenter</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CostcenterDescription { get; set; }
+	public string? CostcenterDescription { get; set; }
 	/// <summary>The cost unit linked to the shop order</summary>
-	public string Costunit { get; set; }
+	public string? Costunit { get; set; }
 	/// <summary>Description of Costunit</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CostunitDescription { get; set; }
+	public string? CostunitDescription { get; set; }
 	/// <summary>Creation date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? Created { get; set; }
@@ -24,9 +24,9 @@ public class ShopOrder
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Description of the shop order</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? Division { get; set; }
@@ -53,18 +53,18 @@ public class ShopOrder
 	public Guid? Item { get; set; }
 	/// <summary>Code of the item created by this shop order</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemCode { get; set; }
+	public string? ItemCode { get; set; }
 	/// <summary>Description of the item created by this shop order</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemDescription { get; set; }
+	public string? ItemDescription { get; set; }
 	/// <summary>URL of the item created by this shop order</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemPictureUrl { get; set; }
+	public string? ItemPictureUrl { get; set; }
 	/// <summary>Reference to ItemVersion</summary>
 	public Guid? ItemVersion { get; set; }
 	/// <summary>Description of Item Version</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemVersionDescription { get; set; }
+	public string? ItemVersionDescription { get; set; }
 	/// <summary>Last modified date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? Modified { get; set; }
@@ -73,9 +73,9 @@ public class ShopOrder
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Notes - only viewed internally</summary>
-	public string Notes { get; set; }
+	public string? Notes { get; set; }
 	/// <summary>Planned end date of this shop order</summary>
 	public DateTime? PlannedDate { get; set; }
 	/// <summary>Planned quantity</summary>
@@ -91,7 +91,7 @@ public class ShopOrder
 	public Guid? Project { get; set; }
 	/// <summary>Description of Project</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ProjectDescription { get; set; }
+	public string? ProjectDescription { get; set; }
 	/// <summary>Quantity ready to ship</summary>
 	public double? ReadyToShipQuantity { get; set; }
 	/// <summary>Number of sales orders linked to this shop order</summary>
@@ -99,7 +99,7 @@ public class ShopOrder
 	public int SalesOrderLineCount { get; set; }
 	/// <summary>Collection of Sales order lines</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public IEnumerable<SalesOrder.SalesOrderLine> SalesOrderLines { get; set; }
+	public IEnumerable<SalesOrder.SalesOrderLine>? SalesOrderLines { get; set; }
 	/// <summary>Number of shop order by-product plans, which are backflushed, for this shop order</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int ShopOrderByProductPlanBackflushCount { get; set; }
@@ -120,13 +120,13 @@ public class ShopOrder
 	public int ShopOrderMaterialPlanCount { get; set; }
 	/// <summary>Collection of Shop order Material plans</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public IEnumerable<ShopOrderMaterialPlan> ShopOrderMaterialPlans { get; set; }
+	public IEnumerable<ShopOrderMaterialPlan>? ShopOrderMaterialPlans { get; set; }
 	/// <summary>Unique number to indentify the shop order</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? ShopOrderNumber { get; set; }
 	/// <summary>Unique number to indentify the shop order (as a string to allow OData filtering, e.g. $filter=substringof(&apos;123&apos;,ShopOrderNumberString) eq true</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ShopOrderNumberString { get; set; }
+	public string? ShopOrderNumberString { get; set; }
 	/// <summary>Shop order parent</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public Guid? ShopOrderParent { get; set; }
@@ -138,7 +138,7 @@ public class ShopOrder
 	public int ShopOrderRoutingStepPlanCount { get; set; }
 	/// <summary>Collection of Shop order Routing step plans</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public IEnumerable<ShopOrderRoutingStepPlan> ShopOrderRoutingStepPlans { get; set; }
+	public IEnumerable<ShopOrderRoutingStepPlan>? ShopOrderRoutingStepPlans { get; set; }
 	/// <summary>Indicates the type of Shop Order: 10 Open, 20 In process, 30 Finished, 40 Completed</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? Status { get; set; }
@@ -150,12 +150,12 @@ public class ShopOrder
 	public int? Type { get; set; }
 	/// <summary>Unit of the item created by this shop order</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string Unit { get; set; }
+	public string? Unit { get; set; }
 	/// <summary>Unit description of the unit of the item created by this shop order</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string UnitDescription { get; set; }
+	public string? UnitDescription { get; set; }
 	/// <summary>Reference to the Warehouse associated with the Shop order</summary>
 	public Guid? Warehouse { get; set; }
 	/// <summary>Your reference (of the customer)</summary>
-	public string YourRef { get; set; }
+	public string? YourRef { get; set; }
 }

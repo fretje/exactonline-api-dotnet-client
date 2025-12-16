@@ -5,9 +5,9 @@ namespace ExactOnline.Client.Models.CRM;
 public class AddressState
 {
 	/// <summary>Country code</summary>
-	public string Country { get; set; }
+	public string? Country { get; set; }
 	/// <summary>Description of state prefixed with the code</summary>
-	public string DisplayValue { get; set; }
+	public string? DisplayValue { get; set; }
 	/// <summary>Primary key</summary>
 	public Guid ID { get; set; }
 	/// <summary>Latitude</summary>
@@ -15,7 +15,7 @@ public class AddressState
 	/// <summary>Longitude</summary>
 	public double? Longitude { get; set; }
 	/// <summary>State name</summary>
-	public string Name { get; set; }
+	public string? Name { get; set; }
 	/// <summary>State code</summary>
-	public string State { get; set; }
+	public string? State { get; set; }
 }

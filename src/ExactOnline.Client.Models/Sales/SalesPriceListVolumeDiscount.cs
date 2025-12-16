@@ -16,7 +16,7 @@ public class SalesPriceListVolumeDiscount : SupportsSync
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Discount</summary>
 	public double? Discount { get; set; }
 	/// <summary>Division code</summary>
@@ -29,13 +29,13 @@ public class SalesPriceListVolumeDiscount : SupportsSync
 	/// <summary>Item</summary>
 	public Guid? Item { get; set; }
 	/// <summary>Description of the item</summary>
-	public string ItemDescription { get; set; }
+	public string? ItemDescription { get; set; }
 	/// <summary>Item group ID</summary>
 	public Guid? ItemGroup { get; set; }
 	/// <summary>Item group code</summary>
-	public string ItemGroupCode { get; set; }
+	public string? ItemGroupCode { get; set; }
 	/// <summary>Item group description</summary>
-	public string ItemGroupDescription { get; set; }
+	public string? ItemGroupDescription { get; set; }
 	/// <summary>Last modified date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? Modified { get; set; }
@@ -44,21 +44,21 @@ public class SalesPriceListVolumeDiscount : SupportsSync
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>New price after discount</summary>
 	public double? NewPrice { get; set; }
 	/// <summary>Number of the item per unit</summary>
 	public double? NumberOfItemsPerUnit { get; set; }
 	/// <summary>Code of the PriceList</summary>
-	public string PriceListCode { get; set; }
+	public string? PriceListCode { get; set; }
 	/// <summary>Description of the PriceList</summary>
-	public string PriceListDescription { get; set; }
+	public string? PriceListDescription { get; set; }
 	/// <summary>Period Id of the PriceList</summary>
 	public Guid? PriceListPeriod { get; set; }
 	/// <summary>Quantity</summary>
 	public double? Quantity { get; set; }
 	/// <summary>Unit</summary>
-	public string Unit { get; set; }
+	public string? Unit { get; set; }
 	/// <summary>Description of the unit</summary>
-	public string UnitDescription { get; set; }
+	public string? UnitDescription { get; set; }
 }

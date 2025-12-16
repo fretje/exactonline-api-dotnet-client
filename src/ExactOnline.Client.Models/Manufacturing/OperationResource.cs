@@ -16,9 +16,9 @@ public class OperationResource
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Reference to Currencies</summary>
-	public string Currency { get; set; }
+	public string? Currency { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? Division { get; set; }
@@ -36,18 +36,18 @@ public class OperationResource
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Reference to Operations</summary>
 	public Guid? Operation { get; set; }
 	/// <summary>Description of Operation</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string OperationDescription { get; set; }
+	public string? OperationDescription { get; set; }
 	/// <summary>Lead days from purchase</summary>
 	public int? PurchaseLeadDays { get; set; }
 	/// <summary>Unit of purchased item from supplier</summary>
-	public string PurchaseUnit { get; set; }
+	public string? PurchaseUnit { get; set; }
 	/// <summary>VAT code used for purchased item from supplier</summary>
-	public string PurchaseVATCode { get; set; }
+	public string? PurchaseVATCode { get; set; }
 	/// <summary>Used in conjuction with RunMethod and EfficiencyPercentage to determine PlannedRunHours</summary>
 	public double? Run { get; set; }
 	/// <summary>Reference to OperationRunMethods</summary>
@@ -55,12 +55,12 @@ public class OperationResource
 	/// <summary>Used in conjunction with SetupCount and SetupUnit to determine PlannedSetupHours</summary>
 	public double? Setup { get; set; }
 	/// <summary>Reference to TimeUnits</summary>
-	public string SetupUnit { get; set; }
+	public string? SetupUnit { get; set; }
 	/// <summary>Reference to RoutingStepTypes</summary>
 	public int? Type { get; set; }
 	/// <summary>Reference to Workcenter</summary>
 	public Guid? Workcenter { get; set; }
 	/// <summary>Description of Workcenter</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string WorkcenterDescription { get; set; }
+	public string? WorkcenterDescription { get; set; }
 }

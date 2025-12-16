@@ -17,19 +17,19 @@ namespace ExactOnline.Client.Sdk.Helpers;
 /// </remarks>
 /// <param name="accessTokenFunc">Delegate that provides a valid oAuth Access Token</param>
 /// <param name="client">The ExactOnlineClient this connector is associated with</param>
-public class ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc, HttpClient httpClient, int minutelyRemaining, DateTime minutelyResetTime, string customDescriptionLanguage, ILogger log = null) : IApiConnector
+public class ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc, HttpClient httpClient, int minutelyRemaining, DateTime minutelyResetTime, string? customDescriptionLanguage, ILogger? log = null) : IApiConnector
 {
 	private readonly Func<CancellationToken, Task<string>> _accessTokenFunc = accessTokenFunc ?? throw new ArgumentNullException(nameof(accessTokenFunc));
 	private readonly HttpClient _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
-	private readonly string _customDescriptionLanguage = customDescriptionLanguage;
-	private readonly ILogger _log = log;
+	private readonly string? _customDescriptionLanguage = customDescriptionLanguage;
+	private readonly ILogger? _log = log;
 
 	private int _minutelyRemaining = minutelyRemaining;
 	private DateTime _minutelyResetTime = minutelyResetTime;
 
-	public EolResponseHeader EolResponseHeader { get; set; }
+	public EolResponseHeader EolResponseHeader { get; set; } = new() { RateLimit = new() };
 
-	public event EventHandler<MinutelyChangedEventArgs> MinutelyChanged;
+	public event EventHandler<MinutelyChangedEventArgs>? MinutelyChanged;
 
 	/// <summary>
 	/// Read Data: Perform a GET Request on the API
@@ -37,7 +37,7 @@ public class ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc,
 	/// <param name="endpoint">{URI}/{Division}/{Resource}/{Entity}</param>
 	/// <param name="querystring">querystring</param>
 	/// <returns>String with API Response in Json Format</returns>
-	public string DoGetRequest(string endpoint, string querystring) =>
+	public string DoGetRequest(string endpoint, string? querystring) =>
 		GetResponse(CreateGetRequestAsync(endpoint, querystring).GetAwaiter().GetResult());
 
 	/// <summary>
@@ -46,7 +46,7 @@ public class ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc,
 	/// <param name="endpoint">{URI}/{Division}/{Resource}/{Entity}</param>
 	/// <param name="querystring">querystring</param>
 	/// <returns>String with API Response in Json Format</returns>
-	public async Task<string> DoGetRequestAsync(string endpoint, string querystring, CancellationToken ct) =>
+	public async Task<string> DoGetRequestAsync(string endpoint, string? querystring, CancellationToken ct) =>
 		await GetResponseAsync(await CreateGetRequestAsync(endpoint, querystring, ct).ConfigureAwait(false), ct).ConfigureAwait(false);
 
 	/// <summary>
@@ -123,7 +123,7 @@ public class ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc,
 	/// <param name="endpoint"></param>
 	/// <param name="querystring">querystring</param>
 	/// <returns></returns>
-	public string DoCleanRequest(string endpoint, string querystring) =>
+	public string DoCleanRequest(string endpoint, string? querystring) =>
 		GetResponse(CreateCleanRequestAsync(endpoint, querystring, default).GetAwaiter().GetResult());
 
 	/// <summary>
@@ -132,10 +132,10 @@ public class ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc,
 	/// <param name="endpoint"></param>
 	/// <param name="querystring">querystring</param>
 	/// <returns></returns>
-	public async Task<string> DoCleanRequestAsync(string endpoint, string querystring, CancellationToken ct) =>
+	public async Task<string> DoCleanRequestAsync(string endpoint, string? querystring, CancellationToken ct) =>
 		await GetResponseAsync(await CreateCleanRequestAsync(endpoint, querystring, ct).ConfigureAwait(false), ct).ConfigureAwait(false);
 
-	private Task<HttpRequestMessage> CreateGetRequestAsync(string endpoint, string querystring = null, CancellationToken ct = default) =>
+	private Task<HttpRequestMessage> CreateGetRequestAsync(string endpoint, string? querystring = null, CancellationToken ct = default) =>
 		CreateRequestAsync(HttpMethod.Get, endpoint, querystring, ct: ct);
 	private Task<HttpRequestMessage> CreatePostRequestAsync(string endpoint, string postdata, CancellationToken ct) =>
 		CreateRequestAsync(HttpMethod.Post, endpoint, data: postdata, ct: ct);
@@ -143,10 +143,10 @@ public class ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc,
 		CreateRequestAsync(HttpMethod.Put, endpoint, data: putData, ct: ct);
 	private Task<HttpRequestMessage> CreateDeleteRequestAsync(string endpoint, CancellationToken ct) =>
 		CreateRequestAsync(HttpMethod.Delete, endpoint, ct: ct);
-	private Task<HttpRequestMessage> CreateCleanRequestAsync(string endpoint, string querystring, CancellationToken ct) =>
+	private Task<HttpRequestMessage> CreateCleanRequestAsync(string endpoint, string? querystring, CancellationToken ct) =>
 		CreateRequestAsync(HttpMethod.Get, endpoint, querystring, acceptContentType: null, ct: ct);
 
-	private async Task<HttpRequestMessage> CreateRequestAsync(HttpMethod method, string endpoint, string querystring = null, string data = null, string acceptContentType = "application/json", CancellationToken ct = default)
+	private async Task<HttpRequestMessage> CreateRequestAsync(HttpMethod method, string endpoint, string? querystring = null, string? data = null, string? acceptContentType = "application/json", CancellationToken ct = default)
 	{
 		if (string.IsNullOrEmpty(endpoint))
 		{
@@ -176,7 +176,7 @@ public class ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc,
 		return request;
 	}
 
-	private async Task<HttpRequestMessage> CreateWebRequestAsync(string url, string querystring, HttpMethod method, string acceptContentType = "application/json", CancellationToken ct = default)
+	private async Task<HttpRequestMessage> CreateWebRequestAsync(string url, string? querystring, HttpMethod method, string? acceptContentType = "application/json", CancellationToken ct = default)
 	{
 		if (_minutelyRemaining == 0)
 		{
@@ -292,11 +292,9 @@ public class ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc,
 		}
 		catch { /* the response might not be a json payload */ }
 
-		var message = messageError?.Error?.Message?.Value;
-		if (string.IsNullOrEmpty(message))
-		{
-			message = response.ReasonPhrase;
-		}
+		var message = messageError?.Error?.Message?.Value
+			?? response.ReasonPhrase
+			?? "";
 
 		switch (statusCode)
 		{

@@ -20,11 +20,11 @@ public class ImportNotificationDetail
 	public Guid ID { get; set; }
 	/// <summary>Termed message</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string Message { get; set; }
+	public string? Message { get; set; }
 	/// <summary>Response code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public short ResponseCode { get; set; }
 	/// <summary>Additional information about the response</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ResponseCodeArguments { get; set; }
+	public string? ResponseCodeArguments { get; set; }
 }

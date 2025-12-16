@@ -2,5 +2,5 @@
 
 internal class ServerMessage
 {
-	public ServerMessageError Error { get; set; }
+	public ServerMessageError? Error { get; set; }
 }

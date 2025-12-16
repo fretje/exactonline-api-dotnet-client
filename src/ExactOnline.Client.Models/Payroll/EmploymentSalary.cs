@@ -13,13 +13,13 @@ public class EmploymentSalary
 	/// <summary>User ID of creator</summary>
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Division code</summary>
 	public int? Division { get; set; }
 	/// <summary>Employee ID</summary>
 	public Guid? Employee { get; set; }
 	/// <summary>Name of employee</summary>
-	public string EmployeeFullName { get; set; }
+	public string? EmployeeFullName { get; set; }
 	/// <summary>Employee number</summary>
 	public int? EmployeeHID { get; set; }
 	/// <summary>Employment</summary>
@@ -29,7 +29,7 @@ public class EmploymentSalary
 	/// <summary>Salary type of employment. 1 - Periodical (fixed), 2 - Per hour (variable)</summary>
 	public int? EmploymentSalaryType { get; set; }
 	/// <summary>Salary type description</summary>
-	public string EmploymentSalaryTypeDescription { get; set; }
+	public string? EmploymentSalaryTypeDescription { get; set; }
 	/// <summary>Salary record end date</summary>
 	public DateTime? EndDate { get; set; }
 	/// <summary>Salary when working fulltime</summary>
@@ -47,19 +47,19 @@ public class EmploymentSalary
 	/// <summary>User ID of modifier</summary>
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Salary when working parttime</summary>
 	public double? ParttimeAmount { get; set; }
 	/// <summary>Contract hours / Fulltime contract hours</summary>
 	public double? ParttimeFactor { get; set; }
 	/// <summary>Employee wage scale</summary>
-	public string Scale { get; set; }
+	public string? Scale { get; set; }
 	/// <summary>Employment schedule</summary>
 	public Guid? Schedule { get; set; }
 	/// <summary>Employment schedule code</summary>
-	public string ScheduleCode { get; set; }
+	public string? ScheduleCode { get; set; }
 	/// <summary>Description of employment schedule</summary>
-	public string ScheduleDescription { get; set; }
+	public string? ScheduleDescription { get; set; }
 	/// <summary>Salary record start date</summary>
 	public DateTime? StartDate { get; set; }
 }

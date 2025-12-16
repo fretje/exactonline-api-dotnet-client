@@ -5,12 +5,12 @@ namespace ExactOnline.Client.Models.Mailbox;
 public class MailMessageAttachment
 {
 	/// <summary>For performance reasons Attachment is Write-Only. The blob can be downloaded using the supplied Url</summary>
-	public byte[] Attachment { get; set; }
+	public byte[]? Attachment { get; set; }
 	/// <summary>File extension of attachment</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string AttachmentFileExtension { get; set; }
+	public string? AttachmentFileExtension { get; set; }
 	/// <summary>File name of attachment</summary>
-	public string AttachmentFileName { get; set; }
+	public string? AttachmentFileName { get; set; }
 	/// <summary>File size</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public long FileSize { get; set; }
@@ -28,8 +28,8 @@ public class MailMessageAttachment
 	public int Type { get; set; }
 	/// <summary>Description of Type</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string TypeDescription { get; set; }
+	public string? TypeDescription { get; set; }
 	/// <summary>To get the file in its original format (xml, jpg, pdf, etc.) append &lt;b&gt;&amp;Download=1&lt;/b&gt; to the url.</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string Url { get; set; }
+	public string? Url { get; set; }
 }

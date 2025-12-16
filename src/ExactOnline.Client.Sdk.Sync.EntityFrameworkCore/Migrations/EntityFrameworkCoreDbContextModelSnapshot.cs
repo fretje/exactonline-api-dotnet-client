@@ -71,7 +71,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("AccountInvolvedAccount");
+                    b.ToTable("AccountInvolvedAccount", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Accountancy.AccountOwner", b =>
@@ -123,7 +123,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("AccountOwner");
+                    b.ToTable("AccountOwner", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Accountancy.InvolvedUser", b =>
@@ -202,7 +202,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("InvolvedUser");
+                    b.ToTable("InvolvedUser", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Accountancy.InvolvedUserRole", b =>
@@ -242,7 +242,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("InvolvedUserRole");
+                    b.ToTable("InvolvedUserRole", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Accountancy.SolutionLink", b =>
@@ -306,7 +306,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("SolutionLink");
+                    b.ToTable("SolutionLink", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Accountancy.TaskType", b =>
@@ -343,7 +343,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("TaskType");
+                    b.ToTable("TaskType", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Activities.CommunicationNote", b =>
@@ -428,7 +428,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("CommunicationNote");
+                    b.ToTable("CommunicationNote", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Activities.Complaint", b =>
@@ -504,7 +504,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Complaint");
+                    b.ToTable("Complaint", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Activities.Event", b =>
@@ -598,7 +598,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Event");
+                    b.ToTable("Event", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Activities.ServiceRequest", b =>
@@ -674,7 +674,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ServiceRequest");
+                    b.ToTable("ServiceRequest", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Activities.Task", b =>
@@ -768,7 +768,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Task");
+                    b.ToTable("Task", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Assets.Asset", b =>
@@ -936,7 +936,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Asset");
+                    b.ToTable("Asset", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Assets.AssetGroup", b =>
@@ -1021,7 +1021,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("AssetGroup");
+                    b.ToTable("AssetGroup", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Assets.DepreciationMethod", b =>
@@ -1085,7 +1085,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("DepreciationMethod");
+                    b.ToTable("DepreciationMethod", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Budget.Budget", b =>
@@ -1167,7 +1167,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Budget");
+                    b.ToTable("Budget", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.CRM.Account", b =>
@@ -1644,7 +1644,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Account");
+                    b.ToTable("Account", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.CRM.AccountClass", b =>
@@ -1684,7 +1684,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("AccountClass");
+                    b.ToTable("AccountClass", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.CRM.AccountClassification", b =>
@@ -1733,7 +1733,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("AccountClassification");
+                    b.ToTable("AccountClassification", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.CRM.AccountClassificationName", b =>
@@ -1778,7 +1778,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("AccountClassificationName");
+                    b.ToTable("AccountClassificationName", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.CRM.Address", b =>
@@ -1949,7 +1949,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Address");
+                    b.ToTable("Address", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.CRM.AddressState", b =>
@@ -1977,7 +1977,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("AddressState");
+                    b.ToTable("AddressState", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.CRM.BankAccount", b =>
@@ -2053,7 +2053,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("BankAccount");
+                    b.ToTable("BankAccount", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.CRM.Contact", b =>
@@ -2276,7 +2276,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Contact");
+                    b.ToTable("Contact", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.CRM.DocumentsAttachment", b =>
@@ -2302,7 +2302,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("DocumentsAttachment");
+                    b.ToTable("DocumentsAttachment", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.CRM.HostingOpportunity", b =>
@@ -2486,7 +2486,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("HostingOpportunity");
+                    b.ToTable("HostingOpportunity", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.CRM.Opportunity", b =>
@@ -2640,7 +2640,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Opportunity");
+                    b.ToTable("Opportunity", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.CRM.OpportunityContact", b =>
@@ -2852,7 +2852,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("OpportunityContact");
+                    b.ToTable("OpportunityContact", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.CRM.Quotation", b =>
@@ -3039,7 +3039,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("QuotationID");
 
-                    b.ToTable("Quotation");
+                    b.ToTable("Quotation", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.CRM.QuotationLine", b =>
@@ -3126,7 +3126,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("QuotationLine");
+                    b.ToTable("QuotationLine", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.CRM.ReasonCode", b =>
@@ -3175,7 +3175,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ReasonCode");
+                    b.ToTable("ReasonCode", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Cashflow.Bank", b =>
@@ -3212,7 +3212,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Bank");
+                    b.ToTable("Bank", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Cashflow.DirectDebitMandate", b =>
@@ -3273,7 +3273,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("DirectDebitMandate");
+                    b.ToTable("DirectDebitMandate", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Cashflow.ImportNotification", b =>
@@ -3310,7 +3310,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ImportNotification");
+                    b.ToTable("ImportNotification", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Cashflow.ImportNotificationDetail", b =>
@@ -3349,7 +3349,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ImportNotificationDetail");
+                    b.ToTable("ImportNotificationDetail", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Cashflow.Payment", b =>
@@ -3582,7 +3582,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Payment");
+                    b.ToTable("Payment", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Cashflow.PaymentCondition", b =>
@@ -3655,7 +3655,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("PaymentCondition");
+                    b.ToTable("PaymentCondition", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Cashflow.Receivable", b =>
@@ -3917,7 +3917,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Receivable");
+                    b.ToTable("Receivable", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Current.Me", b =>
@@ -4013,7 +4013,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("UserID");
 
-                    b.ToTable("Me");
+                    b.ToTable("Me", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Documents.Document", b =>
@@ -4143,7 +4143,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Document");
+                    b.ToTable("Document", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Documents.DocumentAttachment", b =>
@@ -4177,7 +4177,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("DocumentAttachment");
+                    b.ToTable("DocumentAttachment", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Documents.DocumentCategory", b =>
@@ -4196,7 +4196,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("DocumentCategory");
+                    b.ToTable("DocumentCategory", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Documents.DocumentFolder", b =>
@@ -4238,7 +4238,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("DocumentFolder");
+                    b.ToTable("DocumentFolder", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Documents.DocumentType", b =>
@@ -4280,7 +4280,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("DocumentType");
+                    b.ToTable("DocumentType", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Documents.DocumentTypeCategory", b =>
@@ -4299,7 +4299,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("DocumentTypeCategory");
+                    b.ToTable("DocumentTypeCategory", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Documents.DocumentTypeFolder", b =>
@@ -4338,7 +4338,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("DocumentTypeFolder");
+                    b.ToTable("DocumentTypeFolder", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Financial.AgingOverview", b =>
@@ -4364,7 +4364,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("AgeGroup");
 
-                    b.ToTable("AgingOverview");
+                    b.ToTable("AgingOverview", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Financial.AgingPayablesList", b =>
@@ -4440,7 +4440,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("AccountId");
 
-                    b.ToTable("AgingPayablesList");
+                    b.ToTable("AgingPayablesList", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Financial.AgingReceivablesList", b =>
@@ -4516,7 +4516,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("AccountId");
 
-                    b.ToTable("AgingReceivablesList");
+                    b.ToTable("AgingReceivablesList", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Financial.ExchangeRate", b =>
@@ -4565,7 +4565,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ExchangeRate");
+                    b.ToTable("ExchangeRate", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Financial.FinancialPeriod", b =>
@@ -4608,7 +4608,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("FinancialPeriod");
+                    b.ToTable("FinancialPeriod", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Financial.GLAccount", b =>
@@ -4744,7 +4744,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("GLAccount");
+                    b.ToTable("GLAccount", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Financial.GLClassification", b =>
@@ -4819,7 +4819,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("GLClassification");
+                    b.ToTable("GLClassification", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Financial.GLScheme", b =>
@@ -4864,7 +4864,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("GLScheme");
+                    b.ToTable("GLScheme", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Financial.GLTransactionType", b =>
@@ -4880,7 +4880,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("GLTransactionType");
+                    b.ToTable("GLTransactionType", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Financial.Journal", b =>
@@ -4992,7 +4992,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Journal");
+                    b.ToTable("Journal", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Financial.JournalStatusList", b =>
@@ -5027,7 +5027,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("Year", "Period", "Journal");
 
-                    b.ToTable("JournalStatusList");
+                    b.ToTable("JournalStatusList", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Financial.OfficialReturn", b =>
@@ -5109,7 +5109,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("OfficialReturn");
+                    b.ToTable("OfficialReturn", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Financial.OutstandingInvoicesOverview", b =>
@@ -5159,7 +5159,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("CurrencyCode");
 
-                    b.ToTable("OutstandingInvoicesOverview");
+                    b.ToTable("OutstandingInvoicesOverview", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Financial.PayablesList", b =>
@@ -5230,7 +5230,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("HID");
 
-                    b.ToTable("PayablesList");
+                    b.ToTable("PayablesList", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Financial.ProfitLossOverview", b =>
@@ -5318,7 +5318,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("CurrentYear");
 
-                    b.ToTable("ProfitLossOverview");
+                    b.ToTable("ProfitLossOverview", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Financial.ReceivablesList", b =>
@@ -5389,7 +5389,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("HID");
 
-                    b.ToTable("ReceivablesList");
+                    b.ToTable("ReceivablesList", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Financial.ReportingBalance", b =>
@@ -5450,7 +5450,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ReportingBalance");
+                    b.ToTable("ReportingBalance", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Financial.Return", b =>
@@ -5512,7 +5512,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("DocumentID");
 
-                    b.ToTable("Return");
+                    b.ToTable("Return", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Financial.RevenueList", b =>
@@ -5530,7 +5530,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("Year", "Period");
 
-                    b.ToTable("RevenueList");
+                    b.ToTable("RevenueList", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.FinancialTransaction.BankEntry", b =>
@@ -5588,7 +5588,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("EntryID");
 
-                    b.ToTable("BankEntry");
+                    b.ToTable("BankEntry", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.FinancialTransaction.BankEntryLine", b =>
@@ -5727,7 +5727,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("BankEntryLine");
+                    b.ToTable("BankEntryLine", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.FinancialTransaction.CashEntry", b =>
@@ -5776,7 +5776,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("EntryID");
 
-                    b.ToTable("CashEntry");
+                    b.ToTable("CashEntry", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.FinancialTransaction.CashEntryLine", b =>
@@ -5915,7 +5915,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("CashEntryLine");
+                    b.ToTable("CashEntryLine", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.FinancialTransaction.Transaction", b =>
@@ -6004,7 +6004,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("EntryID");
 
-                    b.ToTable("Transaction");
+                    b.ToTable("Transaction", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.FinancialTransaction.TransactionLine", b =>
@@ -6234,7 +6234,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("TransactionLine");
+                    b.ToTable("TransactionLine", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.General.Currency", b =>
@@ -6263,7 +6263,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("Code");
 
-                    b.ToTable("Currency");
+                    b.ToTable("Currency", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.GeneralJournalEntry.GeneralJournalEntry", b =>
@@ -6318,7 +6318,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("EntryID");
 
-                    b.ToTable("GeneralJournalEntry");
+                    b.ToTable("GeneralJournalEntry", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.GeneralJournalEntry.GeneralJournalEntryLine", b =>
@@ -6463,7 +6463,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("GeneralJournalEntryLine");
+                    b.ToTable("GeneralJournalEntryLine", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.HRM.AbsenceRegistration", b =>
@@ -6534,7 +6534,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("AbsenceRegistration");
+                    b.ToTable("AbsenceRegistration", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.HRM.AbsenceRegistrationTransaction", b =>
@@ -6619,7 +6619,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("AbsenceRegistrationTransaction");
+                    b.ToTable("AbsenceRegistrationTransaction", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.HRM.Costcenter", b =>
@@ -6659,7 +6659,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Costcenter");
+                    b.ToTable("Costcenter", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.HRM.Costunit", b =>
@@ -6696,7 +6696,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Costunit");
+                    b.ToTable("Costunit", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.HRM.Department", b =>
@@ -6742,7 +6742,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Department");
+                    b.ToTable("Department", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.HRM.DivisionClass", b =>
@@ -6801,7 +6801,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("DivisionClass");
+                    b.ToTable("DivisionClass", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.HRM.DivisionClassName", b =>
@@ -6849,7 +6849,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("DivisionClassName");
+                    b.ToTable("DivisionClassName", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.HRM.DivisionClassValue", b =>
@@ -6906,7 +6906,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("DivisionClassValue");
+                    b.ToTable("DivisionClassValue", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.HRM.JobGroup", b =>
@@ -6946,7 +6946,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("JobGroup");
+                    b.ToTable("JobGroup", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.HRM.JobTitle", b =>
@@ -7004,7 +7004,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("JobTitle");
+                    b.ToTable("JobTitle", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.HRM.LeaveBuildUpRegistration", b =>
@@ -7084,7 +7084,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("LeaveBuildUpRegistration");
+                    b.ToTable("LeaveBuildUpRegistration", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.HRM.LeaveRegistration", b =>
@@ -7181,7 +7181,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("LeaveRegistration");
+                    b.ToTable("LeaveRegistration", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.HRM.Schedule", b =>
@@ -7260,7 +7260,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Schedule");
+                    b.ToTable("Schedule", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Inventory.AssemblyOrder", b =>
@@ -7336,7 +7336,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("AssemblyOrder");
+                    b.ToTable("AssemblyOrder", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Inventory.BatchNumber", b =>
@@ -7391,7 +7391,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("BatchNumber");
+                    b.ToTable("BatchNumber", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Inventory.ItemWarehouse", b =>
@@ -7491,7 +7491,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ItemWarehouse");
+                    b.ToTable("ItemWarehouse", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Inventory.ItemWarehousePlanningDetail", b =>
@@ -7554,7 +7554,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ItemWarehousePlanningDetail");
+                    b.ToTable("ItemWarehousePlanningDetail", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Inventory.ItemWarehouseStorageLocation", b =>
@@ -7610,7 +7610,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ItemWarehouseStorageLocation");
+                    b.ToTable("ItemWarehouseStorageLocation", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Inventory.SerialNumber", b =>
@@ -7686,7 +7686,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("SerialNumber");
+                    b.ToTable("SerialNumber", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Inventory.StockBatchNumber", b =>
@@ -7777,7 +7777,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("StockBatchNumber");
+                    b.ToTable("StockBatchNumber", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Inventory.StockCount", b =>
@@ -7847,7 +7847,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("StockCountID");
 
-                    b.ToTable("StockCount");
+                    b.ToTable("StockCount", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Inventory.StockCountLine", b =>
@@ -7938,7 +7938,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("StockCountLine");
+                    b.ToTable("StockCountLine", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Inventory.StockSerialNumber", b =>
@@ -8029,7 +8029,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("StockSerialNumber");
+                    b.ToTable("StockSerialNumber", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Inventory.StorageLocation", b =>
@@ -8078,7 +8078,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("StorageLocation");
+                    b.ToTable("StorageLocation", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Inventory.Warehouse", b =>
@@ -8140,7 +8140,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Warehouse");
+                    b.ToTable("Warehouse", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Inventory.WarehouseTransfer", b =>
@@ -8218,7 +8218,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("TransferID");
 
-                    b.ToTable("WarehouseTransfer");
+                    b.ToTable("WarehouseTransfer", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Inventory.WarehouseTransferLine", b =>
@@ -8294,7 +8294,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("WarehouseTransferLine");
+                    b.ToTable("WarehouseTransferLine", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Logistics.Item", b =>
@@ -8616,7 +8616,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Item");
+                    b.ToTable("Item", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Logistics.ItemAssortment", b =>
@@ -8639,7 +8639,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ItemAssortment");
+                    b.ToTable("ItemAssortment", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Logistics.ItemAssortmentProperty", b =>
@@ -8665,7 +8665,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ItemAssortmentProperty");
+                    b.ToTable("ItemAssortmentProperty", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Logistics.ItemGroup", b =>
@@ -8764,7 +8764,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ItemGroup");
+                    b.ToTable("ItemGroup", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Logistics.ItemVersion", b =>
@@ -8838,7 +8838,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ItemVersion");
+                    b.ToTable("ItemVersion", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Logistics.SalesItemPrice", b =>
@@ -8921,7 +8921,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("SalesItemPrice");
+                    b.ToTable("SalesItemPrice", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Logistics.SupplierItem", b =>
@@ -9023,7 +9023,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("SupplierItem");
+                    b.ToTable("SupplierItem", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Logistics.Unit", b =>
@@ -9054,7 +9054,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Unit");
+                    b.ToTable("Unit", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Mailbox.DefaultMailbox", b =>
@@ -9100,7 +9100,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("DefaultMailbox");
+                    b.ToTable("DefaultMailbox", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Mailbox.MailMessageAttachment", b =>
@@ -9146,7 +9146,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("MailMessageAttachment");
+                    b.ToTable("MailMessageAttachment", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Mailbox.MailMessagesReceived", b =>
@@ -9253,7 +9253,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("MailMessagesReceived");
+                    b.ToTable("MailMessagesReceived", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Mailbox.MailMessagesSent", b =>
@@ -9360,7 +9360,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("MailMessagesSent");
+                    b.ToTable("MailMessagesSent", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Mailbox.Mailbox", b =>
@@ -9420,7 +9420,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Mailbox");
+                    b.ToTable("Mailbox", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Mailbox.PreferredMailbox", b =>
@@ -9466,7 +9466,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("PreferredMailbox");
+                    b.ToTable("PreferredMailbox", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Manufacturing.BillOfMaterialMaterial", b =>
@@ -9560,7 +9560,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("BillOfMaterialMaterial");
+                    b.ToTable("BillOfMaterialMaterial", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Manufacturing.BillOfMaterialVersion", b =>
@@ -9643,7 +9643,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("BillOfMaterialVersion");
+                    b.ToTable("BillOfMaterialVersion", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Manufacturing.ByProductReceipt", b =>
@@ -9735,7 +9735,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("StockTransactionId");
 
-                    b.ToTable("ByProductReceipt");
+                    b.ToTable("ByProductReceipt", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Manufacturing.ByProductReversal", b =>
@@ -9825,7 +9825,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ReversalStockTransactionId");
 
-                    b.ToTable("ByProductReversal");
+                    b.ToTable("ByProductReversal", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Manufacturing.ManufacturingSetting", b =>
@@ -9865,7 +9865,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("Division");
 
-                    b.ToTable("ManufacturingSetting");
+                    b.ToTable("ManufacturingSetting", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Manufacturing.MaterialIssue", b =>
@@ -9964,7 +9964,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("StockTransactionId");
 
-                    b.ToTable("MaterialIssue");
+                    b.ToTable("MaterialIssue", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Manufacturing.MaterialReversal", b =>
@@ -10054,7 +10054,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ReversalStockTransactionId");
 
-                    b.ToTable("MaterialReversal");
+                    b.ToTable("MaterialReversal", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Manufacturing.Operation", b =>
@@ -10109,7 +10109,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Operation");
+                    b.ToTable("Operation", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Manufacturing.OperationResource", b =>
@@ -10191,7 +10191,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("OperationResource");
+                    b.ToTable("OperationResource", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Manufacturing.ProductionArea", b =>
@@ -10248,7 +10248,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ProductionArea");
+                    b.ToTable("ProductionArea", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Manufacturing.RecentTimeTransaction", b =>
@@ -10381,7 +10381,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("RecentTimeTransaction");
+                    b.ToTable("RecentTimeTransaction", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Manufacturing.ShopOrder", b =>
@@ -10581,7 +10581,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ShopOrder");
+                    b.ToTable("ShopOrder", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Manufacturing.ShopOrderMaterialPlan", b =>
@@ -10675,7 +10675,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ShopOrderMaterialPlan");
+                    b.ToTable("ShopOrderMaterialPlan", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Manufacturing.ShopOrderMaterialPlanDetail", b =>
@@ -10805,7 +10805,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ShopOrderMaterialPlanDetail");
+                    b.ToTable("ShopOrderMaterialPlanDetail", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Manufacturing.ShopOrderReceipt", b =>
@@ -10903,7 +10903,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("StockTransactionId");
 
-                    b.ToTable("ShopOrderReceipt");
+                    b.ToTable("ShopOrderReceipt", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Manufacturing.ShopOrderReversal", b =>
@@ -10985,7 +10985,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ReversalStockTransactionId");
 
-                    b.ToTable("ShopOrderReversal");
+                    b.ToTable("ShopOrderReversal", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Manufacturing.ShopOrderRoutingStepPlan", b =>
@@ -11130,7 +11130,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ShopOrderRoutingStepPlan");
+                    b.ToTable("ShopOrderRoutingStepPlan", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Manufacturing.StageForDeliveryReceipt", b =>
@@ -11213,7 +11213,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StageForDeliveryReceipt");
+                    b.ToTable("StageForDeliveryReceipt", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Manufacturing.StageForDeliveryReversal", b =>
@@ -11289,7 +11289,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StageForDeliveryReversal");
+                    b.ToTable("StageForDeliveryReversal", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Manufacturing.StartedTimedTimeTransaction", b =>
@@ -11440,7 +11440,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("StartedTimedTimeTransaction");
+                    b.ToTable("StartedTimedTimeTransaction", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Manufacturing.SubOrderReceipt", b =>
@@ -11527,7 +11527,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ShopOrderReceiptStockTransactionId");
 
-                    b.ToTable("SubOrderReceipt");
+                    b.ToTable("SubOrderReceipt", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Manufacturing.SubOrderReversal", b =>
@@ -11612,7 +11612,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("MaterialReversalStockTransactionId");
 
-                    b.ToTable("SubOrderReversal");
+                    b.ToTable("SubOrderReversal", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Manufacturing.TimedTimeTransaction", b =>
@@ -11734,7 +11734,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("TimedTimeTransaction");
+                    b.ToTable("TimedTimeTransaction", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Manufacturing.Workcenter", b =>
@@ -11821,7 +11821,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Workcenter");
+                    b.ToTable("Workcenter", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.OpeningBalance.OpeningBalanceAfterEntry", b =>
@@ -11849,7 +11849,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("Division", "ReportingYear", "GLAccount");
 
-                    b.ToTable("OpeningBalanceAfterEntry");
+                    b.ToTable("OpeningBalanceAfterEntry", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.OpeningBalance.OpeningBalancePreviousYearAfterEntry", b =>
@@ -11877,7 +11877,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("Division", "ReportingYear", "GLAccount");
 
-                    b.ToTable("OpeningBalancePreviousYearAfterEntry");
+                    b.ToTable("OpeningBalancePreviousYearAfterEntry", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.OpeningBalance.OpeningBalancePreviousYearProcessed", b =>
@@ -11905,7 +11905,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("Division", "ReportingYear", "GLAccount");
 
-                    b.ToTable("OpeningBalancePreviousYearProcessed");
+                    b.ToTable("OpeningBalancePreviousYearProcessed", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.OpeningBalance.OpeningBalanceProcessed", b =>
@@ -11933,7 +11933,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("Division", "ReportingYear", "GLAccount");
 
-                    b.ToTable("OpeningBalanceProcessed");
+                    b.ToTable("OpeningBalanceProcessed", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Payroll.ActiveEmployment", b =>
@@ -12072,7 +12072,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ActiveEmployment");
+                    b.ToTable("ActiveEmployment", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Payroll.Employee", b =>
@@ -12281,7 +12281,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Employee");
+                    b.ToTable("Employee", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Payroll.Employment", b =>
@@ -12345,7 +12345,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Employment");
+                    b.ToTable("Employment", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Payroll.EmploymentContract", b =>
@@ -12436,7 +12436,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("EmploymentContract");
+                    b.ToTable("EmploymentContract", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Payroll.EmploymentContractFlexPhase", b =>
@@ -12449,7 +12449,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("EmploymentContractFlexPhase");
+                    b.ToTable("EmploymentContractFlexPhase", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Payroll.EmploymentEndReason", b =>
@@ -12462,7 +12462,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("EmploymentEndReason");
+                    b.ToTable("EmploymentEndReason", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Payroll.EmploymentOrganization", b =>
@@ -12547,7 +12547,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("EmploymentOrganization");
+                    b.ToTable("EmploymentOrganization", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Payroll.EmploymentSalary", b =>
@@ -12641,7 +12641,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("EmploymentSalary");
+                    b.ToTable("EmploymentSalary", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Payroll.TaxEmploymentEndFlexCode", b =>
@@ -12681,7 +12681,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("TaxEmploymentEndFlexCode");
+                    b.ToTable("TaxEmploymentEndFlexCode", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Project.CostTransaction", b =>
@@ -12816,7 +12816,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("CostTransaction");
+                    b.ToTable("CostTransaction", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Project.EmploymentInternalRate", b =>
@@ -12887,7 +12887,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("EmploymentInternalRate");
+                    b.ToTable("EmploymentInternalRate", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Project.HourCostType", b =>
@@ -12900,7 +12900,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ItemId");
 
-                    b.ToTable("HourCostType");
+                    b.ToTable("HourCostType", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Project.InvoiceTerm", b =>
@@ -12976,7 +12976,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("InvoiceTerm");
+                    b.ToTable("InvoiceTerm", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Project.Project", b =>
@@ -13134,7 +13134,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Project");
+                    b.ToTable("Project", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Project.ProjectBudgetType", b =>
@@ -13147,7 +13147,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ProjectBudgetType");
+                    b.ToTable("ProjectBudgetType", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Project.ProjectHourBudget", b =>
@@ -13203,7 +13203,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ProjectHourBudget");
+                    b.ToTable("ProjectHourBudget", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Project.ProjectPlanning", b =>
@@ -13312,7 +13312,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ProjectPlanning");
+                    b.ToTable("ProjectPlanning", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Project.ProjectPlanningRecurring", b =>
@@ -13463,7 +13463,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ProjectPlanningRecurring");
+                    b.ToTable("ProjectPlanningRecurring", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Project.ProjectRestrictionEmployee", b =>
@@ -13512,7 +13512,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ProjectRestrictionEmployee");
+                    b.ToTable("ProjectRestrictionEmployee", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Project.ProjectRestrictionItem", b =>
@@ -13564,7 +13564,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ProjectRestrictionItem");
+                    b.ToTable("ProjectRestrictionItem", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Project.ProjectRestrictionRebilling", b =>
@@ -13613,7 +13613,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ProjectRestrictionRebilling");
+                    b.ToTable("ProjectRestrictionRebilling", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Project.RecentCost", b =>
@@ -13715,7 +13715,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RecentCost");
+                    b.ToTable("RecentCost", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Project.RecentHour", b =>
@@ -13814,7 +13814,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RecentHour");
+                    b.ToTable("RecentHour", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Project.TimeAndBillingAccountDetail", b =>
@@ -13827,7 +13827,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("TimeAndBillingAccountDetail");
+                    b.ToTable("TimeAndBillingAccountDetail", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Project.TimeAndBillingActivitiesAndExpense", b =>
@@ -13843,7 +13843,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("TimeAndBillingActivitiesAndExpense");
+                    b.ToTable("TimeAndBillingActivitiesAndExpense", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Project.TimeAndBillingEntryAccount", b =>
@@ -13856,7 +13856,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("AccountId");
 
-                    b.ToTable("TimeAndBillingEntryAccount");
+                    b.ToTable("TimeAndBillingEntryAccount", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Project.TimeAndBillingEntryProject", b =>
@@ -13872,7 +13872,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ProjectId");
 
-                    b.ToTable("TimeAndBillingEntryProject");
+                    b.ToTable("TimeAndBillingEntryProject", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Project.TimeAndBillingEntryRecentAccount", b =>
@@ -13890,7 +13890,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("AccountId");
 
-                    b.ToTable("TimeAndBillingEntryRecentAccount");
+                    b.ToTable("TimeAndBillingEntryRecentAccount", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Project.TimeAndBillingEntryRecentActivitiesAndExpense", b =>
@@ -13911,7 +13911,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("TimeAndBillingEntryRecentActivitiesAndExpense");
+                    b.ToTable("TimeAndBillingEntryRecentActivitiesAndExpense", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Project.TimeAndBillingEntryRecentHourCostType", b =>
@@ -13929,7 +13929,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ItemId");
 
-                    b.ToTable("TimeAndBillingEntryRecentHourCostType");
+                    b.ToTable("TimeAndBillingEntryRecentHourCostType", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Project.TimeAndBillingEntryRecentProject", b =>
@@ -13950,7 +13950,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ProjectId");
 
-                    b.ToTable("TimeAndBillingEntryRecentProject");
+                    b.ToTable("TimeAndBillingEntryRecentProject", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Project.TimeAndBillingItemDetail", b =>
@@ -13984,7 +13984,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("TimeAndBillingItemDetail");
+                    b.ToTable("TimeAndBillingItemDetail", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Project.TimeAndBillingProjectDetail", b =>
@@ -14011,7 +14011,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("TimeAndBillingProjectDetail");
+                    b.ToTable("TimeAndBillingProjectDetail", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Project.TimeCorrection", b =>
@@ -14051,7 +14051,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("TimeCorrection");
+                    b.ToTable("TimeCorrection", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Project.TimeTransaction", b =>
@@ -14195,7 +14195,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("TimeTransaction");
+                    b.ToTable("TimeTransaction", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Purchase.PurchaseInvoice", b =>
@@ -14284,7 +14284,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("PurchaseInvoice");
+                    b.ToTable("PurchaseInvoice", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Purchase.PurchaseInvoiceLine", b =>
@@ -14368,7 +14368,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("PurchaseInvoiceLine");
+                    b.ToTable("PurchaseInvoiceLine", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.PurchaseEntry.PurchaseEntry", b =>
@@ -14516,7 +14516,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("EntryID");
 
-                    b.ToTable("PurchaseEntry");
+                    b.ToTable("PurchaseEntry", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.PurchaseEntry.PurchaseEntryLine", b =>
@@ -14670,7 +14670,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("PurchaseEntryLine");
+                    b.ToTable("PurchaseEntryLine", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.PurchaseOrder.GoodsReceipt", b =>
@@ -14755,7 +14755,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("GoodsReceipt");
+                    b.ToTable("GoodsReceipt", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.PurchaseOrder.GoodsReceiptLine", b =>
@@ -14858,7 +14858,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("GoodsReceiptLine");
+                    b.ToTable("GoodsReceiptLine", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.PurchaseOrder.PurchaseOrder", b =>
@@ -15009,7 +15009,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("PurchaseOrderID");
 
-                    b.ToTable("PurchaseOrder");
+                    b.ToTable("PurchaseOrder", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.PurchaseOrder.PurchaseOrderLine", b =>
@@ -15165,7 +15165,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("PurchaseOrderLine");
+                    b.ToTable("PurchaseOrderLine", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Sales.SalesPriceList", b =>
@@ -15216,7 +15216,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("SalesPriceList");
+                    b.ToTable("SalesPriceList", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Sales.SalesPriceListVolumeDiscount", b =>
@@ -15305,7 +15305,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("SalesPriceListVolumeDiscount");
+                    b.ToTable("SalesPriceListVolumeDiscount", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Sales.ShippingMethod", b =>
@@ -15354,7 +15354,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ShippingMethod");
+                    b.ToTable("ShippingMethod", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.SalesEntry.SalesEntry", b =>
@@ -15516,7 +15516,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("EntryID");
 
-                    b.ToTable("SalesEntry");
+                    b.ToTable("SalesEntry", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.SalesEntry.SalesEntryLine", b =>
@@ -15672,7 +15672,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("SalesEntryLine");
+                    b.ToTable("SalesEntryLine", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.SalesInvoice.Layout", b =>
@@ -15709,7 +15709,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Layout");
+                    b.ToTable("Layout", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.SalesInvoice.SalesInvoice", b =>
@@ -15916,7 +15916,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("InvoiceID");
 
-                    b.ToTable("SalesInvoice");
+                    b.ToTable("SalesInvoice", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.SalesInvoice.SalesInvoiceLine", b =>
@@ -16075,7 +16075,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("SalesInvoiceLine");
+                    b.ToTable("SalesInvoiceLine", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.SalesOrder.GoodsDelivery", b =>
@@ -16171,7 +16171,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("EntryID");
 
-                    b.ToTable("GoodsDelivery");
+                    b.ToTable("GoodsDelivery", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.SalesOrder.GoodsDeliveryLine", b =>
@@ -16261,7 +16261,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("GoodsDeliveryLine");
+                    b.ToTable("GoodsDeliveryLine", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.SalesOrder.SalesOrder", b =>
@@ -16465,7 +16465,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("OrderID");
 
-                    b.ToTable("SalesOrder");
+                    b.ToTable("SalesOrder", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.SalesOrder.SalesOrderLine", b =>
@@ -16615,7 +16615,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("SalesOrderLine");
+                    b.ToTable("SalesOrderLine", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Subscription.Subscription", b =>
@@ -16760,7 +16760,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("EntryID");
 
-                    b.ToTable("Subscription");
+                    b.ToTable("Subscription", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Subscription.SubscriptionLine", b =>
@@ -16867,7 +16867,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("SubscriptionLine");
+                    b.ToTable("SubscriptionLine", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Subscription.SubscriptionLineType", b =>
@@ -16880,7 +16880,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("SubscriptionLineType");
+                    b.ToTable("SubscriptionLineType", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Subscription.SubscriptionReasonCode", b =>
@@ -16935,7 +16935,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("SubscriptionReasonCode");
+                    b.ToTable("SubscriptionReasonCode", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Subscription.SubscriptionRestrictionEmployee", b =>
@@ -16990,7 +16990,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("SubscriptionRestrictionEmployee");
+                    b.ToTable("SubscriptionRestrictionEmployee", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Subscription.SubscriptionRestrictionItem", b =>
@@ -17045,7 +17045,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("SubscriptionRestrictionItem");
+                    b.ToTable("SubscriptionRestrictionItem", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Subscription.SubscriptionType", b =>
@@ -17084,7 +17084,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("SubscriptionType");
+                    b.ToTable("SubscriptionType", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Sync.Deleted", b =>
@@ -17114,7 +17114,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Deleted");
+                    b.ToTable("Deleted", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.SystemBase.AccountantInfo", b =>
@@ -17162,7 +17162,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("AccountantInfo");
+                    b.ToTable("AccountantInfo", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.SystemBase.AvailableFeature", b =>
@@ -17175,7 +17175,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("AvailableFeature");
+                    b.ToTable("AvailableFeature", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.SystemBase.Division", b =>
@@ -17263,7 +17263,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("Code");
 
-                    b.ToTable("Division");
+                    b.ToTable("Division", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Users.User", b =>
@@ -17380,7 +17380,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("UserID");
 
-                    b.ToTable("User");
+                    b.ToTable("User", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Users.UserRole", b =>
@@ -17432,7 +17432,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("UserRole");
+                    b.ToTable("UserRole", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Users.UserRolesPerDivision", b =>
@@ -17489,7 +17489,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("UserRolesPerDivision");
+                    b.ToTable("UserRolesPerDivision", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.VAT.VATCode", b =>
@@ -17618,7 +17618,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("VATCode");
+                    b.ToTable("VATCode", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.VAT.VatPercentage", b =>
@@ -17671,7 +17671,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("VatPercentage");
+                    b.ToTable("VatPercentage", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Webhooks.WebhookSubscription", b =>
@@ -17705,7 +17705,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("WebhookSubscription");
+                    b.ToTable("WebhookSubscription", (string)null);
                 });
 
             modelBuilder.Entity("ExactOnline.Client.Models.Workflow.RequestAttachment", b =>
@@ -17732,7 +17732,7 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("RequestAttachment");
+                    b.ToTable("RequestAttachment", (string)null);
                 });
 #pragma warning restore 612, 618
         }

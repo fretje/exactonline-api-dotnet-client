@@ -5,14 +5,14 @@ namespace ExactOnline.Client.Models.FinancialTransaction;
 public class CashEntry
 {
 	/// <summary>Collection of lines</summary>
-	public IEnumerable<CashEntryLine> CashEntryLines { get; set; }
+	public IEnumerable<CashEntryLine>? CashEntryLines { get; set; }
 	/// <summary>Closing balance in the currency of the transaction</summary>
 	public double? ClosingBalanceFC { get; set; }
 	/// <summary>Creation date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? Created { get; set; }
 	/// <summary>Currency code</summary>
-	public string Currency { get; set; }
+	public string? Currency { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? Division { get; set; }
@@ -26,10 +26,10 @@ public class CashEntry
 	/// <summary>Fiancial year</summary>
 	public short? FinancialYear { get; set; }
 	/// <summary>Code of Journal</summary>
-	public string JournalCode { get; set; }
+	public string? JournalCode { get; set; }
 	/// <summary>Description of Journal</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string JournalDescription { get; set; }
+	public string? JournalDescription { get; set; }
 	/// <summary>Last modified date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? Modified { get; set; }
@@ -40,5 +40,5 @@ public class CashEntry
 	public short? Status { get; set; }
 	/// <summary>Description of Status</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string StatusDescription { get; set; }
+	public string? StatusDescription { get; set; }
 }

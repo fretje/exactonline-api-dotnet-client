@@ -7,13 +7,13 @@ public class ReviewQuotation
 	/// <summary>Indicates if the item prices should be copied from the original quotation or the default item prices should be used.</summary>
 	public bool? CopyItemPrices { get; set; }
 	/// <summary>The description of the new quotation.</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Division code.</summary>
 	public int Division { get; set; }
 	/// <summary>The document linked to the new quotation.</summary>
 	public Guid? Document { get; set; }
 	/// <summary>Contains the error message if an error occurred during the reviewing of the quotation.</summary>
-	public string ErrorMessage { get; set; }
+	public string? ErrorMessage { get; set; }
 	/// <summary>Identifier of the newly created quotation.</summary>
 	public Guid? NewQuotationID { get; set; }
 	/// <summary>The account who made the order.</summary>
@@ -21,11 +21,11 @@ public class ReviewQuotation
 	/// <summary>The contact person of the account who made the order.</summary>
 	public Guid? OrderAccountContact { get; set; }
 	/// <summary>The paymentcondition linked to the new quotation.</summary>
-	public string PaymentCondition { get; set; }
+	public string? PaymentCondition { get; set; }
 	/// <summary>The date of the new quotation.</summary>
 	public DateTime? QuotationDate { get; set; }
 	/// <summary>Identifier of the quotation.</summary>
 	public Guid QuotationID { get; set; }
 	/// <summary>Contains information if the quotation was successfully reviewed.</summary>
-	public string SuccessMessage { get; set; }
+	public string? SuccessMessage { get; set; }
 }

@@ -9,13 +9,13 @@ public class EmploymentInternalRate
 	/// <summary>Creator</summary>
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Division code</summary>
 	public int Division { get; set; }
 	/// <summary>Employee</summary>
 	public Guid Employee { get; set; }
 	/// <summary>Name of employee</summary>
-	public string EmployeeFullName { get; set; }
+	public string? EmployeeFullName { get; set; }
 	/// <summary>Employee number</summary>
 	public int EmployeeHID { get; set; }
 	/// <summary>Employment</summary>
@@ -33,7 +33,7 @@ public class EmploymentInternalRate
 	/// <summary>Modifier</summary>
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Start date</summary>
 	public DateTime StartDate { get; set; }
 }

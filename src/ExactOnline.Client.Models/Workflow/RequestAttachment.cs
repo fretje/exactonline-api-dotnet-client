@@ -9,9 +9,9 @@ public class RequestAttachment
 	public int? Division { get; set; }
 	/// <summary>To get the file in its original format (xml, jpg, pdf, etc.) append &lt;b&gt;&amp;Download=1&lt;/b&gt; to the url.</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string DownloadUrl { get; set; }
+	public string? DownloadUrl { get; set; }
 	/// <summary>Filename of the attachment</summary>
-	public string FileName { get; set; }
+	public string? FileName { get; set; }
 	/// <summary>File size of the attachment</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public double FileSize { get; set; }

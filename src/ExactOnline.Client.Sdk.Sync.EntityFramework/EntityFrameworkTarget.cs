@@ -4,9 +4,9 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFramework;
 
 public class EntityFrameworkTarget : SyncTargetBase
 {
-	private readonly string _nameOrConnectionString;
+	private readonly string? _nameOrConnectionString;
 
-	public EntityFrameworkTarget(string nameOrConnectionString = null) =>
+	public EntityFrameworkTarget(string? nameOrConnectionString = null) =>
 		_nameOrConnectionString = nameOrConnectionString;
 
 	public void InitializeDatabase(bool force)
@@ -16,11 +16,10 @@ public class EntityFrameworkTarget : SyncTargetBase
 	}
 
 	protected override ISyncTargetController<TModel> CreateControllerFor<TModel>() =>
-		Activator.CreateInstance(
+		(ISyncTargetController<TModel>)Activator.CreateInstance(
 			typeof(EntityFrameworkTargetController<,>)
-				.MakeGenericType(typeof(TModel), ModelInfo.For<TModel>().IdentifierType),
-			_nameOrConnectionString)
-		as ISyncTargetController<TModel>;
+				.MakeGenericType(typeof(TModel), ModelInfo.For<TModel>().IdentifierType ?? throw new InvalidOperationException("Identifier type is not set.")),
+			_nameOrConnectionString);
 
 
 	private static readonly Lazy<Type[]> _supportedModelTypes =

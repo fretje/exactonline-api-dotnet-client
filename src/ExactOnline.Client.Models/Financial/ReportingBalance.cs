@@ -11,15 +11,15 @@ public class ReportingBalance
 	/// <summary>The sum of the amounts of all debit transactions in the grouping.</summary>
 	public double? AmountDebit { get; set; }
 	/// <summary>Balance type of the G/L account: B = Balance Sheet, W = Profit &amp; Loss.</summary>
-	public string BalanceType { get; set; }
+	public string? BalanceType { get; set; }
 	/// <summary>The code of the cost center.</summary>
-	public string CostCenterCode { get; set; }
+	public string? CostCenterCode { get; set; }
 	/// <summary>The description of the cost center.</summary>
-	public string CostCenterDescription { get; set; }
+	public string? CostCenterDescription { get; set; }
 	/// <summary>The code of the cost unit.</summary>
-	public string CostUnitCode { get; set; }
+	public string? CostUnitCode { get; set; }
 	/// <summary>The description of the cost unit.</summary>
-	public string CostUnitDescription { get; set; }
+	public string? CostUnitDescription { get; set; }
 	/// <summary>The number of transactions in the grouping.</summary>
 	public int? Count { get; set; }
 	/// <summary>Division code</summary>
@@ -27,9 +27,9 @@ public class ReportingBalance
 	/// <summary>G/L account</summary>
 	public Guid? GLAccount { get; set; }
 	/// <summary>The code of the G/L account.</summary>
-	public string GLAccountCode { get; set; }
+	public string? GLAccountCode { get; set; }
 	/// <summary>The description of the G/L account.</summary>
-	public string GLAccountDescription { get; set; }
+	public string? GLAccountDescription { get; set; }
 	/// <summary>Record ID</summary>
 	public long ID { get; set; }
 	/// <summary>The reporting period of the transactions in the grouping.</summary>

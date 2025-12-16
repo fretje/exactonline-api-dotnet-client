@@ -21,10 +21,7 @@ public class EntityConverterTest
 	{
 		var jsonarray = JsonFileReader.GetJsonFromFile("Response_Json_Array_Account.txt");
 		var accounts = EntityConverter.ConvertJsonArrayToObjectList<Account>(jsonarray);
-		if (accounts.Count != 2)
-		{
-			throw new Exception("The count of the list isn't equal to the actual list");
-		}
+		Assert.AreEqual(2, accounts?.Count, "The count of the list isn't equal to the actual list");
 	}
 
 	[TestCategory("Unit Test")]
@@ -33,10 +30,7 @@ public class EntityConverterTest
 	{
 		var jsonarray = JsonFileReader.GetJsonFromFile("Response_Json_Array_Account.txt");
 		var accounts = EntityConverter.ConvertJsonArrayToObjectList<Account>(jsonarray);
-		if (accounts.Count != 2)
-		{
-			throw new Exception("The count of the list isn't equal to the actual list");
-		}
+		Assert.AreEqual(2, accounts?.Count, "The count of the list isn't equal to the actual list");
 	}
 
 	[TestCategory("Unit Test")]
@@ -179,8 +173,9 @@ public class EntityConverterTest
 		var jsonsresponse = JsonFileReader.GetJsonFromFile("Response_Json_Object_GLAccount.txt");
 		var json = ApiResponseCleaner.GetJsonObject(jsonsresponse);
 
-		dynamic glaccountObject = EntityConverter.ConvertJsonToDynamicObject(json);
-		Assert.AreEqual("D", (string)glaccountObject.BalanceSide);
+		var glaccountObject = EntityConverter.ConvertJsonToDynamicObject(json);
+		Assert.IsNotNull(glaccountObject);
+		Assert.AreEqual("D", (string)glaccountObject!.BalanceSide);
 		Assert.AreEqual("W", (string)glaccountObject.BalanceType);
 		Assert.AreEqual("4406", (string)glaccountObject.Code);
 		Assert.IsFalse((bool)glaccountObject.Compress);
@@ -263,10 +258,11 @@ public class EntityConverterTest
 		var json = ApiResponseCleaner.GetJsonArray(JsonFileReader.GetJsonFromFile("Response_Json_Array_SalesInvoice_WithLinkedEntities.txt"));
 		var invoices = EntityConverter.ConvertJsonArrayToObjectList<SalesInvoice>(json);
 
+		Assert.IsNotNull(invoices);
 		foreach (var invoice in invoices)
 		{
-			var sil = (List<SalesInvoiceLine>)invoice.SalesInvoiceLines;
-			Assert.IsNotEmpty(sil);
+			Assert.IsNotNull(invoice.SalesInvoiceLines);
+			Assert.IsNotEmpty(invoice.SalesInvoiceLines);
 		}
 	}
 
@@ -277,9 +273,10 @@ public class EntityConverterTest
 		var json = ApiResponseCleaner.GetJsonObject(JsonFileReader.GetJsonFromFile("Response_Json_Object_SalesInvoice.txt"));
 
 		var invoice = EntityConverter.ConvertJsonToObject<SalesInvoice>(json);
-		var lines = (List<SalesInvoiceLine>)invoice.SalesInvoiceLines;
+		var lines = invoice.SalesInvoiceLines;
 
 		Assert.IsNotNull(invoice);
+		Assert.IsNotNull(lines);
 		Assert.IsNotEmpty(lines);
 	}
 
@@ -375,8 +372,8 @@ public class EntityConverterTest
 
 public class SimpleEntity
 {
-	public string Code { get; set; }
-	public string Description { get; set; }
+	public string? Code { get; set; }
+	public string? Description { get; set; }
 	public Guid Id { get; set; }
 	public DateTime StartDate { get; set; }
 	public DateTime? EndDate { get; set; }
@@ -388,18 +385,18 @@ public class SimpleEntity
 
 public class ComplexEntity
 {
-	public string Currency { get; set; }
-	public string Description { get; set; }
+	public string? Currency { get; set; }
+	public string? Description { get; set; }
 	public Guid? InvoiceTo { get; set; }
-	public string Journal { get; set; }
+	public string? Journal { get; set; }
 	public DateTime? OrderDate { get; set; }
 	public Guid? OrderedBy { get; set; }
 
-	public IEnumerable<ComplexEntityLine> Lines { get; set; }
+	public IEnumerable<ComplexEntityLine>? Lines { get; set; }
 }
 
 public class ComplexEntityLine
 {
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	public Guid? Item { get; set; }
 }

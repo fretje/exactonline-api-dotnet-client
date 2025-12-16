@@ -7,7 +7,7 @@ public class Costcenter
 	/// <summary>Indicates if the cost center is active: 0 = inactive 1 = active</summary>
 	public bool? Active { get; set; }
 	/// <summary>Code (user-defined ID)</summary>
-	public string Code { get; set; }
+	public string? Code { get; set; }
 	/// <summary>Creation date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? Created { get; set; }
@@ -16,9 +16,9 @@ public class Costcenter
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Description (text)</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? Division { get; set; }
@@ -32,5 +32,5 @@ public class Costcenter
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 }

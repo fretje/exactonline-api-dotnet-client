@@ -20,7 +20,8 @@ public class AccessLinkedEntities
 			.Get();
 		Assert.IsNotNull(salesinvoices);
 
-		var salesinvoicelines = (List<SalesInvoiceLine>)salesinvoices.First().SalesInvoiceLines;
+		var salesinvoicelines = salesinvoices.First().SalesInvoiceLines;
+		Assert.IsNotNull(salesinvoicelines);
 		Assert.IsNotEmpty(salesinvoicelines);
 	}
 }

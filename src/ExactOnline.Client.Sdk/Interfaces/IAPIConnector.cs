@@ -2,8 +2,8 @@
 
 public interface IApiConnector
 {
-	string DoGetRequest(string endpoint, string parameters);
-	Task<string> DoGetRequestAsync(string endpoint, string parameters, CancellationToken ct = default);
+	string DoGetRequest(string endpoint, string? parameters);
+	Task<string> DoGetRequestAsync(string endpoint, string? parameters, CancellationToken ct = default);
 
 	Stream DoGetFileRequest(string endpoint);
 	Task<Stream> DoGetFileRequestAsync(string endpoint, CancellationToken ct = default);
@@ -17,6 +17,6 @@ public interface IApiConnector
 	string DoDeleteRequest(string endpoint);
 	Task<string> DoDeleteRequestAsync(string endpoint, CancellationToken ct = default);
 
-	string DoCleanRequest(string endpoint, string parameters); // Request without Content-Type for $count function, including parameters
-	Task<string> DoCleanRequestAsync(string endpoint, string parameters, CancellationToken ct = default); // Request without Content-Type for $count function, including parameters
+	string DoCleanRequest(string endpoint, string? parameters); // Request without Content-Type for $count function, including parameters
+	Task<string> DoCleanRequestAsync(string endpoint, string? parameters, CancellationToken ct = default); // Request without Content-Type for $count function, including parameters
 }

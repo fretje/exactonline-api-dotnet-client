@@ -13,14 +13,14 @@ public class ExactOnlineQuery<T>(IController<T> controller)
 {
 	private readonly IController<T> _controller = controller ?? throw new ArgumentNullException(nameof(controller));
 
-	private string _select;
+	private string? _select;
 	private readonly List<string> _and = [];
-	private string _skip;
-	private string _expand;
-	private string _top;
-	private string _orderby;
-	private string _where;
-	private string _skipToken;
+	private string? _skip;
+	private string? _expand;
+	private string? _top;
+	private string? _orderby;
+	private string? _where;
+	private string? _skipToken;
 
 	/// <summary>
 	/// Creates a 'where' clause for the query
@@ -79,9 +79,9 @@ public class ExactOnlineQuery<T>(IController<T> controller)
 	/// Specify the field(s) to get from the API
 	/// </summary>
 	/// <param name="fields">The field(s) to get</param>
-	public ExactOnlineQuery<T> Select(params string[] fields)
+	public ExactOnlineQuery<T> Select(params string[]? fields)
 	{
-		if (fields != null && fields.Length > 0)
+		if (fields?.Length > 0)
 		{
 			var select = string.Join(",", fields);
 
@@ -178,7 +178,7 @@ public class ExactOnlineQuery<T>(IController<T> controller)
 	/// </summary>
 	public List<T> Get(EndpointTypeEnum endpointType)
 	{
-		var skipToken = string.Empty;
+		string? skipToken = null;
 		return Get(ref skipToken, endpointType);
 	}
 
@@ -186,14 +186,14 @@ public class ExactOnlineQuery<T>(IController<T> controller)
 	/// Returns a List of entities using the specified query.
 	/// </summary>
 	/// <param name="skipToken">The variable to store the skiptoken in</param>
-	public List<T> Get(ref string skipToken) => Get(ref skipToken, EndpointTypeEnum.Single);
+	public List<T> Get(ref string? skipToken) => Get(ref skipToken, EndpointTypeEnum.Single);
 
 	/// <summary>
 	/// Returns a List of entities using the specified query.
 	/// </summary>
 	/// <param name="skipToken">The variable to store the skiptoken in</param>
 	/// <param name="endpointType">Which endpoint type to use.</param>
-	public List<T> Get(ref string skipToken, EndpointTypeEnum endpointType)
+	public List<T> Get(ref string? skipToken, EndpointTypeEnum endpointType)
 	{
 		AddSkipToken(skipToken);
 		return _controller.Get(BuildODataQuery(true), ref skipToken, endpointType);
@@ -204,13 +204,13 @@ public class ExactOnlineQuery<T>(IController<T> controller)
 	/// </summary>
 	/// <param name="skipToken">The variable to store the skiptoken in</param>
 	/// <param name="endpointType">Which endpoint type to use.</param>
-	public Task<Models.ApiList<T>> GetAsync(string skiptoken = "", EndpointTypeEnum endpointType = EndpointTypeEnum.Single, CancellationToken ct = default)
+	public Task<Models.ApiList<T>> GetAsync(string? skiptoken = null, EndpointTypeEnum endpointType = EndpointTypeEnum.Single, CancellationToken ct = default)
 	{
 		AddSkipToken(skiptoken);
 		return _controller.GetAsync(BuildODataQuery(true), endpointType, ct);
 	}
 
-	private void AddSkipToken(string skipToken)
+	private void AddSkipToken(string? skipToken)
 	{
 		if (!string.IsNullOrEmpty(skipToken))
 		{
@@ -331,7 +331,7 @@ public class ExactOnlineQuery<T>(IController<T> controller)
 	/// </summary>
 	private string TransformExpressionToODataFormat(Expression e)
 	{
-		MemberExpression me = null;
+		MemberExpression? me = null;
 
 		if (e is MemberExpression)
 		{
@@ -356,14 +356,14 @@ public class ExactOnlineQuery<T>(IController<T> controller)
 
 		foreach (var argument in mce.Arguments)
 		{
-			if (argument is ConstantExpression)
+			if (argument is ConstantExpression ce
+				&& ToODataParameter(ce.Value) is { } odataParameter)
 			{
-				var ce = argument as ConstantExpression;
-				listArguments.Add(ToODataParameter(ce.Value));
+				listArguments.Add(odataParameter);
 			}
 		}
 
-		string arguments = null;
+		string? arguments = null;
 		if (listArguments.Count > 0)
 		{
 			arguments = "," + string.Join(",", listArguments);
@@ -375,9 +375,9 @@ public class ExactOnlineQuery<T>(IController<T> controller)
 	/// <summary>
 	/// Formats any given value to it's OData-compliant string representation.
 	/// </summary>
-	private static string ToODataParameter(object value)
+	private static string? ToODataParameter(object? value)
 	{
-		string _value = null;
+		string? _value = null;
 
 		if (value != null)
 		{
@@ -409,13 +409,13 @@ public class ExactOnlineQuery<T>(IController<T> controller)
 			{
 				_where += string.Format("+and+{0}", string.Join("+and+", _and));
 			}
-			queryParts.Add(_where);
+			queryParts.Add(_where!);
 		}
 
 		// Add $select
 		if (!string.IsNullOrEmpty(_select))
 		{
-			queryParts.Add(_select);
+			queryParts.Add(_select!);
 		}
 		else if (selectIsMandatory && !SupportedActionsSDK.GetByType(typeof(T)).AllowsEmptySelect)
 		{
@@ -425,31 +425,31 @@ public class ExactOnlineQuery<T>(IController<T> controller)
 		// Add $skip
 		if (!string.IsNullOrEmpty(_skip))
 		{
-			queryParts.Add(_skip);
+			queryParts.Add(_skip!);
 		}
 
 		// Add $expand
 		if (!string.IsNullOrEmpty(_expand))
 		{
-			queryParts.Add(_expand);
+			queryParts.Add(_expand!);
 		}
 
 		// Add top
 		if (!string.IsNullOrEmpty(_top))
 		{
-			queryParts.Add(_top);
+			queryParts.Add(_top!);
 		}
 
 		// Add $skipToken
 		if (!string.IsNullOrEmpty(_skipToken))
 		{
-			queryParts.Add(_skipToken);
+			queryParts.Add(_skipToken!);
 		}
 
 		// Add orderby
 		if (!string.IsNullOrEmpty(_orderby))
 		{
-			queryParts.Add(_orderby);
+			queryParts.Add(_orderby!);
 		}
 
 		return string.Join("&", queryParts);

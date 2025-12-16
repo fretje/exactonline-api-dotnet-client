@@ -7,7 +7,7 @@ namespace ExactOnline.Client.Sdk.UserAcceptanceTests.UserLevel;
 [TestClass]
 public class RobustEndpoints
 {
-	private TestObjectsCreator _toc;
+	private TestObjectsCreator _toc = default!;
 	private int _currentDivision;
 
 	public TestContext TestContext { get; set; }

@@ -18,9 +18,9 @@ public class DirectDebitMandate
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Displays the description of the mandate.</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? Division { get; set; }
@@ -38,11 +38,11 @@ public class DirectDebitMandate
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Depending on the payment type, a different bank file will be generated. 0 = One-off payment, 1 = Recurrent payment, 2 = AdHoc (UK only)</summary>
 	public short? PaymentType { get; set; }
 	/// <summary>Displays a reference number for the mandate. It is a unique reference number that you can assign to each mandate.</summary>
-	public string Reference { get; set; }
+	public string? Reference { get; set; }
 	/// <summary>Date that the mandate is signed. The collection must take place after the signature date of the mandate. The date is used to check the validity of the mandate.</summary>
 	public DateTime? SignatureDate { get; set; }
 	/// <summary>Depending on the type, a different bank file will be generated. 0 = Core, 1 = B2B and 2 = bottomline (UK only)</summary>

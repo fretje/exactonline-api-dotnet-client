@@ -5,7 +5,7 @@ namespace ExactOnline.Client.Models.Payroll
 	public class EmploymentContractFlexPhase
 	{
 		/// <summary>Flexible employment contract phase description</summary>
-		public string Description { get; set; }
+		public string? Description { get; set; }
 		/// <summary>Primary key</summary>
 		public int ID { get; set; }
 	}

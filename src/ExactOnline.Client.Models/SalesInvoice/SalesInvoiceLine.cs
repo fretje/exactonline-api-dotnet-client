@@ -10,19 +10,19 @@ public class SalesInvoiceLine
 	/// <summary>For normal lines it&apos;s the amount excluding VAT</summary>
 	public double? AmountFC { get; set; }
 	/// <summary>Reference to Cost center</summary>
-	public string CostCenter { get; set; }
+	public string? CostCenter { get; set; }
 	/// <summary>Description of CostCenter</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CostCenterDescription { get; set; }
+	public string? CostCenterDescription { get; set; }
 	/// <summary>Reference to Cost unit</summary>
-	public string CostUnit { get; set; }
+	public string? CostUnit { get; set; }
 	/// <summary>Description of CostUnit</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CostUnitDescription { get; set; }
+	public string? CostUnitDescription { get; set; }
 	/// <summary>Delivery date of an item in a sales invoice. This is used for VAT on prepayments, only if sales order is not used in the license.</summary>
 	public DateTime? DeliveryDate { get; set; }
 	/// <summary>Description. Can be different for header and lines</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Discount given on the default price. Discount = (DefaultPrice of Item - PriceItem in line) / DefaultPrice of Item</summary>
 	public double? Discount { get; set; }
 	/// <summary>Division code</summary>
@@ -32,7 +32,7 @@ public class SalesInvoiceLine
 	public Guid? Employee { get; set; }
 	/// <summary>Name of employee</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string EmployeeFullName { get; set; }
+	public string? EmployeeFullName { get; set; }
 	/// <summary>EndTime is used to store the last date of a period. EndTime is used in combination with StartTime</summary>
 	public DateTime? EndTime { get; set; }
 	/// <summary>Extra duty amount in the currency of the transaction. Both extra duty amount and VAT amount need to be specified in order to differ this property from automatically calculated.</summary>
@@ -43,7 +43,7 @@ public class SalesInvoiceLine
 	public Guid? GLAccount { get; set; }
 	/// <summary>Description of GLAccount</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string GLAccountDescription { get; set; }
+	public string? GLAccountDescription { get; set; }
 	/// <summary>Primary key</summary>
 	public Guid ID { get; set; }
 	/// <summary>The InvoiceID identifies the sales invoice. All the lines of a sales invoice have the same InvoiceID</summary>
@@ -52,32 +52,32 @@ public class SalesInvoiceLine
 	public Guid? Item { get; set; }
 	/// <summary>Item code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemCode { get; set; }
+	public string? ItemCode { get; set; }
 	/// <summary>Description of Item</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemDescription { get; set; }
+	public string? ItemDescription { get; set; }
 	/// <summary>Indicates the sequence of the lines within one invoice</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? LineNumber { get; set; }
 	/// <summary>Net price of the sales invoice line</summary>
 	public double? NetPrice { get; set; }
 	/// <summary>Extra notes</summary>
-	public string Notes { get; set; }
+	public string? Notes { get; set; }
 	/// <summary>Price list</summary>
 	public Guid? Pricelist { get; set; }
 	/// <summary>Description of Pricelist</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string PricelistDescription { get; set; }
+	public string? PricelistDescription { get; set; }
 	/// <summary>The project to which the sales transaction line is linked. The project can be different per line. Sometimes also the project in the header is filled although this is not really used</summary>
 	public Guid? Project { get; set; }
 	/// <summary>Description of Project</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ProjectDescription { get; set; }
+	public string? ProjectDescription { get; set; }
 	/// <summary>WBS linked to the sales invoice</summary>
 	public Guid? ProjectWBS { get; set; }
 	/// <summary>Description of WBS</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ProjectWBSDescription { get; set; }
+	public string? ProjectWBSDescription { get; set; }
 	/// <summary>The number of items sold in default units. The quantity shown in the entry screen is Quantity * UnitFactor</summary>
 	public double? Quantity { get; set; }
 	/// <summary>Identifies the sales order this invoice line is based on</summary>
@@ -99,20 +99,20 @@ public class SalesInvoiceLine
 	public Guid? Subscription { get; set; }
 	/// <summary>Description of subscription line</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string SubscriptionDescription { get; set; }
+	public string? SubscriptionDescription { get; set; }
 	/// <summary>Obsolete</summary>
 	public Guid? TaxSchedule { get; set; }
 	/// <summary>Obsolete</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string TaxScheduleCode { get; set; }
+	public string? TaxScheduleCode { get; set; }
 	/// <summary>Obsolete</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string TaxScheduleDescription { get; set; }
+	public string? TaxScheduleDescription { get; set; }
 	/// <summary>Code of Unit</summary>
-	public string UnitCode { get; set; }
+	public string? UnitCode { get; set; }
 	/// <summary>Description of Unit</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string UnitDescription { get; set; }
+	public string? UnitDescription { get; set; }
 	/// <summary>Price per unit</summary>
 	public double? UnitPrice { get; set; }
 	/// <summary>VAT amount in the default currency of the company</summary>
@@ -120,10 +120,10 @@ public class SalesInvoiceLine
 	/// <summary>VAT amount in the currency of the transaction</summary>
 	public double? VATAmountFC { get; set; }
 	/// <summary>The VAT code that is used when the invoice is registered</summary>
-	public string VATCode { get; set; }
+	public string? VATCode { get; set; }
 	/// <summary>Description of VATCode</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string VATCodeDescription { get; set; }
+	public string? VATCodeDescription { get; set; }
 	/// <summary>The vat percentage of the VAT code. This is the percentage at the moment the invoice is created. It&apos;s also used for the default calculation of VAT amounts and VAT base amounts</summary>
 	public double? VATPercentage { get; set; }
 }

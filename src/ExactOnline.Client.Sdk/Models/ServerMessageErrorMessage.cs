@@ -2,6 +2,6 @@
 
 internal class ServerMessageErrorMessage
 {
-	public string Lang { get; set; }
-	public string Value { get; set; }
+	public string? Lang { get; set; }
+	public string? Value { get; set; }
 }

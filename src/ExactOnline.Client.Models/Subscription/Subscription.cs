@@ -12,10 +12,10 @@ public class Subscription
 	public Guid? Classification { get; set; }
 	/// <summary>Code of Classification</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ClassificationCode { get; set; }
+	public string? ClassificationCode { get; set; }
 	/// <summary>Description of Classification</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ClassificationDescription { get; set; }
+	public string? ClassificationDescription { get; set; }
 	/// <summary>Creation date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime Created { get; set; }
@@ -24,13 +24,13 @@ public class Subscription
 	public Guid Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Currency code</summary>
-	public string Currency { get; set; }
+	public string? Currency { get; set; }
 	/// <summary>Purchase order number of customer</summary>
-	public string CustomerPONumber { get; set; }
+	public string? CustomerPONumber { get; set; }
 	/// <summary>Description</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int Division { get; set; }
@@ -48,10 +48,10 @@ public class Subscription
 	public Guid? InvoiceToContactPerson { get; set; }
 	/// <summary>Name of contact person of invoice account</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string InvoiceToContactPersonFullName { get; set; }
+	public string? InvoiceToContactPersonFullName { get; set; }
 	/// <summary>Name of invoice account</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string InvoiceToName { get; set; }
+	public string? InvoiceToName { get; set; }
 	/// <summary>Invoicing start date</summary>
 	public DateTime? InvoicingStartDate { get; set; }
 	/// <summary>Last modified date</summary>
@@ -62,9 +62,9 @@ public class Subscription
 	public Guid Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Remarks</summary>
-	public string Notes { get; set; }
+	public string? Notes { get; set; }
 	/// <summary>Number</summary>
 	public int Number { get; set; }
 	/// <summary>Reference to order account</summary>
@@ -73,41 +73,41 @@ public class Subscription
 	public Guid? OrderedByContactPerson { get; set; }
 	/// <summary>Name of contact person of order account</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string OrderedByContactPersonFullName { get; set; }
+	public string? OrderedByContactPersonFullName { get; set; }
 	/// <summary>Name of order account</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string OrderedByName { get; set; }
+	public string? OrderedByName { get; set; }
 	/// <summary>Payment condition</summary>
-	public string PaymentCondition { get; set; }
+	public string? PaymentCondition { get; set; }
 	/// <summary>Description of PaymentCondition</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string PaymentConditionDescription { get; set; }
+	public string? PaymentConditionDescription { get; set; }
 	/// <summary>Indicates if subscription is printed</summary>
 	public bool Printed { get; set; }
 	/// <summary>Reference to reason cancelled</summary>
 	public Guid? ReasonCancelled { get; set; }
 	/// <summary>Code of ReasonCancelled</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ReasonCancelledCode { get; set; }
+	public string? ReasonCancelledCode { get; set; }
 	/// <summary>Description of ReasonCancelled</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ReasonCancelledDescription { get; set; }
+	public string? ReasonCancelledDescription { get; set; }
 	/// <summary>Start date</summary>
 	public DateTime StartDate { get; set; }
 	/// <summary>Collection of subscription lines</summary>
-	public IEnumerable<SubscriptionLine> SubscriptionLines { get; set; }
+	public IEnumerable<SubscriptionLine>? SubscriptionLines { get; set; }
 	/// <summary>Collection of restriction employees</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public IEnumerable<SubscriptionRestrictionEmployee> SubscriptionRestrictionEmployees { get; set; }
+	public IEnumerable<SubscriptionRestrictionEmployee>? SubscriptionRestrictionEmployees { get; set; }
 	/// <summary>Collection of restriction items</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public IEnumerable<SubscriptionRestrictionItem> SubscriptionRestrictionItems { get; set; }
+	public IEnumerable<SubscriptionRestrictionItem>? SubscriptionRestrictionItems { get; set; }
 	/// <summary>Reference to subscription type</summary>
 	public Guid SubscriptionType { get; set; }
 	/// <summary>Code of SubscriptionType</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string SubscriptionTypeCode { get; set; }
+	public string? SubscriptionTypeCode { get; set; }
 	/// <summary>Description of SubscriptionType</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string SubscriptionTypeDescription { get; set; }
+	public string? SubscriptionTypeDescription { get; set; }
 }

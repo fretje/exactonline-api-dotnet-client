@@ -7,19 +7,19 @@ public class DivisionClass
 	/// <summary>Classification customer ID</summary>
 	public Guid ClassNameCustomer { get; set; }
 	/// <summary>Related classification description</summary>
-	public string ClassNameDescription { get; set; }
+	public string? ClassNameDescription { get; set; }
 	/// <summary>Related classification ID</summary>
 	public Guid ClassNameID { get; set; }
 	/// <summary>Property code</summary>
-	public string Code { get; set; }
+	public string? Code { get; set; }
 	/// <summary>Creation date</summary>
 	public DateTime Created { get; set; }
 	/// <summary>User ID of creator</summary>
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Property description</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Property description term ID</summary>
 	public int? DescriptionTermID { get; set; }
 	/// <summary>Primary key</summary>
@@ -29,7 +29,7 @@ public class DivisionClass
 	/// <summary>User ID of modifier</summary>
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Related classification sequence number </summary>
 	public int SequenceNr { get; set; }
 }

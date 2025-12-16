@@ -14,9 +14,9 @@ public class StockCount
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Description of the stock count</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? Division { get; set; }
@@ -31,15 +31,15 @@ public class StockCount
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Offset GL account of inventory</summary>
 	public Guid? OffsetGLInventory { get; set; }
 	/// <summary>GLAccount code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string OffsetGLInventoryCode { get; set; }
+	public string? OffsetGLInventoryCode { get; set; }
 	/// <summary>GLAccount description</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string OffsetGLInventoryDescription { get; set; }
+	public string? OffsetGLInventoryDescription { get; set; }
 	/// <summary>Source of stock count entry: 1-Manual entry, 2-Import, 3-Stock count, 4-Web service</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public short? Source { get; set; }
@@ -50,7 +50,7 @@ public class StockCount
 	/// <summary>Primary key</summary>
 	public Guid StockCountID { get; set; }
 	/// <summary>Collection of stock count lines</summary>
-	public IEnumerable<StockCountLine> StockCountLines { get; set; }
+	public IEnumerable<StockCountLine>? StockCountLines { get; set; }
 	/// <summary>Human readable id of the stock count</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? StockCountNumber { get; set; }
@@ -58,8 +58,8 @@ public class StockCount
 	public Guid? Warehouse { get; set; }
 	/// <summary>Code of Warehouse</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string WarehouseCode { get; set; }
+	public string? WarehouseCode { get; set; }
 	/// <summary>Description of Warehouse</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string WarehouseDescription { get; set; }
+	public string? WarehouseDescription { get; set; }
 }

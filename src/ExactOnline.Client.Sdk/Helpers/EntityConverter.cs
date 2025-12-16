@@ -13,7 +13,7 @@ public static class EntityConverter
 	/// <summary>
 	/// Convert single object to Dynamic object
 	/// </summary>
-	public static dynamic ConvertJsonToDynamicObject(string json)
+	public static dynamic? ConvertJsonToDynamicObject(string json)
 	{
 		try
 		{
@@ -32,7 +32,8 @@ public static class EntityConverter
 	{
 		try
 		{
-			JArray array = JsonConvert.DeserializeObject<dynamic>(json);
+			JArray array = JsonConvert.DeserializeObject<dynamic>(json)
+				?? throw new IncorrectJsonException();
 			return [.. array];
 		}
 		catch
@@ -67,7 +68,8 @@ public static class EntityConverter
 	/// <param name="entity">Current State of the Entity</param>
 	/// <param name="entityControllerDelegate">Delegate for entitycontroller</param>
 	/// <returns>Json String</returns>
-	public static string ConvertObjectToJson<T>(T originalEntity, T entity, Func<object, EntityController> getEntityControllerFunc) =>
+	public static string ConvertObjectToJson<T>(T originalEntity, T entity, Func<object, EntityController?>? getEntityControllerFunc)
+		where T: notnull =>
 		JsonConvert.SerializeObject(entity, new ExactOnlineJsonConverter(originalEntity, getEntityControllerFunc));
 
 	/// <summary>
@@ -77,10 +79,11 @@ public static class EntityConverter
 	/// <param name="json">Json String</param>
 	/// <returns>Exact Online Object</returns>
 	public static T ConvertJsonToObject<T>(string json)
+		where T : notnull
 	{
 		try
 		{
-			return JsonConvert.DeserializeObject<T>(json);
+			return JsonConvert.DeserializeObject<T>(json) ?? throw new IncorrectJsonException("DeserializeObject returned null.");
 		}
 		catch (Exception)
 		{
@@ -94,7 +97,7 @@ public static class EntityConverter
 	/// <typeparam name="T">Specifies the type</typeparam>
 	/// <param name="json">Json Array</param>
 	/// <returns>List of specified type</returns>
-	public static List<T> ConvertJsonArrayToObjectList<T>(string json)
+	public static List<T>? ConvertJsonArrayToObjectList<T>(string json)
 	{
 		try
 		{

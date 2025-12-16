@@ -16,11 +16,11 @@ public class ShopOrderMaterialPlan
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Description of the material</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Detail drawing reference</summary>
-	public string DetailDrawing { get; set; }
+	public string? DetailDrawing { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? Division { get; set; }
@@ -30,12 +30,12 @@ public class ShopOrderMaterialPlan
 	public Guid? Item { get; set; }
 	/// <summary>Item Code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemCode { get; set; }
+	public string? ItemCode { get; set; }
 	/// <summary>Description of Item</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemDescription { get; set; }
+	public string? ItemDescription { get; set; }
 	/// <summary>URL of the material item&apos;s picture</summary>
-	public string ItemPictureUrl { get; set; }
+	public string? ItemPictureUrl { get; set; }
 	/// <summary>Line number</summary>
 	public int? LineNumber { get; set; }
 	/// <summary>Last modified date</summary>
@@ -46,9 +46,9 @@ public class ShopOrderMaterialPlan
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Line notes</summary>
-	public string Notes { get; set; }
+	public string? Notes { get; set; }
 	/// <summary>Planned amount in the currency of the transaction</summary>
 	public double? PlannedAmountFC { get; set; }
 	/// <summary>Date that the material is required.</summary>
@@ -65,13 +65,13 @@ public class ShopOrderMaterialPlan
 	public int? Status { get; set; }
 	/// <summary>Description of Status</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string StatusDescription { get; set; }
+	public string? StatusDescription { get; set; }
 	/// <summary>Type</summary>
 	public int? Type { get; set; }
 	/// <summary>Unit</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string Unit { get; set; }
+	public string? Unit { get; set; }
 	/// <summary>Unit description</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string UnitDescription { get; set; }
+	public string? UnitDescription { get; set; }
 }

@@ -8,12 +8,12 @@ public class TimeTransaction
 	public Guid? Account { get; set; }
 	/// <summary>Name of Account</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string AccountName { get; set; }
+	public string? AccountName { get; set; }
 	/// <summary>Reference to ProjectWBS (work breakdown structure)</summary>
 	public Guid? Activity { get; set; }
 	/// <summary>Description of ProjectWBS</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ActivityDescription { get; set; }
+	public string? ActivityDescription { get; set; }
 	/// <summary>This property is obsolete. Use property &apos;AmountFC&apos; instead.</summary>
 	public double? Amount { get; set; }
 	/// <summary>Amount in the currency of the transaction of the transaction</summary>
@@ -28,9 +28,9 @@ public class TimeTransaction
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Currency of the amount</summary>
-	public string Currency { get; set; }
+	public string? Currency { get; set; }
 	/// <summary>Date</summary>
 	public DateTime? Date { get; set; }
 	/// <summary>Division code</summary>
@@ -38,7 +38,7 @@ public class TimeTransaction
 	public int? Division { get; set; }
 	/// <summary>Description of Division</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string DivisionDescription { get; set; }
+	public string? DivisionDescription { get; set; }
 	/// <summary>Employee linked to the transaction</summary>
 	public Guid? Employee { get; set; }
 	/// <summary>End time of the transaction</summary>
@@ -46,7 +46,7 @@ public class TimeTransaction
 	/// <summary>Entrynumber</summary>
 	public int? EntryNumber { get; set; }
 	/// <summary>Errortext, used for the backgroundjobs</summary>
-	public string ErrorText { get; set; }
+	public string? ErrorText { get; set; }
 	/// <summary>Status of the transaction</summary>
 	public short? HourStatus { get; set; }
 	/// <summary>Primary key</summary>
@@ -55,7 +55,7 @@ public class TimeTransaction
 	public Guid? Item { get; set; }
 	/// <summary>Description of Item</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemDescription { get; set; }
+	public string? ItemDescription { get; set; }
 	/// <summary>True if you can use decimals for item quantity</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public bool? ItemDivisable { get; set; }
@@ -67,9 +67,9 @@ public class TimeTransaction
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Notes linked to the transaction</summary>
-	public string Notes { get; set; }
+	public string? Notes { get; set; }
 	/// <summary>This property is obsolete. Use property &apos;PriceFC&apos; instead.</summary>
 	public double? Price { get; set; }
 	/// <summary>PriceFC (AmountFC = Quantity * PriceFC)</summary>
@@ -81,16 +81,16 @@ public class TimeTransaction
 	public Guid? ProjectAccount { get; set; }
 	/// <summary>Project account code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ProjectAccountCode { get; set; }
+	public string? ProjectAccountCode { get; set; }
 	/// <summary>Project account name</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ProjectAccountName { get; set; }
+	public string? ProjectAccountName { get; set; }
 	/// <summary>Code of Project</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ProjectCode { get; set; }
+	public string? ProjectCode { get; set; }
 	/// <summary>Description of Project</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ProjectDescription { get; set; }
+	public string? ProjectDescription { get; set; }
 	/// <summary>Quantity of the transaction</summary>
 	public double? Quantity { get; set; }
 	/// <summary>Skip validation</summary>
@@ -103,13 +103,13 @@ public class TimeTransaction
 	public Guid? SubscriptionAccount { get; set; }
 	/// <summary>Subscription account code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string SubscriptionAccountCode { get; set; }
+	public string? SubscriptionAccountCode { get; set; }
 	/// <summary>Subscription account name</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string SubscriptionAccountName { get; set; }
+	public string? SubscriptionAccountName { get; set; }
 	/// <summary>Description of the subscription</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string SubscriptionDescription { get; set; }
+	public string? SubscriptionDescription { get; set; }
 	/// <summary>Subscription number</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? SubscriptionNumber { get; set; }

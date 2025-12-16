@@ -9,13 +9,13 @@ public class Employment
 	/// <summary>User ID of creator</summary>
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Division code</summary>
 	public int? Division { get; set; }
 	/// <summary>Employee ID</summary>
 	public Guid? Employee { get; set; }
 	/// <summary>Name of employee</summary>
-	public string EmployeeFullName { get; set; }
+	public string? EmployeeFullName { get; set; }
 	/// <summary>Numeric number of Employee</summary>
 	public int? EmployeeHID { get; set; }
 	/// <summary>End date of employment</summary>
@@ -29,15 +29,15 @@ public class Employment
 	/// <summary>User ID of modifier</summary>
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>ID of employment ended</summary>
 	public int? ReasonEnd { get; set; }
 	/// <summary>Reason of end of employment</summary>
-	public string ReasonEndDescription { get; set; }
+	public string? ReasonEndDescription { get; set; }
 	/// <summary>Reason of ended flexible employment</summary>
 	public int? ReasonEndFlex { get; set; }
 	/// <summary>Other reason for end of employment</summary>
-	public string ReasonEndFlexDescription { get; set; }
+	public string? ReasonEndFlexDescription { get; set; }
 	/// <summary>Start date of employment</summary>
 	public DateTime? StartDate { get; set; }
 	/// <summary>Start date of the employee in the organization. This field is used to count the years in service.</summary>
