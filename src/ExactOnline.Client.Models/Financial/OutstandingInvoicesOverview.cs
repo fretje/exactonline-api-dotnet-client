@@ -5,7 +5,7 @@ namespace ExactOnline.Client.Models.Financial
 	public class OutstandingInvoicesOverview
 	{
 		/// <summary>Primary key</summary>
-		public string CurrencyCode { get; set; }
+		public string? CurrencyCode { get; set; }
 		/// <summary>Total invoice amount to be paid</summary>
 		public double OutstandingPayableInvoiceAmount { get; set; }
 		/// <summary>Number of invoices to be paid</summary>

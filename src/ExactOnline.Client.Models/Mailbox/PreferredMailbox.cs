@@ -9,7 +9,7 @@ public class PreferredMailbox
 	/// <summary>User ID of creator</summary>
 	public Guid? Creator { get; set; }
 	/// <summary>Extra description of the mailbox</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Only used when this mailbox is used for one specific administration, for example invoices to this mailbox will only be booked in this administration</summary>
 	public int? ForDivision { get; set; }
 	/// <summary>Primary key</summary>
@@ -17,7 +17,7 @@ public class PreferredMailbox
 	/// <summary>Indicates whether this service is used for messages returned by the scanning service</summary>
 	public bool IsScanServiceMailbox { get; set; }
 	/// <summary>E-mail address-like format, for example johndoe@exactonline.nl</summary>
-	public string Mailbox { get; set; }
+	public string? Mailbox { get; set; }
 	/// <summary>Last modified date</summary>
 	public DateTime Modified { get; set; }
 	/// <summary>User ID of modifier</summary>

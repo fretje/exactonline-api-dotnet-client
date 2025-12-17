@@ -3,7 +3,7 @@
 public class ExactOnlineWinFormsAuthorizer(string clientId, string clientSecret, Uri callbackUrl, string baseUrl = "https://start.exactonline.be", string? accessToken = null, string? refreshToken = null, DateTime? expiresAt = null)
 	: ExactOnlineAuthorizer(clientId, clientSecret, callbackUrl, baseUrl, accessToken, refreshToken, expiresAt)
 {
-	public override async Task<string?> GetAccessTokenAsync(CancellationToken ct)
+	public override async Task<string> GetAccessTokenAsync(CancellationToken ct)
 	{
 		if (await IsAuthorizationNeededAsync(ct))
 		{

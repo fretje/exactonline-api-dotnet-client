@@ -9,7 +9,7 @@ public class MaterialIssue
 	public Guid? CreatedBy { get; set; }
 	/// <summary>Name of the creating user</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatedByFullName { get; set; }
+	public string? CreatedByFullName { get; set; }
 	/// <summary>Date this material issue was created</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? CreatedDate { get; set; }
@@ -38,15 +38,15 @@ public class MaterialIssue
 	public Guid? Item { get; set; }
 	/// <summary>Code of item issued</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemCode { get; set; }
+	public string? ItemCode { get; set; }
 	/// <summary>Description of item issued</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemDescription { get; set; }
+	public string? ItemDescription { get; set; }
 	/// <summary>Picture url of item issued</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemPictureUrl { get; set; }
+	public string? ItemPictureUrl { get; set; }
 	/// <summary>Notes logged with this material issue</summary>
-	public string Note { get; set; }
+	public string? Note { get; set; }
 	/// <summary>Quantity of this material issue</summary>
 	public double? Quantity { get; set; }
 	/// <summary>If this transaction was part of a SubOrderReceipt, this ID is the related ShopOrderReceipt.StockTransactionID.</summary>
@@ -67,25 +67,25 @@ public class MaterialIssue
 	public Guid? StorageLocation { get; set; }
 	/// <summary>Code of storage location issued from</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string StorageLocationCode { get; set; }
+	public string? StorageLocationCode { get; set; }
 	/// <summary>Description of storage location issued from</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string StorageLocationDescription { get; set; }
+	public string? StorageLocationDescription { get; set; }
 	/// <summary>Effective date of this material issue</summary>
 	public DateTime? TransactionDate { get; set; }
 	/// <summary>Unit of measurement abbreviation of item issued</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string Unit { get; set; }
+	public string? Unit { get; set; }
 	/// <summary>Unit of measurement of item issued</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string UnitDescription { get; set; }
+	public string? UnitDescription { get; set; }
 	/// <summary>ID of warehouse issued from</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public Guid? Warehouse { get; set; }
 	/// <summary>Code of warehouse issued from</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string WarehouseCode { get; set; }
+	public string? WarehouseCode { get; set; }
 	/// <summary>Description of warehouse issued from</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string WarehouseDescription { get; set; }
+	public string? WarehouseDescription { get; set; }
 }

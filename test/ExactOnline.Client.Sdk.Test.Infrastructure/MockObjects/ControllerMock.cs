@@ -11,22 +11,22 @@ public sealed class ControllerMock<T> : IController<T>
 	List<T> IController<T>.Get(string query, EndpointTypeEnum endpointType)
 	{
 		ODataQuery = query;
-		return null;
+		return [];
 	}
 
-	public List<T> Get(string query, ref string skipToken) => Get(query, ref skipToken, EndpointTypeEnum.Single);
-	public List<T> Get(string query, ref string skipToken, EndpointTypeEnum endpointType)
+	public List<T> Get(string query, ref string? skipToken) => Get(query, ref skipToken, EndpointTypeEnum.Single);
+	public List<T> Get(string query, ref string? skipToken, EndpointTypeEnum endpointType)
 	{
 		skipToken = null;
 		ODataQuery = query;
-		return null;
+		return [];
 	}
 
 	public Task<Models.ApiList<T>> GetAsync(string query, CancellationToken ct) => GetAsync(query, EndpointTypeEnum.Single, ct);
 	public Task<Models.ApiList<T>> GetAsync(string query, EndpointTypeEnum endpointType, CancellationToken ct)
 	{
 		ODataQuery = query;
-		return Task.FromResult(new Models.ApiList<T>(null, null));
+		return Task.FromResult(new Models.ApiList<T>([], null));
 	}
 
 	T IController<T>.GetEntity(string guid, string parameters) => throw new NotImplementedException();

@@ -7,7 +7,7 @@ public class DocumentType
 	/// <summary>Creation date</summary>
 	public DateTime? Created { get; set; }
 	/// <summary>Document type description</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Indicates if documents of this type can be created</summary>
 	public bool DocumentIsCreatable { get; set; }
 	/// <summary>Indicates if documents of this type can be deleted</summary>

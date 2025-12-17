@@ -23,25 +23,25 @@ public class ActiveEmployment
 	/// <summary>Type of employment contract. 1 - Definite, 2 - Indefinite, 3 - External</summary>
 	public int? ContractType { get; set; }
 	/// <summary>Description of employment contract type</summary>
-	public string ContractTypeDescription { get; set; }
+	public string? ContractTypeDescription { get; set; }
 	/// <summary>Creation date</summary>
 	public DateTime? Created { get; set; }
 	/// <summary>User ID of creator</summary>
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Department of employee</summary>
 	public Guid? Department { get; set; }
 	/// <summary>Department code of employee</summary>
-	public string DepartmentCode { get; set; }
+	public string? DepartmentCode { get; set; }
 	/// <summary>Description of department</summary>
-	public string DepartmentDescription { get; set; }
+	public string? DepartmentDescription { get; set; }
 	/// <summary>Division code</summary>
 	public int? Division { get; set; }
 	/// <summary>Employee ID</summary>
 	public Guid? Employee { get; set; }
 	/// <summary>Name of employee</summary>
-	public string EmployeeFullName { get; set; }
+	public string? EmployeeFullName { get; set; }
 	/// <summary>Numeric number of Employee</summary>
 	public int? EmployeeHID { get; set; }
 	/// <summary>Organization of employment</summary>
@@ -59,21 +59,21 @@ public class ActiveEmployment
 	/// <summary>Job title of employee</summary>
 	public Guid? Jobtitle { get; set; }
 	/// <summary>Description of job title</summary>
-	public string JobtitleDescription { get; set; }
+	public string? JobtitleDescription { get; set; }
 	/// <summary>Last modified date</summary>
 	public DateTime? Modified { get; set; }
 	/// <summary>User ID of modifier</summary>
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>ID of employment ended</summary>
 	public int? ReasonEnd { get; set; }
 	/// <summary>Reason of end of employment</summary>
-	public string ReasonEndDescription { get; set; }
+	public string? ReasonEndDescription { get; set; }
 	/// <summary>Reason of ended flexible employment</summary>
 	public int? ReasonEndFlex { get; set; }
 	/// <summary>Other reason for end of employment</summary>
-	public string ReasonEndFlexDescription { get; set; }
+	public string? ReasonEndFlexDescription { get; set; }
 	/// <summary>Employment salary</summary>
 	public Guid? Salary { get; set; }
 	/// <summary>Work schedule</summary>
@@ -81,11 +81,11 @@ public class ActiveEmployment
 	/// <summary>Average hours per week in a schedule.</summary>
 	public double? ScheduleAverageHours { get; set; }
 	/// <summary>Work schedule code</summary>
-	public string ScheduleCode { get; set; }
+	public string? ScheduleCode { get; set; }
 	/// <summary>Number of days of work per week</summary>
 	public double? ScheduleDays { get; set; }
 	/// <summary>Description of work schedule</summary>
-	public string ScheduleDescription { get; set; }
+	public string? ScheduleDescription { get; set; }
 	/// <summary>Number of work hours per week.</summary>
 	public double? ScheduleHours { get; set; }
 	/// <summary>Start date of employment</summary>

@@ -14,12 +14,12 @@ public class InvoiceTerm
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>WBS&apos;s deliverable linked to invoice term</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string Deliverable { get; set; }
+	public string? Deliverable { get; set; }
 	/// <summary>Description of invoice term</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Division number</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? Division { get; set; }
@@ -35,7 +35,7 @@ public class InvoiceTerm
 	public Guid? Item { get; set; }
 	/// <summary>Description of item</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemDescription { get; set; }
+	public string? ItemDescription { get; set; }
 	/// <summary>Last modified date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? Modified { get; set; }
@@ -44,9 +44,9 @@ public class InvoiceTerm
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Notes</summary>
-	public string Notes { get; set; }
+	public string? Notes { get; set; }
 	/// <summary>Percentage of amount per project&apos;s budgeted amount</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public double? Percentage { get; set; }
@@ -54,12 +54,12 @@ public class InvoiceTerm
 	public Guid? Project { get; set; }
 	/// <summary>Description of project</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ProjectDescription { get; set; }
+	public string? ProjectDescription { get; set; }
 	/// <summary>Reference to VATCode</summary>
-	public string VATCode { get; set; }
+	public string? VATCode { get; set; }
 	/// <summary>Description of VATCode</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string VATCodeDescription { get; set; }
+	public string? VATCodeDescription { get; set; }
 	/// <summary>VATCode percentage</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public double? VATPercentage { get; set; }

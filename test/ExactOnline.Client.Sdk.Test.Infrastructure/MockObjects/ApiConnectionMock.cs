@@ -5,8 +5,8 @@ namespace ExactOnline.Client.Sdk.Test.Infrastructure.MockObjects;
 
 public sealed class ApiConnectionMock : IApiConnection
 {
-	string IApiConnection.Get(string parameters) => (this as IApiConnection).Get(parameters, EndpointTypeEnum.Single);
-	string IApiConnection.Get(string parameters, EndpointTypeEnum endpointType)
+	string IApiConnection.Get(string? parameters) => (this as IApiConnection).Get(parameters, EndpointTypeEnum.Single);
+	string IApiConnection.Get(string? parameters, EndpointTypeEnum endpointType)
 	{
 		const string correctJsonArray = @"{
 			""d"": {
@@ -280,10 +280,10 @@ public sealed class ApiConnectionMock : IApiConnection
 		return correctJsonArray;
 	}
 
-	Task<string> IApiConnection.GetAsync(string parameters, CancellationToken ct) => (this as IApiConnection).GetAsync(parameters, EndpointTypeEnum.Single, ct);
-	Task<string> IApiConnection.GetAsync(string parameters, EndpointTypeEnum endpointType, CancellationToken ct) => Task.FromResult((this as IApiConnection).Get(parameters, endpointType));
+	Task<string> IApiConnection.GetAsync(string? parameters, CancellationToken ct) => (this as IApiConnection).GetAsync(parameters, EndpointTypeEnum.Single, ct);
+	Task<string> IApiConnection.GetAsync(string? parameters, EndpointTypeEnum endpointType, CancellationToken ct) => Task.FromResult((this as IApiConnection).Get(parameters, endpointType));
 
-	string IApiConnection.GetEntity(string keyname, string guid, string parameters)
+	string IApiConnection.GetEntity(string keyname, string guid, string? parameters)
 	{
 		const string correctJsonObject = @"{
 			""d"": {
@@ -420,7 +420,7 @@ public sealed class ApiConnectionMock : IApiConnection
 		}";
 		return correctJsonObject;
 	}
-	Task<string> IApiConnection.GetEntityAsync(string keyname, string guid, string parameters, CancellationToken ct) => Task.FromResult((this as IApiConnection).GetEntity(keyname, guid, parameters));
+	Task<string> IApiConnection.GetEntityAsync(string keyname, string guid, string? parameters, CancellationToken ct) => Task.FromResult((this as IApiConnection).GetEntity(keyname, guid, parameters));
 
 	string IApiConnection.Post(string data) => "";
 	Task<string> IApiConnection.PostAsync(string data, CancellationToken ct) => Task.FromResult((this as IApiConnection).Post(data));
@@ -431,6 +431,6 @@ public sealed class ApiConnectionMock : IApiConnection
 	bool IApiConnection.Delete(string keyName, string guid) => true;
 	Task<bool> IApiConnection.DeleteAsync(string keyName, string guid, CancellationToken ct) => Task.FromResult((this as IApiConnection).Delete(keyName, guid));
 
-	int IApiConnection.Count(string parameters) => 0;
-	Task<int> IApiConnection.CountAsync(string parameters, CancellationToken ct) => Task.FromResult((this as IApiConnection).Count(parameters));
+	int IApiConnection.Count(string? parameters) => 0;
+	Task<int> IApiConnection.CountAsync(string? parameters, CancellationToken ct) => Task.FromResult((this as IApiConnection).Count(parameters));
 }

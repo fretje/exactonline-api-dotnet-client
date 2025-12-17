@@ -7,7 +7,7 @@ public class ShippingMethod
 	/// <summary>Active</summary>
 	public bool? Active { get; set; }
 	/// <summary>Code of the shipping method</summary>
-	public string Code { get; set; }
+	public string? Code { get; set; }
 	/// <summary>Creation date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? Created { get; set; }
@@ -16,9 +16,9 @@ public class ShippingMethod
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Description of shipping method</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? Division { get; set; }
@@ -32,11 +32,11 @@ public class ShippingMethod
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Notes</summary>
-	public string Notes { get; set; }
+	public string? Notes { get; set; }
 	/// <summary>Shipping method rates URL</summary>
-	public string ShippingRatesURL { get; set; }
+	public string? ShippingRatesURL { get; set; }
 	/// <summary>Tracking URL</summary>
-	public string TrackingURL { get; set; }
+	public string? TrackingURL { get; set; }
 }

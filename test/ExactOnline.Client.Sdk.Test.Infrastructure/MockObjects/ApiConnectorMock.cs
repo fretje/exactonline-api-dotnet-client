@@ -7,8 +7,8 @@ namespace ExactOnline.Client.Sdk.Test.Infrastructure.MockObjects;
 /// </summary>
 public class ApiConnectorMock : IApiConnector
 {
-	public string DoGetRequest(string endpoint, string parameters) => string.Empty;
-	public Task<string> DoGetRequestAsync(string endpoint, string parameters, CancellationToken ct) => Task.FromResult(DoGetRequest(endpoint, parameters));
+	public string DoGetRequest(string endpoint, string? parameters) => string.Empty;
+	public Task<string> DoGetRequestAsync(string endpoint, string? parameters, CancellationToken ct) => Task.FromResult(DoGetRequest(endpoint, parameters));
 
 	public Stream DoGetFileRequest(string endpointy) => Stream.Null;
 	public Task<Stream> DoGetFileRequestAsync(string endpointy, CancellationToken ct) => Task.FromResult(DoGetFileRequest(endpointy));
@@ -22,8 +22,8 @@ public class ApiConnectorMock : IApiConnector
 	public string DoDeleteRequest(string endpoint) => string.Empty;
 	public Task<string> DoDeleteRequestAsync(string endpoint, CancellationToken ct) => Task.FromResult(DoDeleteRequest(endpoint));
 
-	public string DoCleanRequest(string endpoint, string oDataQuery) => string.Empty;
-	public Task<string> DoCleanRequestAsync(string endpoint, string oDataQuery, CancellationToken ct) => Task.FromResult(DoCleanRequest(endpoint, oDataQuery));
+	public string DoCleanRequest(string endpoint, string? oDataQuery) => string.Empty;
+	public Task<string> DoCleanRequestAsync(string endpoint, string? oDataQuery, CancellationToken ct) => Task.FromResult(DoCleanRequest(endpoint, oDataQuery));
 
 	public int GetCurrentDivision(string endpoint) => -1;
 	public Task<int> GetCurrentDivisionAsync(string endpoint) => Task.FromResult(GetCurrentDivision(endpoint));

@@ -7,7 +7,7 @@ public class AssemblyOrder
 	/// <summary>Planned date for assembly of the item</summary>
 	public DateTime? AssemblyDate { get; set; }
 	/// <summary>Description of assembly order</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Division code</summary>
 	public int Division { get; set; }
 	/// <summary>Quantity of items that have actually been assembled</summary>
@@ -17,11 +17,11 @@ public class AssemblyOrder
 	/// <summary>Reference to item</summary>
 	public Guid Item { get; set; }
 	/// <summary>Item code</summary>
-	public string ItemCode { get; set; }
+	public string? ItemCode { get; set; }
 	/// <summary>Description of item</summary>
-	public string ItemDescription { get; set; }
+	public string? ItemDescription { get; set; }
 	/// <summary>Notes of the assembly order</summary>
-	public string Notes { get; set; }
+	public string? Notes { get; set; }
 	/// <summary>Date of the assembly order is initiated</summary>
 	public DateTime? OrderDate { get; set; }
 	/// <summary>Assembly order number </summary>
@@ -35,13 +35,13 @@ public class AssemblyOrder
 	/// <summary>Reference to storage location</summary>
 	public Guid? StorageLocation { get; set; }
 	/// <summary>Storage location code</summary>
-	public string StorageLocationCode { get; set; }
+	public string? StorageLocationCode { get; set; }
 	/// <summary>Storage location description</summary>
-	public string StorageLocationDescription { get; set; }
+	public string? StorageLocationDescription { get; set; }
 	/// <summary>Warehouse</summary>
 	public Guid? Warehouse { get; set; }
 	/// <summary>Code of Warehouse</summary>
-	public string WarehouseCode { get; set; }
+	public string? WarehouseCode { get; set; }
 	/// <summary>Description of Warehouse</summary>
-	public string WarehouseDescription { get; set; }
+	public string? WarehouseDescription { get; set; }
 }

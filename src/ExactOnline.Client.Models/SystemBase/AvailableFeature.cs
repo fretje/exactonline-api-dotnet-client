@@ -5,7 +5,7 @@ namespace ExactOnline.Client.Models.SystemBase
 	public class AvailableFeature
 	{
 		/// <summary>The description of the feature.</summary>
-		public string Description { get; set; }
+		public string? Description { get; set; }
 		/// <summary>The ID of the feature.</summary>
 		public int ID { get; set; }
 	}

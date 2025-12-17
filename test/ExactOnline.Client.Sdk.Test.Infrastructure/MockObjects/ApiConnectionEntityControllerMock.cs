@@ -7,14 +7,14 @@ public sealed class ApiConnectionEntityControllerMock : IApiConnection
 {
 	public string Data { get; set; } = default!;
 
-	string IApiConnection.Get(string parameters) => throw new NotImplementedException();
-	string IApiConnection.Get(string parameters, EndpointTypeEnum endpointType) => throw new NotImplementedException();
+	string IApiConnection.Get(string? parameters) => throw new NotImplementedException();
+	string IApiConnection.Get(string? parameters, EndpointTypeEnum endpointType) => throw new NotImplementedException();
 
-	Task<string> IApiConnection.GetAsync(string parameters, CancellationToken ct) => throw new NotImplementedException();
-	Task<string> IApiConnection.GetAsync(string parameters, EndpointTypeEnum endpointType, CancellationToken ct) => throw new NotImplementedException();
+	Task<string> IApiConnection.GetAsync(string? parameters, CancellationToken ct) => throw new NotImplementedException();
+	Task<string> IApiConnection.GetAsync(string? parameters, EndpointTypeEnum endpointType, CancellationToken ct) => throw new NotImplementedException();
 
-	string IApiConnection.GetEntity(string keyname, string guid, string parameters) => throw new NotImplementedException();
-	Task<string> IApiConnection.GetEntityAsync(string keyname, string guid, string parameters, CancellationToken ct) => throw new NotImplementedException();
+	string IApiConnection.GetEntity(string keyname, string guid, string? parameters) => throw new NotImplementedException();
+	Task<string> IApiConnection.GetEntityAsync(string keyname, string guid, string? parameters, CancellationToken ct) => throw new NotImplementedException();
 
 	string IApiConnection.Post(string data)
 	{
@@ -88,6 +88,6 @@ public sealed class ApiConnectionEntityControllerMock : IApiConnection
 	bool IApiConnection.Delete(string keyName, string guid) => keyName.Equals("ID") && guid.Equals("c931ef6c-ecdf-40db-87de-0d2c629ef322");
 	Task<bool> IApiConnection.DeleteAsync(string keyName, string guid, CancellationToken ct) => Task.FromResult((this as IApiConnection).Delete(keyName, guid));
 
-	int IApiConnection.Count(string parameters) => 0;
-	Task<int> IApiConnection.CountAsync(string parameters, CancellationToken ct) => Task.FromResult((this as IApiConnection).Count(parameters));
+	int IApiConnection.Count(string? parameters) => 0;
+	Task<int> IApiConnection.CountAsync(string? parameters, CancellationToken ct) => Task.FromResult((this as IApiConnection).Count(parameters));
 }

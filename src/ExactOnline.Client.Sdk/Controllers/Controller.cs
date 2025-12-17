@@ -11,16 +11,16 @@ namespace ExactOnline.Client.Sdk.Controllers;
 /// </summary>
 public class Controller<T> : IController<T>, IEntityManager where T : class
 {
-	private readonly Hashtable _entityControllers = [];
+	private readonly Dictionary<string, EntityController> _entityControllers = [];
 	private readonly IApiConnection _conn;
-	private readonly Func<Type, IEntityManager> _getEntityManager;
-	private readonly string _keyname;
-	private string _expandfield;
+	private readonly Func<Type, IEntityManager>? _getEntityManager;
+	private readonly string? _keyname;
+	private string? _expandfield;
 
 	/// <summary>
 	/// Create new instance of the controller
 	/// </summary>
-	public Controller(IApiConnection conn, Func<Type, IEntityManager> getEntityManager = null)
+	public Controller(IApiConnection conn, Func<Type, IEntityManager>? getEntityManager = null)
 	{
 		_conn = conn ?? throw new ArgumentException("Instance of type APIConnection cannot be null");
 		_getEntityManager = getEntityManager;
@@ -41,11 +41,8 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 	/// <summary>
 	/// Returns if the specified entity is managed by the controller
 	/// </summary>
-	public bool IsManagedEntity(object entity)
-	{
-		var identifierValue = GetIdentifierValue(entity);
-		return identifierValue != null && _entityControllers.Contains(identifierValue);
-	}
+	public bool IsManagedEntity(object entity) =>
+		GetIdentifierValue(entity) is { } identifierValue && _entityControllers.ContainsKey(identifierValue);
 
 	/// <summary>
 	/// Returns the number of entities of the current type
@@ -76,7 +73,7 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 	/// <returns>List of entity Objects</returns>
 	public List<T> Get(string query, EndpointTypeEnum endpointType)
 	{
-		var skipToken = string.Empty;
+		string? skipToken = null;
 		return Get(query, ref skipToken, endpointType);
 	}
 
@@ -87,7 +84,7 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 	/// <param name="query">oData query</param>
 	/// <param name="skipToken">The skip token to be used to get the next page of data.</param>
 	/// <returns>List of entity Objects</returns>
-	public List<T> Get(string query, ref string skipToken) => Get(query, ref skipToken, EndpointTypeEnum.Single);
+	public List<T> Get(string query, ref string? skipToken) => Get(query, ref skipToken, EndpointTypeEnum.Single);
 
 	/// <summary>
 	/// Gets specific collection of entities and return a skipToken if there are more records
@@ -97,7 +94,7 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 	/// <param name="skipToken">The skip token to be used to get the next page of data.</param>
 	/// <param name="endpointType">Which endpoint type to use.</param>
 	/// <returns>List of entity Objects</returns>
-	public List<T> Get(string query, ref string skipToken, EndpointTypeEnum endpointType)
+	public List<T> Get(string query, ref string? skipToken, EndpointTypeEnum endpointType)
 	{
 		CheckValidEndpointType(endpointType);
 
@@ -108,7 +105,7 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 	}
 
 	/// <summary>
-	/// Gets specific collection of entities and return a skipToken if there are more than
+	/// Gets specific collection of entities 
 	/// 60 entities to be returned.
 	/// </summary>
 	/// <param name="query">oData query</param>
@@ -116,11 +113,10 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 	public Task<Models.ApiList<T>> GetAsync(string query, CancellationToken ct = default) => GetAsync(query, EndpointTypeEnum.Single, ct);
 
 	/// <summary>
-	/// Gets specific collection of entities and return a skipToken if there are more records
+	/// Gets specific collection of entities 
 	/// than the maximum page size of the endpoint.
 	/// </summary>
 	/// <param name="query">oData query</param>
-	/// <param name="skipToken">The skip token to be used to get the next page of data.</param>
 	/// <param name="endpointType">Which endpoint type to use.</param>
 	public async Task<Models.ApiList<T>> GetAsync(string query, EndpointTypeEnum endpointType, CancellationToken ct = default)
 	{
@@ -146,12 +142,12 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 		}
 	}
 
-	private List<T> ParseGetResponse(string response, out string skipToken)
+	private List<T> ParseGetResponse(string response, out string? skipToken)
 	{
 		skipToken = ApiResponseCleaner.GetSkipToken(response);
 		response = ApiResponseCleaner.GetJsonArray(response);
 
-		var entities = EntityConverter.ConvertJsonArrayToObjectList<T>(response);
+		var entities = EntityConverter.ConvertJsonArrayToObjectList<T>(response) ?? [];
 
 		// If the entity aren't managed already, register to managed entity collection
 		AddEntitiesToManagedEntitiesCollection(entities);
@@ -166,15 +162,20 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 	/// <param name="guid">Global Unique Identifier of the entity</param>
 	/// <param name="parameters">parameters</param>
 	/// <returns>Entity if exists. Null if entity not exists.</returns>
-	public T GetEntity(string guid, string parameters)
+	public T GetEntity(string guid, string? parameters)
 	{
 		if (guid.Contains('}') || guid.Contains('{'))
 		{
 			throw new Exception("Bad Guid: Guid cannot contain '}' or '{'");
 		}
 
+		if (string.IsNullOrEmpty(_keyname))
+		{
+			throw new Exception("Cannot get entity by GUID. This entity does not have a keyname.");
+		}
+
 		// Convert the resonse to an object of the specific type
-		var response = _conn.GetEntity(_keyname, guid, parameters);
+		var response = _conn.GetEntity(_keyname!, guid, parameters);
 		response = ApiResponseCleaner.GetJsonObject(response);
 		var entity = EntityConverter.ConvertJsonToObject<T>(response);
 
@@ -189,15 +190,20 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 	/// <param name="guid">Global Unique Identifier of the entity</param>
 	/// <param name="parameters">parameters</param>
 	/// <returns>Entity if exists. Null if entity not exists.</returns>
-	public async Task<T> GetEntityAsync(string guid, string parameters, CancellationToken ct = default)
+	public async Task<T> GetEntityAsync(string guid, string? parameters, CancellationToken ct = default)
 	{
 		if (guid.Contains('}') || guid.Contains('{'))
 		{
 			throw new Exception("Bad Guid: Guid cannot contain '}' or '{'");
 		}
 
+		if (string.IsNullOrEmpty(_keyname))
+		{
+			throw new Exception("Cannot get entity by GUID. This entity does not have a keyname.");
+		}
+
 		// Convert the resonse to an object of the specific type
-		var response = await _conn.GetEntityAsync(_keyname, guid, parameters, ct).ConfigureAwait(false);
+		var response = await _conn.GetEntityAsync(_keyname!, guid, parameters, ct).ConfigureAwait(false);
 		response = ApiResponseCleaner.GetJsonObject(response);
 		var entity = EntityConverter.ConvertJsonToObject<T>(response);
 
@@ -206,7 +212,7 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 		return entity;
 	}
 
-	public T GetFunctionResult(string querystring)
+	public T GetFunctionResult(string? querystring)
 	{
 		var response = _conn.Get(querystring);
 
@@ -252,10 +258,10 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 			}
 
 			// Check if the endpoint supports a read action. Some endpoints such as PrintQuotation only support create (POST).
-			if (supportedActions.CanRead)
+			if (supportedActions.CanRead && GetIdentifierValue(entity) is { Length: > 0 } entityIdentifier)
 			{
 				// Get entity with linked entities (API Response for creating does not return the linked entities)
-				entity = GetEntity(GetIdentifierValue(entity), _expandfield);
+				entity = GetEntity(entityIdentifier, _expandfield);
 			}
 		}
 		return created;
@@ -293,10 +299,10 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 			}
 
 			// Check if the endpoint supports a read action. Some endpoints such as PrintQuotation only support create (POST).
-			if (supportedActions.CanRead)
+			if (supportedActions.CanRead && GetIdentifierValue(createdEntity) is { } entityIdentifier)
 			{
 				// Get entity with linked entities (API Response for creating does not return the linked entities)
-				createdEntity = await GetEntityAsync(GetIdentifierValue(createdEntity), _expandfield, ct).ConfigureAwait(false);
+				createdEntity = await GetEntityAsync(entityIdentifier, _expandfield, ct).ConfigureAwait(false);
 			}
 			return createdEntity;
 		}
@@ -321,10 +327,17 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 			throw new Exception("Cannot update entity. Entity is not updateable. Please see the Reference Documentation.");
 		}
 
-		var associatedController = (EntityController)_entityControllers[GetIdentifierValue(entity)];
-		return associatedController == null
-			? throw new Exception("Entity identifier value not found")
-			: associatedController.Update(entity);
+		if (GetIdentifierValue(entity) is not { Length: > 0 } entityIdentifier)
+		{
+			throw new Exception("Cannot update entity: Cannot get entity identifier.");
+		}
+
+		if (GetEntityController(entityIdentifier) is not { } entityController)
+		{
+			throw new Exception("Cannot update entity: It is not being tracked.");
+		}
+
+		return entityController.Update(entity);
 	}
 
 	/// <summary>
@@ -345,10 +358,17 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 			throw new Exception("Cannot update entity. Entity is not updateable. Please see the Reference Documentation.");
 		}
 
-		var associatedController = (EntityController)_entityControllers[GetIdentifierValue(entity)];
-		return associatedController == null
-			? throw new Exception("Entity identifier value not found")
-			: associatedController.UpdateAsync(entity, ct);
+		if (GetIdentifierValue(entity) is not { Length: > 0 } entityIdentifier)
+		{
+			throw new Exception("Cannot update entity: Cannot get entity identifier.");
+		}
+
+		if (GetEntityController(entityIdentifier) is not { } entityController)
+		{
+			throw new Exception("Cannot update entity: It is not being tracked.");
+		}
+
+		return entityController.UpdateAsync(entity, ct);
 	}
 
 	private static bool IsUpdateable(T entity) => GetSupportedActions(entity).CanUpdate;
@@ -371,17 +391,24 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 			throw new Exception("Cannot delete entity. Entity does not support deleting. Please see the Reference Documentation.");
 		}
 
-		// Delete entity
-		var entityIdentifier = GetIdentifierValue(entity);
-		var associatedController = (EntityController)_entityControllers[entityIdentifier];
-
-		var returnValue = false;
-		if (associatedController.Delete())
+		if (GetIdentifierValue(entity) is not { Length: > 0 } entityIdentifier)
 		{
-			returnValue = true;
-			_entityControllers.Remove(entityIdentifier);
+			throw new Exception("Cannot delete entity: Cannot get entity identifier.");
 		}
-		return returnValue;
+
+		if (GetEntityController(entityIdentifier) is not { } entityController)
+		{
+			throw new Exception("Cannot delete entity: It is not being tracked.");
+		}
+
+		// Delete entity
+		if (!entityController.Delete())
+		{
+			return false;
+		}
+
+		_entityControllers.Remove(entityIdentifier);
+		return true;
 	}
 
 	/// <summary>
@@ -402,17 +429,24 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 			throw new Exception("Cannot delete entity. Entity does not support deleting. Please see the Reference Documentation.");
 		}
 
-		// Delete entity
-		var entityIdentifier = GetIdentifierValue(entity);
-		var associatedController = (EntityController)_entityControllers[entityIdentifier];
-
-		var returnValue = false;
-		if (await associatedController.DeleteAsync(ct).ConfigureAwait(false))
+		if (GetIdentifierValue(entity) is not { Length: > 0 } entityIdentifier)
 		{
-			returnValue = true;
-			_entityControllers.Remove(entityIdentifier);
+			throw new Exception("Cannot delete entity: Cannot get entity identifier.");
 		}
-		return returnValue;
+
+		if (GetEntityController(entityIdentifier) is not { } entityController)
+		{
+			throw new Exception("Cannot delete entity: It is not being tracked.");
+		}
+
+		// Delete entity
+		if (!await entityController.DeleteAsync(ct).ConfigureAwait(false))
+		{
+			return false;
+		}
+
+		_entityControllers.Remove(entityIdentifier);
+		return true;
 	}
 
 	private static bool IsDeleteable(T entity) => GetSupportedActions(entity).CanDelete;
@@ -423,12 +457,12 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 	/// Get the unique value of the entity
 	/// </summary>
 	/// <returns>Identifier value of the entity. Null if the indicated keyname is set to null or is not found.</returns>
-	public string GetIdentifierValue(object entity) =>
+	public string? GetIdentifierValue(object entity) =>
 		_keyname == null
 			? null
 			: _keyname.Contains(",")
 			? null // throw new Exception("Currently the SDK doesn't support entities with a compound key.") // why throw an exception if it only disables the auto change tracking?
-			: entity.GetType().GetProperty(_keyname).GetValue(entity).ToString();
+			: entity.GetType().GetProperty(_keyname).GetValue(entity)?.ToString();
 
 	/// <summary>
 	/// Adds multiple entities to the managed entities collection.
@@ -450,9 +484,9 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 		var entityIdentifier = GetIdentifierValue(entity)
 			?? throw new ArgumentException("Cannot add an entity without an entity identifier", nameof(entity));
 
-		if (!_entityControllers.Contains(entityIdentifier))
+		if (!_entityControllers.ContainsKey(entityIdentifier))
 		{
-			var newController = new EntityController(entity, _keyname, entityIdentifier, _conn, GetEntityController);
+			var newController = new EntityController(entity, _keyname!, entityIdentifier, _conn, GetEntityController);
 			_entityControllers.Add(entityIdentifier, newController);
 
 			returnValue = true;
@@ -463,7 +497,7 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 									 where value != null
 									 let ns = value.GetType().Namespace
 									 where ns != null
-									&& ns.Contains("System.Collections.Generic")
+										&& ns.Contains("System.Collections.Generic")
 									 select value;
 
 			// Get associated controller & registrate entity
@@ -487,7 +521,10 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 		return returnValue;
 	}
 
-	public EntityController GetEntityController(string guid) => (EntityController)_entityControllers[guid];
+	public EntityController? GetEntityController(string guid) =>
+		_entityControllers.TryGetValue(guid, out var controller)
+			? controller
+			: null;
 
 	/// <summary>
 	/// Registrates a linked entity field so the Controller knows the field to Expand
@@ -500,10 +537,15 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 	/// knows the associated EntityController of a Linked Entity so it can perform
 	/// methods on the EntityController to see if the entity is updated
 	/// </summary>
-	public EntityController GetEntityController(object o)
+	public EntityController? GetEntityController(object o)
 	{
+		_ = _getEntityManager ?? throw new Exception("Cannot get EntityController: _getEntityManager delegate is not set.");
 		var entityManager = _getEntityManager(o.GetType());
-		var id = entityManager.GetIdentifierValue(o);
+		if (entityManager.GetIdentifierValue(o) is not { Length: > 0 } id)
+		{
+			throw new Exception("Cannot get EntityController: Can't get Identifier value from object.");
+		}
+
 		return entityManager.GetEntityController(id);
 	}
 }

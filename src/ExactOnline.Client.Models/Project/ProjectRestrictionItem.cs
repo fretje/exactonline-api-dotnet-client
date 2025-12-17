@@ -12,7 +12,7 @@ public class ProjectRestrictionItem
 	public Guid? Creator { get; set; }
 	/// <summary>Creator name</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? Division { get; set; }
@@ -22,10 +22,10 @@ public class ProjectRestrictionItem
 	public Guid? Item { get; set; }
 	/// <summary>Item code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemCode { get; set; }
+	public string? ItemCode { get; set; }
 	/// <summary>Description of the item</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemDescription { get; set; }
+	public string? ItemDescription { get; set; }
 	/// <summary>Indicates if the item is a time unit item</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public byte? ItemIsTime { get; set; }
@@ -37,13 +37,13 @@ public class ProjectRestrictionItem
 	public Guid? Modifier { get; set; }
 	/// <summary>Modifier name</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Project linked to the restriction</summary>
 	public Guid? Project { get; set; }
 	/// <summary>Project code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ProjectCode { get; set; }
+	public string? ProjectCode { get; set; }
 	/// <summary>Project description</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ProjectDescription { get; set; }
+	public string? ProjectDescription { get; set; }
 }

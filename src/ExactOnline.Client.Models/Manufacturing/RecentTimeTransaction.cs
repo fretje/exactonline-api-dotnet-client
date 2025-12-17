@@ -5,11 +5,11 @@
 public class RecentTimeTransaction
 {
 	/// <summary>Customer code</summary>
-	public string CustomerCode { get; set; }
+	public string? CustomerCode { get; set; }
 	/// <summary>Count of customers</summary>
 	public int? CustomerCount { get; set; }
 	/// <summary>Customer name</summary>
-	public string CustomerName { get; set; }
+	public string? CustomerName { get; set; }
 	/// <summary>Type of data returned by query - for internal use</summary>
 	public short? DataType { get; set; }
 	/// <summary>Date of time entry</summary>
@@ -29,11 +29,11 @@ public class RecentTimeTransaction
 	/// <summary>Shop order make item</summary>
 	public Guid? Item { get; set; }
 	/// <summary>Make item code</summary>
-	public string ItemCode { get; set; }
+	public string? ItemCode { get; set; }
 	/// <summary>Url to retrieve the item</summary>
-	public string ItemPictureUrl { get; set; }
+	public string? ItemPictureUrl { get; set; }
 	/// <summary>Make item unit</summary>
-	public string ItemUnit { get; set; }
+	public string? ItemUnit { get; set; }
 	/// <summary>Adjustable labor hours</summary>
 	public double? LaborHours { get; set; }
 	/// <summary>Adjustable machine hours</summary>
@@ -41,11 +41,11 @@ public class RecentTimeTransaction
 	/// <summary>Modified date</summary>
 	public DateTime? Modified { get; set; }
 	/// <summary>Notes - viewable in data collection</summary>
-	public string Notes { get; set; }
+	public string? Notes { get; set; }
 	/// <summary>Routing step operation</summary>
 	public Guid? Operation { get; set; }
 	/// <summary>Routing step operation code</summary>
-	public string OperationCode { get; set; }
+	public string? OperationCode { get; set; }
 	/// <summary>Percentage of operation completed within time period</summary>
 	public double? PercentComplete { get; set; }
 	/// <summary>Quantity of make item produced within time period</summary>
@@ -53,9 +53,9 @@ public class RecentTimeTransaction
 	/// <summary>Project ID of the shop order</summary>
 	public Guid? Project { get; set; }
 	/// <summary>Project code of the shop order</summary>
-	public string ProjectCode { get; set; }
+	public string? ProjectCode { get; set; }
 	/// <summary>Project description of the shop order</summary>
-	public string ProjectDescription { get; set; }
+	public string? ProjectDescription { get; set; }
 	/// <summary>Count of Sales order</summary>
 	public int? SalesOrderCount { get; set; }
 	/// <summary>Sales order line number</summary>
@@ -65,7 +65,7 @@ public class RecentTimeTransaction
 	/// <summary>Shop order</summary>
 	public Guid? ShopOrder { get; set; }
 	/// <summary>Shop order description</summary>
-	public string ShopOrderDescription { get; set; }
+	public string? ShopOrderDescription { get; set; }
 	/// <summary>Shop order number</summary>
 	public int? ShopOrderNumber { get; set; }
 	/// <summary>Shop order planned quantity</summary>
@@ -75,7 +75,7 @@ public class RecentTimeTransaction
 	/// <summary>Percentage of time attended on the routing step plan</summary>
 	public double? ShopOrderRoutingStepPlanAttendedPercentage { get; set; }
 	/// <summary>Description of the shop order routing step where work occurred</summary>
-	public string ShopOrderRoutingStepPlanDescription { get; set; }
+	public string? ShopOrderRoutingStepPlanDescription { get; set; }
 	/// <summary>Time that operation was started</summary>
 	public DateTime? StartTime { get; set; }
 	/// <summary>Status of the time transaction</summary>
@@ -87,5 +87,5 @@ public class RecentTimeTransaction
 	/// <summary>Work center where work occurred</summary>
 	public Guid? Workcenter { get; set; }
 	/// <summary>Work center code</summary>
-	public string WorkcenterCode { get; set; }
+	public string? WorkcenterCode { get; set; }
 }

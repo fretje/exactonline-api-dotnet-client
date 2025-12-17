@@ -9,17 +9,17 @@ public class LeaveBuildUpRegistration
 	/// <summary>User ID of creator</summary>
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Date of leave build up</summary>
 	public DateTime Date { get; set; }
 	/// <summary>Description of leave build up</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Division code</summary>
 	public int? Division { get; set; }
 	/// <summary>Employee linked to the leave build up</summary>
 	public Guid Employee { get; set; }
 	/// <summary>Employee full name</summary>
-	public string EmployeeFullName { get; set; }
+	public string? EmployeeFullName { get; set; }
 	/// <summary>Numeric ID of the employee</summary>
 	public int EmployeeHID { get; set; }
 	/// <summary>Total number of leave build up hours</summary>
@@ -29,17 +29,17 @@ public class LeaveBuildUpRegistration
 	/// <summary>Type of leave</summary>
 	public Guid LeaveType { get; set; }
 	/// <summary>Code for type of leave</summary>
-	public string LeaveTypeCode { get; set; }
+	public string? LeaveTypeCode { get; set; }
 	/// <summary>Description for type of leave</summary>
-	public string LeaveTypeDescription { get; set; }
+	public string? LeaveTypeDescription { get; set; }
 	/// <summary>Last modified date</summary>
 	public DateTime Modified { get; set; }
 	/// <summary>User ID of modifier</summary>
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Extra information for leave build up</summary>
-	public string Notes { get; set; }
+	public string? Notes { get; set; }
 	/// <summary>Status of leave build up, 1 = Submitted, 2 = Approved, 3 = Rejected</summary>
 	public short Status { get; set; }
 }

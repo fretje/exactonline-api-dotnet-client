@@ -5,7 +5,7 @@ namespace ExactOnline.Client.Models.FinancialTransaction;
 public class BankEntry
 {
 	/// <summary>Collection of lines</summary>
-	public IEnumerable<BankEntryLine> BankEntryLines { get; set; }
+	public IEnumerable<BankEntryLine>? BankEntryLines { get; set; }
 	/// <summary>Reference to document with bank statement</summary>
 	public Guid? BankStatementDocument { get; set; }
 	/// <summary>Document number of document with bank statement</summary>
@@ -13,14 +13,14 @@ public class BankEntry
 	public int? BankStatementDocumentNumber { get; set; }
 	/// <summary>Subject of document with bank statement</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string BankStatementDocumentSubject { get; set; }
+	public string? BankStatementDocumentSubject { get; set; }
 	/// <summary>Closing balance in the currency of the transaction</summary>
 	public double? ClosingBalanceFC { get; set; }
 	/// <summary>Creation date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? Created { get; set; }
 	/// <summary>Currency code</summary>
-	public string Currency { get; set; }
+	public string? Currency { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? Division { get; set; }
@@ -34,10 +34,10 @@ public class BankEntry
 	/// <summary>Fiancial year</summary>
 	public short? FinancialYear { get; set; }
 	/// <summary>Code of Journal</summary>
-	public string JournalCode { get; set; }
+	public string? JournalCode { get; set; }
 	/// <summary>Description of Journal</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string JournalDescription { get; set; }
+	public string? JournalDescription { get; set; }
 	/// <summary>Last modified date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? Modified { get; set; }
@@ -48,5 +48,5 @@ public class BankEntry
 	public short? Status { get; set; }
 	/// <summary>Description of Status</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string StatusDescription { get; set; }
+	public string? StatusDescription { get; set; }
 }

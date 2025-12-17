@@ -5,11 +5,11 @@ namespace ExactOnline.Client.Models.Project;
 public class RecentCost
 {
 	/// <summary>Code of Account</summary>
-	public string AccountCode { get; set; }
+	public string? AccountCode { get; set; }
 	/// <summary>Reference to Account</summary>
 	public Guid? AccountId { get; set; }
 	/// <summary>Name of Account</summary>
-	public string AccountName { get; set; }
+	public string? AccountName { get; set; }
 	/// <summary>Amount approved</summary>
 	public double AmountApproved { get; set; }
 	/// <summary>Amount draft</summary>
@@ -19,7 +19,7 @@ public class RecentCost
 	/// <summary>Amount submitted</summary>
 	public double AmountSubmitted { get; set; }
 	/// <summary>Code of Currency</summary>
-	public string CurrencyCode { get; set; }
+	public string? CurrencyCode { get; set; }
 	/// <summary>Date</summary>
 	public DateTime Date { get; set; }
 	/// <summary>Entry ID</summary>
@@ -27,21 +27,21 @@ public class RecentCost
 	/// <summary>Reference to Expense</summary>
 	public Guid? Expense { get; set; }
 	/// <summary>Description of Expense</summary>
-	public string ExpenseDescription { get; set; }
+	public string? ExpenseDescription { get; set; }
 	/// <summary>Primary key</summary>
 	public int Id { get; set; }
 	/// <summary>Code of Item</summary>
-	public string ItemCode { get; set; }
+	public string? ItemCode { get; set; }
 	/// <summary>Description of Item</summary>
-	public string ItemDescription { get; set; }
+	public string? ItemDescription { get; set; }
 	/// <summary>Reference to Item</summary>
 	public Guid? ItemId { get; set; }
 	/// <summary>Remarks</summary>
-	public string Notes { get; set; }
+	public string? Notes { get; set; }
 	/// <summary>Code of Project</summary>
-	public string ProjectCode { get; set; }
+	public string? ProjectCode { get; set; }
 	/// <summary>Description of Project</summary>
-	public string ProjectDescription { get; set; }
+	public string? ProjectDescription { get; set; }
 	/// <summary>Reference to Project</summary>
 	public Guid? ProjectId { get; set; }
 	/// <summary>Quantity approved</summary>

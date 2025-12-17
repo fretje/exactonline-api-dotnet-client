@@ -13,7 +13,7 @@ namespace ExactOnline.Client.Models.Financial
 		/// <summary>Costs in period of previous year</summary>
 		public double CostsPreviousYearPeriod { get; set; }
 		/// <summary>Currency code</summary>
-		public string CurrencyCode { get; set; }
+		public string? CurrencyCode { get; set; }
 		/// <summary>Current period</summary>
 		public int CurrentPeriod { get; set; }
 		/// <summary>Primary key, Current year</summary>

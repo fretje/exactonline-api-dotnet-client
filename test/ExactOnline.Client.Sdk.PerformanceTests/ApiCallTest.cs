@@ -12,8 +12,8 @@ namespace ExactOnline.Client.Sdk.PerformanceTests;
 [TestClass]
 public class ApiCallTest
 {
-	TestObjectsCreator _toc;
-	IApiConnector _conn;
+	TestObjectsCreator _toc = default!;
+	IApiConnector _conn = default!;
 	private int _currentDivision;
 
 	public TestContext TestContext { get; set; }
@@ -76,7 +76,7 @@ public class ApiCallTest
 	public async Task TestPerformanceApiCallDelete()
 	{
 		var client = await _toc.GetClientAsync(TestContext.CancellationToken);
-		var account = client.For<Account>().Select("ID").Where("Name+eq+'43905139517985179437'").Get().FirstOrDefault();
+		var account = client.For<Account>().Select("ID").Where("Name+eq+'43905139517985179437'").Get().First();
 
 		if (ExactOnlineTest.MinutelyRemaining < 1)
 		{

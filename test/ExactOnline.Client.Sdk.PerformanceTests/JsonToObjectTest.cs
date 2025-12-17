@@ -495,10 +495,7 @@ public class JsonToObjectTest
 		{
 			var json = ApiResponseCleaner.GetJsonArray(_jsonArray);
 			var accounts = EntityConverter.ConvertJsonArrayToObjectList<Account>(json);
-			if (accounts.Count != 2)
-			{
-				throw new Exception("The count of the list isn't equal to the actual list");
-			}
+			Assert.AreEqual(2, accounts?.Count, "The count of the list isn't equal to the actual list");
 		}
 	}
 
@@ -511,10 +508,11 @@ public class JsonToObjectTest
 			var json = ApiResponseCleaner.GetJsonArray(_linkedEntities);
 			var invoices = EntityConverter.ConvertJsonArrayToObjectList<SalesInvoice>(json);
 
+			Assert.IsNotNull(invoices);
 			foreach (var invoice in invoices)
 			{
-				var sil = (List<SalesInvoiceLine>)invoice.SalesInvoiceLines;
-				Assert.IsNotEmpty(sil);
+				Assert.IsNotNull(invoice.SalesInvoiceLines);
+				Assert.IsNotEmpty(invoice.SalesInvoiceLines);
 			}
 		}
 	}

@@ -13,7 +13,7 @@ public static class ExactOnlineTest
 	private static readonly string _minutelyRemainingCacheFile = @"c:\temp\minutelyRemainingCache";
 	private static readonly string _minutelyResetTimeCacheFile = @"c:\temp\minutelyResetTimeCache";
 
-	public static string RefreshToken
+	public static string? RefreshToken
 	{
 		get => File.Exists(_refreshTokenCacheFile) ? File.ReadAllText(_refreshTokenCacheFile) : null;
 		set
@@ -29,7 +29,7 @@ public static class ExactOnlineTest
 		}
 	}
 
-	public static string AccessToken
+	public static string? AccessToken
 	{
 		get => File.Exists(_accessTokenCacheFile) ? File.ReadAllText(_accessTokenCacheFile) : null;
 		set

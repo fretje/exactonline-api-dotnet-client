@@ -46,7 +46,7 @@ public class EntityWithCollection
 			.GetEntity(newInvoice.InvoiceID.ToString());
 
 		Assert.IsNotNull(salesInvoice);
-		Assert.AreEqual(1, salesInvoice.SalesInvoiceLines.Count());
+		Assert.AreEqual(1, salesInvoice.SalesInvoiceLines?.Count());
 	}
 
 	private static Guid GetCustomerId(ExactOnlineClient client)

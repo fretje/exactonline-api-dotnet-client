@@ -6,8 +6,8 @@ public interface IController<T>
 {
 	List<T> Get(string query);
 	List<T> Get(string query, EndpointTypeEnum endpointType);
-	List<T> Get(string query, ref string skipToken);
-	List<T> Get(string query, ref string skipToken, EndpointTypeEnum endpointType);
+	List<T> Get(string query, ref string? skipToken);
+	List<T> Get(string query, ref string? skipToken, EndpointTypeEnum endpointType);
 	Task<Models.ApiList<T>> GetAsync(string query, CancellationToken ct = default);
 	Task<Models.ApiList<T>> GetAsync(string query, EndpointTypeEnum endpointType, CancellationToken ct = default);
 

@@ -5,7 +5,7 @@ namespace ExactOnline.Client.Models.Manufacturing;
 public class Operation
 {
 	/// <summary>Code of the operation</summary>
-	public string Code { get; set; }
+	public string? Code { get; set; }
 	/// <summary>Creation date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? Created { get; set; }
@@ -14,9 +14,9 @@ public class Operation
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Description of the operation</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? Division { get; set; }
@@ -28,7 +28,7 @@ public class Operation
 	public Guid? Item { get; set; }
 	/// <summary>Description of Item</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemDescription { get; set; }
+	public string? ItemDescription { get; set; }
 	/// <summary>Last modified date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? Modified { get; set; }
@@ -37,11 +37,11 @@ public class Operation
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Extra remarks</summary>
-	public string Notes { get; set; }
+	public string? Notes { get; set; }
 	/// <summary>Search code for the operation</summary>
-	public string Searchcode { get; set; }
+	public string? Searchcode { get; set; }
 	/// <summary>Status of the operation</summary>
 	public int? Status { get; set; }
 }

@@ -9,7 +9,7 @@ namespace ExactOnline.Client.Sdk.IntegrationTests;
 [TestClass]
 public class ApiConnectorTest
 {
-	TestObjectsCreator _toc;
+	TestObjectsCreator _toc = default!;
 	private int _currentDivision;
 
 	[TestInitialize]
@@ -38,7 +38,7 @@ public class ApiConnectorTest
 	public void DoGetRequest_WithoutEndpoint_ThrowsExcepion()
 	{
 		var connector = _toc.GetApiConnector();
-		Assert.Throws<BadRequestException>(() => connector.DoGetRequest(null, string.Empty));
+		Assert.Throws<BadRequestException>(() => connector.DoGetRequest(null!, string.Empty));
 	}
 
 	/// <summary>

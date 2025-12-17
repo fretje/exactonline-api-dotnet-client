@@ -5,15 +5,15 @@ namespace ExactOnline.Client.Models.Project;
 public class RecentHour
 {
 	/// <summary>Code of Account</summary>
-	public string AccountCode { get; set; }
+	public string? AccountCode { get; set; }
 	/// <summary>Reference to Account</summary>
 	public Guid? AccountId { get; set; }
 	/// <summary>Name of Account</summary>
-	public string AccountName { get; set; }
+	public string? AccountName { get; set; }
 	/// <summary>Reference to Activity</summary>
 	public Guid? Activity { get; set; }
 	/// <summary>Description of Activity</summary>
-	public string ActivityDescription { get; set; }
+	public string? ActivityDescription { get; set; }
 	/// <summary>Date</summary>
 	public DateTime Date { get; set; }
 	/// <summary>Entry ID</summary>
@@ -37,17 +37,17 @@ public class RecentHour
 	/// <summary>Primary key</summary>
 	public int Id { get; set; }
 	/// <summary>Code of Item</summary>
-	public string ItemCode { get; set; }
+	public string? ItemCode { get; set; }
 	/// <summary>Description of Item</summary>
-	public string ItemDescription { get; set; }
+	public string? ItemDescription { get; set; }
 	/// <summary>Reference to Item</summary>
 	public Guid? ItemId { get; set; }
 	/// <summary>Remarks</summary>
-	public string Notes { get; set; }
+	public string? Notes { get; set; }
 	/// <summary>Code of Project</summary>
-	public string ProjectCode { get; set; }
+	public string? ProjectCode { get; set; }
 	/// <summary>Description of Project</summary>
-	public string ProjectDescription { get; set; }
+	public string? ProjectDescription { get; set; }
 	/// <summary>Reference to Project</summary>
 	public Guid? ProjectId { get; set; }
 	/// <summary>Week number</summary>

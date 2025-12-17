@@ -9,53 +9,53 @@ public class Me
 	/// <summary>Owner account of the division</summary>
 	public Guid? DivisionCustomer { get; set; }
 	/// <summary>Owner account code of the division</summary>
-	public string DivisionCustomerCode { get; set; }
+	public string? DivisionCustomerCode { get; set; }
 	/// <summary>Owner account name of the division</summary>
-	public string DivisionCustomerName { get; set; }
+	public string? DivisionCustomerName { get; set; }
 	/// <summary>Email address of the user</summary>
-	public string Email { get; set; }
+	public string? Email { get; set; }
 	/// <summary>Employee ID</summary>
 	public Guid EmployeeID { get; set; }
 	/// <summary>First name</summary>
-	public string FirstName { get; set; }
+	public string? FirstName { get; set; }
 	/// <summary>Full name of the user</summary>
-	public string FullName { get; set; }
+	public string? FullName { get; set; }
 	/// <summary>Gender: M=Male, V=Female, O=Unknown</summary>
-	public string Gender { get; set; }
+	public string? Gender { get; set; }
 	/// <summary>Initials</summary>
-	public string Initials { get; set; }
+	public string? Initials { get; set; }
 	/// <summary>Language spoken by this user</summary>
-	public string Language { get; set; }
+	public string? Language { get; set; }
 	/// <summary>Language (culture) that is used in Exact Online</summary>
-	public string LanguageCode { get; set; }
+	public string? LanguageCode { get; set; }
 	/// <summary>Last name</summary>
-	public string LastName { get; set; }
+	public string? LastName { get; set; }
 	/// <summary>Legislation</summary>
 	public long Legislation { get; set; }
 	/// <summary>Middle name</summary>
-	public string MiddleName { get; set; }
+	public string? MiddleName { get; set; }
 	/// <summary>Mobile phone</summary>
-	public string Mobile { get; set; }
+	public string? Mobile { get; set; }
 	/// <summary>Nationality</summary>
-	public string Nationality { get; set; }
+	public string? Nationality { get; set; }
 	/// <summary>Phone number</summary>
-	public string Phone { get; set; }
+	public string? Phone { get; set; }
 	/// <summary>Phone number extension</summary>
-	public string PhoneExtension { get; set; }
+	public string? PhoneExtension { get; set; }
 	/// <summary>Url that can be used to retrieve the picture of the user</summary>
-	public string PictureUrl { get; set; }
+	public string? PictureUrl { get; set; }
 	/// <summary>The current date and time in Exact Online</summary>
-	public string ServerTime { get; set; }
+	public string? ServerTime { get; set; }
 	/// <summary>The time difference with UTC in seconds</summary>
 	public double ServerUtcOffset { get; set; }
 	/// <summary>Binary thumbnail picture of this user</summary>
-	public byte[] ThumbnailPicture { get; set; }
+	public byte[]? ThumbnailPicture { get; set; }
 	/// <summary>File type of the picture</summary>
-	public string ThumbnailPictureFormat { get; set; }
+	public string? ThumbnailPictureFormat { get; set; }
 	/// <summary>Title</summary>
-	public string Title { get; set; }
+	public string? Title { get; set; }
 	/// <summary>Primary key</summary>
 	public Guid UserID { get; set; }
 	/// <summary>Login name of the user</summary>
-	public string UserName { get; set; }
+	public string? UserName { get; set; }
 }

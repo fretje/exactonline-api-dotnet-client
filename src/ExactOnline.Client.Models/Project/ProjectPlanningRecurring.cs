@@ -8,10 +8,10 @@ public class ProjectPlanningRecurring
 	public Guid? Account { get; set; }
 	/// <summary>Code of Account</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string AccountCode { get; set; }
+	public string? AccountCode { get; set; }
 	/// <summary>Name of Account</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string AccountName { get; set; }
+	public string? AccountName { get; set; }
 	/// <summary>Status of the project planning process, 1 = To be processed, 2 = Processed, 3 = Failed</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public short? BGTStatus { get; set; }
@@ -23,12 +23,12 @@ public class ProjectPlanningRecurring
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Indicates whether the recurring planning is day of the month or weekday of the month</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? DayOrThe { get; set; }
 	/// <summary>Description of recurring planning</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? Division { get; set; }
@@ -36,7 +36,7 @@ public class ProjectPlanningRecurring
 	public Guid? Employee { get; set; }
 	/// <summary>Code of employee</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string EmployeeCode { get; set; }
+	public string? EmployeeCode { get; set; }
 	/// <summary>Numeric ID of the employee</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? EmployeeHID { get; set; }
@@ -53,10 +53,10 @@ public class ProjectPlanningRecurring
 	public Guid? HourType { get; set; }
 	/// <summary>Code of the hour type</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string HourTypeCode { get; set; }
+	public string? HourTypeCode { get; set; }
 	/// <summary>Description of the hour type</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string HourTypeDescription { get; set; }
+	public string? HourTypeDescription { get; set; }
 	/// <summary>Primary key</summary>
 	public Guid ID { get; set; }
 	/// <summary>Date modified</summary>
@@ -67,7 +67,7 @@ public class ProjectPlanningRecurring
 	public Guid? Modifier { get; set; }
 	/// <summary>Modifier name</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Day of the monthly recurring</summary>
 	public byte? MonthPatternDay { get; set; }
 	/// <summary>Ordinal number of week day for the monthly recurring planning, 1 = first, 2 = second, 3 = third, 4 = fourth, 31 = last</summary>
@@ -75,7 +75,7 @@ public class ProjectPlanningRecurring
 	/// <summary>Ordinal week day of the monthly recurring planning, 1 = Monday, 2 = Tuesday, 3 = Wednesday, 4 = Thursday, 5 = Friday, 6 = Saturday, 7 = Sunday</summary>
 	public byte? MonthPatternOrdinalWeek { get; set; }
 	/// <summary>For additional information about recurring planning</summary>
-	public string Notes { get; set; }
+	public string? Notes { get; set; }
 	/// <summary>Number of times the planning recurs</summary>
 	public short? NumberOfRecurrences { get; set; }
 	/// <summary>Indicates whether the entries can have over allocated planning hours</summary>
@@ -86,17 +86,17 @@ public class ProjectPlanningRecurring
 	public Guid? Project { get; set; }
 	/// <summary>Code of project</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ProjectCode { get; set; }
+	public string? ProjectCode { get; set; }
 	/// <summary>Description of project</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ProjectDescription { get; set; }
+	public string? ProjectDescription { get; set; }
 	/// <summary>Type of the recurring planning, 1 = weekly, 2 = monthly</summary>
 	public byte? ProjectPlanningRecurringType { get; set; }
 	/// <summary>WBS linked to the recurring planning</summary>
 	public Guid? ProjectWBS { get; set; }
 	/// <summary>Description of WBS</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ProjectWBSDescription { get; set; }
+	public string? ProjectWBSDescription { get; set; }
 	/// <summary>Start date of the recurring planning</summary>
 	public DateTime? StartDate { get; set; }
 	/// <summary>Start time for the recurring planning to be active</summary>

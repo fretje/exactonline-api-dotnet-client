@@ -8,23 +8,23 @@ public class Document : SupportsSync
 	public Guid? Account { get; set; }
 	/// <summary>Code of Account</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string AccountCode { get; set; }
+	public string? AccountCode { get; set; }
 	/// <summary>Name of Account</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string AccountName { get; set; }
+	public string? AccountName { get; set; }
 	/// <summary>Amount in the currency of the transaction</summary>
 	public double? AmountFC { get; set; }
 	/// <summary>Body of this document</summary>
-	public string Body { get; set; }
+	public string? Body { get; set; }
 	/// <summary>ID of the category of this document</summary>
 	public Guid? Category { get; set; }
 	/// <summary>Description of Category</summary>
-	public string CategoryDescription { get; set; }
+	public string? CategoryDescription { get; set; }
 	/// <summary>ID of the related contact of this document</summary>
 	public Guid? Contact { get; set; }
 	/// <summary>Contact full name</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ContactFullName { get; set; }
+	public string? ContactFullName { get; set; }
 	/// <summary>Creation date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? Created { get; set; }
@@ -32,9 +32,9 @@ public class Document : SupportsSync
 	[SDKFieldType(FieldType.ReadOnly)]
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Currency code</summary>
-	public string Currency { get; set; }
+	public string? Currency { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int Division { get; set; }
@@ -44,13 +44,13 @@ public class Document : SupportsSync
 	public Guid? DocumentFolder { get; set; }
 	/// <summary>The Code of document folder</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string DocumentFolderCode { get; set; }
+	public string? DocumentFolderCode { get; set; }
 	/// <summary>The Decsription of document folder</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string DocumentFolderDescription { get; set; }
+	public string? DocumentFolderDescription { get; set; }
 	/// <summary>Url to view the document</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string DocumentViewUrl { get; set; }
+	public string? DocumentViewUrl { get; set; }
 	/// <summary>Reference to the financial transaction</summary>
 	public Guid? FinancialTransactionEntryID { get; set; }
 	/// <summary>Indicates that the document body is empty</summary>
@@ -61,7 +61,7 @@ public class Document : SupportsSync
 	/// <summary>Primary key</summary>
 	public Guid ID { get; set; }
 	/// <summary>The language code of the document</summary>
-	public string Language { get; set; }
+	public string? Language { get; set; }
 	/// <summary>Last modified date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? Modified { get; set; }
@@ -70,17 +70,17 @@ public class Document : SupportsSync
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>The opportunity linked to the document</summary>
 	public Guid? Opportunity { get; set; }
 	/// <summary>The project linked to the document</summary>
 	public Guid? Project { get; set; }
 	/// <summary>Code of project</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ProjectCode { get; set; }
+	public string? ProjectCode { get; set; }
 	/// <summary>Description of project</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ProjectDescription { get; set; }
+	public string? ProjectDescription { get; set; }
 	/// <summary>&apos;Our reference&apos; of the transaction that belongs to this document</summary>
 	public int? SalesInvoiceNumber { get; set; }
 	/// <summary>Number of the sales order</summary>
@@ -91,10 +91,10 @@ public class Document : SupportsSync
 	/// <summary>Number of the shop order</summary>
 	public int? ShopOrderNumber { get; set; }
 	/// <summary>Subject of this document</summary>
-	public string Subject { get; set; }
+	public string? Subject { get; set; }
 	/// <summary>ID of the type of this document</summary>
 	public int? Type { get; set; }
 	/// <summary>Description of Type</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string TypeDescription { get; set; }
+	public string? TypeDescription { get; set; }
 }

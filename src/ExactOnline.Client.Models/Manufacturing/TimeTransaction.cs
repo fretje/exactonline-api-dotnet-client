@@ -14,7 +14,7 @@ public class TimeTransaction
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Date</summary>
 	public DateTime? Date { get; set; }
 	/// <summary>Division code</summary>
@@ -38,9 +38,9 @@ public class TimeTransaction
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Notes linked to the time transaction</summary>
-	public string Notes { get; set; }
+	public string? Notes { get; set; }
 	/// <summary>Percentage of the operation that is complete</summary>
 	public double? PercentComplete { get; set; }
 	/// <summary>Quantity</summary>

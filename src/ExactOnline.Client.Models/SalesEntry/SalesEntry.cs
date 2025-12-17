@@ -20,16 +20,16 @@ public class SalesEntry
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Currency for the invoice. By default this is the currency of the administration</summary>
-	public string Currency { get; set; }
+	public string? Currency { get; set; }
 	/// <summary>Reference to customer (account)</summary>
 	public Guid? Customer { get; set; }
 	/// <summary>Name of customer</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CustomerName { get; set; }
+	public string? CustomerName { get; set; }
 	/// <summary>Description. Can be different for header and lines</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int Division { get; set; }
@@ -40,7 +40,7 @@ public class SalesEntry
 	public int? DocumentNumber { get; set; }
 	/// <summary>Subject of the document</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string DocumentSubject { get; set; }
+	public string? DocumentSubject { get; set; }
 	/// <summary>The due date for payments. This date is calculated based on the EntryDate and the Paymentcondition</summary>
 	public DateTime? DueDate { get; set; }
 	/// <summary>The date when the invoice is entered</summary>
@@ -51,9 +51,9 @@ public class SalesEntry
 	public int? EntryNumber { get; set; }
 	/// <summary>Description of ExternalLink</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ExternalLinkDescription { get; set; }
+	public string? ExternalLinkDescription { get; set; }
 	/// <summary>Reference of ExternalLink</summary>
-	public string ExternalLinkReference { get; set; }
+	public string? ExternalLinkReference { get; set; }
 	/// <summary>A positive value of the amount indicates that the amount is to be paid by the customer to your G bank account.In case of a credit invoice the amount should have negative value when retrieved or posted to Exact.</summary>
 	public double? GAccountAmountFC { get; set; }
 	/// <summary>Assigned at entry or at printing depending on setting. The number assigned is based on the freenumbers as defined for the Journal. When printing the field InvoiceNumber is copied to the fields EntryNumber and InvoiceNumber of the sales entry</summary>
@@ -61,10 +61,10 @@ public class SalesEntry
 	/// <summary>Indicates whether the invoice has extra duty</summary>
 	public bool? IsExtraDuty { get; set; }
 	/// <summary>The journal code. Every invoice should be linked to a sales journal</summary>
-	public string Journal { get; set; }
+	public string? Journal { get; set; }
 	/// <summary>Description of Journal</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string JournalDescription { get; set; }
+	public string? JournalDescription { get; set; }
 	/// <summary>Last modified date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime Modified { get; set; }
@@ -73,16 +73,16 @@ public class SalesEntry
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Number to indentify the invoice. Order numbers are not unique. Default the number is based on a setting for the first free number</summary>
 	public int? OrderNumber { get; set; }
 	/// <summary>The payment condition used for due date and discount calculation</summary>
-	public string PaymentCondition { get; set; }
+	public string? PaymentCondition { get; set; }
 	/// <summary>Description of PaymentCondition</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string PaymentConditionDescription { get; set; }
+	public string? PaymentConditionDescription { get; set; }
 	/// <summary>The payment reference used for bank imports, VAT return and Tax reference</summary>
-	public string PaymentReference { get; set; }
+	public string? PaymentReference { get; set; }
 	public int? ProcessNumber { get; set; }
 	/// <summary>Foreign currency rate</summary>
 	public double? Rate { get; set; }
@@ -93,19 +93,19 @@ public class SalesEntry
 	/// <summary>Indicates if amounts are reversed</summary>
 	public bool Reversal { get; set; }
 	/// <summary>Collection of lines</summary>
-	public IEnumerable<SalesEntryLine> SalesEntryLines { get; set; }
+	public IEnumerable<SalesEntryLine>? SalesEntryLines { get; set; }
 	/// <summary>Status: 20 = Open, 50 = Processed</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public short? Status { get; set; }
 	/// <summary>Description of Status</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string StatusDescription { get; set; }
+	public string? StatusDescription { get; set; }
 	/// <summary>Type: 20 = Sales entry, 21 = Sales credit note</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int Type { get; set; }
 	/// <summary>Description of Type</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string TypeDescription { get; set; }
+	public string? TypeDescription { get; set; }
 	/// <summary>Vat amount in the default currency of the company</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public double? VATAmountDC { get; set; }
@@ -118,5 +118,5 @@ public class SalesEntry
 	/// <summary>Withholding tax percentage</summary>
 	public double? WithholdingTaxPercentage { get; set; }
 	/// <summary>The invoice number of the customer</summary>
-	public string YourRef { get; set; }
+	public string? YourRef { get; set; }
 }

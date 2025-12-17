@@ -6,7 +6,7 @@ public class HourCostType
 {
 	/// <summary>Description of Item</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemDescription { get; set; }
+	public string? ItemDescription { get; set; }
 	/// <summary>Primary key</summary>
 	public Guid ItemId { get; set; }
 }

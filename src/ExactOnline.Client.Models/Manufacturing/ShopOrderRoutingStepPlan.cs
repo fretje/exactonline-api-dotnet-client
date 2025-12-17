@@ -8,10 +8,10 @@ public class ShopOrderRoutingStepPlan
 	public Guid? Account { get; set; }
 	/// <summary>Account name</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string AccountName { get; set; }
+	public string? AccountName { get; set; }
 	/// <summary>Account number</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string AccountNumber { get; set; }
+	public string? AccountNumber { get; set; }
 	/// <summary>Attended Percentage</summary>
 	public double? AttendedPercentage { get; set; }
 	/// <summary>Indicates if this is a backflush step</summary>
@@ -26,9 +26,9 @@ public class ShopOrderRoutingStepPlan
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Description of the operation</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? Division { get; set; }
@@ -48,17 +48,17 @@ public class ShopOrderRoutingStepPlan
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Notes</summary>
-	public string Notes { get; set; }
+	public string? Notes { get; set; }
 	/// <summary>Reference to Operations</summary>
 	public Guid? Operation { get; set; }
 	/// <summary>Code of the routing step operation</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string OperationCode { get; set; }
+	public string? OperationCode { get; set; }
 	/// <summary>Description of the operation step</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string OperationDescription { get; set; }
+	public string? OperationDescription { get; set; }
 	/// <summary>Reference to OperationResources</summary>
 	public Guid? OperationResource { get; set; }
 	/// <summary>Planned end date</summary>
@@ -72,7 +72,7 @@ public class ShopOrderRoutingStepPlan
 	/// <summary>Setup hours + Run hours</summary>
 	public double? PlannedTotalHours { get; set; }
 	/// <summary>Reference to Units</summary>
-	public string PurchaseUnit { get; set; }
+	public string? PurchaseUnit { get; set; }
 	/// <summary>Purchase Unit Factor</summary>
 	public double? PurchaseUnitFactor { get; set; }
 	/// <summary>Purchase Unit Price in the currency of the transaction</summary>
@@ -87,30 +87,30 @@ public class ShopOrderRoutingStepPlan
 	public int? RunMethod { get; set; }
 	/// <summary>Description of RunMethod</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string RunMethodDescription { get; set; }
+	public string? RunMethodDescription { get; set; }
 	/// <summary>Used in conjunction with SetupCount and Setup Unit to determine PlannedSetupHours</summary>
 	public double? Setup { get; set; }
 	/// <summary>Reference to TimeUnits</summary>
-	public string SetupUnit { get; set; }
+	public string? SetupUnit { get; set; }
 	/// <summary>Reference to Shop orders</summary>
 	public Guid? ShopOrder { get; set; }
 	/// <summary>Reference to OperationStatus</summary>
 	public int? Status { get; set; }
 	/// <summary>Description of Status</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string StatusDescription { get; set; }
+	public string? StatusDescription { get; set; }
 	/// <summary>Subcontracted lead days</summary>
 	public int? SubcontractedLeadDays { get; set; }
 	/// <summary>Collection of TimeTransactions</summary>
-	public IEnumerable<TimeTransaction> TimeTransactions { get; set; }
+	public IEnumerable<TimeTransaction>? TimeTransactions { get; set; }
 	/// <summary>Total cost of the routing line</summary>
 	public double? TotalCostDC { get; set; }
 	/// <summary>Reference to Workcenters</summary>
 	public Guid? Workcenter { get; set; }
 	/// <summary>Workcenter code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string WorkcenterCode { get; set; }
+	public string? WorkcenterCode { get; set; }
 	/// <summary>Workcenter description</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string WorkcenterDescription { get; set; }
+	public string? WorkcenterDescription { get; set; }
 }

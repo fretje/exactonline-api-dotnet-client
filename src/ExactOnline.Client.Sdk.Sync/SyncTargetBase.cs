@@ -6,8 +6,8 @@ namespace ExactOnline.Client.Sdk.Sync;
 public abstract class SyncTargetBase : ISyncTarget
 {
 	private readonly Hashtable _controllers = [];
-	private readonly Type _controllerType;
-	private readonly object[] _controllerArgs;
+	private readonly Type? _controllerType;
+	private readonly object[]? _controllerArgs;
 
 	protected SyncTargetBase()
 	{ }
@@ -37,9 +37,8 @@ public abstract class SyncTargetBase : ISyncTarget
 	protected virtual ISyncTargetController<TModel> CreateControllerFor<TModel>() =>
 		_controllerType == null
 			? throw new Exception("Must override CreateControllerFor<TModel> method, or provide a correct controllerType in the constructor.")
-			: Activator.CreateInstance(
-				  _controllerType.MakeGenericType(typeof(TModel)), _controllerArgs)
-			  as ISyncTargetController<TModel>;
+			: (ISyncTargetController<TModel>)Activator.CreateInstance(
+				  _controllerType.MakeGenericType(typeof(TModel)), _controllerArgs);
 
 	private static bool ConstructorTakesArgs(ConstructorInfo constructor, object[] args)
 	{

@@ -6,7 +6,7 @@ public class ImportNotification
 {
 	/// <summary>Number of the bank account related to the notification.</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string BankAccount { get; set; }
+	public string? BankAccount { get; set; }
 	/// <summary>ID of the bank account related to the notification.</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public Guid? BankAccountID { get; set; }
@@ -26,7 +26,7 @@ public class ImportNotification
 	public short? Result { get; set; }
 	/// <summary>Description of the import result</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ResultDescription { get; set; }
+	public string? ResultDescription { get; set; }
 	/// <summary>ID of the user that requested a retry of the import.</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public Guid? RetriedBy { get; set; }

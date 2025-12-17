@@ -4,7 +4,7 @@ namespace ExactOnline.Client.Sdk.Test.Infrastructure.MockObjects;
 
 public class ApiConnectorControllerMock : IApiConnector
 {
-	public string DoGetRequest(string endpoint, string parameters) => @"{
+	public string DoGetRequest(string endpoint, string? parameters) => @"{
 	""d"": {
 		""results"": [
 			{
@@ -105,7 +105,7 @@ public class ApiConnectorControllerMock : IApiConnector
 		]
 	}
 }";
-	public Task<string> DoGetRequestAsync(string endpoint, string parameters, CancellationToken ct) => Task.FromResult(DoGetRequest(endpoint, parameters));
+	public Task<string> DoGetRequestAsync(string endpoint, string? parameters, CancellationToken ct) => Task.FromResult(DoGetRequest(endpoint, parameters));
 
 	public Stream DoGetFileRequest(string endpoint) => Stream.Null;
 	public Task<Stream> DoGetFileRequestAsync(string endpoint, CancellationToken ct) => Task.FromResult(DoGetFileRequest(endpoint));
@@ -119,8 +119,8 @@ public class ApiConnectorControllerMock : IApiConnector
 	public string DoDeleteRequest(string endpoint) => string.Empty;
 	public Task<string> DoDeleteRequestAsync(string endpoint, CancellationToken ct) => Task.FromResult(DoDeleteRequest(endpoint));
 
-	public string DoCleanRequest(string uri, string oDataQuery) => "";
-	public Task<string> DoCleanRequestAsync(string uri, string oDataQuery, CancellationToken ct) => Task.FromResult(DoCleanRequest(uri, oDataQuery));
+	public string DoCleanRequest(string uri, string? oDataQuery) => "";
+	public Task<string> DoCleanRequestAsync(string uri, string? oDataQuery, CancellationToken ct) => Task.FromResult(DoCleanRequest(uri, oDataQuery));
 
 	public int GetCurrentDivision(string website) => -1;
 	public Task<int> GetCurrentDivisionAsync(string website) => Task.FromResult(GetCurrentDivision(website));

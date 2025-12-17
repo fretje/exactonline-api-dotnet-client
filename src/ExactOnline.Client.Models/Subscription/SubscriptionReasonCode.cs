@@ -7,7 +7,7 @@ public class SubscriptionReasonCode
 	/// <summary>Indicates if the reason code is active</summary>
 	public bool Active { get; set; }
 	/// <summary>Subscription reason code</summary>
-	public string Code { get; set; }
+	public string? Code { get; set; }
 	/// <summary>Creation date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime Created { get; set; }
@@ -16,9 +16,9 @@ public class SubscriptionReasonCode
 	public Guid Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Description</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int Division { get; set; }
@@ -32,7 +32,7 @@ public class SubscriptionReasonCode
 	public Guid Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Remarks</summary>
-	public string Notes { get; set; }
+	public string? Notes { get; set; }
 }

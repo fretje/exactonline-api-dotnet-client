@@ -12,7 +12,7 @@ public class StockSerialNumber
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? Division { get; set; }
@@ -32,10 +32,10 @@ public class StockSerialNumber
 	public Guid? Item { get; set; }
 	/// <summary>Item code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemCode { get; set; }
+	public string? ItemCode { get; set; }
 	/// <summary>Description of item</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemDescription { get; set; }
+	public string? ItemDescription { get; set; }
 	/// <summary>Last modified date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? Modified { get; set; }
@@ -44,11 +44,11 @@ public class StockSerialNumber
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Remarks</summary>
-	public string Remarks { get; set; }
+	public string? Remarks { get; set; }
 	/// <summary>Human readable serial number</summary>
-	public string SerialNumber { get; set; }
+	public string? SerialNumber { get; set; }
 	/// <summary>Serial number ID</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public Guid? SerialNumberID { get; set; }
@@ -67,16 +67,16 @@ public class StockSerialNumber
 	public Guid? StorageLocation { get; set; }
 	/// <summary>Code of the storage location which this serial number is entering or leaving</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string StorageLocationCode { get; set; }
+	public string? StorageLocationCode { get; set; }
 	/// <summary>Description of the storage location which this serial number is entering or leaving</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string StorageLocationDescription { get; set; }
+	public string? StorageLocationDescription { get; set; }
 	/// <summary>Warehouse which this serial number is entering or leaving</summary>
 	public Guid? Warehouse { get; set; }
 	/// <summary>Code of the warehouse which this serial number is entering or leaving</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string WarehouseCode { get; set; }
+	public string? WarehouseCode { get; set; }
 	/// <summary>Description of the warehouse which this serial number is entering or leaving</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string WarehouseDescription { get; set; }
+	public string? WarehouseDescription { get; set; }
 }

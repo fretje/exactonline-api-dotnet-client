@@ -23,8 +23,12 @@ public static class ApiResponseCleaner
 
 		try
 		{
-			var jtoken = JsonConvert.DeserializeObject(response, new JsonSerializerSettings { DateFormatHandling = DateFormatHandling.MicrosoftDateFormat }) as JToken;
-			return GetJsonFromObject(jtoken["d"] as JObject);
+			var jtoken = JsonConvert.DeserializeObject<JToken>(response, new JsonSerializerSettings { DateFormatHandling = DateFormatHandling.MicrosoftDateFormat });
+			if (jtoken?["d"] is not JObject jobject)
+			{
+				throw new Exception("No 'd' property found in response");
+			}
+			return GetJsonFromObject(jobject);
 		}
 		catch (Exception e)
 		{
@@ -36,19 +40,19 @@ public static class ApiResponseCleaner
 		}
 	}
 
-	public static string GetSkipToken(string response)
+	public static string? GetSkipToken(string response)
 	{
 		var oldCulture = Thread.CurrentThread.CurrentCulture;
 		Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
-		var token = string.Empty;
+		string? token = null;
 		try
 		{
-			var jtoken = JsonConvert.DeserializeObject(response, new JsonSerializerSettings { DateFormatHandling = DateFormatHandling.MicrosoftDateFormat }) as JToken;
-			if (jtoken["d"] is JObject dObject)
+			var jtoken = JsonConvert.DeserializeObject<JToken>(response, new JsonSerializerSettings { DateFormatHandling = DateFormatHandling.MicrosoftDateFormat });
+			if (jtoken?["d"] is JObject dObject)
 			{
 				if (dObject.ContainsKey("__next"))
 				{
-					var next = dObject["__next"].ToString();
+					var next = dObject["__next"]!.ToString();
 
 					// Skiptoken has format "$skiptoken=xyz" in the url and we want to extract xyz.
 					var match = Regex.Match(next ?? "", @"\$skiptoken=([^&#]*)");
@@ -80,11 +84,11 @@ public static class ApiResponseCleaner
 		{
 			var results = default(JArray);
 			var jtoken = JsonConvert.DeserializeObject(response, new JsonSerializerSettings { DateFormatHandling = DateFormatHandling.MicrosoftDateFormat }) as JToken;
-			if (jtoken["d"] is JObject dObject && dObject["results"] is JArray resultsArray)
+			if (jtoken?["d"] is JObject dObject && dObject["results"] is JArray resultsArray)
 			{
 				results = resultsArray;
 			}
-			else if (jtoken["d"] is JArray dArray)
+			else if (jtoken?["d"] is JArray dArray)
 			{
 				results = dArray;
 			}
@@ -150,11 +154,15 @@ public static class ApiResponseCleaner
 	private static string GetJsonFromArray(JArray results)
 	{
 		var json = "[";
-		if (results != null && results.Count > 0)
+		if (results.Count > 0)
 		{
 			foreach (var entity in results)
 			{
-				json += GetJsonFromObject(entity as JObject) + ",";
+				if (entity is not JObject jobject)
+				{
+					throw new IncorrectJsonException("Entity in results is not a JObject");	
+				}
+				json += GetJsonFromObject(jobject) + ",";
 			}
 
 			json = json.Remove(json.Length - 1, 1); // Remove last comma

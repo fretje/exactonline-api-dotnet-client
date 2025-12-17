@@ -8,10 +8,10 @@ public class ProjectRestrictionRebilling
 	public Guid? CostTypeRebill { get; set; }
 	/// <summary>Cost type code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CostTypeRebillCode { get; set; }
+	public string? CostTypeRebillCode { get; set; }
 	/// <summary>Cost type description</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CostTypeRebillDescription { get; set; }
+	public string? CostTypeRebillDescription { get; set; }
 	/// <summary>Date created</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? Created { get; set; }
@@ -20,7 +20,7 @@ public class ProjectRestrictionRebilling
 	public Guid? Creator { get; set; }
 	/// <summary>Creator name</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? Division { get; set; }
@@ -34,13 +34,13 @@ public class ProjectRestrictionRebilling
 	public Guid? Modifier { get; set; }
 	/// <summary>Modifier name</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Project linked to the restriction</summary>
 	public Guid? Project { get; set; }
 	/// <summary>Project code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ProjectCode { get; set; }
+	public string? ProjectCode { get; set; }
 	/// <summary>Project description</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ProjectDescription { get; set; }
+	public string? ProjectDescription { get; set; }
 }

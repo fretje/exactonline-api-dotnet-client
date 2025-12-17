@@ -6,7 +6,7 @@ public class ItemExtraField
 {
 	/// <summary>Description of the free field</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Item Identidy</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public Guid ItemID { get; set; }
@@ -18,5 +18,5 @@ public class ItemExtraField
 	public int Number { get; set; }
 	/// <summary>The value store in free field</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string Value { get; set; }
+	public string? Value { get; set; }
 }

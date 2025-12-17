@@ -11,9 +11,9 @@ public class TaskType
 	public Guid? Creator { get; set; }
 	/// <summary>Name of the creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Name of the task type</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Term ID of the task type</summary>
 	public int? DescriptionTermID { get; set; }
 	/// <summary>Division code</summary>
@@ -28,5 +28,5 @@ public class TaskType
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of the modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 }

@@ -11,15 +11,15 @@ public class PurchaseOrderLine
 	[SDKFieldType(FieldType.ReadOnly)]
 	public double? AmountFC { get; set; }
 	/// <summary>Reference to Cost center</summary>
-	public string CostCenter { get; set; }
+	public string? CostCenter { get; set; }
 	/// <summary>Description of CostCenter</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CostCenterDescription { get; set; }
+	public string? CostCenterDescription { get; set; }
 	/// <summary>Reference to Cost unit</summary>
-	public string CostUnit { get; set; }
+	public string? CostUnit { get; set; }
 	/// <summary>Description of CostUnit</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CostUnitDescription { get; set; }
+	public string? CostUnitDescription { get; set; }
 	/// <summary>Creation date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? Created { get; set; }
@@ -28,9 +28,9 @@ public class PurchaseOrderLine
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Description of the purchase order line</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Discount in percentage for item</summary>
 	public double? Discount { get; set; }
 	/// <summary>Division code</summary>
@@ -41,7 +41,7 @@ public class PurchaseOrderLine
 	public Guid? Expense { get; set; }
 	/// <summary>Description of expense. Only available with a professional service license</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ExpenseDescription { get; set; }
+	public string? ExpenseDescription { get; set; }
 	/// <summary>Primary key</summary>
 	public Guid ID { get; set; }
 	/// <summary>The current stock level of items shown in stock unit. The information is displayed only for items with the stock property selected.</summary>
@@ -54,10 +54,10 @@ public class PurchaseOrderLine
 	public Guid? Item { get; set; }
 	/// <summary>Item code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemCode { get; set; }
+	public string? ItemCode { get; set; }
 	/// <summary>Description of item</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemDescription { get; set; }
+	public string? ItemDescription { get; set; }
 	/// <summary>Indicates if fractional quantities of the item can be used, for example quantity = 0.4</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public bool? ItemDivisable { get; set; }
@@ -72,19 +72,19 @@ public class PurchaseOrderLine
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>The net price is the unit price (VAT code taken into account) with any discount applied</summary>
 	public double? NetPrice { get; set; }
 	/// <summary>Notes</summary>
-	public string Notes { get; set; }
+	public string? Notes { get; set; }
 	/// <summary>Reference to project. Only available with a professional service license</summary>
 	public Guid? Project { get; set; }
 	/// <summary>Project code. Only available with a professional service license</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ProjectCode { get; set; }
+	public string? ProjectCode { get; set; }
 	/// <summary>Description of the project. Only available with a professional service license</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ProjectDescription { get; set; }
+	public string? ProjectDescription { get; set; }
 	/// <summary>The current stock level + the planned quantity to be received - the planned quantity to deliver shown in stock unit.</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public double? ProjectedStock { get; set; }
@@ -116,23 +116,23 @@ public class PurchaseOrderLine
 	public int? SalesOrderNumber { get; set; }
 	/// <summary>Code the supplier uses for this item</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string SupplierItemCode { get; set; }
+	public string? SupplierItemCode { get; set; }
 	/// <summary>Code of item unit</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string Unit { get; set; }
+	public string? Unit { get; set; }
 	/// <summary>Description of unit</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string UnitDescription { get; set; }
+	public string? UnitDescription { get; set; }
 	/// <summary>Item price per purchase unit</summary>
 	public double? UnitPrice { get; set; }
 	/// <summary>Amount of VAT charges calculated from total amount and vat percentage</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public double? VATAmount { get; set; }
 	/// <summary>The VAT code used when the invoice was registered</summary>
-	public string VATCode { get; set; }
+	public string? VATCode { get; set; }
 	/// <summary>Description of vat code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string VATDescription { get; set; }
+	public string? VATDescription { get; set; }
 	/// <summary>The VAT percentage of the VAT code. This is the percentage at the moment the invoice is created. It&apos;s also used by the default calculation of VAT amounts and VAT base amounts</summary>
 	public double? VATPercentage { get; set; }
 }

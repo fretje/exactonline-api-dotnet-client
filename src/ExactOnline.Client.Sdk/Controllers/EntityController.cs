@@ -15,12 +15,12 @@ namespace ExactOnline.Client.Sdk.Controllers;
 /// <param name="identifier">Name of the identifier field of the entity (mostly ID)</param>
 /// <param name="connection">Instance of IApiConnection to connect to the specific part of the API</param>
 /// <param name="getEntityControllerFunc">Delegate that gets the entity controller</param>
-public class EntityController(object entity, string keyName, string identifier, IApiConnection connection, Func<object, EntityController> getEntityControllerFunc)
+public class EntityController(object entity, string keyName, string identifier, IApiConnection connection, Func<object, EntityController?>? getEntityControllerFunc)
 {
 	private readonly string _keyName = keyName; // Name of the field that identifies the entity
 	private readonly string _identifier = identifier; // Value of the field that identifies the entity 
 	private readonly IApiConnection _connection = connection;
-	private readonly Func<object, EntityController> _getEntityControllerFunc = getEntityControllerFunc;
+	private readonly Func<object, EntityController?>? _getEntityControllerFunc = getEntityControllerFunc;
 
 	public object OriginalEntity { get; private set; } = Clone(entity);
 

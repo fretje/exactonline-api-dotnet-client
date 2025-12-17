@@ -9,7 +9,7 @@ public class MaterialReversal
 	public Guid? CreatedBy { get; set; }
 	/// <summary>Name of the creating user</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatedByFullName { get; set; }
+	public string? CreatedByFullName { get; set; }
 	/// <summary>Date this reversal was created</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? CreatedDate { get; set; }
@@ -30,15 +30,15 @@ public class MaterialReversal
 	public Guid? Item { get; set; }
 	/// <summary>Code of item reversed</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemCode { get; set; }
+	public string? ItemCode { get; set; }
 	/// <summary>Description of item reversed</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemDescription { get; set; }
+	public string? ItemDescription { get; set; }
 	/// <summary>Picture url of item issued</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemPictureUrl { get; set; }
+	public string? ItemPictureUrl { get; set; }
 	/// <summary>Notes logged with this reversal</summary>
-	public string Note { get; set; }
+	public string? Note { get; set; }
 	/// <summary>ID of the original stock transaction, which was reversed</summary>
 	public Guid? OriginalStockTransactionId { get; set; }
 	/// <summary>Quantity of this reversal</summary>
@@ -60,25 +60,25 @@ public class MaterialReversal
 	public Guid? StorageLocation { get; set; }
 	/// <summary>Code of storage location reversed to</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string StorageLocationCode { get; set; }
+	public string? StorageLocationCode { get; set; }
 	/// <summary>Description of storage location reversed to</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string StorageLocationDescription { get; set; }
+	public string? StorageLocationDescription { get; set; }
 	/// <summary>Effective date of this reversal</summary>
 	public DateTime? TransactionDate { get; set; }
 	/// <summary>Unit of measurement abbreviation of item reversed</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string Unit { get; set; }
+	public string? Unit { get; set; }
 	/// <summary>Unit of measurement of item reversed</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string UnitDescription { get; set; }
+	public string? UnitDescription { get; set; }
 	/// <summary>ID of warehouse reversed to</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public Guid? Warehouse { get; set; }
 	/// <summary>Code of warehouse reversed to</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string WarehouseCode { get; set; }
+	public string? WarehouseCode { get; set; }
 	/// <summary>Description of warehouse reversed to</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string WarehouseDescription { get; set; }
+	public string? WarehouseDescription { get; set; }
 }

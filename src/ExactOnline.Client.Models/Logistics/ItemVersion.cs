@@ -16,9 +16,9 @@ public class ItemVersion
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Description of the item version</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? Division { get; set; }
@@ -30,7 +30,7 @@ public class ItemVersion
 	public Guid Item { get; set; }
 	/// <summary>Description of Item</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemDescription { get; set; }
+	public string? ItemDescription { get; set; }
 	/// <summary>Lead time of Item version</summary>
 	public int? LeadTime { get; set; }
 	/// <summary>Last modified date</summary>
@@ -41,19 +41,19 @@ public class ItemVersion
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Line notes</summary>
-	public string Notes { get; set; }
+	public string? Notes { get; set; }
 	/// <summary>Statuses of Item version: 10-Engineering change pending, 20-Engineering change approved, 30-Active &amp; 40-Historic</summary>
 	public short? Status { get; set; }
 	/// <summary>Description of Status</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string StatusDescription { get; set; }
+	public string? StatusDescription { get; set; }
 	/// <summary>Type of Item version: 10-Sales bill of material, 20-Manufacturing recipe</summary>
 	public short? Type { get; set; }
 	/// <summary>Description of Type</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string TypeDescription { get; set; }
+	public string? TypeDescription { get; set; }
 	/// <summary>Version Number</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? VersionNumber { get; set; }

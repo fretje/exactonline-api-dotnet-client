@@ -9,11 +9,11 @@ public class SubscriptionLine
 	/// <summary>Amount in the currency of the transaction</summary>
 	public double AmountFC { get; set; }
 	/// <summary>Cost center</summary>
-	public string Costcenter { get; set; }
+	public string? Costcenter { get; set; }
 	/// <summary>Cost unit</summary>
-	public string Costunit { get; set; }
+	public string? Costunit { get; set; }
 	/// <summary>Description</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Discount percentage</summary>
 	public double? Discount { get; set; }
 	/// <summary>Division code</summary>
@@ -29,37 +29,37 @@ public class SubscriptionLine
 	public Guid Item { get; set; }
 	/// <summary>Description of Item</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemDescription { get; set; }
+	public string? ItemDescription { get; set; }
 	/// <summary>Line number</summary>
 	public int LineNumber { get; set; }
 	/// <summary>Reference to LineType</summary>
 	public short? LineType { get; set; }
 	/// <summary>Description of LineType</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string LineTypeDescription { get; set; }
+	public string? LineTypeDescription { get; set; }
 	/// <summary>Last modified date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime Modified { get; set; }
 	/// <summary>Net price in the currency of the transaction</summary>
 	public double NetPrice { get; set; }
 	/// <summary>Remarks</summary>
-	public string Notes { get; set; }
+	public string? Notes { get; set; }
 	/// <summary>Quantity</summary>
 	public double Quantity { get; set; }
 	/// <summary>To date</summary>
 	public DateTime? ToDate { get; set; }
 	/// <summary>Unit code</summary>
-	public string UnitCode { get; set; }
+	public string? UnitCode { get; set; }
 	/// <summary>Description of Unit</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string UnitDescription { get; set; }
+	public string? UnitDescription { get; set; }
 	/// <summary>Unit price in the currency of the transaction (price * unit factor)</summary>
 	public double UnitPrice { get; set; }
 	/// <summary>Vat Amount in the currency of the transaction</summary>
 	public double? VATAmountFC { get; set; }
 	/// <summary>VATCode</summary>
-	public string VATCode { get; set; }
+	public string? VATCode { get; set; }
 	/// <summary>Description of VATCode</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string VATCodeDescription { get; set; }
+	public string? VATCodeDescription { get; set; }
 }

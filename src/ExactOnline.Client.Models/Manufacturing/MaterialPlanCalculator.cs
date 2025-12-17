@@ -62,10 +62,10 @@
 	{
 		/// <summary>Pieces per material</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
-		public string ItemStockUnit { get; set; }
+		public string? ItemStockUnit { get; set; }
 		/// <summary>Shape unit</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
-		public string ShapeUnit { get; set; }
+		public string? ShapeUnit { get; set; }
 		/// <summary>Conversion unit factor</summary>
 		public double? ConversionUnitFactor { get; set; }
 		/// <summary>Conversion unit factor type - 1 := 1 stockUnit = X shapeunits, 2 := 1 Shape Unit = X Stock Units</summary>
@@ -73,7 +73,7 @@
 		public int? ConversionUnitFactorType { get; set; }
 		/// <summary>Conversion unit description</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
-		public string ConversionUnitDescription { get; set; }
+		public string? ConversionUnitDescription { get; set; }
 		/// <summary>Pieces per make item</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
 		public double? PiecesPerMakeItem { get; set; }
@@ -83,7 +83,7 @@
 	{
 		/// <summary>Bar length unit</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
-		public string BarLengthUnit { get; set; }
+		public string? BarLengthUnit { get; set; }
 
 		/// <summary>Bar length</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
@@ -95,7 +95,7 @@
 
 		/// <summary>Weight per length unit</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
-		public string WeightPerLengthUnit { get; set; }
+		public string? WeightPerLengthUnit { get; set; }
 
 		/// <summary>Weight per length unit factor</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
@@ -103,7 +103,7 @@
 
 		/// <summary>Length to weight unit description</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
-		public string LengthToWeightUnitDescription { get; set; }
+		public string? LengthToWeightUnitDescription { get; set; }
 
 		/// <summary>PieceLength</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
@@ -123,7 +123,7 @@
 
 		/// <summary>Weight unit</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
-		public string PlannedWeightUnit { get; set; }
+		public string? PlannedWeightUnit { get; set; }
 
 		/// <summary>Length</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
@@ -131,7 +131,7 @@
 
 		/// <summary>Length unit</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
-		public string PlannedLengthUnit { get; set; }
+		public string? PlannedLengthUnit { get; set; }
 
 		/// <summary>Whole bars</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
@@ -159,7 +159,7 @@
 
 		/// <summary>Sheet length unit</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
-		public string SheetLengthUnit { get; set; }
+		public string? SheetLengthUnit { get; set; }
 
 		/// <summary>Sheet length</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
@@ -175,7 +175,7 @@
 
 		/// <summary>Weight per area unit</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
-		public string WeightPerAreaUnit { get; set; }
+		public string? WeightPerAreaUnit { get; set; }
 
 		/// <summary>Weight per area unit factor</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
@@ -183,7 +183,7 @@
 
 		/// <summary>Length to weight unit description</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
-		public string AreaToWeightUnitDescription { get; set; }
+		public string? AreaToWeightUnitDescription { get; set; }
 
 		/// <summary>Piece length</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
@@ -203,7 +203,7 @@
 
 		/// <summary>Weight unit</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
-		public string PlannedWeightUnit { get; set; }
+		public string? PlannedWeightUnit { get; set; }
 
 		/// <summary>Area</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
@@ -211,7 +211,7 @@
 
 		/// <summary>Area unit</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
-		public string PlannedAreaUnit { get; set; }
+		public string? PlannedAreaUnit { get; set; }
 
 		/// <summary>Whole sheets</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
@@ -238,7 +238,7 @@
 	{
 		/// <summary>Length unit</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
-		public string LengthUnit { get; set; }
+		public string? LengthUnit { get; set; }
 
 		/// <summary>Coil wire length</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
@@ -250,7 +250,7 @@
 
 		/// <summary>Weight per length unit</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
-		public string WeightPerLengthUnit { get; set; }
+		public string? WeightPerLengthUnit { get; set; }
 
 		/// <summary>Weight per length unit factor</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
@@ -258,7 +258,7 @@
 
 		/// <summary>Length to weight unit description</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
-		public string LengthToWeightUnitDescription { get; set; }
+		public string? LengthToWeightUnitDescription { get; set; }
 
 		/// <summary>Piece length</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
@@ -278,7 +278,7 @@
 
 		/// <summary>Weight unit</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
-		public string PlannedWeightUnit { get; set; }
+		public string? PlannedWeightUnit { get; set; }
 
 		/// <summary>Length</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
@@ -286,7 +286,7 @@
 
 		/// <summary>Length unit</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
-		public string PlannedLengthUnit { get; set; }
+		public string? PlannedLengthUnit { get; set; }
 
 		/// <summary>Is calculated -  Always true for CoilWireWeight</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
@@ -297,7 +297,7 @@
 	{
 		/// <summary>Weight unit</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
-		public string WeightUnit { get; set; }
+		public string? WeightUnit { get; set; }
 
 		/// <summary>Piece weight</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
@@ -309,7 +309,7 @@
 
 		/// <summary>Weight unit</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
-		public string PlannedWeightUnit { get; set; }
+		public string? PlannedWeightUnit { get; set; }
 
 		/// <summary>Is calculated -  Always true for CoilWireWeight</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
@@ -320,7 +320,7 @@
 	{
 		/// <summary>Length unit</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
-		public string LengthUnit { get; set; }
+		public string? LengthUnit { get; set; }
 
 		/// <summary>Length</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
