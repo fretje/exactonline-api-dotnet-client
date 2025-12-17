@@ -15,7 +15,7 @@ public class ApiConnectorTest
 	[TestInitialize]
 	public void Setup()
 	{
-		_connector = new ApiConnector(GetAccessToken, new HttpClient(), ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, ExactOnlineTest.CustomDescriptionLanguage);
+		_connector = new(GetAccessToken, new HttpClient(), ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, ExactOnlineTest.CustomDescriptionLanguage);
 		_connector.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
 	}
 
@@ -32,7 +32,7 @@ public class ApiConnectorTest
 	[TestMethod]
 	[TestCategory("Unit Test")]
 	public void ApiConnector_Constructor_WithDelegateAndHttpClient_Succeeds() =>
-		_ = new ApiConnector(GetAccessToken, new HttpClient(), ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, ExactOnlineTest.CustomDescriptionLanguage);
+		_ = new ApiConnector(GetAccessToken, new(), ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, ExactOnlineTest.CustomDescriptionLanguage);
 
 	[TestMethod]
 	[TestCategory("Unit Test")]

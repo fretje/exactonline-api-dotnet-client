@@ -18,7 +18,7 @@ public class TestObjectsCreator
 	private static readonly ExactOnlineWinFormsAuthorizer _authorizer;
 	static TestObjectsCreator()
 	{
-		var testApp = new TestApp();
+		TestApp testApp = new();
 		_authorizer = new(testApp.ClientId, testApp.ClientSecret, testApp.CallbackUrl, ExactOnlineUrl, ExactOnlineTest.AccessToken, ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessTokenExpiresAt);
 		_authorizer.TokensChanged += (_, args) =>
 			(ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessToken, ExactOnlineTest.AccessTokenExpiresAt) =
@@ -32,7 +32,7 @@ public class TestObjectsCreator
 	{
 		if (_connector is null)
 		{
-			_connector = new ApiConnector(GetOAuthAuthenticationToken, new HttpClient(), ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, ExactOnlineTest.CustomDescriptionLanguage);
+			_connector = new(GetOAuthAuthenticationToken, new HttpClient(), ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, ExactOnlineTest.CustomDescriptionLanguage);
 			_connector.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
 		}
 		return _connector;
@@ -42,7 +42,7 @@ public class TestObjectsCreator
 	{
 		if (_client == null)
 		{
-			_client = new ExactOnlineClient(ExactOnlineUrl, GetOAuthAuthenticationToken, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, ExactOnlineTest.CustomDescriptionLanguage);
+			_client = new(ExactOnlineUrl, GetOAuthAuthenticationToken, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, ExactOnlineTest.CustomDescriptionLanguage);
 			_client.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
 			await _client.InitializeDivisionAsync(ct).ConfigureAwait(false);
 		}

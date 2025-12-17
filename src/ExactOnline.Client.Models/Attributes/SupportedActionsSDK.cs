@@ -33,8 +33,8 @@ public sealed class SupportedActionsSDK : Attribute
 
 	public static SupportedActionsSDK GetByType(Type type)
 	{
-		var actions = (SupportedActionsSDK)type.GetCustomAttribute(typeof(SupportedActionsSDK));
-		actions ??= new SupportedActionsSDK(false, false, false, false);
+		var actions = type.GetCustomAttribute<SupportedActionsSDK>();
+		actions ??= new(false, false, false, false);
 		return actions;
 	}
 }

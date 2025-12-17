@@ -14,7 +14,7 @@ public class ModificationRestrictions
 		var client = await new TestObjectsCreator().GetClientAsync(TestContext.CancellationToken);
 
 		// Create
-		var newJournal = new Journal { Description = "New Journal" };
+		Journal newJournal = new() { Description = "New Journal" };
 		try { client.For<Journal>().Insert(ref newJournal); throw new Exception(); } catch { }
 
 		// Update

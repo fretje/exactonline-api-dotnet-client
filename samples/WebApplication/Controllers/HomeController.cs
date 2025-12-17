@@ -24,8 +24,8 @@ public class HomeController : Controller
 			{
 				// To make this work set the authorisation properties of your test app in the testapp.config.
 				var path = Path.Combine(Server.MapPath("~"), @"..\..\testapp.config");
-				var testApp = new TestApp(path);
-				authorizer = new ExactOnlineAuthorizer(testApp.ClientId, testApp.ClientSecret, testApp.CallbackUrl,
+				TestApp testApp = new(path);
+				authorizer = new(testApp.ClientId, testApp.ClientSecret, testApp.CallbackUrl,
 					ExactOnlineTest.Url, ExactOnlineTest.AccessToken, ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessTokenExpiresAt);
 				authorizer.TokensChanged += (_, e) =>
 					(ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessToken, ExactOnlineTest.AccessTokenExpiresAt) =
@@ -45,12 +45,12 @@ public class HomeController : Controller
 		}
 
 		// When we get here, that means the authorizer is authorized and we can use its GetAccessTokenAsync method for the exactOnlineclient
-		var client = new ExactOnlineClient(ExactOnlineTest.Url, Authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
+		ExactOnlineClient client = new(ExactOnlineTest.Url, Authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
 		client.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
 		await client.InitializeDivisionAsync();
 
 		// Get the Code and Name of a random account in the administration.
-		var fields = new[] { "Code", "Name" };
+		string[] fields = ["Code", "Name"];
 		var account = client.For<Account>().Top(1).Select(fields).Get().FirstOrDefault();
 		Debug.WriteLine(string.Format("Account {0} - {1}", account.Code?.TrimStart(), account.Name));
 		Debug.WriteLine(string.Format("X-RateLimit-Limit:  {0} - X-RateLimit-Remaining: {1} - X-RateLimit-Reset: {2}",

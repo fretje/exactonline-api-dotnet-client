@@ -14,14 +14,14 @@ internal class Program
 	private static async Task Main()
 	{
 		// We need a WinFormsApartment (message loop) to be able to use the WinFormsAuthorizer
-		using var apartment = new WinFormsApartment(() => new Form { Width = 0, Height = 0 });
+		using WinFormsApartment apartment = new(() => new() { Width = 0, Height = 0 });
 
 		await apartment.Run(async () =>
 		{
 			// To make this work set the authorisation properties of your test app in the testapp.config.
-			var testApp = new TestApp();
+			TestApp testApp = new();
 
-			var authorizer = new ExactOnlineWinFormsAuthorizer(testApp.ClientId, testApp.ClientSecret, testApp.CallbackUrl, ExactOnlineTest.Url, ExactOnlineTest.AccessToken, ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessTokenExpiresAt);
+			ExactOnlineWinFormsAuthorizer authorizer = new(testApp.ClientId, testApp.ClientSecret, testApp.CallbackUrl, ExactOnlineTest.Url, ExactOnlineTest.AccessToken, ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessTokenExpiresAt);
 			authorizer.TokensChanged += (_, e) => (ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessToken, ExactOnlineTest.AccessTokenExpiresAt) = (e.NewRefreshToken, e.NewAccessToken, e.NewExpiresAt);
 
 			var seriLogger = new LoggerConfiguration()
@@ -31,12 +31,12 @@ internal class Program
 				.CreateLogger();
 			var logger = new SerilogLoggerFactory(seriLogger).CreateLogger("ExactOnline Sdk");
 
-			var client = new ExactOnlineClient(ExactOnlineTest.Url, authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, ExactOnlineTest.CustomDescriptionLanguage, logger);
+			ExactOnlineClient client = new(ExactOnlineTest.Url, authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, ExactOnlineTest.CustomDescriptionLanguage, logger);
 			client.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
 			await client.InitializeDivisionAsync();
 
 			// Get the Code and Name of a random account in the administration.
-			var fields = new[] { "Code", "Name" };
+			string[] fields = ["Code", "Name"];
 			var account = client.For<Account>().Top(1).Select(fields).Get().FirstOrDefault();
 
 			// This is an example of how to use skipToken for paging.
@@ -53,7 +53,7 @@ internal class Program
 			// SyncTargetBase and SyncTargetControllerBase. See the example EntityFrameworkTarget and its Controller to get started.
 			// EntityFrameworkTarget will automatically create a database on localdb.
 			// Or you can also supply a connectionstring in the constructor for more control.
-			var efTarget = new EntityFrameworkCoreTarget("Data Source=(localdb)\\mssqllocaldb;Initial Catalog=ExactOnlineClientSdkSyncTest;Integrated Security=True;MultipleActiveResultSets=True");
+			EntityFrameworkCoreTarget efTarget = new("Data Source=(localdb)\\mssqllocaldb;Initial Catalog=ExactOnlineClientSdkSyncTest;Integrated Security=True;MultipleActiveResultSets=True");
 
 			// Initialize the database so potential migrations are applied.
 			await efTarget.InitializeDatabaseAsync(default);
@@ -67,7 +67,7 @@ internal class Program
 			fields = ["AddressLine1", "AddressLine2", "AddressLine3"];
 			await client.For<Account>()
 				.Select(fields)
-				.Where(a => a.StartDate, new DateTime(2000, 1, 1), OperatorEnum.Gt)
+				.Where(a => a.StartDate, new(2000, 1, 1), OperatorEnum.Gt)
 				.SynchronizeWithAsync(efTarget, client, fields);
 
 			// There's also an override that takes a type in case you want to run the synchronization dynamically (for a given modeltype)

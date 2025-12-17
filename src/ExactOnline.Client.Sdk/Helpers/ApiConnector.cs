@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using System.Net.Http.Headers;
 using System.Text;
 using ExactOnline.Client.Sdk.Exceptions;
 using ExactOnline.Client.Sdk.Interfaces;
@@ -190,13 +189,13 @@ public class ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc,
 			url += "?" + querystring;
 		}
 
-		var request = new HttpRequestMessage(method, url);
+		HttpRequestMessage request = new(method, url);
 
 		// request.ServicePoint.Expect100Continue = false;
 
 		if (!string.IsNullOrEmpty(acceptContentType))
 		{
-			request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(acceptContentType));
+			request.Headers.Accept.Add(new(acceptContentType));
 		}
 
 		if (!string.IsNullOrEmpty(_customDescriptionLanguage))
@@ -204,7 +203,7 @@ public class ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc,
 			request.Headers.Add("CustomDescriptionLanguage", _customDescriptionLanguage);
 		}
 
-		request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", await _accessTokenFunc(ct).ConfigureAwait(false));
+		request.Headers.Authorization = new("Bearer", await _accessTokenFunc(ct).ConfigureAwait(false));
 
 		return request;
 	}
@@ -217,7 +216,7 @@ public class ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc,
 		{
 			if (responseStream != null)
 			{
-				using var reader = new StreamReader(responseStream);
+				using StreamReader reader = new(responseStream);
 				responseValue = reader.ReadToEnd();
 			}
 		}
@@ -235,7 +234,7 @@ public class ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc,
 		{
 			if (responseStream != null)
 			{
-				using var reader = new StreamReader(responseStream);
+				using StreamReader reader = new(responseStream);
 				responseValue = await reader.ReadToEndAsync().ConfigureAwait(false);
 			}
 		}
@@ -323,9 +322,9 @@ public class ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc,
 	{
 		if (response != null)
 		{
-			EolResponseHeader = new EolResponseHeader
+			EolResponseHeader = new()
 			{
-				RateLimit = new RateLimit
+				RateLimit = new()
 				{
 					Limit = response.Headers.TryGetValues("X-RateLimit-Limit", out var limitHeaders) && limitHeaders.Any() ? limitHeaders.First().ToNullableInt() : null,
 					Remaining = response.Headers.TryGetValues("X-RateLimit-Remaining", out var remainingHeaders) && remainingHeaders.Any() ? remainingHeaders.First().ToNullableInt() : null,
@@ -363,5 +362,5 @@ public class ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc,
 	}
 
 	private void OnMinutelyChanged() =>
-		MinutelyChanged?.Invoke(this, new MinutelyChangedEventArgs(_minutelyRemaining, _minutelyResetTime));
+		MinutelyChanged?.Invoke(this, new(_minutelyRemaining, _minutelyResetTime));
 }

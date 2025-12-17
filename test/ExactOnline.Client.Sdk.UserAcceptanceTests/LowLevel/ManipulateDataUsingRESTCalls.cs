@@ -15,8 +15,8 @@ public class ManipulateDataUsingRestCalls
 	[TestInitialize]
 	public async Task Setup()
 	{
-		var toc = new TestObjectsCreator();
-		_conn = new ApiConnection(toc.GetApiConnector(), TestObjectsCreator.UriGlAccount(await toc.GetCurrentDivisionAsync()));
+		TestObjectsCreator toc = new();
+		_conn = new(toc.GetApiConnector(), TestObjectsCreator.UriGlAccount(await toc.GetCurrentDivisionAsync()));
 	}
 
 	[TestMethod]

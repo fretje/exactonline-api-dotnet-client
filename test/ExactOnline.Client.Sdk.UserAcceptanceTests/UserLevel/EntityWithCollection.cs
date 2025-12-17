@@ -19,7 +19,7 @@ public class EntityWithCollection
 		var customerId = GetCustomerId(client);
 		var itemId = GetItemId(client);
 
-		var newInvoice = new SalesInvoice
+		SalesInvoice newInvoice = new()
 		{
 			Currency = "EUR",
 			OrderDate = DateTime.Now,
@@ -28,13 +28,13 @@ public class EntityWithCollection
 			Description = "New invoice for Entity With Collection"
 		};
 
-		var newInvoiceLine = new SalesInvoiceLine
+		SalesInvoiceLine newInvoiceLine = new()
 		{
 			Description = "New invoice line for Entity With Collection",
 			Item = itemId
 		};
 
-		var invoicelines = new List<SalesInvoiceLine> { newInvoiceLine };
+		List<SalesInvoiceLine> invoicelines = [newInvoiceLine];
 		newInvoice.SalesInvoiceLines = invoicelines;
 
 		// Add SalesInvoice to Database

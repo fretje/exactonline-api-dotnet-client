@@ -15,19 +15,19 @@ public partial class MainForm : Form
 	private async void MainForm_Load(object sender, EventArgs e)
 	{
 		// To make this work set the authorisation properties of your test app in the testapp.config.
-		var testApp = new TestApp();
+		TestApp testApp = new();
 
-		var authorizer = new ExactOnlineWinFormsAuthorizer(testApp.ClientId, testApp.ClientSecret, testApp.CallbackUrl, ExactOnlineTest.Url, ExactOnlineTest.AccessToken, ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessTokenExpiresAt);
+		ExactOnlineWinFormsAuthorizer authorizer = new(testApp.ClientId, testApp.ClientSecret, testApp.CallbackUrl, ExactOnlineTest.Url, ExactOnlineTest.AccessToken, ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessTokenExpiresAt);
 		authorizer.TokensChanged += (_, e) => (ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessToken, ExactOnlineTest.AccessTokenExpiresAt) = (e.NewRefreshToken, e.NewAccessToken, e.NewExpiresAt);
 
 		try
 		{
-			var client = new ExactOnlineClient(ExactOnlineTest.Url, authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
+			ExactOnlineClient client = new(ExactOnlineTest.Url, authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
 			client.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
 			await client.InitializeDivisionAsync();
 
 			// Get the Code and Name of a random account in the administration.
-			var fields = new[] { "Code", "Name" };
+			string[] fields = ["Code", "Name"];
 			var account = (await client.For<Account>().Top(1).Select(fields).GetAsync()).List.FirstOrDefault();
 			MessageBox.Show(account?.Name);
 

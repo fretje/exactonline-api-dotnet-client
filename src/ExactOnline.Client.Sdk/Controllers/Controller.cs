@@ -29,7 +29,7 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 		var attributes = Attribute.GetCustomAttributes(typeof(T)).Where(x => x.GetType() == typeof(DataServiceKey)).Select(a => a); //DataServiceKey
 
 		// Find unique value of entity
-		var enumerable = attributes as IList<Attribute> ?? attributes.ToList();
+		var enumerable = attributes as IList<Attribute> ?? [.. attributes];
 		if (!enumerable.Any())
 		{
 			throw new Exception("Cannot find 'DataServiceKey' field. This entity cannot be managed by the Controller");
@@ -127,7 +127,7 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 
 		var entities = ParseGetResponse(response, out var skipToken);
 
-		return new Models.ApiList<T>(entities, skipToken);
+		return new(entities, skipToken);
 	}
 
 	private static void CheckValidEndpointType(EndpointTypeEnum endpointType)
@@ -458,10 +458,8 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 	/// </summary>
 	/// <returns>Identifier value of the entity. Null if the indicated keyname is set to null or is not found.</returns>
 	public string? GetIdentifierValue(object entity) =>
-		_keyname == null
+		_keyname is null || _keyname.Contains(",") // Currently the SDK doesn't support entities with a compound key.
 			? null
-			: _keyname.Contains(",")
-			? null // throw new Exception("Currently the SDK doesn't support entities with a compound key.") // why throw an exception if it only disables the auto change tracking?
 			: entity.GetType().GetProperty(_keyname).GetValue(entity)?.ToString();
 
 	/// <summary>
@@ -486,7 +484,7 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 
 		if (!_entityControllers.ContainsKey(entityIdentifier))
 		{
-			var newController = new EntityController(entity, _keyname!, entityIdentifier, _conn, GetEntityController);
+			EntityController newController = new(entity, _keyname!, entityIdentifier, _conn, GetEntityController);
 			_entityControllers.Add(entityIdentifier, newController);
 
 			returnValue = true;

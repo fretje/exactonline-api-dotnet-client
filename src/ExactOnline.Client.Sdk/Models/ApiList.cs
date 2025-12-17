@@ -1,10 +1,7 @@
 ﻿namespace ExactOnline.Client.Sdk.Models;
 
-public class ApiList<T>
+public class ApiList<T>(List<T> list, string? skipToken)
 {
-	public ApiList(List<T> list, string? skipToken) =>
-		(List, SkipToken) = (list, skipToken);
-
-	public List<T> List { get; }
-	public string? SkipToken { get; }
+	public List<T> List { get; } = list;
+	public string? SkipToken { get; } = skipToken;
 }

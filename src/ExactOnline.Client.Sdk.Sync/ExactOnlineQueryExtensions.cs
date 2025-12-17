@@ -15,9 +15,9 @@ public static class ExactOnlineQueryExtensions
 		var modelInfo = ModelInfo.For<TModel>();
 		var endpointType = GetEndpointType(modelInfo);
 		var targetController = syncTarget.ControllerFor<TModel>();
-		var result = new SyncResult(typeof(TModel), endpointType);
+		SyncResult result = new(typeof(TModel), endpointType);
 		var maxTimestamp = 0L;
-		var maxModified = default(DateTime?);
+		DateTime? maxModified = null;
 
 		if (endpointType == EndpointTypeEnum.Sync)
 		{
@@ -80,9 +80,9 @@ public static class ExactOnlineQueryExtensions
 		var modelInfo = ModelInfo.For<TModel>();
 		var endpointType = GetEndpointType(modelInfo);
 		var targetController = syncTarget.ControllerFor<TModel>();
-		var result = new SyncResult(typeof(TModel), endpointType);
+		SyncResult result = new(typeof(TModel), endpointType);
 		var maxTimestamp = 0L;
-		var maxModified = default(DateTime?);
+		DateTime? maxModified = null;
 
 		if (endpointType == EndpointTypeEnum.Sync)
 		{
@@ -207,5 +207,5 @@ public static class ExactOnlineQueryExtensions
 			.Select("EntityKey");
 
 	private static Guid[] ToEntityKeyArray(this IList<Deleted> deleted) =>
-		deleted.Select(d => d.EntityKey).ToArray();
+		[.. deleted.Select(d => d.EntityKey)];
 }

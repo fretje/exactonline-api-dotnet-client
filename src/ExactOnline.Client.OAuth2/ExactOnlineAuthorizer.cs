@@ -20,11 +20,11 @@ public class ExactOnlineAuthorizer(
 	: OAuth2Client(
 		new RequestFactory(),
 		new ClientConfiguration
-			{
-				ClientId = clientId,
-				ClientSecret = clientSecret,
-				RedirectUri = callbackUrl.ToString()
-			},
+		{
+			ClientId = clientId,
+			ClientSecret = clientSecret,
+			RedirectUri = callbackUrl.ToString()
+		},
 		accessToken,
 		refreshToken,
 		expiresAt)
@@ -88,5 +88,5 @@ public class ExactOnlineAuthorizer(
 		};
 
 	protected override void OnAfterTokensChanged() =>
-		TokensChanged?.Invoke(this, new TokensChangedEventArgs(RefreshToken, AccessToken, ExpiresAt));
+		TokensChanged?.Invoke(this, new(RefreshToken, AccessToken, ExpiresAt));
 }

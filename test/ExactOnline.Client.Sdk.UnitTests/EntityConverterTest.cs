@@ -46,13 +46,13 @@ public class EntityConverterTest
 	public void EntityConverter_ConvertObjectToJson_ForCreating_Succeeds()
 	{
 		// Test if objects is converted to json correctly
-		var dateTimeEpoc = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+		DateTime dateTimeEpoc = new(1970, 1, 1, 0, 0, 0, 0);
 
-		var simpleEntity = new SimpleEntity()
+		SimpleEntity simpleEntity = new()
 		{
 			Code = "123",
 			Description = "FOO",
-			Id = new Guid("53697fab-137f-4242-b710-0139886b50f4"),
+			Id = new("53697fab-137f-4242-b710-0139886b50f4"),
 			StartDate = dateTimeEpoc.AddMilliseconds(1387188617287),
 			EndDate = null,
 			Boolean = true,
@@ -72,7 +72,7 @@ public class EntityConverterTest
 	[TestCategory("Unit Test")]
 	public void EntityConverter_ConvertObjectToJson_ForAlteredFields_Succeeds()
 	{
-		var account = new Account { Name = "New Account" };
+		Account account = new() { Name = "New Account" };
 		const string expected = "{\"Name\":\"New Account\"}";
 
 		var result = EntityConverter.ConvertObjectToJson(new Account(), account, null);
@@ -84,8 +84,8 @@ public class EntityConverterTest
 	[TestCategory("Unit Test")]
 	public void EntityConverter_ConvertObjectToJson_ForNoAlteredFields_Succeeds()
 	{
-		var oldAccount = new Account { Name = "New Account" };
-		var newAccount = new Account { Name = "New Account" };
+		Account oldAccount = new() { Name = "New Account" };
+		Account newAccount = new() { Name = "New Account" };
 		const string expected = "";
 
 		var result = EntityConverter.ConvertObjectToJson(oldAccount, newAccount, null);
@@ -97,7 +97,7 @@ public class EntityConverterTest
 	[TestCategory("Unit Test")]
 	public void EntityConverter_ConvertObjectToJson_WithReadonlyFields_Succeeds()
 	{
-		var newAccount = new Account { AccountManagerHID = 10 };
+		Account newAccount = new() { AccountManagerHID = 10 };
 		const string expected = "";
 
 		var result = EntityConverter.ConvertObjectToJson(new Account(), newAccount, null);
@@ -109,7 +109,7 @@ public class EntityConverterTest
 	[TestCategory("Unit Test")]
 	public void EntityConverter_CreateWithGuid_Succeeds()
 	{
-		var newAccount = new Account { ID = new Guid("8f8b8025-90b3-4307-a8a3-a5111d048fb5") };
+		Account newAccount = new() { ID = new("8f8b8025-90b3-4307-a8a3-a5111d048fb5") };
 		const string expected = "{\"ID\":\"8f8b8025-90b3-4307-a8a3-a5111d048fb5\"}";
 
 		var result = EntityConverter.ConvertObjectToJson(new Account(), newAccount, null);
@@ -121,7 +121,7 @@ public class EntityConverterTest
 	[TestCategory("Unit Test")]
 	public void EntityConverter_CreateWithoutGuid_Succeeds()
 	{
-		var newAccount = new Account { ID = new Guid() };
+		Account newAccount = new() { ID = new() };
 		const string expected = "";
 
 		var result = EntityConverter.ConvertObjectToJson(new Account(), newAccount, null);
@@ -156,7 +156,7 @@ public class EntityConverterTest
 	[TestMethod]
 	public void EntityConverter_ConvertObject_WithJsonPropertyAttributeSpecifyingDifferentPropertyToJson_SerializesToCorrectJson()
 	{
-		var bankaccount = new BankAccount
+		BankAccount bankaccount = new()
 		{
 			BankAccountName = "value"
 		};
@@ -285,23 +285,23 @@ public class EntityConverterTest
 	public void EntityConverter_ConvertLinkedObjectToJson_Succeeds()
 	{
 		// Create Object
-		var newInvoice = new ComplexEntity
+		ComplexEntity newInvoice = new()
 		{
 			Currency = "EUR",
-			OrderDate = new DateTime(2012, 10, 26),
-			InvoiceTo = new Guid("3734121e-1544-4b77-9ae2-7203e9bd6046"),
+			OrderDate = new(2012, 10, 26),
+			InvoiceTo = new("3734121e-1544-4b77-9ae2-7203e9bd6046"),
 			Journal = "50",
-			OrderedBy = new Guid("3734121e-1544-4b77-9ae2-7203e9bd6046"),
+			OrderedBy = new("3734121e-1544-4b77-9ae2-7203e9bd6046"),
 			Description = "NewInvoiceForEntityWithCollection"
 		};
 
-		var newInvoiceLine = new ComplexEntityLine
+		ComplexEntityLine newInvoiceLine = new()
 		{
 			Description = "NewInvoiceForEntityWithCollection",
-			Item = new Guid("4f68481a-7a2c-4fbc-a3a0-0c494df3fa0d")
+			Item = new("4f68481a-7a2c-4fbc-a3a0-0c494df3fa0d")
 		};
 
-		var invoicelines = new List<ComplexEntityLine> { newInvoiceLine };
+		List<ComplexEntityLine> invoicelines = [newInvoiceLine];
 		newInvoice.Lines = invoicelines;
 
 		var json = EntityConverter.ConvertObjectToJson(newInvoice);
@@ -312,11 +312,11 @@ public class EntityConverterTest
 	private static EntityController GetEntityController(object o)
 	{
 		// Create Object
-		var newInvoice = new SalesInvoice { InvoiceID = new Guid("4f68481a-7a2c-4fbc-a3a0-0c494df3fa0d") };
-		var newInvoiceLine = new SalesInvoiceLine { Description = "NewInvoiceForEntityWithCollection" };
+		SalesInvoice newInvoice = new() { InvoiceID = new("4f68481a-7a2c-4fbc-a3a0-0c494df3fa0d") };
+		SalesInvoiceLine newInvoiceLine = new() { Description = "NewInvoiceForEntityWithCollection" };
 		newInvoice.SalesInvoiceLines = [newInvoiceLine];
 
-		var entityController = new EntityController(newInvoice, "ID", "4f68481a-7a2c-4fbc-a3a0-0c494df3fa0d", new ApiConnectionMock(), null);
+		EntityController entityController = new(newInvoice, "ID", "4f68481a-7a2c-4fbc-a3a0-0c494df3fa0d", new ApiConnectionMock(), null);
 		return entityController;
 	}
 
@@ -325,12 +325,12 @@ public class EntityConverterTest
 	public void EntityConverter_ConvertExistingLinkedObjectToJson_Succeeds()
 	{
 		// Create Object
-		var newInvoice = new SalesInvoice { InvoiceID = new Guid("4f68481a-7a2c-4fbc-a3a0-0c494df3fa0d") };
-		var newInvoiceLine = new SalesInvoiceLine { Description = "NewInvoiceForEntityWithCollection" };
+		SalesInvoice newInvoice = new() { InvoiceID = new("4f68481a-7a2c-4fbc-a3a0-0c494df3fa0d") };
+		SalesInvoiceLine newInvoiceLine = new() { Description = "NewInvoiceForEntityWithCollection" };
 		newInvoice.SalesInvoiceLines = [newInvoiceLine];
 
 		//ControllerSingleton.GetInstance(new MockObjects.MAPIConnector_Controller(), "www.dummy.com/");
-		var entityController = new EntityController(newInvoice, "ID", "4f68481a-7a2c-4fbc-a3a0-0c494df3fa0d", new ApiConnectionMock(), null);
+		EntityController entityController = new(newInvoice, "ID", "4f68481a-7a2c-4fbc-a3a0-0c494df3fa0d", new ApiConnectionMock(), null);
 		newInvoiceLine.Description = "ChangedNewInvoiceForEntityWithCollection";
 
 		var json = EntityConverter.ConvertObjectToJson((SalesInvoice)entityController.OriginalEntity, newInvoice, GetEntityController);
@@ -346,13 +346,13 @@ public class EntityConverterTest
 	public void EntityConverter_ConvertEmptyLinkedObjectToJson_Succeeds()
 	{
 		// Create Object
-		var newInvoice = new ComplexEntity
+		ComplexEntity newInvoice = new()
 		{
 			Currency = "EUR",
-			OrderDate = new DateTime(2012, 10, 26),
-			InvoiceTo = new Guid("3734121e-1544-4b77-9ae2-7203e9bd6046"),
+			OrderDate = new(2012, 10, 26),
+			InvoiceTo = new("3734121e-1544-4b77-9ae2-7203e9bd6046"),
 			Journal = "50",
-			OrderedBy = new Guid("3734121e-1544-4b77-9ae2-7203e9bd6046"),
+			OrderedBy = new("3734121e-1544-4b77-9ae2-7203e9bd6046"),
 			Description = "NewInvoiceForEntityWithCollection"
 		};
 

@@ -23,6 +23,6 @@ public class TestApp
 
 		ClientId = details[0];
 		ClientSecret = details[1];
-		CallbackUrl = new Uri(details[2]);
+		CallbackUrl = new(details[2]);
 	}
 }

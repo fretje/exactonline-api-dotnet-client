@@ -11,6 +11,8 @@ namespace ExactOnline.Client.Sdk.Helpers;
 /// </summary>
 public static class ApiResponseCleaner
 {
+	private static readonly JsonSerializerSettings _settings = new() { DateFormatHandling = DateFormatHandling.MicrosoftDateFormat };
+
 	/// <summary>
 	/// Fetch Json Object (Json within ['d'] name/value pair) from response
 	/// </summary>
@@ -23,7 +25,7 @@ public static class ApiResponseCleaner
 
 		try
 		{
-			var jtoken = JsonConvert.DeserializeObject<JToken>(response, new JsonSerializerSettings { DateFormatHandling = DateFormatHandling.MicrosoftDateFormat });
+			var jtoken = JsonConvert.DeserializeObject<JToken>(response, _settings);
 			if (jtoken?["d"] is not JObject jobject)
 			{
 				throw new Exception("No 'd' property found in response");
@@ -47,7 +49,7 @@ public static class ApiResponseCleaner
 		string? token = null;
 		try
 		{
-			var jtoken = JsonConvert.DeserializeObject<JToken>(response, new JsonSerializerSettings { DateFormatHandling = DateFormatHandling.MicrosoftDateFormat });
+			var jtoken = JsonConvert.DeserializeObject<JToken>(response, _settings);
 			if (jtoken?["d"] is JObject dObject)
 			{
 				if (dObject.ContainsKey("__next"))
@@ -83,7 +85,7 @@ public static class ApiResponseCleaner
 		try
 		{
 			var results = default(JArray);
-			var jtoken = JsonConvert.DeserializeObject(response, new JsonSerializerSettings { DateFormatHandling = DateFormatHandling.MicrosoftDateFormat }) as JToken;
+			var jtoken = JsonConvert.DeserializeObject(response, _settings) as JToken;
 			if (jtoken?["d"] is JObject dObject && dObject["results"] is JArray resultsArray)
 			{
 				results = resultsArray;

@@ -85,7 +85,7 @@ public class UserDocument
 
 	private bool CreateDocument(ExactOnlineClient client)
 	{
-		var document = new Document
+		Document document = new()
 		{
 			Subject = "User Acceptance Test Document",
 			Body = "User Acceptance Test Document",

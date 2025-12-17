@@ -38,8 +38,8 @@ public class ControllerTest
 	public void Controller_GetIdentifierValueForCompoundKey_ReturnsNull()
 	{
 		// JournalStatus has a compound key
-		var journalStatusController = new Controller<JournalStatusList>(_mockConnection);
-		var journalStatus = new JournalStatusList();
+		Controller<JournalStatusList> journalStatusController = new(_mockConnection);
+		JournalStatusList journalStatus = new();
 
 		var idValue = journalStatusController.GetIdentifierValue(journalStatus);
 
@@ -50,7 +50,7 @@ public class ControllerTest
 	[TestCategory("Unit Test")]
 	public void Controller_Delete_WithEntity_Succeeds()
 	{
-		var accountController = new Controller<Account>(_mockConnection);
+		Controller<Account> accountController = new(_mockConnection);
 		var testAccount = accountController.GetEntity("dummyGUID", string.Empty);
 
 		// Delete Entity and Test if Entity still exists
@@ -62,7 +62,7 @@ public class ControllerTest
 	[TestCategory("Unit Test")]
 	public async Task Controller_Delete_WithEntity_SucceedsAsync()
 	{
-		var accountController = new Controller<Account>(_mockConnection);
+		Controller<Account> accountController = new(_mockConnection);
 		var testAccount = await accountController.GetEntityAsync("dummyGUID", string.Empty, TestContext.CancellationToken);
 
 		// Delete Entity and Test if Entity still exists
@@ -74,7 +74,7 @@ public class ControllerTest
 	[TestCategory("Unit Test")]
 	public void Controller_Delete_WithoutEntity_Fails()
 	{
-		var accountController = new Controller<Account>(_mockConnection);
+		Controller<Account> accountController = new(_mockConnection);
 		Assert.Throws<ArgumentException>(() => accountController.Delete(null!));
 	}
 
@@ -82,7 +82,7 @@ public class ControllerTest
 	[TestCategory("Unit Test")]
 	public async Task Controller_Delete_WithoutEntity_FailsAsync()
 	{
-		var accountController = new Controller<Account>(_mockConnection);
+		Controller<Account> accountController = new(_mockConnection);
 		await Assert.ThrowsAsync<ArgumentException>(() => accountController.DeleteAsync(null!, TestContext.CancellationToken));
 	}
 
@@ -90,7 +90,7 @@ public class ControllerTest
 	[TestCategory("Unit Test")]
 	public void Controller_Get_Succeeds()
 	{
-		var accountController = new Controller<Account>(_mockConnection);
+		Controller<Account> accountController = new(_mockConnection);
 		accountController.Get(string.Empty);
 	}
 
@@ -98,7 +98,7 @@ public class ControllerTest
 	[TestCategory("Unit Test")]
 	public async Task Controller_Get_SucceedsAsync()
 	{
-		var accountController = new Controller<Account>(_mockConnection);
+		Controller<Account> accountController = new(_mockConnection);
 		await accountController.GetAsync(string.Empty, TestContext.CancellationToken);
 	}
 
@@ -106,7 +106,7 @@ public class ControllerTest
 	[TestCategory("Unit Test")]
 	public void Controller_GetMultipleTimes_Succeeds()
 	{
-		var accountController = new Controller<Account>(_mockConnection);
+		Controller<Account> accountController = new(_mockConnection);
 
 		// Get accounts again to test for double entitycontrollers
 		_ = accountController.Get(string.Empty);
@@ -116,7 +116,7 @@ public class ControllerTest
 	[TestCategory("Unit Test")]
 	public async Task Controller_GetMultipleTimes_SucceedsAsync()
 	{
-		var accountController = new Controller<Account>(_mockConnection);
+		Controller<Account> accountController = new(_mockConnection);
 
 		// Get accounts again to test for double entitycontrollers
 		_ = await accountController.GetAsync(string.Empty, TestContext.CancellationToken);
@@ -126,7 +126,7 @@ public class ControllerTest
 	[TestCategory("Unit Test")]
 	public void Controller_Update_WithoutEntity_Fails()
 	{
-		var accountController = new Controller<Account>(_mockConnection);
+		Controller<Account> accountController = new(_mockConnection);
 		Assert.Throws<ArgumentException>(() => accountController.Update(null!));
 	}
 
@@ -134,7 +134,7 @@ public class ControllerTest
 	[TestCategory("Unit Test")]
 	public async Task Controller_Update_WithoutEntity_FailsAsync()
 	{
-		var accountController = new Controller<Account>(_mockConnection);
+		Controller<Account> accountController = new(_mockConnection);
 		await Assert.ThrowsAsync<ArgumentException>(() => accountController.UpdateAsync(null!, TestContext.CancellationToken));
 	}
 
@@ -142,7 +142,7 @@ public class ControllerTest
 	[TestCategory("Unit Test")]
 	public void Controller_Update_WithEntity_Succeeds()
 	{
-		var accountController = new Controller<Account>(_mockConnection);
+		Controller<Account> accountController = new(_mockConnection);
 		var testAccount = accountController.GetEntity("dummyGUID", string.Empty);
 		Assert.IsTrue(accountController.Update(testAccount));
 	}
@@ -151,7 +151,7 @@ public class ControllerTest
 	[TestCategory("Unit Test")]
 	public async Task Controller_Update_WithEntity_SucceedsAsync()
 	{
-		var accountController = new Controller<Account>(_mockConnection);
+		Controller<Account> accountController = new(_mockConnection);
 		var testAccount = await accountController.GetEntityAsync("dummyGUID", string.Empty, TestContext.CancellationToken);
 		Assert.IsTrue(await accountController.UpdateAsync(testAccount, TestContext.CancellationToken));
 	}
@@ -162,7 +162,7 @@ public class ControllerTest
 	{
 		// Test if controller registrates linked entities
 		IApiConnector conn = new ApiConnectorControllerMock();
-		var controllerList = new ControllerList(conn, string.Empty);
+		ControllerList controllerList = new(conn, string.Empty);
 
 		var salesinvoicecontroller = (Controller<SalesInvoice>)controllerList.GetController<SalesInvoice>();
 		var invoicelines = (Controller<SalesInvoiceLine>)controllerList.GetController<SalesInvoiceLine>();
@@ -180,7 +180,7 @@ public class ControllerTest
 	{
 		// Test if controller registrates linked entities
 		IApiConnector conn = new ApiConnectorControllerMock();
-		var controllerList = new ControllerList(conn, string.Empty);
+		ControllerList controllerList = new(conn, string.Empty);
 
 		var salesinvoicecontroller = (Controller<SalesInvoice>)controllerList.GetController<SalesInvoice>();
 		var invoicelines = (Controller<SalesInvoiceLine>)controllerList.GetController<SalesInvoiceLine>();

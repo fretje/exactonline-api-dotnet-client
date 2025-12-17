@@ -15,7 +15,7 @@ public class ApiConnectorTest
 	[TestInitialize]
 	public async Task Setup()
 	{
-		_toc = new TestObjectsCreator();
+		_toc = new();
 		_currentDivision = await _toc.GetCurrentDivisionAsync();
 	}
 

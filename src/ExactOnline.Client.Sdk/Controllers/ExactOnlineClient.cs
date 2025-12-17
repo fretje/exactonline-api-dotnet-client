@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using ExactOnline.Client.Models.Current;
+﻿using ExactOnline.Client.Models.Current;
 using ExactOnline.Client.Sdk.Helpers;
 using ExactOnline.Client.Sdk.Models;
 using Microsoft.Extensions.Logging;
@@ -55,7 +54,7 @@ public class ExactOnlineClient
 
 		ExactOnlineApiUrl = exactOnlineUrl + "api/v1/";
 
-		_apiConnector = new ApiConnector(accesstokenFunc, httpClient ?? new HttpClient(), minutelyRemaining, minutelyResetTime, customDescriptionLanguage, log);
+		_apiConnector = new(accesstokenFunc, httpClient ?? new(), minutelyRemaining, minutelyResetTime, customDescriptionLanguage, log);
 
 		Division = division;
 		Log = log;
@@ -63,7 +62,7 @@ public class ExactOnlineClient
 		{
 			var baseUrl = ExactOnlineApiUrl + Division + "/";
 
-			_controllers = new ControllerList(_apiConnector, baseUrl);
+			_controllers = new(_apiConnector, baseUrl);
 		}
 	}
 
@@ -73,7 +72,7 @@ public class ExactOnlineClient
 
 		var baseUrl = ExactOnlineApiUrl + Division + "/";
 
-		_controllers = new ControllerList(_apiConnector, baseUrl);
+		_controllers = new(_apiConnector, baseUrl);
 	}
 
 	/// <summary>
@@ -83,7 +82,7 @@ public class ExactOnlineClient
 	{
 		CheckInitialized();
 		var controller = _controllers!.GetController<T>();
-		return new ExactOnlineQuery<T>(controller);
+		return new(controller);
 	}
 
 	/// <summary>
@@ -93,7 +92,7 @@ public class ExactOnlineClient
 	public Stream GetAttachment(string url)
 	{
 		CheckInitialized();
-		var conn = new ApiConnection(_apiConnector, url);
+		ApiConnection conn = new(_apiConnector, url);
 		return conn.GetFile();
 	}
 
@@ -104,7 +103,7 @@ public class ExactOnlineClient
 	public Task<Stream> GetAttachmentAsync(string url, CancellationToken ct)
 	{
 		CheckInitialized();
-		var conn = new ApiConnection(_apiConnector, url);
+		ApiConnection conn = new(_apiConnector, url);
 		return conn.GetFileAsync(ct);
 	}
 
@@ -135,7 +134,7 @@ public class ExactOnlineClient
 
 	private async Task<Me> CurrentMeAsync(CancellationToken ct)
 	{
-		var conn = new ApiConnection(_apiConnector, ExactOnlineApiUrl + "current/Me");
+		ApiConnection conn = new(_apiConnector, ExactOnlineApiUrl + "current/Me");
 		var response = await conn.GetAsync("$select=CurrentDivision", ct).ConfigureAwait(false);
 		response = ApiResponseCleaner.GetJsonArray(response);
 		var currentMe = EntityConverter.ConvertJsonArrayToObjectList<Me>(response);

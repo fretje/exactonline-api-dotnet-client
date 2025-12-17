@@ -19,9 +19,9 @@ public class ExactOnlineQueryTest
 	[TestInitialize]
 	public void Setup()
 	{
-		_conn = new ApiConnectionMock();
-		_controllerMock = new ControllerMock<Account>();
-		_acccountController = new Controller<Account>(_conn);
+		_conn = new();
+		_controllerMock = new();
+		_acccountController = new(_conn);
 	}
 
 	[TestMethod]
@@ -56,7 +56,7 @@ public class ExactOnlineQueryTest
 	[TestCategory("Unit Test")]
 	public void ExactOnlineQuery_TestAnd_WithNoWhereClause_Fails()
 	{
-		_controllerMock = new ControllerMock<Account>();
+		_controllerMock = new();
 		Assert.Throws<ArgumentException>(() =>
 			new ExactOnlineQuery<Account>(_controllerMock)
 				.Select(["Code", "Name"])
@@ -68,7 +68,7 @@ public class ExactOnlineQueryTest
 	[TestCategory("Unit Test")]
 	public async Task ExactOnlineQuery_TestAnd_WithNoWhereClause_FailsAsync()
 	{
-		_controllerMock = new ControllerMock<Account>();
+		_controllerMock = new();
 		await Assert.ThrowsAsync<ArgumentException>(async () =>
 			await new ExactOnlineQuery<Account>(_controllerMock)
 				.Select(["Code", "Name"])
@@ -78,27 +78,29 @@ public class ExactOnlineQueryTest
 
 	[TestMethod]
 	[TestCategory("Unit Test")]
-	public void ExactOnlineQuery_TestAnd_WithEmptyString_Fails() => Assert.Throws<ArgumentException>(() =>
-																			 new ExactOnlineQuery<Account>(_controllerMock)
-																				 .Select(["Code", "Name"])
-																				 .Where("Name+eq+'Test Testname'")
-																				 .And(string.Empty)
-																				 .Get());
+	public void ExactOnlineQuery_TestAnd_WithEmptyString_Fails() =>
+		Assert.Throws<ArgumentException>(() =>
+			new ExactOnlineQuery<Account>(_controllerMock)
+				.Select(["Code", "Name"])
+				.Where("Name+eq+'Test Testname'")
+				.And(string.Empty)
+				.Get());
 
 	[TestMethod]
 	[TestCategory("Unit Test")]
-	public async Task ExactOnlineQuery_TestAnd_WithEmptyString_FailsAsync() => await Assert.ThrowsAsync<ArgumentException>(async () =>
-																						await new ExactOnlineQuery<Account>(_controllerMock)
-																							.Select(["Code", "Name"])
-																							.Where("Name+eq+'Test Testname'")
-																							.And(string.Empty)
-																							.GetAsync(ct: TestContext.CancellationToken));
+	public async Task ExactOnlineQuery_TestAnd_WithEmptyString_FailsAsync() =>
+		await Assert.ThrowsAsync<ArgumentException>(async () =>
+			await new ExactOnlineQuery<Account>(_controllerMock)
+				.Select(["Code", "Name"])
+				.Where("Name+eq+'Test Testname'")
+				.And(string.Empty)
+				.GetAsync(ct: TestContext.CancellationToken));
 
 	[TestMethod]
 	[TestCategory("Unit Test")]
 	public void ExactOnlineQuery_Delete_WithEntity_Succeeds()
 	{
-		var query = new ExactOnlineQuery<Account>(_controllerMock);
+		ExactOnlineQuery<Account> query = new(_controllerMock);
 		Assert.IsTrue(query.Delete(new Account()));
 	}
 
@@ -106,7 +108,7 @@ public class ExactOnlineQueryTest
 	[TestCategory("Unit Test")]
 	public async Task ExactOnlineQuery_Delete_WithEntity_SucceedsAsync()
 	{
-		var query = new ExactOnlineQuery<Account>(_controllerMock);
+		ExactOnlineQuery<Account> query = new(_controllerMock);
 		Assert.IsTrue(await query.DeleteAsync(new Account(), TestContext.CancellationToken));
 	}
 
@@ -114,7 +116,7 @@ public class ExactOnlineQueryTest
 	[TestCategory("Unit Test")]
 	public void ExactOnlineQueryDelete_WithNullEntity_Fails()
 	{
-		var query = new ExactOnlineQuery<Account>(_controllerMock);
+		ExactOnlineQuery<Account> query = new(_controllerMock);
 		Assert.Throws<ArgumentException>(() => query.Delete(null!));
 	}
 
@@ -122,7 +124,7 @@ public class ExactOnlineQueryTest
 	[TestCategory("Unit Test")]
 	public async Task ExactOnlineQueryDelete_WithNullEntity_FailsAsync()
 	{
-		var query = new ExactOnlineQuery<Account>(_controllerMock);
+		ExactOnlineQuery<Account> query = new(_controllerMock);
 		await Assert.ThrowsAsync<ArgumentException>(async () => await query.DeleteAsync(null!, TestContext.CancellationToken));
 	}
 
@@ -149,7 +151,7 @@ public class ExactOnlineQueryTest
 	[TestMethod]
 	[TestCategory("Unit Test")]
 	public void ExactOnlineQuery_Get_WithoutSelect_Fails() =>
-		Assert.Throws<Exception>(() =>new ExactOnlineQuery<Account>(_controllerMock).Get());
+		Assert.Throws<Exception>(() => new ExactOnlineQuery<Account>(_controllerMock).Get());
 
 	[TestMethod]
 	[TestCategory("Unit Test")]
@@ -190,7 +192,7 @@ public class ExactOnlineQueryTest
 	[TestCategory("Unit Test")]
 	public void ExactOnlineQuery_Insert_WithObject_Succeeds()
 	{
-		var newAccount = new Account();
+		Account newAccount = new();
 		new ExactOnlineQuery<Account>(_controllerMock).Insert(ref newAccount);
 	}
 
@@ -198,7 +200,7 @@ public class ExactOnlineQueryTest
 	[TestCategory("Unit Test")]
 	public async Task ExactOnlineQuery_Insert_WithObject_SucceedsAsync()
 	{
-		var newAccount = new Account();
+		Account newAccount = new();
 		var insertedAccount = await new ExactOnlineQuery<Account>(_controllerMock).InsertAsync(newAccount, TestContext.CancellationToken);
 		Assert.IsNotNull(insertedAccount);
 	}

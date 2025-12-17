@@ -17,9 +17,9 @@ public class GetApiResponseAfterGetCall
 	[TestCategory("User Acceptance Tests")]
 	public async Task GetApiResponseAfterGetCall_Succeeds()
 	{
-		//APIConnector connector = new APIConnector(accesstoken);
-		var toc = new TestObjectsCreator();
-		var conn = new ApiConnection(toc.GetApiConnector(), TestObjectsCreator.UriCrmAccount(await toc.GetCurrentDivisionAsync(TestContext.CancellationToken)));
+		//APIConnector connector = new(accesstoken);
+		TestObjectsCreator toc = new();
+		ApiConnection conn = new(toc.GetApiConnector(), TestObjectsCreator.UriCrmAccount(await toc.GetCurrentDivisionAsync(TestContext.CancellationToken)));
 
 		var result = conn.Get(string.Empty);
 		if (string.IsNullOrEmpty(result))

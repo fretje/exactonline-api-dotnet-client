@@ -73,7 +73,7 @@ public class ExactOnlineQuery<T>(IController<T> controller)
 	/// </summary>
 	/// <param name="properties">The properties to select</param>
 	public ExactOnlineQuery<T> Select(params Expression<Func<T, object>>[] properties) =>
-		Select(fields: properties.Select(x => TransformExpressionToODataFormat(x.Body)).ToArray());
+		Select(fields: [.. properties.Select(x => TransformExpressionToODataFormat(x.Body))]);
 
 	/// <summary>
 	/// Specify the field(s) to get from the API
@@ -347,7 +347,7 @@ public class ExactOnlineQuery<T>(IController<T> controller)
 			return me.Member.Name;
 		}
 
-		var listArguments = new List<string>();
+		List<string> listArguments = [];
 
 		if (e is not MethodCallExpression mce)
 		{
@@ -401,7 +401,7 @@ public class ExactOnlineQuery<T>(IController<T> controller)
 	/// </summary>
 	private string BuildODataQuery(bool selectIsMandatory)
 	{
-		var queryParts = new List<string>();
+		List<string> queryParts = [];
 
 		if (!string.IsNullOrEmpty(_where))
 		{

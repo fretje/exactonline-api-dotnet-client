@@ -14,17 +14,17 @@ public class EntityControllerTest
 	[TestCategory("Unit Test")]
 	public void EntityController_Update_WithNewLinkedEntity_Succeeds()
 	{
-		var controllerMock = new ApiConnectionEntityControllerMock();
-		var apiConnectorMock = new ApiConnectorMock();
-		var controllerList = new ControllerList(apiConnectorMock, string.Empty);
+		ApiConnectionEntityControllerMock controllerMock = new();
+		ApiConnectorMock apiConnectorMock = new();
+		ControllerList controllerList = new(apiConnectorMock, string.Empty);
 
 		var controller = (Controller<SalesInvoice>)controllerList.GetController<SalesInvoice>();
-		var invoice = new SalesInvoice { Description = "New Description" };
-		var entityController = new EntityController(invoice, "ID", invoice.InvoiceID.ToString(), controllerMock, controller.GetEntityController);
+		SalesInvoice invoice = new() { Description = "New Description" };
+		EntityController entityController = new(invoice, "ID", invoice.InvoiceID.ToString(), controllerMock, controller.GetEntityController);
 
 		// Change State
 		invoice.Description = "Description2";
-		var line = new SalesInvoiceLine { Description = "InvoiceLine2" };
+		SalesInvoiceLine line = new() { Description = "InvoiceLine2" };
 		invoice.SalesInvoiceLines = (List<SalesInvoiceLine>)[line];
 
 		entityController.Update(invoice);
@@ -38,17 +38,17 @@ public class EntityControllerTest
 	[TestCategory("Unit Test")]
 	public async Task EntityController_Update_WithNewLinkedEntity_SucceedsAsync()
 	{
-		var controllerMock = new ApiConnectionEntityControllerMock();
-		var apiConnectorMock = new ApiConnectorMock();
-		var controllerList = new ControllerList(apiConnectorMock, string.Empty);
+		ApiConnectionEntityControllerMock controllerMock = new();
+		ApiConnectorMock apiConnectorMock = new();
+		ControllerList controllerList = new(apiConnectorMock, string.Empty);
 
 		var controller = (Controller<SalesInvoice>)controllerList.GetController<SalesInvoice>();
-		var invoice = new SalesInvoice { Description = "New Description" };
-		var entityController = new EntityController(invoice, "ID", invoice.InvoiceID.ToString(), controllerMock, controller.GetEntityController);
+		SalesInvoice invoice = new() { Description = "New Description" };
+		EntityController entityController = new(invoice, "ID", invoice.InvoiceID.ToString(), controllerMock, controller.GetEntityController);
 
 		// Change State
 		invoice.Description = "Description2";
-		var line = new SalesInvoiceLine { Description = "InvoiceLine2" };
+		SalesInvoiceLine line = new() { Description = "InvoiceLine2" };
 		invoice.SalesInvoiceLines = (List<SalesInvoiceLine>)[line];
 
 		await entityController.UpdateAsync(invoice, TestContext.CancellationToken);
@@ -62,16 +62,16 @@ public class EntityControllerTest
 	[TestCategory("Unit Test")]
 	public void EntityController_Update_WithExistingLinkedEntity_Succeeds()
 	{
-		var controllerMock = new ApiConnectionEntityControllerMock();
-		var apiConnectorMock = new ApiConnectorMock();
-		var controllerList = new ControllerList(apiConnectorMock, string.Empty);
+		ApiConnectionEntityControllerMock controllerMock = new();
+		ApiConnectorMock apiConnectorMock = new();
+		ControllerList controllerList = new(apiConnectorMock, string.Empty);
 
-		var invoice = new SalesInvoice { Description = "New Description" };
-		var line = new SalesInvoiceLine { Description = "InvoiceLine" };
+		SalesInvoice invoice = new() { Description = "New Description" };
+		SalesInvoiceLine line = new() { Description = "InvoiceLine" };
 		invoice.SalesInvoiceLines = (List<SalesInvoiceLine>)[line];
 
 		var controller = (Controller<SalesInvoice>)controllerList.GetController<SalesInvoice>();
-		var entityController = new EntityController(invoice, "ID", invoice.InvoiceID.ToString(), controllerMock, controller.GetEntityController);
+		EntityController entityController = new(invoice, "ID", invoice.InvoiceID.ToString(), controllerMock, controller.GetEntityController);
 		Assert.IsTrue(controller.AddEntityToManagedEntitiesCollection(invoice));
 
 		// Change State
@@ -87,16 +87,16 @@ public class EntityControllerTest
 	[TestCategory("Unit Test")]
 	public async Task EntityController_Update_WithExistingLinkedEntity_SucceedsAsync()
 	{
-		var controllerMock = new ApiConnectionEntityControllerMock();
-		var apiConnectorMock = new ApiConnectorMock();
-		var controllerList = new ControllerList(apiConnectorMock, string.Empty);
+		ApiConnectionEntityControllerMock controllerMock = new();
+		ApiConnectorMock apiConnectorMock = new();
+		ControllerList controllerList = new(apiConnectorMock, string.Empty);
 
-		var invoice = new SalesInvoice { Description = "New Description" };
-		var line = new SalesInvoiceLine { Description = "InvoiceLine" };
+		SalesInvoice invoice = new() { Description = "New Description" };
+		SalesInvoiceLine line = new() { Description = "InvoiceLine" };
 		invoice.SalesInvoiceLines = (List<SalesInvoiceLine>)[line];
 
 		var controller = (Controller<SalesInvoice>)controllerList.GetController<SalesInvoice>();
-		var entityController = new EntityController(invoice, "ID", invoice.InvoiceID.ToString(), controllerMock, controller.GetEntityController);
+		EntityController entityController = new(invoice, "ID", invoice.InvoiceID.ToString(), controllerMock, controller.GetEntityController);
 		Assert.IsTrue(controller.AddEntityToManagedEntitiesCollection(invoice));
 
 		// Change State
@@ -112,16 +112,16 @@ public class EntityControllerTest
 	[TestCategory("Unit Test")]
 	public void EntityController_Update_WithNoFieldsAltered_Succeeds()
 	{
-		var controllerMock = new ApiConnectionEntityControllerMock();
-		var apiConnectorMock = new ApiConnectorMock();
-		var controllerList = new ControllerList(apiConnectorMock, string.Empty);
+		ApiConnectionEntityControllerMock controllerMock = new();
+		ApiConnectorMock apiConnectorMock = new();
+		ControllerList controllerList = new(apiConnectorMock, string.Empty);
 
-		var invoice = new SalesInvoice { Description = "New Description" };
-		var line = new SalesInvoiceLine { Description = "Invoice Line" };
+		SalesInvoice invoice = new() { Description = "New Description" };
+		SalesInvoiceLine line = new() { Description = "Invoice Line" };
 		invoice.SalesInvoiceLines = (List<SalesInvoiceLine>)[line];
 
 		var controller = (Controller<SalesInvoice>)controllerList.GetController<SalesInvoice>();
-		var entityController = new EntityController(invoice, "ID", invoice.InvoiceID.ToString(), controllerMock, controller.GetEntityController);
+		EntityController entityController = new(invoice, "ID", invoice.InvoiceID.ToString(), controllerMock, controller.GetEntityController);
 		var returnValue = controller.AddEntityToManagedEntitiesCollection(invoice);
 
 		Assert.IsTrue(returnValue);
@@ -135,16 +135,16 @@ public class EntityControllerTest
 	[TestCategory("Unit Test")]
 	public async Task EntityController_Update_WithNoFieldsAltered_SucceedsAsync()
 	{
-		var controllerMock = new ApiConnectionEntityControllerMock();
-		var apiConnectorMock = new ApiConnectorMock();
-		var controllerList = new ControllerList(apiConnectorMock, string.Empty);
+		ApiConnectionEntityControllerMock controllerMock = new();
+		ApiConnectorMock apiConnectorMock = new();
+		ControllerList controllerList = new(apiConnectorMock, string.Empty);
 
-		var invoice = new SalesInvoice { Description = "New Description" };
-		var line = new SalesInvoiceLine { Description = "Invoice Line" };
+		SalesInvoice invoice = new() { Description = "New Description" };
+		SalesInvoiceLine line = new() { Description = "Invoice Line" };
 		invoice.SalesInvoiceLines = (List<SalesInvoiceLine>)[line];
 
 		var controller = (Controller<SalesInvoice>)controllerList.GetController<SalesInvoice>();
-		var entityController = new EntityController(invoice, "ID", invoice.InvoiceID.ToString(), controllerMock, controller.GetEntityController);
+		EntityController entityController = new(invoice, "ID", invoice.InvoiceID.ToString(), controllerMock, controller.GetEntityController);
 		var returnValue = controller.AddEntityToManagedEntitiesCollection(invoice);
 
 		Assert.IsTrue(returnValue);
@@ -158,16 +158,16 @@ public class EntityControllerTest
 	[TestCategory("Unit Test")]
 	public void EntityController_Update_WithOnlyLinkedEntityFieldsAltered_Succeeds()
 	{
-		var controllerMock = new ApiConnectionEntityControllerMock();
-		var apiConnectorMock = new ApiConnectorMock();
-		var controllerList = new ControllerList(apiConnectorMock, string.Empty);
+		ApiConnectionEntityControllerMock controllerMock = new();
+		ApiConnectorMock apiConnectorMock = new();
+		ControllerList controllerList = new(apiConnectorMock, string.Empty);
 
-		var invoice = new SalesInvoice { Description = "New Description" };
-		var line = new SalesInvoiceLine { Description = "InvoiceLine" };
+		SalesInvoice invoice = new() { Description = "New Description" };
+		SalesInvoiceLine line = new() { Description = "InvoiceLine" };
 		invoice.SalesInvoiceLines = (List<SalesInvoiceLine>)[line];
 
 		var controller = (Controller<SalesInvoice>)controllerList.GetController<SalesInvoice>();
-		var ec = new EntityController(invoice, "ID", invoice.InvoiceID.ToString(), controllerMock, controller.GetEntityController);
+		EntityController ec = new(invoice, "ID", invoice.InvoiceID.ToString(), controllerMock, controller.GetEntityController);
 		Assert.IsTrue(controller.AddEntityToManagedEntitiesCollection(invoice));
 
 		// Change State
@@ -183,16 +183,16 @@ public class EntityControllerTest
 	[TestCategory("Unit Test")]
 	public async Task EntityController_Update_WithOnlyLinkedEntityFieldsAltered_SucceedsAsync()
 	{
-		var controllerMock = new ApiConnectionEntityControllerMock();
-		var apiConnectorMock = new ApiConnectorMock();
-		var controllerList = new ControllerList(apiConnectorMock, string.Empty);
+		ApiConnectionEntityControllerMock controllerMock = new();
+		ApiConnectorMock apiConnectorMock = new();
+		ControllerList controllerList = new(apiConnectorMock, string.Empty);
 
-		var invoice = new SalesInvoice { Description = "New Description" };
-		var line = new SalesInvoiceLine { Description = "InvoiceLine" };
+		SalesInvoice invoice = new() { Description = "New Description" };
+		SalesInvoiceLine line = new() { Description = "InvoiceLine" };
 		invoice.SalesInvoiceLines = (List<SalesInvoiceLine>)[line];
 
 		var controller = (Controller<SalesInvoice>)controllerList.GetController<SalesInvoice>();
-		var ec = new EntityController(invoice, "ID", invoice.InvoiceID.ToString(), controllerMock, controller.GetEntityController);
+		EntityController ec = new(invoice, "ID", invoice.InvoiceID.ToString(), controllerMock, controller.GetEntityController);
 		Assert.IsTrue(controller.AddEntityToManagedEntitiesCollection(invoice));
 
 		// Change State

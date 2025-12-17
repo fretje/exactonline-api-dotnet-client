@@ -28,7 +28,7 @@ public class ModelInfo
 	{
 		if (_modelInfos[modelType] is not ModelInfo modelInfo)
 		{
-			modelInfo = new ModelInfo(modelType);
+			modelInfo = new(modelType);
 			_modelInfos.Add(modelType, modelInfo);
 		}
 		return modelInfo;
@@ -48,15 +48,15 @@ public class ModelInfo
 	public ModelInfo(Type modelType)
 	{
 		_modelType = modelType;
-		_supportedActions = new Lazy<SupportedActionsSDK>(() => SupportedActionsSDK.GetByType(modelType));
-		_supportsSync = new Lazy<bool>(() => modelType.IsSubclassOf(typeof(SupportsSync)));
-		_identifierName = new Lazy<string?>(() => GetIdentifierName());
-		_identifierType = new Lazy<Type?>(() => GetIdentifierType());
-		_identifierLambda = new Lazy<LambdaExpression?>(() => LambdaForProperty(IdentifierName));
-		_timestampLambda = new Lazy<LambdaExpression?>(() => LambdaForProperty(TimestampName));
-		_timestampCastedToNullableLambda = new Lazy<LambdaExpression?>(() => LambdaForPropertyCastedToNullable(TimestampName));
-		_modifiedLambda = new Lazy<LambdaExpression?>(() => LambdaForPropertyCastedToNullable(ModifiedName));
-		_fields = new Lazy<FieldInfo[]>(() => GetFields());
+		_supportedActions = new(() => SupportedActionsSDK.GetByType(modelType));
+		_supportsSync = new(() => modelType.IsSubclassOf(typeof(SupportsSync)));
+		_identifierName = new(GetIdentifierName);
+		_identifierType = new(GetIdentifierType);
+		_identifierLambda = new(() => LambdaForProperty(IdentifierName));
+		_timestampLambda = new(() => LambdaForProperty(TimestampName));
+		_timestampCastedToNullableLambda = new(() => LambdaForPropertyCastedToNullable(TimestampName));
+		_modifiedLambda = new(() => LambdaForPropertyCastedToNullable(ModifiedName));
+		_fields = new(GetFields);
 	}
 
 	public bool SupportsCreate => _supportedActions.Value.CanCreate;
@@ -105,8 +105,8 @@ public class ModelInfo
 	public Expression<Func<TModel, DateTime?>> ModifiedLambda<TModel>() =>
 		_modifiedLambda.Value as Expression<Func<TModel, DateTime?>> ?? throw new InvalidOperationException("Modified lambda is not set.");
 
-	public FieldInfo[] Fields(bool forSync = false) => forSync ? FieldsForSync() : _fields.Value.Where(f => f.Name != "Timestamp").ToArray();
-	public string[] FieldNames(bool forSync = false) => Fields(forSync).Select(f => f.Name).ToArray();
+	public FieldInfo[] Fields(bool forSync = false) => forSync ? FieldsForSync() : [.. _fields.Value.Where(f => f.Name != "Timestamp")];
+	public string[] FieldNames(bool forSync = false) => [.. Fields(forSync).Select(f => f.Name)];
 
 	public bool HasDeletedEntityType =>
 		_modelType == typeof(Client.Models.CRM.Account) ||
@@ -159,10 +159,9 @@ public class ModelInfo
 
 	private Type GetCompositeIdType(string[] idNames) =>
 		DynamicClassFactory.CreateType(
-			idNames
+			[.. idNames
 				.Select(name =>
-					new DynamicProperty(name, _modelType.GetProperty(name).PropertyType))
-				.ToArray(),
+					new DynamicProperty(name, _modelType.GetProperty(name).PropertyType))],
 			false);
 
 	// Generates an expression for "entity => entity.propertyName" or "entity => new { entity.propertyName1, entity.propertyName2 }" when dealing with a composite id
@@ -219,17 +218,16 @@ public class ModelInfo
 	}
 
 	private FieldInfo[] GetFields() =>
-		(from p in _modelType.GetProperties()
-		 where p.PropertyType == typeof(string) || !typeof(IEnumerable).IsAssignableFrom(p.PropertyType)
-		 let fieldName = p.GetCustomAttribute<JsonPropertyAttribute>()?.PropertyName ?? p.Name
-		 select new FieldInfo(
-			 fieldName,
-			 p,
-			 IdentifierName?.Split(',')?.Any(idName => idName == fieldName) ?? false))
-		.ToArray();
+		[.. from p in _modelType.GetProperties()
+			where p.PropertyType == typeof(string) || !typeof(IEnumerable).IsAssignableFrom(p.PropertyType)
+			let fieldName = p.GetCustomAttribute<JsonPropertyAttribute>()?.PropertyName ?? p.Name
+			select new FieldInfo(
+				fieldName,
+				p,
+				IdentifierName?.Split(',')?.Any(idName => idName == fieldName) ?? false)];
 
 	private FieldInfo[] FieldsForSync() =>
-		_fields.Value.Where(field =>
+		[.. _fields.Value.Where(field =>
 			!(_modelType == typeof(Client.Models.Manufacturing.ShopOrderMaterialPlanDetail) &&
 					field.Name == "Calculator" ||
 			  _modelType == typeof(Client.Models.CRM.Quotation) &&
@@ -241,5 +239,5 @@ public class ModelInfo
 			  _modelType == typeof(Client.Models.SalesOrder.SalesOrder) &&
 					field.Name == "SalesOrderLines" ||
 			  _modelType == typeof(Client.Models.SalesOrder.SalesOrderLine) &&
-					(field.Name == "QuantityDelivered" || field.Name == "QuantityInvoiced" || field.Name == "Margin"))).ToArray();
+					(field.Name == "QuantityDelivered" || field.Name == "QuantityInvoiced" || field.Name == "Margin")))];
 }

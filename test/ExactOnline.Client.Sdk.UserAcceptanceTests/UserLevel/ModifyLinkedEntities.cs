@@ -51,7 +51,7 @@ public class ModifyLinkedEntities
 		var item = client.For<Item>().Top(1).Select("ID").Where("IsSalesItem+eq+true").Get().First();
 
 		// add line
-		var invoiceline = new SalesInvoiceLine
+		SalesInvoiceLine invoiceline = new()
 		{
 			Description = "New Sales Invoice Line",
 			InvoiceID = salesinvoice.InvoiceID,
@@ -83,17 +83,17 @@ public class ModifyLinkedEntities
 		var item = client.For<Item>().Top(1).Select("ID").Where("IsSalesItem+eq+true").Get().First();
 		var customer = client.For<Account>().Top(1).Select("ID").Where("IsSales+eq+true").Get().First();
 
-		var salesInvoice = new SalesInvoice
+		SalesInvoice salesInvoice = new()
 		{
 			OrderedBy = customer.ID,
 			Description = "SDK User level test"
 		};
 
-		var salesInvoiceLines = new List<SalesInvoiceLine>();
+		List<SalesInvoiceLine> salesInvoiceLines = [];
 
 		for (var iterator = 0; iterator < numberOfLines; iterator++)
 		{
-			var salesInvoiceLine = new SalesInvoiceLine
+			SalesInvoiceLine salesInvoiceLine = new()
 			{
 				Item = item.ID,
 				Quantity = 1,

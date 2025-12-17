@@ -12,7 +12,7 @@ public class JsonFileReader
 		var text = "";
 		try
 		{
-			using var sr = new StreamReader(filepath);
+			using StreamReader sr = new(filepath);
 			text = sr.ReadToEnd();
 		}
 		catch (Exception e)
