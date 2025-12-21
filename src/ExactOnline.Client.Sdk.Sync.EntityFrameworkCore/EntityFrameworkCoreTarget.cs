@@ -17,11 +17,10 @@ public class EntityFrameworkCoreTarget : SyncTargetBase
 	}
 
 	protected override ISyncTargetController<TModel> CreateControllerFor<TModel>() =>
-		Activator.CreateInstance(
+		(ISyncTargetController<TModel>)Activator.CreateInstance(
 			typeof(EntityFrameworkCoreTargetController<,>)
-				.MakeGenericType(typeof(TModel), ModelInfo.For<TModel>().IdentifierType),
-			_connectionString)
-		as ISyncTargetController<TModel>;
+				.MakeGenericType(typeof(TModel), ModelInfo.For<TModel>().IdentifierType ?? throw new InvalidOperationException("Identifier type is not set.")),
+			_connectionString)!;
 
 
 	private static readonly Lazy<Type[]> _supportedModelTypes =

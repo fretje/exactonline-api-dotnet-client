@@ -13,7 +13,7 @@ public interface IEntityManager
 
 	bool AddEntityToManagedEntitiesCollection(object entity);
 
-	EntityController GetEntityController(string guid);
+	EntityController? GetEntityController(string guid);
 
-	string GetIdentifierValue(object entity);
+	string? GetIdentifierValue(object entity);
 }

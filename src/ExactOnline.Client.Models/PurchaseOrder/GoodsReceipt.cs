@@ -12,9 +12,9 @@ public class GoodsReceipt
 	public Guid? Creator { get; set; }
 	/// <summary>Name of the creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Description of the goods receipt</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int Division { get; set; }
@@ -22,12 +22,12 @@ public class GoodsReceipt
 	public Guid? Document { get; set; }
 	/// <summary>Document subject</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string DocumentSubject { get; set; }
+	public string? DocumentSubject { get; set; }
 	/// <summary>Entry number of the resulting stock entry</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? EntryNumber { get; set; }
 	/// <summary>Collection of receipt lines</summary>
-	public IEnumerable<GoodsReceiptLine> GoodsReceiptLines { get; set; }
+	public IEnumerable<GoodsReceiptLine>? GoodsReceiptLines { get; set; }
 	/// <summary>Primary key</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public Guid ID { get; set; }
@@ -39,38 +39,38 @@ public class GoodsReceipt
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of the last modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Date of the goods receipt</summary>
 	public DateTime? ReceiptDate { get; set; }
 	/// <summary>Receipt number</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? ReceiptNumber { get; set; }
 	/// <summary>Receipt note</summary>
-	public string Remarks { get; set; }
+	public string? Remarks { get; set; }
 	/// <summary>Account ID of the supplier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public Guid? Supplier { get; set; }
 	/// <summary>Supplier code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string SupplierCode { get; set; }
+	public string? SupplierCode { get; set; }
 	/// <summary>ID of the contact person at the supplier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public Guid? SupplierContact { get; set; }
 	/// <summary>Name of the contact person at the supplier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string SupplierContactFullName { get; set; }
+	public string? SupplierContactFullName { get; set; }
 	/// <summary>Supplier name</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string SupplierName { get; set; }
+	public string? SupplierName { get; set; }
 	/// <summary>Warehouse ID</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public Guid? Warehouse { get; set; }
 	/// <summary>Warehouse code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string WarehouseCode { get; set; }
+	public string? WarehouseCode { get; set; }
 	/// <summary>Description of the warehouse</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string WarehouseDescription { get; set; }
+	public string? WarehouseDescription { get; set; }
 	/// <summary>The purchase invoice number provided by the supplier</summary>
-	public string YourRef { get; set; }
+	public string? YourRef { get; set; }
 }

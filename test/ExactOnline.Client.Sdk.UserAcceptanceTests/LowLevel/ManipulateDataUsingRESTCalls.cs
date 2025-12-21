@@ -10,7 +10,7 @@ namespace ExactOnline.Client.Sdk.UserAcceptanceTests.LowLevel;
 [TestClass]
 public class ManipulateDataUsingRestCalls
 {
-	ApiConnection _conn;
+	ApiConnection _conn = default!;
 
 	[TestInitialize]
 	public async Task Setup()

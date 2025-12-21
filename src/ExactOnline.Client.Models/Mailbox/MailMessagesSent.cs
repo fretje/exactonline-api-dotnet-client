@@ -7,7 +7,7 @@ public class MailMessagesSent
 	/// <summary>Bank to/from which the mail message is sent/received. This is used for mail messages of type Bank only. It has an attachment containing the bank file. When used for a mail message of type bank, the value is reserved for internal use and will then be ignored.</summary>
 	public Guid? Bank { get; set; }
 	/// <summary>Bank account for which the mail message is sent. This is used for mail messages of type Bank only. It has an attachment containing the bank export file. When used for a mail message of type bank, the value is reserved for internal use and will then be ignored.</summary>
-	public string BankAccount { get; set; }
+	public string? BankAccount { get; set; }
 	/// <summary>Creation date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? Created { get; set; }
@@ -16,7 +16,7 @@ public class MailMessagesSent
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Administration from which the mail message is sent. This is used for mail messages of type Bank only. When used for a mail message of type bank, the value is reserved for internal use and will then be ignored.</summary>
 	public int? ForDivision { get; set; }
 	/// <summary>Primary key</summary>
@@ -29,14 +29,14 @@ public class MailMessagesSent
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Specifies the operation upon dealing with the mailmessage (Kirean scan service)</summary>
 	public short? Operation { get; set; }
 	/// <summary>Provides a link to another MailMessage (Kirean scan service)</summary>
 	public Guid? OriginalMessage { get; set; }
 	/// <summary>Subject of the OriginalMessage</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string OriginalMessageSubject { get; set; }
+	public string? OriginalMessageSubject { get; set; }
 	/// <summary>The partner key that was used: this refers to the application from which the message is originating. It is filled with a fixed partnerkey when created from within Exact Online</summary>
 	public Guid? PartnerKey { get; set; }
 	/// <summary>Specifies the number of lines of the returned MailMessage attachment (Kirean scan service)</summary>
@@ -48,17 +48,17 @@ public class MailMessagesSent
 	public byte RecipientDeleted { get; set; }
 	/// <summary>Mailbox of recipient</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string RecipientMailbox { get; set; }
+	public string? RecipientMailbox { get; set; }
 	/// <summary>Mailbox description of recipient</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string RecipientMailboxDescription { get; set; }
+	public string? RecipientMailboxDescription { get; set; }
 	/// <summary>Mailbox ID of the recipient. The owner of this mailbox will see the message in the inbox</summary>
 	public Guid? RecipientMailboxID { get; set; }
 	/// <summary>Status of the mail message, only the recipient can update this</summary>
 	public short? RecipientStatus { get; set; }
 	/// <summary>Description of RecipientStatus</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string RecipientStatusDescription { get; set; }
+	public string? RecipientStatusDescription { get; set; }
 	/// <summary>Reference to Account of Sender</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public Guid? SenderAccount { get; set; }
@@ -67,19 +67,19 @@ public class MailMessagesSent
 	/// <summary>Indicates if the sender deleted the message. This means the sender can&apos;t see it anymore and the recipient can actually delete it</summary>
 	public byte SenderDeleted { get; set; }
 	/// <summary>IP address of the sender</summary>
-	public string SenderIPAddress { get; set; }
+	public string? SenderIPAddress { get; set; }
 	/// <summary>Mailbox of sender</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string SenderMailbox { get; set; }
+	public string? SenderMailbox { get; set; }
 	/// <summary>Description of SenderMailbox</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string SenderMailboxDescription { get; set; }
+	public string? SenderMailboxDescription { get; set; }
 	/// <summary>Mailbox ID of the sender. The owner of this mailbox will see the message in the sent items</summary>
 	public Guid? SenderMailboxID { get; set; }
 	/// <summary>Subject of the mail message</summary>
-	public string Subject { get; set; }
+	public string? Subject { get; set; }
 	/// <summary>Provides a link between Exact Online and the banks</summary>
-	public string SynchronizationCode { get; set; }
+	public string? SynchronizationCode { get; set; }
 	/// <summary>Type of the mail message</summary>
 	public int? Type { get; set; }
 }

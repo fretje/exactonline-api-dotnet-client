@@ -10,7 +10,7 @@ public class ApiConnection : IApiConnection
 {
 	private readonly IApiConnector _connector;
 	private readonly string _endPoint;
-	private readonly string _baseUrl;
+	private readonly string? _baseUrl;
 
 	/// <summary>
 	/// Creates a new instance of APIConnection
@@ -18,7 +18,7 @@ public class ApiConnection : IApiConnection
 	/// <param name="conn">Instance of APIConnector</param>
 	/// <param name="endPoint">Specific endpoint of API</param>
 	/// <param name="baseUrl">The base url of the API (leave empty if included in the endpoint, but it's mandatory for connections to sync/bulk endpoints)</param>
-	public ApiConnection(IApiConnector conn, string endPoint, string baseUrl = default)
+	public ApiConnection(IApiConnector conn, string endPoint, string? baseUrl = null)
 	{
 		if (conn != null && !string.IsNullOrEmpty(endPoint))
 		{
@@ -37,7 +37,7 @@ public class ApiConnection : IApiConnection
 	/// </summary>
 	/// <param name="parameters">oData Parameters</param>
 	/// <returns>Json String</returns>
-	public string Get(string parameters) => Get(parameters, EndpointTypeEnum.Single);
+	public string Get(string? parameters) => Get(parameters, EndpointTypeEnum.Single);
 
 	/// <summary>
 	/// Perform a GET (Read) request on the API
@@ -45,7 +45,7 @@ public class ApiConnection : IApiConnection
 	/// <param name="parameters">oData Parameters</param>
 	/// <param name="endpointType">Which EndpointType to use</param>
 	/// <returns>Json String</returns>
-	public string Get(string parameters, EndpointTypeEnum endpointType)
+	public string Get(string? parameters, EndpointTypeEnum endpointType)
 	{
 		var response = _connector.DoGetRequest(EndpointUrl(endpointType), parameters);
 		return response.Contains("Object moved") ? throw new Exception("Invalid Access Token") : response;
@@ -56,7 +56,7 @@ public class ApiConnection : IApiConnection
 	/// </summary>
 	/// <param name="parameters">oData Parameters</param>
 	/// <returns>Json String</returns>
-	public Task<string> GetAsync(string parameters, CancellationToken ct) =>
+	public Task<string> GetAsync(string? parameters, CancellationToken ct) =>
 		GetAsync(parameters, EndpointTypeEnum.Single, ct);
 
 	/// <summary>
@@ -65,7 +65,7 @@ public class ApiConnection : IApiConnection
 	/// <param name="parameters">oData Parameters</param>
 	/// <param name="endpointType">Which EndpointType to use</param>
 	/// <returns>Json String</returns>
-	public async Task<string> GetAsync(string parameters, EndpointTypeEnum endpointType, CancellationToken ct = default)
+	public async Task<string> GetAsync(string? parameters, EndpointTypeEnum endpointType, CancellationToken ct = default)
 	{
 		var response = await _connector.DoGetRequestAsync(EndpointUrl(endpointType), parameters, ct).ConfigureAwait(false);
 		return response.Contains("Object moved") ? throw new Exception("Invalid Access Token") : response;
@@ -90,7 +90,7 @@ public class ApiConnection : IApiConnection
 	/// <param name="guid">Global Unique Identifier of the entity</param>
 	/// <param name="parameters">Parameters</param>
 	/// <returns>Json String</returns>
-	public string GetEntity(string keyname, string guid, string parameters) =>
+	public string GetEntity(string keyname, string guid, string? parameters) =>
 		_connector.DoGetRequest(EndpointUrlWithKey(keyname, guid), parameters);
 
 	/// <summary>
@@ -100,7 +100,7 @@ public class ApiConnection : IApiConnection
 	/// <param name="guid">Global Unique Identifier of the entity</param>
 	/// <param name="parameters">Parameters</param>
 	/// <returns>Json String</returns>
-	public Task<string> GetEntityAsync(string keyname, string guid, string parameters, CancellationToken ct = default) =>
+	public Task<string> GetEntityAsync(string keyname, string guid, string? parameters, CancellationToken ct = default) =>
 		_connector.DoGetRequestAsync(EndpointUrlWithKey(keyname, guid), parameters, ct);
 
 	/// <summary>
@@ -180,7 +180,7 @@ public class ApiConnection : IApiConnection
 	/// </summary>
 	/// <param name="parameters">Parameters</param>
 	/// <returns></returns>
-	public int Count(string parameters) =>
+	public int Count(string? parameters) =>
 		int.Parse(_connector.DoCleanRequest(EndpointUrl() + "/$count", parameters));
 
 	/// <summary>
@@ -188,7 +188,7 @@ public class ApiConnection : IApiConnection
 	/// </summary>
 	/// <param name="parameters">Parameters</param>
 	/// <returns></returns>
-	public async Task<int> CountAsync(string parameters, CancellationToken ct = default) =>
+	public async Task<int> CountAsync(string? parameters, CancellationToken ct = default) =>
 		int.Parse(await _connector.DoCleanRequestAsync(EndpointUrl() + "/$count", parameters, ct).ConfigureAwait(false));
 
 	private string EndpointUrl(EndpointTypeEnum endpointType = EndpointTypeEnum.Single)

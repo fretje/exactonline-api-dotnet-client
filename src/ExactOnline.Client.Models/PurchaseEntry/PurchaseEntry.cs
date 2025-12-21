@@ -20,11 +20,11 @@ public class PurchaseEntry
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Currency code</summary>
-	public string Currency { get; set; }
+	public string? Currency { get; set; }
 	/// <summary>Description</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int Division { get; set; }
@@ -35,7 +35,7 @@ public class PurchaseEntry
 	public int? DocumentNumber { get; set; }
 	/// <summary>Document subject</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string DocumentSubject { get; set; }
+	public string? DocumentSubject { get; set; }
 	/// <summary>Date when payment should be done</summary>
 	public DateTime? DueDate { get; set; }
 	/// <summary>Entry date</summary>
@@ -46,17 +46,17 @@ public class PurchaseEntry
 	public int? EntryNumber { get; set; }
 	/// <summary>Description of ExternalLink</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ExternalLinkDescription { get; set; }
-	public string ExternalLinkReference { get; set; }
+	public string? ExternalLinkDescription { get; set; }
+	public string? ExternalLinkReference { get; set; }
 	/// <summary>A positive value of the amount indicates that the amount is to be paid to the suppliers G bank account.In case of a credit invoice the amount should have negative value when retrieved or posted to Exact.</summary>
 	public double? GAccountAmountFC { get; set; }
 	/// <summary>Invoice number</summary>
 	public int? InvoiceNumber { get; set; }
 	/// <summary>Journal</summary>
-	public string Journal { get; set; }
+	public string? Journal { get; set; }
 	/// <summary>Description of Journal</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string JournalDescription { get; set; }
+	public string? JournalDescription { get; set; }
 	/// <summary>Last modified date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime Modified { get; set; }
@@ -65,19 +65,19 @@ public class PurchaseEntry
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Order number</summary>
 	public int? OrderNumber { get; set; }
 	/// <summary>Payment condition</summary>
-	public string PaymentCondition { get; set; }
+	public string? PaymentCondition { get; set; }
 	/// <summary>Description of PaymentCondition</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string PaymentConditionDescription { get; set; }
+	public string? PaymentConditionDescription { get; set; }
 	/// <summary>The payment reference used for bank imports, VAT return and Tax reference</summary>
-	public string PaymentReference { get; set; }
+	public string? PaymentReference { get; set; }
 	public int? ProcessNumber { get; set; }
 	/// <summary>Collection of lines</summary>
-	public IEnumerable<PurchaseEntryLine> PurchaseEntryLines { get; set; }
+	public IEnumerable<PurchaseEntryLine>? PurchaseEntryLines { get; set; }
 	/// <summary>Currency exchange rate</summary>
 	public double? Rate { get; set; }
 	/// <summary>Reporting period</summary>
@@ -91,23 +91,23 @@ public class PurchaseEntry
 	public short? Status { get; set; }
 	/// <summary>Description of Status</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string StatusDescription { get; set; }
+	public string? StatusDescription { get; set; }
 	/// <summary>Reference to supplier (account)</summary>
 	public Guid? Supplier { get; set; }
 	/// <summary>Name of supplier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string SupplierName { get; set; }
+	public string? SupplierName { get; set; }
 	/// <summary>Type: 30 = Purchase entry, 31 = Purchase credit note</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int Type { get; set; }
 	/// <summary>Description of Type</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string TypeDescription { get; set; }
+	public string? TypeDescription { get; set; }
 	/// <summary>Vat Amount in the default currency of the company</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public double? VATAmountDC { get; set; }
 	/// <summary>Vat Amount in the currency of the transaction</summary>
 	public double? VATAmountFC { get; set; }
 	/// <summary>Your reference</summary>
-	public string YourRef { get; set; }
+	public string? YourRef { get; set; }
 }

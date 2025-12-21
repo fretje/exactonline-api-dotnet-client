@@ -22,7 +22,7 @@ public class SalesOrder
 	public short ApprovalStatus { get; set; }
 	/// <summary>Description of ApprovalStatus</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ApprovalStatusDescription { get; set; }
+	public string? ApprovalStatusDescription { get; set; }
 	/// <summary>Approval datetime</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? Approved { get; set; }
@@ -31,7 +31,7 @@ public class SalesOrder
 	public Guid? Approver { get; set; }
 	/// <summary>Name of approver</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ApproverFullName { get; set; }
+	public string? ApproverFullName { get; set; }
 	/// <summary>Creation date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime Created { get; set; }
@@ -40,19 +40,19 @@ public class SalesOrder
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Currency code</summary>
-	public string Currency { get; set; }
+	public string? Currency { get; set; }
 	/// <summary>Reference to delivery customer</summary>
 	public Guid? DeliverTo { get; set; }
 	/// <summary>Reference to contact person of delivery customer</summary>
 	public Guid? DeliverToContactPerson { get; set; }
 	/// <summary>Name of contact person of delivery customer</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string DeliverToContactPersonFullName { get; set; }
+	public string? DeliverToContactPersonFullName { get; set; }
 	/// <summary>Name of delivery customer</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string DeliverToName { get; set; }
+	public string? DeliverToName { get; set; }
 	/// <summary>Delivery address</summary>
 	public Guid? DeliveryAddress { get; set; }
 	/// <summary>Delivery date</summary>
@@ -61,9 +61,9 @@ public class SalesOrder
 	public short? DeliveryStatus { get; set; }
 	/// <summary>Description of DeliveryStatus</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string DeliveryStatusDescription { get; set; }
+	public string? DeliveryStatusDescription { get; set; }
 	/// <summary>Description</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Discount percentage</summary>
 	public double? Discount { get; set; }
 	/// <summary>Division code</summary>
@@ -76,22 +76,22 @@ public class SalesOrder
 	public int? DocumentNumber { get; set; }
 	/// <summary>Subject of the document</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string DocumentSubject { get; set; }
+	public string? DocumentSubject { get; set; }
 	/// <summary>Invoice status</summary>
 	public short? InvoiceStatus { get; set; }
 	/// <summary>Description of InvoiceStatus</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string InvoiceStatusDescription { get; set; }
+	public string? InvoiceStatusDescription { get; set; }
 	/// <summary>Reference to the Customer who will receive the invoice</summary>
 	public Guid? InvoiceTo { get; set; }
 	/// <summary>Reference to the Contact person of the customer who will receive the invoice</summary>
 	public Guid? InvoiceToContactPerson { get; set; }
 	/// <summary>Name of the contact person of the customer who will receive the invoice</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string InvoiceToContactPersonFullName { get; set; }
+	public string? InvoiceToContactPersonFullName { get; set; }
 	/// <summary>Name of the customer who will receive the invoice</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string InvoiceToName { get; set; }
+	public string? InvoiceToName { get; set; }
 	/// <summary>Last modified date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime Modified { get; set; }
@@ -100,7 +100,7 @@ public class SalesOrder
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Order date</summary>
 	public DateTime? OrderDate { get; set; }
 	/// <summary>Customer who ordered the sales order</summary>
@@ -109,57 +109,57 @@ public class SalesOrder
 	public Guid? OrderedByContactPerson { get; set; }
 	/// <summary>Name of contact person of the customer who ordered the sales order</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string OrderedByContactPersonFullName { get; set; }
+	public string? OrderedByContactPersonFullName { get; set; }
 	/// <summary>Name of the customer who ordered the sales order</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string OrderedByName { get; set; }
+	public string? OrderedByName { get; set; }
 	/// <summary>Primary key</summary>
 	public Guid OrderID { get; set; }
 	/// <summary>Number of sales order</summary>
 	public int OrderNumber { get; set; }
 	/// <summary>The payment condition used for due date and discount calculation</summary>
-	public string PaymentCondition { get; set; }
+	public string? PaymentCondition { get; set; }
 	/// <summary>Description of PaymentCondition</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string PaymentConditionDescription { get; set; }
+	public string? PaymentConditionDescription { get; set; }
 	/// <summary>Payment reference for sales order</summary>
-	public string PaymentReference { get; set; }
+	public string? PaymentReference { get; set; }
 	/// <summary>Extra remarks</summary>
-	public string Remarks { get; set; }
+	public string? Remarks { get; set; }
 	/// <summary>Collection of lines</summary>
-	public IEnumerable<SalesOrderLine> SalesOrderLines { get; set; }
+	public IEnumerable<SalesOrderLine>? SalesOrderLines { get; set; }
 	/// <summary>Sales representative</summary>
 	public Guid? Salesperson { get; set; }
 	/// <summary>Name of sales representative</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string SalespersonFullName { get; set; }
+	public string? SalespersonFullName { get; set; }
 	/// <summary>ShippingMethod</summary>
 	public Guid? ShippingMethod { get; set; }
 	/// <summary>Description of ShippingMethod</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ShippingMethodDescription { get; set; }
+	public string? ShippingMethodDescription { get; set; }
 	/// <summary>The status of the sales order. 12 = Open, 20 = Partial, 21 = Complete, 45 = Cancelled.</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public short? Status { get; set; }
 	/// <summary>Description of Status</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string StatusDescription { get; set; }
+	public string? StatusDescription { get; set; }
 	/// <summary>Obsolete</summary>
 	public Guid? TaxSchedule { get; set; }
 	/// <summary>Obsolete</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string TaxScheduleCode { get; set; }
+	public string? TaxScheduleCode { get; set; }
 	/// <summary>Obsolete</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string TaxScheduleDescription { get; set; }
+	public string? TaxScheduleDescription { get; set; }
 	/// <summary>Code of Warehouse</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string WarehouseCode { get; set; }
+	public string? WarehouseCode { get; set; }
 	/// <summary>Description of Warehouse</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string WarehouseDescription { get; set; }
+	public string? WarehouseDescription { get; set; }
 	/// <summary>Warehouse</summary>
 	public Guid? WarehouseID { get; set; }
 	/// <summary>The reference number of the customer</summary>
-	public string YourRef { get; set; }
+	public string? YourRef { get; set; }
 }

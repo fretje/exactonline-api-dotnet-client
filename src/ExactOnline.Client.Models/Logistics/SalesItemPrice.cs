@@ -8,7 +8,7 @@ public class SalesItemPrice : SupportsSync
 	public Guid? Account { get; set; }
 	/// <summary>Name of the customer account</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string AccountName { get; set; }
+	public string? AccountName { get; set; }
 	/// <summary>Creation date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? Created { get; set; }
@@ -17,15 +17,15 @@ public class SalesItemPrice : SupportsSync
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>The currency of the price</summary>
-	public string Currency { get; set; }
+	public string? Currency { get; set; }
 	/// <summary>The default unit of the item</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string DefaultItemUnit { get; set; }
+	public string? DefaultItemUnit { get; set; }
 	/// <summary>The description of the default item unit</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string DefaultItemUnitDescription { get; set; }
+	public string? DefaultItemUnitDescription { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? Division { get; set; }
@@ -37,10 +37,10 @@ public class SalesItemPrice : SupportsSync
 	public Guid? Item { get; set; }
 	/// <summary>Code of Item</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemCode { get; set; }
+	public string? ItemCode { get; set; }
 	/// <summary>Description of Item</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemDescription { get; set; }
+	public string? ItemDescription { get; set; }
 	/// <summary>Last modified date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? Modified { get; set; }
@@ -49,7 +49,7 @@ public class SalesItemPrice : SupportsSync
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>This is the multiplication factor when going from default item unit to the unit of this price.For example if the default item unit is &apos;gram&apos; and the price unit is &apos;kilogram&apos; then the value of this property is 1000.</summary>
 	public double? NumberOfItemsPerUnit { get; set; }
 	/// <summary>The actual price of this sales item</summary>
@@ -59,8 +59,8 @@ public class SalesItemPrice : SupportsSync
 	/// <summary>Together with EndDate this determines whether the price is active</summary>
 	public DateTime StartDate { get; set; }
 	/// <summary>The unit code of the price</summary>
-	public string Unit { get; set; }
+	public string? Unit { get; set; }
 	/// <summary>Description of the price unit</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string UnitDescription { get; set; }
+	public string? UnitDescription { get; set; }
 }

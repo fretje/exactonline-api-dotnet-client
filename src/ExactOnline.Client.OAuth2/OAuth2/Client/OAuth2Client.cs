@@ -116,19 +116,19 @@ public abstract class OAuth2Client : IClient
 	/// </summary>
 	/// <param name="parameters">Callback request payload (parameters).</param>
 	/// <param name="ct">Optional cancellation token</param>
-	public async Task<string?> GetTokenAsync(NameValueCollection parameters, CancellationToken ct = default)
+	public async Task<string> GetTokenAsync(NameValueCollection parameters, CancellationToken ct = default)
 	{
 		GrantType = "authorization_code";
 		CheckErrorAndSetState(parameters);
 		await QueryAccessTokenAsync(parameters, ct).ConfigureAwait(false);
-		return AccessToken;
+		return AccessToken!;
 	}
 
-	public async Task<string?> GetCurrentTokenAsync(string? refreshToken = null, bool forceUpdate = false, CancellationToken ct = default)
+	public async Task<string> GetCurrentTokenAsync(string? refreshToken = null, bool forceUpdate = false, CancellationToken ct = default)
 	{
 		if (!forceUpdate && ExpiresAt != default && DateTime.Now < ExpiresAt && !string.IsNullOrEmpty(AccessToken))
 		{
-			return AccessToken;
+			return AccessToken!;
 		}
 
 		NameValueCollection parameters = [];
@@ -145,7 +145,7 @@ public abstract class OAuth2Client : IClient
 		{
 			GrantType = "refresh_token";
 			await QueryAccessTokenAsync(parameters, ct).ConfigureAwait(false);
-			return AccessToken;
+			return AccessToken!;
 		}
 		throw new Exception("Token never fetched and refresh token not provided.");
 	}

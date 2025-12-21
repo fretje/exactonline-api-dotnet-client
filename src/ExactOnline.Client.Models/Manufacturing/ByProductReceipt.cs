@@ -9,7 +9,7 @@ public class ByProductReceipt
 	public Guid? CreatedBy { get; set; }
 	/// <summary>Name of the creating user</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatedByFullName { get; set; }
+	public string? CreatedByFullName { get; set; }
 	/// <summary>Date this by-product finish was created</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? CreatedDate { get; set; }
@@ -35,13 +35,13 @@ public class ByProductReceipt
 	public Guid? Item { get; set; }
 	/// <summary>Code of by-product item</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemCode { get; set; }
+	public string? ItemCode { get; set; }
 	/// <summary>Description of by-product item</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemDescription { get; set; }
+	public string? ItemDescription { get; set; }
 	/// <summary>Picture url of by-product item</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemPictureUrl { get; set; }
+	public string? ItemPictureUrl { get; set; }
 	/// <summary>Quantity of this by-product finish</summary>
 	public double? Quantity { get; set; }
 	/// <summary>ID of shop order, which produced the by-product</summary>
@@ -59,25 +59,25 @@ public class ByProductReceipt
 	public Guid? StorageLocation { get; set; }
 	/// <summary>Code of storage location finished to</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string StorageLocationCode { get; set; }
+	public string? StorageLocationCode { get; set; }
 	/// <summary>Description of storage location finished to</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string StorageLocationDescription { get; set; }
+	public string? StorageLocationDescription { get; set; }
 	/// <summary>Effective date of this by-product finish</summary>
 	public DateTime? TransactionDate { get; set; }
 	/// <summary>Unit of measurement abbreviation of by-product item</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string Unit { get; set; }
+	public string? Unit { get; set; }
 	/// <summary>Unit of measurement of by-product item</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string UnitDescription { get; set; }
+	public string? UnitDescription { get; set; }
 	/// <summary>ID of warehouse finished to</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public Guid? Warehouse { get; set; }
 	/// <summary>Code of warehouse finished to</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string WarehouseCode { get; set; }
+	public string? WarehouseCode { get; set; }
 	/// <summary>Description of warehouse finished to</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string WarehouseDescription { get; set; }
+	public string? WarehouseDescription { get; set; }
 }

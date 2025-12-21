@@ -7,17 +7,17 @@ public class Workcenter
 	/// <summary>Capacity of the work center</summary>
 	public int? Capacity { get; set; }
 	/// <summary>Code of the work center</summary>
-	public string Code { get; set; }
+	public string? Code { get; set; }
 	/// <summary>Reference to CostCenters</summary>
-	public string Costcenter { get; set; }
+	public string? Costcenter { get; set; }
 	/// <summary>Description of Costcenter</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CostcenterDescription { get; set; }
+	public string? CostcenterDescription { get; set; }
 	/// <summary>Reference to CostUnits</summary>
-	public string Costunit { get; set; }
+	public string? Costunit { get; set; }
 	/// <summary>Description of Costunit</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CostunitDescription { get; set; }
+	public string? CostunitDescription { get; set; }
 	/// <summary>Creation date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? Created { get; set; }
@@ -26,9 +26,9 @@ public class Workcenter
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Description of the work center</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? Division { get; set; }
@@ -50,15 +50,15 @@ public class Workcenter
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Remarks</summary>
-	public string Notes { get; set; }
+	public string? Notes { get; set; }
 	/// <summary>Area to which the work center belongs.</summary>
 	public Guid? ProductionArea { get; set; }
 	/// <summary>Run labor rate</summary>
 	public double? RunLaborRate { get; set; }
 	/// <summary>Search code of the work center</summary>
-	public string SearchCode { get; set; }
+	public string? SearchCode { get; set; }
 	/// <summary>Setup labor rate</summary>
 	public double? SetupLaborRate { get; set; }
 	/// <summary>Reference to WorkcenterStatus</summary>

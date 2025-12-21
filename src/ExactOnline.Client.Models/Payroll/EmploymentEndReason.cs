@@ -5,7 +5,7 @@ namespace ExactOnline.Client.Models.Payroll
 	public class EmploymentEndReason
 	{
 		/// <summary>Employment end reason description</summary>
-		public string Description { get; set; }
+		public string? Description { get; set; }
 		/// <summary>Primary key</summary>
 		public int ID { get; set; }
 	}

@@ -5,7 +5,7 @@ namespace ExactOnline.Client.Models.Sales;
 public class SalesPriceList
 {
 	/// <summary>Code to indicate the price list</summary>
-	public string Code { get; set; }
+	public string? Code { get; set; }
 	/// <summary>Creation date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? Created { get; set; }
@@ -14,11 +14,11 @@ public class SalesPriceList
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>All prices in the price list are stored in this currency</summary>
-	public string Currency { get; set; }
+	public string? Currency { get; set; }
 	/// <summary>Description</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? Division { get; set; }
@@ -34,9 +34,9 @@ public class SalesPriceList
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Explanation or extra information can be stored in the notes</summary>
-	public string Notes { get; set; }
+	public string? Notes { get; set; }
 	/// <summary>Indicates the type (1 - Customer, 2 - Standard) on which this price list applies</summary>
 	public int Type { get; set; }
 }

@@ -11,7 +11,7 @@ public class QuotationLine
 	[SDKFieldType(FieldType.ReadOnly)]
 	public double AmountFC { get; set; }
 	/// <summary>By default this contains the item description</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Discount given on the default price. This is stored as a fraction. ie 5.5% is stored as .055</summary>
 	public double? Discount { get; set; }
 	/// <summary>Division code</summary>
@@ -23,14 +23,14 @@ public class QuotationLine
 	public Guid? Item { get; set; }
 	/// <summary>Description of the item</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemDescription { get; set; }
+	public string? ItemDescription { get; set; }
 	/// <summary>Indicates the sequence of the lines within one quotation</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int LineNumber { get; set; }
 	/// <summary>Net price of the quotation line</summary>
 	public double? NetPrice { get; set; }
 	/// <summary>Extra notes</summary>
-	public string Notes { get; set; }
+	public string? Notes { get; set; }
 	/// <summary>The number of items sold in default units. The quantity shown in the entry screen is Quantity * UnitFactor</summary>
 	public double? Quantity { get; set; }
 	/// <summary>Identifies the quotation. All the lines of a quotation have the same QuotationID</summary>
@@ -39,20 +39,20 @@ public class QuotationLine
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int QuotationNumber { get; set; }
 	/// <summary>Code of the item unit</summary>
-	public string UnitCode { get; set; }
+	public string? UnitCode { get; set; }
 	/// <summary>Description of the item unit</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string UnitDescription { get; set; }
+	public string? UnitDescription { get; set; }
 	/// <summary>Price per item unit</summary>
 	public double? UnitPrice { get; set; }
 	/// <summary>VAT amount of the line in the currency of the transaction</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public double? VATAmountFC { get; set; }
 	/// <summary>The VAT code that is used when the quotation is invoiced</summary>
-	public string VATCode { get; set; }
+	public string? VATCode { get; set; }
 	/// <summary>Description of the VAT code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string VATDescription { get; set; }
+	public string? VATDescription { get; set; }
 	/// <summary>The VAT percentage of the VAT code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public double? VATPercentage { get; set; }

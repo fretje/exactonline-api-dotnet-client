@@ -9,7 +9,7 @@ public class BatchNumber
 	public double? AvailableQuantity { get; set; }
 	/// <summary>Human readable batch number</summary>
 	[Newtonsoft.Json.JsonProperty(PropertyName = "BatchNumber")]
-	public string BatchNumberName { get; set; }
+	public string? BatchNumberName { get; set; }
 	/// <summary>Creation date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? Created { get; set; }
@@ -18,7 +18,7 @@ public class BatchNumber
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? Division { get; set; }
@@ -32,10 +32,10 @@ public class BatchNumber
 	public Guid? Item { get; set; }
 	/// <summary>Item code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemCode { get; set; }
+	public string? ItemCode { get; set; }
 	/// <summary>Description of item</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemDescription { get; set; }
+	public string? ItemDescription { get; set; }
 	/// <summary>Last modified date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? Modified { get; set; }
@@ -44,11 +44,11 @@ public class BatchNumber
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Remarks</summary>
-	public string Remarks { get; set; }
+	public string? Remarks { get; set; }
 	/// <summary>Total quantity available per location</summary>
-	public IEnumerable<BatchQuantitiesPerLocation> StorageLocations { get; set; }
+	public IEnumerable<BatchQuantitiesPerLocation>? StorageLocations { get; set; }
 	/// <summary>Total quantity available per warehouse</summary>
-	public IEnumerable<BatchQuantitiesPerWarehouse> Warehouses { get; set; }
+	public IEnumerable<BatchQuantitiesPerWarehouse>? Warehouses { get; set; }
 }

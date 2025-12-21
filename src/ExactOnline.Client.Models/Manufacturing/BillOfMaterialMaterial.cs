@@ -15,22 +15,22 @@ public class BillOfMaterialMaterial
 	[SDKFieldType(FieldType.ReadOnly)]
 	public double? CostBatch { get; set; }
 	/// <summary>Cost center</summary>
-	public string CostCenter { get; set; }
+	public string? CostCenter { get; set; }
 	/// <summary>Cost center description</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CostCenterDescription { get; set; }
+	public string? CostCenterDescription { get; set; }
 	/// <summary>Cost unit</summary>
-	public string CostUnit { get; set; }
+	public string? CostUnit { get; set; }
 	/// <summary>Cost unit description</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CostUnitDescription { get; set; }
+	public string? CostUnitDescription { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Description of the material</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Detail drawing reference</summary>
-	public string DetailDrawing { get; set; }
+	public string? DetailDrawing { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? Division { get; set; }
@@ -46,20 +46,20 @@ public class BillOfMaterialMaterial
 	public double? NetWeight { get; set; }
 	/// <summary>Net weight unit of measure</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string NetWeightUnit { get; set; }
+	public string? NetWeightUnit { get; set; }
 	/// <summary>Notes</summary>
-	public string Notes { get; set; }
+	public string? Notes { get; set; }
 	/// <summary>Key of part item</summary>
 	public Guid? PartItem { get; set; }
 	/// <summary>Part item code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string PartItemCode { get; set; }
+	public string? PartItemCode { get; set; }
 	/// <summary>Item standard cost available when standard cost method is used</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public double? PartItemCostPriceStandard { get; set; }
 	/// <summary>Part item description</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string PartItemDescription { get; set; }
+	public string? PartItemDescription { get; set; }
 	/// <summary>Quantity</summary>
 	public double? Quantity { get; set; }
 	/// <summary>Quantity batch</summary>

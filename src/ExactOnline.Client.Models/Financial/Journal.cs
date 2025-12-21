@@ -16,20 +16,20 @@ public class Journal
 	public Guid? Bank { get; set; }
 	/// <summary>BIC code of the bank where the bank account is held</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string BankAccountBICCode { get; set; }
+	public string? BankAccountBICCode { get; set; }
 	/// <summary>Country of bank account</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string BankAccountCountry { get; set; }
+	public string? BankAccountCountry { get; set; }
 	/// <summary>Description of BankAccount</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string BankAccountDescription { get; set; }
+	public string? BankAccountDescription { get; set; }
 	/// <summary>IBAN of the bank account</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string BankAccountIBAN { get; set; }
+	public string? BankAccountIBAN { get; set; }
 	/// <summary>Reference to the Bank Account linked to the Journal</summary>
 	public Guid? BankAccountID { get; set; }
 	/// <summary>Bank account number. Is mandatory for Journals that have Type = Bank</summary>
-	public string BankAccountIncludingMask { get; set; }
+	public string? BankAccountIncludingMask { get; set; }
 	/// <summary>Obsolete. Whether or not use SEPA for the bank account</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public bool? BankAccountUseSEPA { get; set; }
@@ -38,9 +38,9 @@ public class Journal
 	public bool? BankAccountUseSepaDirectDebit { get; set; }
 	/// <summary>Name of bank account</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string BankName { get; set; }
+	public string? BankName { get; set; }
 	/// <summary>Primary key</summary>
-	public string Code { get; set; }
+	public string? Code { get; set; }
 	/// <summary>Creation date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? Created { get; set; }
@@ -49,14 +49,14 @@ public class Journal
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Default Currency of the Journal. If AllowVariableCurrency is false this is the only currency that can be used</summary>
-	public string Currency { get; set; }
+	public string? Currency { get; set; }
 	/// <summary>Description of Currency</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CurrencyDescription { get; set; }
+	public string? CurrencyDescription { get; set; }
 	/// <summary>Name of the Journal</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? Division { get; set; }
@@ -64,10 +64,10 @@ public class Journal
 	public Guid? GLAccount { get; set; }
 	/// <summary>Code of GLAccount</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string GLAccountCode { get; set; }
+	public string? GLAccountCode { get; set; }
 	/// <summary>Description of GLAccount</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string GLAccountDescription { get; set; }
+	public string? GLAccountDescription { get; set; }
 	/// <summary>Type of GLAccount</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? GLAccountType { get; set; }
@@ -81,16 +81,16 @@ public class Journal
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>General ledger account for payment in transit</summary>
 	public Guid? PaymentInTransitAccount { get; set; }
 	/// <summary>Identifier detail of the Payment service account. Ex. EmailID for Paypal type of Payment service account</summary>
-	public string PaymentServiceAccountIdentifier { get; set; }
+	public string? PaymentServiceAccountIdentifier { get; set; }
 	/// <summary>Type of Payment service provider. The following values are supported: 1 (Adyen), 2 (Paypal), 3 (Stripe). Is mandatory for Journals of Type 16 (Payment service)</summary>
 	public int? PaymentServiceProvider { get; set; }
 	/// <summary>Name of the Payment service provider</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string PaymentServiceProviderName { get; set; }
+	public string? PaymentServiceProviderName { get; set; }
 	/// <summary>Type of Journal. The following values are supported: 10 (Cash) 12 (Bank) 16 (Payment service) 20 (Sales) 21 (Return invoice) 22 (Purchase) 23 (Received return invoice) 90 (General journal)</summary>
 	public int? Type { get; set; }
 }

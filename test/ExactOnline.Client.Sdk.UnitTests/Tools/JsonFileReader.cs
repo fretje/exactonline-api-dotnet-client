@@ -6,7 +6,7 @@ public class JsonFileReader
 {
 	public static string GetJsonFromFile(string filename)
 	{
-		var path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
+		var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 		var filepath = path + Path.DirectorySeparatorChar + "Json" + Path.DirectorySeparatorChar + filename;
 
 		var text = "";

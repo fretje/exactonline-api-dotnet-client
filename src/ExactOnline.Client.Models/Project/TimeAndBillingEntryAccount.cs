@@ -7,5 +7,5 @@ public class TimeAndBillingEntryAccount
 	/// <summary>Primary key</summary>
 	public Guid AccountId { get; set; }
 	/// <summary>Name of account</summary>
-	public string AccountName { get; set; }
+	public string? AccountName { get; set; }
 }

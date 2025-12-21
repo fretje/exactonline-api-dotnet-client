@@ -1,4 +1,5 @@
-﻿using ExactOnline.Client.Models.Current;
+﻿using System.Diagnostics.CodeAnalysis;
+using ExactOnline.Client.Models.Current;
 using ExactOnline.Client.Sdk.Helpers;
 using ExactOnline.Client.Sdk.Models;
 using Microsoft.Extensions.Logging;
@@ -15,13 +16,13 @@ public class ExactOnlineClient
 	// https://start.exactonline.nl/api/v1
 	public string ExactOnlineApiUrl { get; private set; }
 
-	private ControllerList _controllers;
+	private ControllerList? _controllers;
 
 	public int Division { get; private set; }
 
 	public EolResponseHeader EolResponseHeader => _apiConnector.EolResponseHeader;
 
-	public ILogger Log { get; }
+	public ILogger? Log { get; }
 
 	public event EventHandler<MinutelyChangedEventArgs> MinutelyChanged
 	{
@@ -34,7 +35,7 @@ public class ExactOnlineClient
 	/// </summary>
 	/// <param name="exactOnlineUrl">{URI}/</param>
 	/// <param name="accesstokenFunc">Valid oAuth AccessToken</param>
-	public ExactOnlineClient(string exactOnlineUrl, Func<CancellationToken, Task<string>> accesstokenFunc, HttpClient httpClient = null, int minutelyRemaining = -1, DateTime minutelyResetTime = default, string customDescriptionLanguage = null, ILogger log = null)
+	public ExactOnlineClient(string exactOnlineUrl, Func<CancellationToken, Task<string>> accesstokenFunc, HttpClient? httpClient = null, int minutelyRemaining = -1, DateTime minutelyResetTime = default, string? customDescriptionLanguage = null, ILogger? log = null)
 		: this(exactOnlineUrl, 0, accesstokenFunc, httpClient, minutelyRemaining, minutelyResetTime, customDescriptionLanguage, log)
 	{
 	}
@@ -45,7 +46,7 @@ public class ExactOnlineClient
 	/// <param name="exactOnlineUrl">The Exact Online URL for your country</param>
 	/// <param name="division">Division number</param>
 	/// <param name="accesstokenFunc">Delegate that will be executed the access token is expired</param>
-	public ExactOnlineClient(string exactOnlineUrl, int division, Func<CancellationToken, Task<string>> accesstokenFunc, HttpClient httpClient = null, int minutelyRemaining = -1, DateTime minutelyResetTime = default, string customDescriptionLanguage = null, ILogger log = null)
+	public ExactOnlineClient(string exactOnlineUrl, int division, Func<CancellationToken, Task<string>> accesstokenFunc, HttpClient? httpClient = null, int minutelyRemaining = -1, DateTime minutelyResetTime = default, string? customDescriptionLanguage = null, ILogger? log = null)
 	{
 		if (!exactOnlineUrl.EndsWith("/"))
 		{
@@ -81,7 +82,7 @@ public class ExactOnlineClient
 	public ExactOnlineQuery<T> For<T>() where T : class
 	{
 		CheckInitialized();
-		var controller = _controllers.GetController<T>();
+		var controller = _controllers!.GetController<T>();
 		return new ExactOnlineQuery<T>(controller);
 	}
 

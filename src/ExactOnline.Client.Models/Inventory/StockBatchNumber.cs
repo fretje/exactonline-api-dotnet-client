@@ -5,7 +5,7 @@ namespace ExactOnline.Client.Models.Inventory;
 public class StockBatchNumber
 {
 	/// <summary>Human readable batch number</summary>
-	public string BatchNumber { get; set; }
+	public string? BatchNumber { get; set; }
 	/// <summary>Batch number ID</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public Guid? BatchNumberID { get; set; }
@@ -17,7 +17,7 @@ public class StockBatchNumber
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? Division { get; set; }
@@ -37,10 +37,10 @@ public class StockBatchNumber
 	public Guid? Item { get; set; }
 	/// <summary>Item code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemCode { get; set; }
+	public string? ItemCode { get; set; }
 	/// <summary>Description of item</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemDescription { get; set; }
+	public string? ItemDescription { get; set; }
 	/// <summary>Last modified date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? Modified { get; set; }
@@ -49,11 +49,11 @@ public class StockBatchNumber
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Quantity of this batch number entering or leaving inventory</summary>
 	public double? Quantity { get; set; }
 	/// <summary>Remarks</summary>
-	public string Remarks { get; set; }
+	public string? Remarks { get; set; }
 	/// <summary>ID of stock count entry</summary>
 	public Guid? StockCountLine { get; set; }
 	/// <summary>ID of the stock transaction in which this batch number was used</summary>
@@ -65,16 +65,16 @@ public class StockBatchNumber
 	public Guid? StorageLocation { get; set; }
 	/// <summary>Code of the storage location which this batch number is entering or leaving</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string StorageLocationCode { get; set; }
+	public string? StorageLocationCode { get; set; }
 	/// <summary>Description of the storage location which this batch number is entering or leaving</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string StorageLocationDescription { get; set; }
+	public string? StorageLocationDescription { get; set; }
 	/// <summary>Warehouse which this batch number is entering or leaving</summary>
 	public Guid? Warehouse { get; set; }
 	/// <summary>Code of the warehouse which this batch number is entering or leaving</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string WarehouseCode { get; set; }
+	public string? WarehouseCode { get; set; }
 	/// <summary>Description of the warehouse which this batch number is entering or leaving</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string WarehouseDescription { get; set; }
+	public string? WarehouseDescription { get; set; }
 }

@@ -25,8 +25,8 @@ public class TestObjectsCreator
 			(args.NewRefreshToken, args.NewAccessToken, args.NewExpiresAt);
 	}
 
-	private ApiConnector _connector;
-	private ExactOnlineClient _client;
+	private ApiConnector? _connector;
+	private ExactOnlineClient? _client;
 
 	public IApiConnector GetApiConnector()
 	{

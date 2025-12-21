@@ -12,9 +12,9 @@ public class UserRolesPerDivision
 	public Guid? Creator { get; set; }
 	/// <summary>Name of the creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Description</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Division code</summary>
 	public int Division { get; set; }
 	/// <summary>Indicates the date and time when te role becomes inactive for the user</summary>
@@ -29,7 +29,7 @@ public class UserRolesPerDivision
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of the last modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>The role that the user is linked to</summary>
 	public int Role { get; set; }
 	/// <summary>Rolelevel sets the level on which a role for a user is active. This can be: 1 = Database, 2 = Customer, 3 = Division, 100 = Transferred to accountant</summary>

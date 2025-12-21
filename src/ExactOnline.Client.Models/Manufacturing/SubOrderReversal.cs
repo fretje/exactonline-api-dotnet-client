@@ -9,7 +9,7 @@ public class SubOrderReversal
 	public Guid? CreatedBy { get; set; }
 	/// <summary>Name of the creating user</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatedByFullName { get; set; }
+	public string? CreatedByFullName { get; set; }
 	/// <summary>Creation date of this SubOrderReversal</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? CreatedDate { get; set; }
@@ -27,18 +27,18 @@ public class SubOrderReversal
 	public Guid? Item { get; set; }
 	/// <summary>Code of item reversed</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemCode { get; set; }
+	public string? ItemCode { get; set; }
 	/// <summary>Description of item reversed</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemDescription { get; set; }
+	public string? ItemDescription { get; set; }
 	/// <summary>Picture url of shop order item</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemPictureUrl { get; set; }
+	public string? ItemPictureUrl { get; set; }
 	/// <summary>MaterialReversal.StockTransactionId related to this SubOrderReversal&apos;s MaterialReversal</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public Guid MaterialReversalStockTransactionId { get; set; }
 	/// <summary>Notes logged with this reversal</summary>
-	public string Note { get; set; }
+	public string? Note { get; set; }
 	/// <summary>MaterialIssue.StockTransactionId related to this SubOrderReceipt&apos;s original MaterialIssue</summary>
 	public Guid? OriginalMaterialIssueStockTransactionId { get; set; }
 	/// <summary>ShopOrderReceipt.StockTransactionId related to this SubOrderReceipt&apos;s original ShopOrderReceipt</summary>
@@ -66,17 +66,17 @@ public class SubOrderReversal
 	public DateTime? TransactionDate { get; set; }
 	/// <summary>Unit of measurement abbreviation of this SubOrderReversal&apos;s item</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string Unit { get; set; }
+	public string? Unit { get; set; }
 	/// <summary>Unit of measurement of this SubOrderReversal&apos;s item</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string UnitDescription { get; set; }
+	public string? UnitDescription { get; set; }
 	/// <summary>ID of warehouse of this SubOrderReversal</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public Guid? Warehouse { get; set; }
 	/// <summary>Code of warehouse of this SubOrderReversal</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string WarehouseCode { get; set; }
+	public string? WarehouseCode { get; set; }
 	/// <summary>Description of warehouse of this SubOrderReversal</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string WarehouseDescription { get; set; }
+	public string? WarehouseDescription { get; set; }
 }

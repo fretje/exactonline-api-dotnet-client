@@ -12,7 +12,7 @@ public class SubscriptionRestrictionEmployee
 	public Guid? Creator { get; set; }
 	/// <summary>Name of the creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int Division { get; set; }
@@ -20,7 +20,7 @@ public class SubscriptionRestrictionEmployee
 	public Guid? Employee { get; set; }
 	/// <summary>Name of employee</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string EmployeeFullName { get; set; }
+	public string? EmployeeFullName { get; set; }
 	/// <summary>Readable ID of employee</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? EmployeeHID { get; set; }
@@ -34,12 +34,12 @@ public class SubscriptionRestrictionEmployee
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of the last modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Reference to subscription</summary>
 	public Guid Subscription { get; set; }
 	/// <summary>Description of subscription</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string SubscriptionDescription { get; set; }
+	public string? SubscriptionDescription { get; set; }
 	/// <summary>Number of subscription</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int SubscriptionNumber { get; set; }

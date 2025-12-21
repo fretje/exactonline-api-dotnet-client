@@ -37,12 +37,12 @@ public class ModelInfo
 	private readonly Type _modelType;
 	private readonly Lazy<SupportedActionsSDK> _supportedActions;
 	private readonly Lazy<bool> _supportsSync;
-	private readonly Lazy<string> _identifierName;
-	private readonly Lazy<Type> _identifierType;
-	private readonly Lazy<LambdaExpression> _identifierLambda;
-	private readonly Lazy<LambdaExpression> _timestampLambda;
-	private readonly Lazy<LambdaExpression> _timestampCastedToNullableLambda;
-	private readonly Lazy<LambdaExpression> _modifiedLambda;
+	private readonly Lazy<string?> _identifierName;
+	private readonly Lazy<Type?> _identifierType;
+	private readonly Lazy<LambdaExpression?> _identifierLambda;
+	private readonly Lazy<LambdaExpression?> _timestampLambda;
+	private readonly Lazy<LambdaExpression?> _timestampCastedToNullableLambda;
+	private readonly Lazy<LambdaExpression?> _modifiedLambda;
 	private readonly Lazy<FieldInfo[]> _fields;
 
 	public ModelInfo(Type modelType)
@@ -50,12 +50,12 @@ public class ModelInfo
 		_modelType = modelType;
 		_supportedActions = new Lazy<SupportedActionsSDK>(() => SupportedActionsSDK.GetByType(modelType));
 		_supportsSync = new Lazy<bool>(() => modelType.IsSubclassOf(typeof(SupportsSync)));
-		_identifierName = new Lazy<string>(() => GetIdentifierName());
-		_identifierType = new Lazy<Type>(() => GetIdentifierType());
-		_identifierLambda = new Lazy<LambdaExpression>(() => LambdaForProperty(IdentifierName));
-		_timestampLambda = new Lazy<LambdaExpression>(() => LambdaForProperty(TimestampName));
-		_timestampCastedToNullableLambda = new Lazy<LambdaExpression>(() => LambdaForPropertyCastedToNullable(TimestampName));
-		_modifiedLambda = new Lazy<LambdaExpression>(() => LambdaForPropertyCastedToNullable(ModifiedName));
+		_identifierName = new Lazy<string?>(() => GetIdentifierName());
+		_identifierType = new Lazy<Type?>(() => GetIdentifierType());
+		_identifierLambda = new Lazy<LambdaExpression?>(() => LambdaForProperty(IdentifierName));
+		_timestampLambda = new Lazy<LambdaExpression?>(() => LambdaForProperty(TimestampName));
+		_timestampCastedToNullableLambda = new Lazy<LambdaExpression?>(() => LambdaForPropertyCastedToNullable(TimestampName));
+		_modifiedLambda = new Lazy<LambdaExpression?>(() => LambdaForPropertyCastedToNullable(ModifiedName));
 		_fields = new Lazy<FieldInfo[]>(() => GetFields());
 	}
 
@@ -66,9 +66,14 @@ public class ModelInfo
 	public bool SupportsBulk => _supportedActions.Value.CanBulkRead;
 	public bool SupportsSync => _supportsSync.Value;
 
-	public string IdentifierName => _identifierName.Value;
-	public TId IdentifierValue<TModel, TId>(TModel entity)
+	public string? IdentifierName => _identifierName.Value;
+	public TId? IdentifierValue<TModel, TId>(TModel entity)
 	{
+		if (IdentifierName == null)
+		{
+			return default;
+		}
+
 		var idNames = IdentifierName.Split(',');
 		if (idNames.Length == 1)
 		{
@@ -79,26 +84,26 @@ public class ModelInfo
 		var dynamicClass = idValue as DynamicClass;
 		foreach (var idName in idNames)
 		{
-			dynamicClass.SetDynamicPropertyValue(idName, _modelType.GetProperty(idName).GetValue(entity));
+			dynamicClass?.SetDynamicPropertyValue(idName, _modelType.GetProperty(idName).GetValue(entity));
 		}
 		return idValue;
 	}
-	public Type IdentifierType => _identifierType.Value;
+	public Type? IdentifierType => _identifierType.Value;
 	public Expression<Func<TModel, TId>> IdentifierLambda<TModel, TId>() =>
-		_identifierLambda.Value as Expression<Func<TModel, TId>>;
+		_identifierLambda.Value as Expression<Func<TModel, TId>> ?? throw new InvalidOperationException("Identifier lambda is not set.");
 
 	public static string TimestampName => "Timestamp";
 	public long? TimestampValue<TModel>(TModel entity) =>
 		(long?)_modelType.GetProperty(TimestampName)?.GetValue(entity);
 	public Expression<Func<TModel, long>> TimestampLambda<TModel>() =>
-		_timestampLambda.Value as Expression<Func<TModel, long>>;
+		_timestampLambda.Value as Expression<Func<TModel, long>> ?? throw new InvalidOperationException("Timestamp lambda is not set.");
 	public Expression<Func<TModel, long?>> TimestampCastedToNullableLambda<TModel>() =>
-		_timestampCastedToNullableLambda.Value as Expression<Func<TModel, long?>>;
+		_timestampCastedToNullableLambda.Value as Expression<Func<TModel, long?>> ?? throw new InvalidOperationException("Timestamp casted to nullable lambda is not set.");
 
 	public static string ModifiedName => "Modified";
 	public bool HasModifiedProperty => _modifiedLambda.Value != null;
 	public Expression<Func<TModel, DateTime?>> ModifiedLambda<TModel>() =>
-		_modifiedLambda.Value as Expression<Func<TModel, DateTime?>>;
+		_modifiedLambda.Value as Expression<Func<TModel, DateTime?>> ?? throw new InvalidOperationException("Modified lambda is not set.");
 
 	public FieldInfo[] Fields(bool forSync = false) => forSync ? FieldsForSync() : _fields.Value.Where(f => f.Name != "Timestamp").ToArray();
 	public string[] FieldNames(bool forSync = false) => Fields(forSync).Select(f => f.Name).ToArray();
@@ -133,14 +138,14 @@ public class ModelInfo
 		//: typeof(TEntity) == typeof(TimeCostTransaction) ? EntityType.TimeCostTransactions
 		: throw new Exception($"EntityType {_modelType.Name} has no sync delete support.");
 
-	private string GetIdentifierName() =>
+	private string? GetIdentifierName() =>
 		(Attribute.GetCustomAttributes(_modelType)
 			.Where(x => x.GetType() == typeof(DataServiceKey))
 			.FirstOrDefault()
 		as DataServiceKey)
 		?.DataServiceKeyName;
 
-	private Type GetIdentifierType()
+	private Type? GetIdentifierType()
 	{
 		if (IdentifierName == null)
 		{
@@ -161,8 +166,12 @@ public class ModelInfo
 			false);
 
 	// Generates an expression for "entity => entity.propertyName" or "entity => new { entity.propertyName1, entity.propertyName2 }" when dealing with a composite id
-	private LambdaExpression LambdaForProperty(string propertyName)
+	private LambdaExpression? LambdaForProperty(string? propertyName)
 	{
+		if (propertyName == null)
+		{
+			return null;
+		}
 		var propNames = propertyName.Split(',');
 		Type propType;
 		string expression;
@@ -178,6 +187,10 @@ public class ModelInfo
 		}
 		else // we're dealing with a composite id property
 		{
+			if (IdentifierType is null)
+			{
+				return null;
+			}
 			propType = IdentifierType;
 			expression = $"new ({propertyName})";
 		}
@@ -185,8 +198,12 @@ public class ModelInfo
 	}
 
 	// Generates an expression for "entity => (TProperty?) entity.propertyName" when the property is not nullable, otherwise "entity => entity.propertyName"
-	private LambdaExpression LambdaForPropertyCastedToNullable(string propertyName)
+	private LambdaExpression? LambdaForPropertyCastedToNullable(string? propertyName)
 	{
+		if (propertyName == null)
+		{
+			return null;
+		}
 		var propertyInfo = _modelType.GetProperty(propertyName);
 		if (propertyInfo == null)
 		{

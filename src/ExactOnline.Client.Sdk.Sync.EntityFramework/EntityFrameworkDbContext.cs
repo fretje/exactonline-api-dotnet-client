@@ -9,7 +9,7 @@ public class EntityFrameworkDbContext : DbContext
 		: this(null)
 	{ }
 
-	public EntityFrameworkDbContext(string nameOrConnectionString)
+	public EntityFrameworkDbContext(string? nameOrConnectionString)
 		: base(string.IsNullOrEmpty(nameOrConnectionString)
 			  ? typeof(EntityFrameworkDbContext).FullName
 			  : nameOrConnectionString) =>
@@ -25,12 +25,12 @@ public class EntityFrameworkDbContext : DbContext
 			.Where(p =>
 			{
 				var identifierName = ModelInfo.For(p.DeclaringType).IdentifierName;
-				return !string.IsNullOrEmpty(identifierName) && identifierName.Split(',').Any(i => i == p.Name);
+				return !string.IsNullOrEmpty(identifierName) && identifierName!.Split(',').Any(i => i == p.Name);
 			})
 			.Configure(p =>
 			{
 				p.IsKey();
-				var identifierName = ModelInfo.For(p.ClrPropertyInfo.DeclaringType).IdentifierName;
+				var identifierName = ModelInfo.For(p.ClrPropertyInfo.DeclaringType).IdentifierName!;
 				var idNames = identifierName.Split(',');
 				if (idNames.Length > 0)
 				{

@@ -19,9 +19,9 @@ public class SolutionLink
 	public int? ExternalSolutionCode { get; set; }
 	/// <summary>Name of the external solution</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ExternalSolutionName { get; set; }
+	public string? ExternalSolutionName { get; set; }
 	/// <summary>Customer URl in external solution, like solution.com/id123 (mandatory for External and ExternalOther solution)</summary>
-	public string ExternalSolutionUrl { get; set; }
+	public string? ExternalSolutionUrl { get; set; }
 	/// <summary>Primary key</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public Guid ID { get; set; }
@@ -34,9 +34,9 @@ public class SolutionLink
 	[SDKFieldType(FieldType.ReadOnly)]
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of the solution link</summary>
-	public string Name { get; set; }
+	public string? Name { get; set; }
 	/// <summary>Name of the custom external solution (mandatory for ExternalOther solution)</summary>
-	public string OtherExternalSolutionName { get; set; }
+	public string? OtherExternalSolutionName { get; set; }
 	/// <summary>Type of solution: 0 - Internal(EOL), 1 - External(Wellknown solution), 2 - ExternalOther</summary>
 	public int SolutionType { get; set; }
 	/// <summary>Link status: 0 - Active, 1 - Inactive, 2 -Archived</summary>

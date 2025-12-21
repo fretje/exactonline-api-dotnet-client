@@ -10,20 +10,20 @@ public class Budget
 	public Guid? BudgetScenario { get; set; }
 	/// <summary>Code of BudgetScenario</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string BudgetScenarioCode { get; set; }
+	public string? BudgetScenarioCode { get; set; }
 	/// <summary>Description of BudgetScenario</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string BudgetScenarioDescription { get; set; }
+	public string? BudgetScenarioDescription { get; set; }
 	/// <summary>Used for cost center-specific budgets - NULL otherwise</summary>
-	public string Costcenter { get; set; }
+	public string? Costcenter { get; set; }
 	/// <summary>Description of Costcenter</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CostcenterDescription { get; set; }
+	public string? CostcenterDescription { get; set; }
 	/// <summary>Used for cost unit-specific budgets - NULL otherwise</summary>
-	public string Costunit { get; set; }
+	public string? Costunit { get; set; }
 	/// <summary>Description of Costunit</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CostunitDescription { get; set; }
+	public string? CostunitDescription { get; set; }
 	/// <summary>Creation date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? Created { get; set; }
@@ -32,7 +32,7 @@ public class Budget
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? Division { get; set; }
@@ -40,10 +40,10 @@ public class Budget
 	public Guid? GLAccount { get; set; }
 	/// <summary>Code of GLAccount</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string GLAccountCode { get; set; }
+	public string? GLAccountCode { get; set; }
 	/// <summary>Description of GLAccount</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string GLAccountDescription { get; set; }
+	public string? GLAccountDescription { get; set; }
 	/// <summary>Numerical ID. Never displayed to the user, but it may have its use for performance reasons</summary>
 	public long? HID { get; set; }
 	/// <summary>Primary key</summary>
@@ -52,10 +52,10 @@ public class Budget
 	public Guid? Item { get; set; }
 	/// <summary>Code of Item</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemCode { get; set; }
+	public string? ItemCode { get; set; }
 	/// <summary>Description of Item</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemDescription { get; set; }
+	public string? ItemDescription { get; set; }
 	/// <summary>Last modified date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? Modified { get; set; }
@@ -64,7 +64,7 @@ public class Budget
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Period (combined with financial year)</summary>
 	public short? ReportingPeriod { get; set; }
 	/// <summary>Financial year</summary>

@@ -52,7 +52,7 @@ public class HomeController : Controller
 		// Get the Code and Name of a random account in the administration.
 		var fields = new[] { "Code", "Name" };
 		var account = client.For<Account>().Top(1).Select(fields).Get().FirstOrDefault();
-		Debug.WriteLine(string.Format("Account {0} - {1}", account.Code.TrimStart(), account.Name));
+		Debug.WriteLine(string.Format("Account {0} - {1}", account.Code?.TrimStart(), account.Name));
 		Debug.WriteLine(string.Format("X-RateLimit-Limit:  {0} - X-RateLimit-Remaining: {1} - X-RateLimit-Reset: {2}",
 			client.EolResponseHeader.RateLimit.Limit, client.EolResponseHeader.RateLimit.Remaining, client.EolResponseHeader.RateLimit.Reset));
 

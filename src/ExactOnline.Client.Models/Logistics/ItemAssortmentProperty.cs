@@ -5,9 +5,9 @@
 public class ItemAssortmentProperty
 {
 	/// <summary>Code of Property</summary>
-	public string Code { get; set; }
+	public string? Code { get; set; }
 	/// <summary>Description of Property</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Division</summary>
 	public int Division { get; set; }
 	/// <summary>ID of Property</summary>

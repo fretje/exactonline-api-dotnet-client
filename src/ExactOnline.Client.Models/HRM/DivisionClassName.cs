@@ -9,15 +9,15 @@ public class DivisionClassName
 	/// <summary>User ID of creator</summary>
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>ID of customer</summary>
 	public Guid Customer { get; set; }
 	/// <summary>Description of classification</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Term ID of the classification</summary>
 	public int? DescriptionTermID { get; set; }
 	/// <summary>Collection of classification properties</summary>
-	public IEnumerable<DivisionClass> DivisionClasses { get; set; }
+	public IEnumerable<DivisionClass>? DivisionClasses { get; set; }
 	/// <summary>Primary key</summary>
 	public Guid ID { get; set; }
 	/// <summary>Last modified date</summary>
@@ -25,7 +25,7 @@ public class DivisionClassName
 	/// <summary>User ID of modifier</summary>
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Sequence number</summary>
 	public int SequenceNr { get; set; }
 }

@@ -5,7 +5,7 @@ namespace ExactOnline.Client.Models.Cashflow;
 public class PaymentCondition
 {
 	/// <summary>Code of the payment condition</summary>
-	public string Code { get; set; }
+	public string? Code { get; set; }
 	/// <summary>Creation date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? Created { get; set; }
@@ -14,19 +14,19 @@ public class PaymentCondition
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Default credit management scenario to be used for new payment terms</summary>
 	public Guid? CreditManagementScenario { get; set; }
 	/// <summary>Code of CreditManagementScenario</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreditManagementScenarioCode { get; set; }
+	public string? CreditManagementScenarioCode { get; set; }
 	/// <summary>Description of CreditManagementScenario</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreditManagementScenarioDescription { get; set; }
+	public string? CreditManagementScenarioDescription { get; set; }
 	/// <summary>Description of the payment condition</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Indicates how the discount amount is calculated. Values: E = Excluding VAT, I = Including VAT</summary>
-	public string DiscountCalculation { get; set; }
+	public string? DiscountCalculation { get; set; }
 	/// <summary>Number of days to pay within, to have the right to take the discount</summary>
 	public int? DiscountPaymentDays { get; set; }
 	/// <summary>Discount percentage</summary>
@@ -44,17 +44,17 @@ public class PaymentCondition
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Number of days to be included in the due date calculation. Example: invoice date = 17/01 PaymentEndOfMonths = 2 =&gt; 31/03 PaymentDays = 15 =&gt; 15/04</summary>
 	public int? PaymentDays { get; set; }
 	/// <summary>Type of payment discount. Values: B = Settlement discount, K = Credit surcharge</summary>
-	public string PaymentDiscountType { get; set; }
+	public string? PaymentDiscountType { get; set; }
 	/// <summary>Number of month endings to be included in the due date calculation</summary>
 	public int? PaymentEndOfMonths { get; set; }
 	/// <summary>Method of payment. Values: B = On credit, I = Collection, K = Cash</summary>
-	public string PaymentMethod { get; set; }
+	public string? PaymentMethod { get; set; }
 	/// <summary>Percentage (stored as fraction) of total invoice amount</summary>
 	public double? Percentage { get; set; }
 	/// <summary>Indicates how the VAT amount is calculated Values: E = Excluding discount, I = Including discount</summary>
-	public string VATCalculation { get; set; }
+	public string? VATCalculation { get; set; }
 }

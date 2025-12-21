@@ -11,7 +11,7 @@ public class AbsenceRegistrationTransaction
 	/// <summary>User ID of creator</summary>
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Division code</summary>
 	public int Division { get; set; }
 	/// <summary>End time on the last day of absence stored as DateTime, and the date should be ignored</summary>
@@ -31,9 +31,9 @@ public class AbsenceRegistrationTransaction
 	/// <summary>User ID of modifier</summary>
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Extra information for absence</summary>
-	public string Notes { get; set; }
+	public string? Notes { get; set; }
 	/// <summary>Notification moment of absence</summary>
 	public DateTime NotificationMoment { get; set; }
 	/// <summary>Percentage disablement</summary>

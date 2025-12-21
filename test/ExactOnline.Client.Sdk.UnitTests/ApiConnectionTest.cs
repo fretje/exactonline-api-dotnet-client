@@ -15,8 +15,8 @@ public class ApiConnectionTest
 	private const string _uri = "http://localhost/WI_143620/api/v1/";
 	private const string _currentDivision = "499156";
 
-	IApiConnector _connector;
-	ApiConnection _conn;
+	IApiConnector _connector = default!;
+	ApiConnection _conn = default!;
 
 	public TestContext TestContext { get; set; }
 
@@ -30,12 +30,12 @@ public class ApiConnectionTest
 	[TestCategory("Unit Test")]
 	[TestMethod]
 	public void ApiConnection_Constructor_InitializeWithEmptyValues_Fails() =>
-		Assert.Throws<ArgumentException>(() => new ApiConnection(null, string.Empty));
+		Assert.Throws<ArgumentException>(() => new ApiConnection(null!, string.Empty));
 
 	[TestCategory("Unit Test")]
 	[TestMethod]
 	public void ApiConnection_Constructor_CreateWithEmptyConnector_Fails() =>
-		Assert.Throws<ArgumentException>(() => new ApiConnection(null, "financial/GLAccounts"));
+		Assert.Throws<ArgumentException>(() => new ApiConnection(null!, "financial/GLAccounts"));
 
 	[TestCategory("Unit Test")]
 	[TestMethod]
@@ -45,7 +45,7 @@ public class ApiConnectionTest
 	[TestCategory("Unit Test")]
 	[TestMethod]
 	public void ApiConnection_Constructor_InitializeWithEmptyEndpoint_Fails() =>
-		Assert.Throws<ArgumentException>(() => new ApiConnection(null, string.Empty));
+		Assert.Throws<ArgumentException>(() => new ApiConnection(null!, string.Empty));
 
 	[TestCategory("Unit Test")]
 	[TestMethod]

@@ -8,9 +8,9 @@ public class AccountClassification
 	public Guid? AccountClassificationName { get; set; }
 	/// <summary>Description of AccountClassificationName</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string AccountClassificationNameDescription { get; set; }
+	public string? AccountClassificationNameDescription { get; set; }
 	/// <summary>Account classification code</summary>
-	public string Code { get; set; }
+	public string? Code { get; set; }
 	/// <summary>Creation date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime Created { get; set; }
@@ -19,9 +19,9 @@ public class AccountClassification
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Description</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int Division { get; set; }
@@ -35,5 +35,5 @@ public class AccountClassification
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 }

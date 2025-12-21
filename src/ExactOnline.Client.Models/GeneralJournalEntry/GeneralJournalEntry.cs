@@ -8,7 +8,7 @@ public class GeneralJournalEntry
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? Created { get; set; }
 	/// <summary>Currency code</summary>
-	public string Currency { get; set; }
+	public string? Currency { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? Division { get; set; }
@@ -23,12 +23,12 @@ public class GeneralJournalEntry
 	/// <summary>Financial year</summary>
 	public short? FinancialYear { get; set; }
 	/// <summary>Collection of lines</summary>
-	public IEnumerable<GeneralJournalEntryLine> GeneralJournalEntryLines { get; set; }
+	public IEnumerable<GeneralJournalEntryLine>? GeneralJournalEntryLines { get; set; }
 	/// <summary>Code of Journal</summary>
-	public string JournalCode { get; set; }
+	public string? JournalCode { get; set; }
 	/// <summary>Description of Journal</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string JournalDescription { get; set; }
+	public string? JournalDescription { get; set; }
 	/// <summary>Last modified date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? Modified { get; set; }
@@ -39,11 +39,11 @@ public class GeneralJournalEntry
 	public short? Status { get; set; }
 	/// <summary>Description of Status</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string StatusDescription { get; set; }
+	public string? StatusDescription { get; set; }
 	/// <summary>Type: 10 = Opening balance, 90 = Other</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? Type { get; set; }
 	/// <summary>Description of Type</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string TypeDescription { get; set; }
+	public string? TypeDescription { get; set; }
 }

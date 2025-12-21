@@ -12,7 +12,7 @@ public class Layout
 	public Guid? Creator { get; set; }
 	/// <summary>Name of the creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? Division { get; set; }
@@ -26,9 +26,9 @@ public class Layout
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of the last modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Layout name</summary>
-	public string Subject { get; set; }
+	public string? Subject { get; set; }
 	/// <summary>Type: 1=Layout, 2=E-mail text layout, 3=Word template</summary>
 	public short? Type { get; set; }
 }

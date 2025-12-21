@@ -8,7 +8,7 @@ namespace ExactOnline.Client.Sdk.UnitTests;
 [TestClass]
 public class ApiConnectorTest
 {
-	ApiConnector _connector;
+	ApiConnector _connector = default!;
 
 	private static Task<string> GetAccessToken(CancellationToken ct) => Task.FromResult("accessToken");
 
@@ -22,12 +22,12 @@ public class ApiConnectorTest
 	[TestMethod]
 	[TestCategory("Unit Test")]
 	public void ApiConnector_Constructor_WithoutDelegate_Fails() =>
-		Assert.Throws<ArgumentNullException>(() => new ApiConnector(null, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, ExactOnlineTest.CustomDescriptionLanguage));
+		Assert.Throws<ArgumentNullException>(() => new ApiConnector(null!, null!, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, ExactOnlineTest.CustomDescriptionLanguage));
 
 	[TestMethod]
 	[TestCategory("Unit Test")]
 	public void ApiConnector_Constructor_WithoutHttpClient_Fails() =>
-		Assert.Throws<ArgumentNullException>(() => new ApiConnector(GetAccessToken, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, ExactOnlineTest.CustomDescriptionLanguage));
+		Assert.Throws<ArgumentNullException>(() => new ApiConnector(GetAccessToken, null!, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, ExactOnlineTest.CustomDescriptionLanguage));
 
 	[TestMethod]
 	[TestCategory("Unit Test")]

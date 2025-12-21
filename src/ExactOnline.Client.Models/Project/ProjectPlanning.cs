@@ -8,10 +8,10 @@ public class ProjectPlanning
 	public Guid? Account { get; set; }
 	/// <summary>Code of Account</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string AccountCode { get; set; }
+	public string? AccountCode { get; set; }
 	/// <summary>Name of Account</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string AccountName { get; set; }
+	public string? AccountName { get; set; }
 	/// <summary>Status of the project planning process, 1 = To be processed, 2 = Processed, 3 = Failed</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public short? BGTStatus { get; set; }
@@ -26,9 +26,9 @@ public class ProjectPlanning
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Description of project planning</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? Division { get; set; }
@@ -36,7 +36,7 @@ public class ProjectPlanning
 	public Guid? Employee { get; set; }
 	/// <summary>Code of employee</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string EmployeeCode { get; set; }
+	public string? EmployeeCode { get; set; }
 	/// <summary>Numeric ID of the employee</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? EmployeeHID { get; set; }
@@ -48,10 +48,10 @@ public class ProjectPlanning
 	public Guid? HourType { get; set; }
 	/// <summary>Code of the hour type</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string HourTypeCode { get; set; }
+	public string? HourTypeCode { get; set; }
 	/// <summary>Description of the hour type</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string HourTypeDescription { get; set; }
+	public string? HourTypeDescription { get; set; }
 	/// <summary>Primary key</summary>
 	public Guid ID { get; set; }
 	/// <summary>Indicates whether the project planning is separated from the recurring planning</summary>
@@ -65,19 +65,19 @@ public class ProjectPlanning
 	public Guid? Modifier { get; set; }
 	/// <summary>Modifier name</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>For additional information about project planning</summary>
-	public string Notes { get; set; }
+	public string? Notes { get; set; }
 	/// <summary>Indicates whether the entries can have over allocated planning hours</summary>
 	public bool? OverAllocate { get; set; }
 	/// <summary>Project linked to the planning</summary>
 	public Guid? Project { get; set; }
 	/// <summary>Code of project</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ProjectCode { get; set; }
+	public string? ProjectCode { get; set; }
 	/// <summary>Description of project</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ProjectDescription { get; set; }
+	public string? ProjectDescription { get; set; }
 	/// <summary>Recurring planning linked to the project planning</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public Guid? ProjectPlanningRecurring { get; set; }
@@ -85,7 +85,7 @@ public class ProjectPlanning
 	public Guid? ProjectWBS { get; set; }
 	/// <summary>Description of WBS</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ProjectWBSDescription { get; set; }
+	public string? ProjectWBSDescription { get; set; }
 	/// <summary>Start date of the project planning</summary>
 	public DateTime? StartDate { get; set; }
 	/// <summary>Status of the project planning, 1 = Reserved, 2 = Planned</summary>

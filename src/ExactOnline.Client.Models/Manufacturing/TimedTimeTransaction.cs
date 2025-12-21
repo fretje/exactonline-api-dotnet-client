@@ -12,7 +12,7 @@ public class TimedTimeTransaction
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? Division { get; set; }
@@ -20,7 +20,7 @@ public class TimedTimeTransaction
 	public Guid? Employee { get; set; }
 	/// <summary>Name of employee</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string EmployeeFullName { get; set; }
+	public string? EmployeeFullName { get; set; }
 	/// <summary>Time that operation was stopped</summary>
 	public DateTime? EndTime { get; set; }
 	/// <summary>Primary key</summary>
@@ -39,18 +39,18 @@ public class TimedTimeTransaction
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Notes - viewable in data collection</summary>
-	public string Notes { get; set; }
+	public string? Notes { get; set; }
 	/// <summary>ID of operation</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public Guid? Operation { get; set; }
 	/// <summary>Code of operation</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string OperationCode { get; set; }
+	public string? OperationCode { get; set; }
 	/// <summary>Description of operation</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string OperationDescription { get; set; }
+	public string? OperationDescription { get; set; }
 	/// <summary>Percentage of operation completed within time period</summary>
 	public double? PercentComplete { get; set; }
 	/// <summary>Quantity of make item produced within time period</summary>
@@ -58,15 +58,15 @@ public class TimedTimeTransaction
 	/// <summary>Production area of the work center</summary>
 	public Guid? ProductionArea { get; set; }
 	/// <summary>Code of production area of the work center</summary>
-	public string ProductionAreaCode { get; set; }
+	public string? ProductionAreaCode { get; set; }
 	/// <summary>Description of production area of the work center</summary>
-	public string ProductionAreaDescription { get; set; }
+	public string? ProductionAreaDescription { get; set; }
 	/// <summary>ID of shop order</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public Guid? ShopOrder { get; set; }
 	/// <summary>Description of shop order</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ShopOrderDescription { get; set; }
+	public string? ShopOrderDescription { get; set; }
 	/// <summary>Number of shop order</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? ShopOrderNumber { get; set; }
@@ -74,7 +74,7 @@ public class TimedTimeTransaction
 	public Guid? ShopOrderRoutingStepPlan { get; set; }
 	/// <summary>Description of the routing step plan</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ShopOrderRoutingStepPlanDescription { get; set; }
+	public string? ShopOrderRoutingStepPlanDescription { get; set; }
 	/// <summary>Remaining planned run hours of the routing step plan</summary>
 	public double ShopOrderRoutingStepPlanRemainingRunHours { get; set; }
 	/// <summary>Remaining planned setup hours of the routing step plan</summary>
@@ -91,8 +91,8 @@ public class TimedTimeTransaction
 	public Guid? Workcenter { get; set; }
 	/// <summary>Code of the work center</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string WorkcenterCode { get; set; }
+	public string? WorkcenterCode { get; set; }
 	/// <summary>Description of the work center</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string WorkcenterDescription { get; set; }
+	public string? WorkcenterDescription { get; set; }
 }

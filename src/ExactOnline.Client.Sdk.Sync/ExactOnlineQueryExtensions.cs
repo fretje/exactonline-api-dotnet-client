@@ -9,7 +9,7 @@ namespace ExactOnline.Client.Sdk.Sync;
 
 public static class ExactOnlineQueryExtensions
 {
-	public static SyncResult SynchronizeWith<TModel>(this ExactOnlineQuery<TModel> query, ISyncTarget syncTarget, ExactOnlineClient client, string[] fields = null)
+	public static SyncResult SynchronizeWith<TModel>(this ExactOnlineQuery<TModel> query, ISyncTarget syncTarget, ExactOnlineClient client, string[]? fields = null)
 		where TModel : class
 	{
 		var modelInfo = ModelInfo.For<TModel>();
@@ -41,7 +41,7 @@ public static class ExactOnlineQueryExtensions
 			if (endpointType == EndpointTypeEnum.Sync)
 			{
 				entities = entities
-					.FilterDoubles(modelInfo.IdentifierName)
+					.FilterDoubles(modelInfo.IdentifierName ?? throw new InvalidOperationException("Identifier name is not set."))
 					.ToDynamicList<TModel>();
 			}
 
@@ -74,7 +74,7 @@ public static class ExactOnlineQueryExtensions
 		return result;
 	}
 
-	public static async Task<SyncResult> SynchronizeWithAsync<TModel>(this ExactOnlineQuery<TModel> query, ISyncTarget syncTarget, ExactOnlineClient client, string[] fields = null, Action<int, int> reportProgress = null, CancellationToken ct = default)
+	public static async Task<SyncResult> SynchronizeWithAsync<TModel>(this ExactOnlineQuery<TModel> query, ISyncTarget syncTarget, ExactOnlineClient client, string[]? fields = null, Action<int, int>? reportProgress = null, CancellationToken ct = default)
 		where TModel : class
 	{
 		var modelInfo = ModelInfo.For<TModel>();
@@ -96,7 +96,7 @@ public static class ExactOnlineQueryExtensions
 		var fieldsList = fields?.ToList() ?? [];
 		PrepareForSync(query, modelInfo, fieldsList, endpointType, maxTimestamp, maxModified);
 
-		var skiptoken = default(string);
+		string? skiptoken = null;
 		do
 		{
 			ct.ThrowIfCancellationRequested();
@@ -112,7 +112,7 @@ public static class ExactOnlineQueryExtensions
 			if (endpointType == EndpointTypeEnum.Sync)
 			{
 				entities = await entities
-					.FilterDoubles(modelInfo.IdentifierName)
+					.FilterDoubles(modelInfo.IdentifierName ?? throw new InvalidOperationException("Identifier name is not set."))
 					.ToDynamicListAsync<TModel>(ct).ConfigureAwait(false);
 			}
 
@@ -168,7 +168,7 @@ public static class ExactOnlineQueryExtensions
 	private static void PrepareForSync<TModel>(this ExactOnlineQuery<TModel> query, ModelInfo modelInfo, List<string> fields, EndpointTypeEnum endpointType, long maxTimestamp, DateTime? maxModified)
 		where TModel : class
 	{
-		foreach (var item in modelInfo.IdentifierName.Split(','))
+		foreach (var item in modelInfo.IdentifierName?.Split(',') ?? [])
 		{
 			if (!fields.Contains(item))
 			{

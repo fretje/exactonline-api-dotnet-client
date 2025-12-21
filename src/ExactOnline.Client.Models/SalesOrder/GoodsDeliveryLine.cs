@@ -5,7 +5,7 @@ namespace ExactOnline.Client.Models.SalesOrder;
 public class GoodsDeliveryLine : SupportsSync
 {
 	/// <summary>Collection of batch numbers</summary>
-	public IEnumerable<Inventory.StockBatchNumber> BatchNumbers { get; set; }
+	public IEnumerable<Inventory.StockBatchNumber>? BatchNumbers { get; set; }
 	/// <summary>Creation date</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? Created { get; set; }
@@ -14,12 +14,12 @@ public class GoodsDeliveryLine : SupportsSync
 	public Guid? Creator { get; set; }
 	/// <summary>Name of creator</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CreatorFullName { get; set; }
+	public string? CreatorFullName { get; set; }
 	/// <summary>Date of goods delivery</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime? DeliveryDate { get; set; }
 	/// <summary>Description of sales order delivery</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Division code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? Division { get; set; }
@@ -32,10 +32,10 @@ public class GoodsDeliveryLine : SupportsSync
 	public Guid? Item { get; set; }
 	/// <summary>Item code</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemCode { get; set; }
+	public string? ItemCode { get; set; }
 	/// <summary>Description of item</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemDescription { get; set; }
+	public string? ItemDescription { get; set; }
 	/// <summary>Line number</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? LineNumber { get; set; }
@@ -47,9 +47,9 @@ public class GoodsDeliveryLine : SupportsSync
 	public Guid? Modifier { get; set; }
 	/// <summary>Name of modifier</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ModifierFullName { get; set; }
+	public string? ModifierFullName { get; set; }
 	/// <summary>Notes</summary>
-	public string Notes { get; set; }
+	public string? Notes { get; set; }
 	/// <summary>Quantity delivered</summary>
 	public double? QuantityDelivered { get; set; }
 	/// <summary>Quantity ordered</summary>
@@ -64,16 +64,16 @@ public class GoodsDeliveryLine : SupportsSync
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int? SalesOrderNumber { get; set; }
 	/// <summary>Collection of serial numbers</summary>
-	public IEnumerable<Inventory.StockSerialNumber> SerialNumbers { get; set; }
+	public IEnumerable<Inventory.StockSerialNumber>? SerialNumbers { get; set; }
 	/// <summary>Reference to storage location</summary>
 	public Guid? StorageLocation { get; set; }
 	/// <summary>Storage location code</summary>
-	public string StorageLocationCode { get; set; }
+	public string? StorageLocationCode { get; set; }
 	/// <summary>Storage location description</summary>
-	public string StorageLocationDescription { get; set; }
+	public string? StorageLocationDescription { get; set; }
 	/// <summary>Reference to tracking number</summary>
-	public string TrackingNumber { get; set; }
+	public string? TrackingNumber { get; set; }
 	/// <summary>Code of item unit</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string Unitcode { get; set; }
+	public string? Unitcode { get; set; }
 }

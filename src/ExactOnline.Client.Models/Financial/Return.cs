@@ -10,24 +10,24 @@ public class Return
 	[SDKFieldType(FieldType.ReadOnly)]
 	public DateTime Created { get; set; }
 	/// <summary>Currency</summary>
-	public string Currency { get; set; }
+	public string? Currency { get; set; }
 	/// <summary>Description</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Primary key, document ID</summary>
 	public Guid DocumentID { get; set; }
 	/// <summary>Url to view the document</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string DocumentViewUrl { get; set; }
+	public string? DocumentViewUrl { get; set; }
 	/// <summary>Due date</summary>
 	public DateTime? DueDate { get; set; }
 	/// <summary>Frequency</summary>
-	public string Frequency { get; set; }
+	public string? Frequency { get; set; }
 	/// <summary>Payroll declaration type</summary>
-	public string PayrollDeclarationType { get; set; }
+	public string? PayrollDeclarationType { get; set; }
 	/// <summary>Period</summary>
 	public int Period { get; set; }
 	/// <summary>Description of Period</summary>
-	public string PeriodDescription { get; set; }
+	public string? PeriodDescription { get; set; }
 	/// <summary>Reference to request</summary>
 	public Guid? Request { get; set; }
 	/// <summary>Status</summary>

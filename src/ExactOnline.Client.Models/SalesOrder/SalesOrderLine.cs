@@ -10,22 +10,22 @@ public class SalesOrderLine
 	/// <summary>Amount in the currency of the transaction</summary>
 	public double AmountFC { get; set; }
 	/// <summary>Reference to Cost center</summary>
-	public string CostCenter { get; set; }
+	public string? CostCenter { get; set; }
 	/// <summary>Description of CostCenter</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CostCenterDescription { get; set; }
+	public string? CostCenterDescription { get; set; }
 	/// <summary>Item cost price</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public double? CostPriceFC { get; set; }
 	/// <summary>Reference to Cost unit</summary>
-	public string CostUnit { get; set; }
+	public string? CostUnit { get; set; }
 	/// <summary>Description of CostUnit</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string CostUnitDescription { get; set; }
+	public string? CostUnitDescription { get; set; }
 	/// <summary>Delivery date of this line</summary>
 	public DateTime? DeliveryDate { get; set; }
 	/// <summary>Description</summary>
-	public string Description { get; set; }
+	public string? Description { get; set; }
 	/// <summary>Discount given on the default price. Discount = (DefaultPrice of Item - PriceItem in line) / DefaultPrice of Item</summary>
 	public double? Discount { get; set; }
 	/// <summary>Division code</summary>
@@ -37,15 +37,15 @@ public class SalesOrderLine
 	public Guid? Item { get; set; }
 	/// <summary>Code of Item</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemCode { get; set; }
+	public string? ItemCode { get; set; }
 	/// <summary>Description of Item</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemDescription { get; set; }
+	public string? ItemDescription { get; set; }
 	/// <summary>Item Version</summary>
 	public Guid? ItemVersion { get; set; }
 	/// <summary>Description of Item Version</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ItemVersionDescription { get; set; }
+	public string? ItemVersionDescription { get; set; }
 	/// <summary>Line number</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public int LineNumber { get; set; }
@@ -54,7 +54,7 @@ public class SalesOrderLine
 	/// <summary>Net price of the sales order line</summary>
 	public double? NetPrice { get; set; }
 	/// <summary>Extra notes</summary>
-	public string Notes { get; set; }
+	public string? Notes { get; set; }
 	/// <summary>The OrderID identifies the sales order. All the lines of a sales order have the same OrderID</summary>
 	public Guid OrderID { get; set; }
 	/// <summary>Number of sales order</summary>
@@ -63,12 +63,12 @@ public class SalesOrderLine
 	public Guid? Pricelist { get; set; }
 	/// <summary>Description of Pricelist</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string PricelistDescription { get; set; }
+	public string? PricelistDescription { get; set; }
 	/// <summary>The project to which the sales order line is linked. The project can be different per line. Sometimes also the project in the header is filled although this is not really used</summary>
 	public Guid? Project { get; set; }
 	/// <summary>Description of Project</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string ProjectDescription { get; set; }
+	public string? ProjectDescription { get; set; }
 	/// <summary>Purchase order that is linked to the sales order</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
 	public Guid? PurchaseOrder { get; set; }
@@ -92,10 +92,10 @@ public class SalesOrderLine
 	/// <summary>Reference to ShopOrder</summary>
 	public Guid? ShopOrder { get; set; }
 	/// <summary>Code of item unit</summary>
-	public string UnitCode { get; set; }
+	public string? UnitCode { get; set; }
 	/// <summary>Description of Unit</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string UnitDescription { get; set; }
+	public string? UnitDescription { get; set; }
 	/// <summary>Price per unit in the currency of the transaction</summary>
 	public double? UnitPrice { get; set; }
 	/// <summary>Indicates if drop shipment is used (delivery directly to customer, invoice to wholesaler)</summary>
@@ -103,10 +103,10 @@ public class SalesOrderLine
 	/// <summary>VAT amount in the currency of the transaction</summary>
 	public double? VATAmount { get; set; }
 	/// <summary>VAT code</summary>
-	public string VATCode { get; set; }
+	public string? VATCode { get; set; }
 	/// <summary>Description of VATCode</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public string VATCodeDescription { get; set; }
+	public string? VATCodeDescription { get; set; }
 	/// <summary>The vat percentage of the VAT code. This is the percentage at the moment the sales order is created. It&apos;s also used for the default calculation of VAT amounts and VAT base amounts</summary>
 	public double? VATPercentage { get; set; }
 }
