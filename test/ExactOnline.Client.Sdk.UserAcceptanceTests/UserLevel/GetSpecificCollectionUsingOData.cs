@@ -5,7 +5,7 @@ namespace ExactOnline.Client.Sdk.UserAcceptanceTests.UserLevel;
 [TestClass]
 public class GetSpecificCollectionCusingOData184244
 {
-	public TestContext TestContext { get; set; }
+	public TestContext TestContext { get; set; } = default!;
 
 	[TestMethod]
 	[TestCategory("User Acceptance Tests")]

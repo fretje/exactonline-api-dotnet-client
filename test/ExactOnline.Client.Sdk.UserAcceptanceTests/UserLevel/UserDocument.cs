@@ -9,7 +9,7 @@ public class UserDocument
 {
 	Guid _documentId;
 
-	public TestContext TestContext { get; set; }
+	public TestContext TestContext { get; set; } = default!;
 
 	[TestCategory("User Acceptance Tests")]
 	[TestMethod]

@@ -6,7 +6,7 @@ namespace ExactOnline.Client.Sdk.UserAcceptanceTests.LowLevel;
 [TestClass]
 public class GetCollectionOfAccountsInJsonFormat
 {
-	public TestContext TestContext { get; set; }
+	public TestContext TestContext { get; set; } = default!;
 
 	[TestCategory("User Acceptance Tests")]
 	[TestMethod]

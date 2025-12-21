@@ -8,7 +8,7 @@ namespace ExactOnline.Client.Sdk.UnitTests;
 [TestClass]
 public class EntityControllerTest
 {
-	public TestContext TestContext { get; set; }
+	public TestContext TestContext { get; set; } = default!;
 
 	[TestMethod]
 	[TestCategory("Unit Test")]

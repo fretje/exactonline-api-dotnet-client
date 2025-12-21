@@ -7,8 +7,6 @@ namespace ExactOnline.Client.Sdk.UnitTests;
 [TestClass]
 public class ApiResponseCleanerTest
 {
-	public TestContext TestContext { get; set; }
-
 	[TestCategory("Unit Test")]
 	[TestMethod]
 	public void ApiResponseCleaner_FetchJsonArray_WithCorrectValues_Succeeds() =>

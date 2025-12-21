@@ -8,7 +8,7 @@ namespace ExactOnline.Client.Sdk.UserAcceptanceTests.UserLevel;
 [TestClass]
 public class ModifyLinkedEntities
 {
-	public TestContext TestContext { get; set; }
+	public TestContext TestContext { get; set; } = default!;
 
 	[TestMethod]
 	[TestCategory("User Acceptance Tests")]

@@ -22,7 +22,7 @@ namespace ExactOnline.Client.Sdk.UserAcceptanceTests.UserLevel;
 [TestClass]
 public class AttributesToAllEntities
 {
-	public TestContext TestContext { get; set; }
+	public TestContext TestContext { get; set; } = default!;
 
 	[TestMethod]
 	[TestCategory("User Acceptance Tests")]

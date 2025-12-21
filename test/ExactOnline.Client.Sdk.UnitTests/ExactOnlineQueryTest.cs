@@ -14,7 +14,7 @@ public class ExactOnlineQueryTest
 	ControllerMock<Account> _controllerMock = default!;
 	ApiConnectionMock _conn = default!;
 
-	public TestContext TestContext { get; set; }
+	public TestContext TestContext { get; set; } = default!;
 
 	[TestInitialize]
 	public void Setup()
