@@ -277,7 +277,8 @@ public class ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc,
 	private async Task ThrowSpecificExceptionAsync(HttpResponseMessage response)
 	{
 		var statusCode = response.StatusCode;
-		var messageFromServer = new StreamReader(await response.Content.ReadAsStreamAsync().ConfigureAwait(false)).ReadToEnd();
+		var messageFromServer = await new StreamReader(await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
+			.ReadToEndAsync().ConfigureAwait(false);
 		if (_log is not null)
 		{
 			_log.LogError("ExactOnline Sdk: Request Failed: {Response}", response.ReasonPhrase);

@@ -26,7 +26,8 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 		_getEntityManager = getEntityManager;
 
 		// Set keyname of the entity (name of the field that is used to identify)
-		var attributes = Attribute.GetCustomAttributes(typeof(T)).Where(x => x.GetType() == typeof(DataServiceKey)).Select(a => a); //DataServiceKey
+		var attributes = Attribute.GetCustomAttributes(typeof(T))
+			.Where(x => x.GetType() == typeof(DataServiceKey)); //DataServiceKey
 
 		// Find unique value of entity
 		var enumerable = attributes as IList<Attribute> ?? [.. attributes];
