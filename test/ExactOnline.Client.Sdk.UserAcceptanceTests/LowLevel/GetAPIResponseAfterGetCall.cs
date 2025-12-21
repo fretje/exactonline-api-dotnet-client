@@ -6,7 +6,7 @@ namespace ExactOnline.Client.Sdk.UserAcceptanceTests.LowLevel;
 [TestClass]
 public class GetApiResponseAfterGetCall
 {
-	public TestContext TestContext { get; set; }
+	public TestContext TestContext { get; set; } = default!;
 
 	/// <summary>
 	/// User Story: Get a text response in JSON format from the API after 

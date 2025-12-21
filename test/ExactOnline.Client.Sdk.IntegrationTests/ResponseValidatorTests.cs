@@ -3,7 +3,7 @@
 [TestClass]
 public class ResponseValidatorTests
 {
-	public TestContext TestContext { get; set; }
+	public TestContext TestContext { get; set; } = default!;
 
 	[TestCategory("Integration Tests")]
 	[TestMethod]

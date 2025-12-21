@@ -16,7 +16,7 @@ public class ApiCallTest
 	IApiConnector _conn = default!;
 	private int _currentDivision;
 
-	public TestContext TestContext { get; set; }
+	public TestContext TestContext { get; set; } = default!;
 
 	[TestInitialize()]
 	public async Task Setup()

@@ -13,7 +13,7 @@ public class ControllerTest
 {
 	IApiConnection _mockConnection = default!;
 
-	public TestContext TestContext { get; set; }
+	public TestContext TestContext { get; set; } = default!;
 
 	[TestInitialize]
 	public void Setup() => _mockConnection = new ApiConnectionMock();

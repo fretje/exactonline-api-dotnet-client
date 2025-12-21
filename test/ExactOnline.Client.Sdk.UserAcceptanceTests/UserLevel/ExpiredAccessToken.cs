@@ -5,7 +5,7 @@ namespace ExactOnline.Client.Sdk.UserAcceptanceTests.UserLevel;
 [TestClass]
 public class ExpiredAccessToken
 {
-	public TestContext TestContext { get; set; }
+	public TestContext TestContext { get; set; } = default!;
 
 	// Run this test selectively because it takes 10 minutes
 	[TestMethod]

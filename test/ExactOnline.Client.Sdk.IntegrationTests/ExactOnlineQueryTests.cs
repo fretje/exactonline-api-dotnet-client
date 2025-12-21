@@ -7,7 +7,7 @@ namespace ExactOnline.Client.Sdk.IntegrationTests;
 [TestClass]
 public class ExactOnlineQueryTests
 {
-	public TestContext TestContext { get; set; }
+	public TestContext TestContext { get; set; } = default!;
 
 	[TestMethod]
 	[TestCategory("Integration Tests")]
