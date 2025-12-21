@@ -1,9 +1,8 @@
-name: Build and Pack and Push to Nuget on version update
+name: Build, test, pack and push to nuget on version update
 
 on:
   push:
-    branches: 
-    - master
+  pull_request:
   workflow_dispatch:
 
 jobs:
@@ -18,27 +17,28 @@ jobs:
       NUGET_CERT_REVOCATION_MODE: "offline"
 
     steps:
-      - name: Checkout Code
+      - name: Checkout code
         uses: actions/checkout@v3
         
-      - name: Setup .NET
+      - name: Setup dotnet
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 10.0.x
     
-      - name: Restore NuGet Packages
-        run: dotnet restore ExactOnline.Client.Sdk.sln
-
-      - name: Add msbuild to PATH
+      - name: Setup msbuild
         uses: microsoft/setup-msbuild@v1.1
 
-      - name: Build and Pack Solution
+      - name: Restore nuget packages
+        run: dotnet restore ExactOnline.Client.Sdk.sln
+
+      - name: Build and pack solution
         run: msbuild ExactOnline.Client.Sdk.sln /t:pack /p:Configuration=Release
 
-      - name: Run Unit Tests
+      - name: Run unit tests
         run: dotnet test test/ExactOnline.Client.Sdk.UnitTests/ --no-restore
 
       - name: Publish the package to nuget.org when we have a new version
+        if: github.event_name != 'pull_request'
         env:
           NUGET_AUTH_TOKEN: ${{ secrets.NUGET_AUTH_TOKEN }}
         run: |
