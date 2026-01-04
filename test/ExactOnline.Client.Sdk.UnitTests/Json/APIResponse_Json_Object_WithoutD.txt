@@ -1,5 +1,5 @@
 ﻿{
-	""	{
+	"x": {
 		"__metadata": {
 			"uri": "https://start.exactonline.nl/api/v1/499156/crm/Accounts(guid'71b961de-b9f3-49fe-883d-0f46c7e0e89b')",
 			"type": "Exact.Web.Api.Models.Account"

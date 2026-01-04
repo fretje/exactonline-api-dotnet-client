@@ -38,6 +38,11 @@ public class ApiResponseCleanerTest
 
 	[TestCategory("Unit Test")]
 	[TestMethod]
+	public void ApiResponseCleaner_FetchJsonObject_Without_D_Fails() =>
+		Assert.Throws<IncorrectJsonException>(() => ApiResponseCleaner.GetJsonObject(JsonFileReader.GetJsonFromFile("APIResponse_Json_Object_WithoutD.txt")));
+
+	[TestCategory("Unit Test")]
+	[TestMethod]
 	public void ApiResponseCleaner_FetchJsonObject_WithEscapeCharacter_Succeeds()
 	{
 		const string sampleJsonResponse = @"{ ""d"": { ""Remarks"": ""\\escape test"" }}";
@@ -53,4 +58,57 @@ public class ApiResponseCleanerTest
 	[TestMethod]
 	public void ApiResponseCleaner_FetchJsonObject_WithoutDKeyValuePair_Fails() =>
 		Assert.Throws<IncorrectJsonException>(() => ApiResponseCleaner.GetJsonObject(JsonFileReader.GetJsonFromFile("ApiResponse_Json_Object_WithoutD.txt")));
+
+	[TestCategory("Unit Test")]
+	[TestMethod]
+	public void ApiResponseCleaner_GetSkipToken_WithValidSkipToken_ReturnsToken()
+	{
+		const string response = """
+		                        {
+		                        	"d": {
+		                        		"__next": "https://start.exactonline.nl/api/v1/1234/salesorder/SalesOrders?$skiptoken=abcdefg"
+		                        	}
+		                        }
+		                        """;
+		var token = ApiResponseCleaner.GetSkipToken(response);
+		Assert.AreEqual("abcdefg", token);
+	}
+
+	[TestCategory("Unit Test")]
+	[TestMethod]
+	public void ApiResponseCleaner_GetSkipToken_WithoutSkipToken_ReturnsEmptyString()
+	{
+		const string response = """
+		                        {
+		                        	"d": {
+		                        		"__next": "https://start.exactonline.nl/api/v1/1234/salesorder/SalesOrders"
+		                        	}
+		                        }
+		                        """;
+		var token = ApiResponseCleaner.GetSkipToken(response);
+		Assert.IsNull(token);
+	}
+
+	[TestCategory("Unit Test")]
+	[TestMethod]
+	public void ApiResponseCleaner_GetSkipToken_WithoutNextKey_ReturnsEmptyString()
+	{
+		const string response = """
+		                        {
+		                        	"d": {
+		                        		"SomeOtherKey": "value"
+		                        	}
+		                        }
+		                        """;
+		var token = ApiResponseCleaner.GetSkipToken(response);
+		Assert.IsNull(token);
+	}
+
+	[TestCategory("Unit Test")]
+	[TestMethod]
+	public void ApiResponseCleaner_GetSkipToken_InvalidJson_ThrowsIncorrectJsonException()
+	{
+		const string response = @"{ invalid json }";
+		Assert.Throws<IncorrectJsonException>(() => ApiResponseCleaner.GetSkipToken(response));
+	}
 }

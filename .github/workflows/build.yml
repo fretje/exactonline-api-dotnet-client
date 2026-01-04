@@ -35,7 +35,14 @@ jobs:
         run: msbuild ExactOnline.Client.Sdk.sln /t:pack /p:Configuration=Release
 
       - name: Run unit tests
-        run: dotnet test test/ExactOnline.Client.Sdk.UnitTests/ --no-restore
+        run: dotnet test test/ExactOnline.Client.Sdk.UnitTests/ --no-build -p:TestTfmsInParallel=false -p:CollectCoverage=true -p:CoverletOutputFormat=opencover -p:CoverletOutput=out/.coverage/
+
+      - name: Upload coverage reports to Codecov
+        if: false
+        uses: codecov/codecov-action@v5
+        with:
+          files: out/.coverage/*.opencover.xml
+          token: ${{ secrets.CODECOV_TOKEN }} # required
 
       - name: Publish the package to nuget.org when we have a new version
         if: github.event_name != 'pull_request'

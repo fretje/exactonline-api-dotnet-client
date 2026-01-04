@@ -21,7 +21,7 @@ var app = builder.Build();
 var testApp = new TestApp(@"..\..\testapp.config");
 
 var authorizer = new ExactOnlineAuthorizer(testApp.ClientId.ToString(), testApp.ClientSecret, testApp.CallbackUrl,
-	ExactOnlineTest.Url, ExactOnlineTest.AccessToken, ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessTokenExpiresAt);
+	testApp.BaseUrl, ExactOnlineTest.AccessToken, ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessTokenExpiresAt);
 
 authorizer.TokensChanged += (_, e) =>
 	(ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessToken, ExactOnlineTest.AccessTokenExpiresAt) =
@@ -34,7 +34,7 @@ app.MapGet("/", async (ILogger<Program> logger, CancellationToken ct) =>
 		return Results.Redirect(await authorizer.GetLoginLinkUriAsync(ct: ct));
 	}
 
-	var client = new ExactOnlineClient(ExactOnlineTest.Url, authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, ExactOnlineTest.CustomDescriptionLanguage, logger);
+	var client = new ExactOnlineClient(testApp.BaseUrl, authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, testApp.CustomDescriptionLanguage, logger);
 	client.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
 	await client.InitializeDivisionAsync(ct);
 
@@ -62,7 +62,7 @@ app.MapGet("/sync", async (ILogger<Program> logger, CancellationToken ct) =>
 		return Results.Redirect(await authorizer.GetLoginLinkUriAsync("/sync", ct: ct));
 	}
 
-	var client = new ExactOnlineClient(ExactOnlineTest.Url, authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, ExactOnlineTest.CustomDescriptionLanguage, logger);
+	var client = new ExactOnlineClient(testApp.BaseUrl, authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, testApp.CustomDescriptionLanguage, logger);
 	client.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
 	await client.InitializeDivisionAsync();
 
