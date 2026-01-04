@@ -25,11 +25,15 @@ public class TestApp
 	/// </summary>
 	public TestApp(string path = @"..\..\..\..\..\testapp.config")
 	{
-		var details = File.ReadAllLines(path);
+		var details = Array.Empty<string>();
+		if (File.Exists(path))
+		{
+			details = File.ReadAllLines(path);
+		}
 
-		ClientId = details[0];
-		ClientSecret = details[1];
-		CallbackUrl = new Uri(details[2]);
+		ClientId = GetSetting(details, 0, "00000000-0000-0000-0000-000000000000");
+		ClientSecret = GetSetting(details, 1, "secret");
+		CallbackUrl = new Uri(GetSetting(details, 2, "http://foo.bar"));
 		BaseUrl = GetSetting(details, 3, "https://start.exactonline.be");
 		CustomDescriptionLanguage = GetSetting(details, 4, "nl-BE");
 	}
