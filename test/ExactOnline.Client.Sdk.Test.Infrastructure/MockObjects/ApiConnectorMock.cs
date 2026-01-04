@@ -22,7 +22,16 @@ public class ApiConnectorMock : IApiConnector
 	public string DoDeleteRequest(string endpoint) => string.Empty;
 	public Task<string> DoDeleteRequestAsync(string endpoint, CancellationToken ct) => Task.FromResult(DoDeleteRequest(endpoint));
 
-	public string DoCleanRequest(string endpoint, string? oDataQuery) => string.Empty;
+	public string DoCleanRequest(string endpoint, string? oDataQuery)
+	{
+		if (endpoint.EndsWith("/$count"))
+		{
+			return "42";
+		}
+
+		return string.Empty;
+	}
+
 	public Task<string> DoCleanRequestAsync(string endpoint, string? oDataQuery, CancellationToken ct) => Task.FromResult(DoCleanRequest(endpoint, oDataQuery));
 
 	public int GetCurrentDivision(string endpoint) => -1;

@@ -21,7 +21,7 @@ internal class Program
 			// To make this work set the authorisation properties of your test app in the testapp.config.
 			var testApp = new TestApp();
 
-			var authorizer = new ExactOnlineWinFormsAuthorizer(testApp.ClientId, testApp.ClientSecret, testApp.CallbackUrl, ExactOnlineTest.Url, ExactOnlineTest.AccessToken, ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessTokenExpiresAt);
+			var authorizer = new ExactOnlineWinFormsAuthorizer(testApp.ClientId, testApp.ClientSecret, testApp.CallbackUrl, testApp.BaseUrl, ExactOnlineTest.AccessToken, ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessTokenExpiresAt);
 			authorizer.TokensChanged += (_, e) => (ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessToken, ExactOnlineTest.AccessTokenExpiresAt) = (e.NewRefreshToken, e.NewAccessToken, e.NewExpiresAt);
 
 			var seriLogger = new LoggerConfiguration()
@@ -31,7 +31,7 @@ internal class Program
 				.CreateLogger();
 			var logger = new SerilogLoggerFactory(seriLogger).CreateLogger("ExactOnline Sdk");
 
-			var client = new ExactOnlineClient(ExactOnlineTest.Url, authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, ExactOnlineTest.CustomDescriptionLanguage, logger);
+			var client = new ExactOnlineClient(testApp.BaseUrl, authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, testApp.CustomDescriptionLanguage, logger);
 			client.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
 			await client.InitializeDivisionAsync();
 

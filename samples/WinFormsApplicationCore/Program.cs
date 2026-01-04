@@ -1,4 +1,4 @@
-namespace WinFormsApplication;
+namespace WinFormsApplicationCore;
 
 internal static class Program
 {
