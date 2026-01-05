@@ -92,7 +92,7 @@ public class ApiCallTest
 	{
 		for (var i = 0; i < 10; i++)
 		{
-			_conn.DoGetRequest(TestObjectsCreator.UriGlAccount(_currentDivision), string.Empty);
+			_conn.DoGetRequest(TestObjectsCreator.UriGlAccount(_currentDivision), "");
 		}
 	}
 

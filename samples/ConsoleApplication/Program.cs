@@ -42,7 +42,7 @@ internal class Program
 			var account = client.For<Account>().Top(1).Select(fields).Get().FirstOrDefault();
 
 			// This is an example of how to use skipToken for paging.
-			var skipToken = string.Empty;
+			string? skipToken = null;
 			var accounts = client.For<Account>().Select(fields).Get(ref skipToken);
 
 			// Now I can use the skip token to get the first record from the next page.

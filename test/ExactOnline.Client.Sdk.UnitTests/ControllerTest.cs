@@ -51,7 +51,7 @@ public class ControllerTest
 	public void Controller_Delete_WithEntity_Succeeds()
 	{
 		Controller<Account> accountController = new(_mockConnection);
-		var testAccount = accountController.GetEntity("dummyGUID", string.Empty);
+		var testAccount = accountController.GetEntity("dummyGUID", "");
 
 		// Delete Entity and Test if Entity still exists
 		Assert.IsTrue(accountController.Delete(testAccount));
@@ -63,7 +63,7 @@ public class ControllerTest
 	public async Task Controller_Delete_WithEntity_SucceedsAsync()
 	{
 		Controller<Account> accountController = new(_mockConnection);
-		var testAccount = await accountController.GetEntityAsync("dummyGUID", string.Empty, TestContext.CancellationToken);
+		var testAccount = await accountController.GetEntityAsync("dummyGUID", "", TestContext.CancellationToken);
 
 		// Delete Entity and Test if Entity still exists
 		Assert.IsTrue(await accountController.DeleteAsync(testAccount, TestContext.CancellationToken));
@@ -91,7 +91,7 @@ public class ControllerTest
 	public void Controller_Get_Succeeds()
 	{
 		Controller<Account> accountController = new(_mockConnection);
-		accountController.Get(string.Empty);
+		accountController.Get("");
 	}
 
 	[TestMethod]
@@ -99,7 +99,7 @@ public class ControllerTest
 	public async Task Controller_Get_SucceedsAsync()
 	{
 		Controller<Account> accountController = new(_mockConnection);
-		await accountController.GetAsync(string.Empty, TestContext.CancellationToken);
+		await accountController.GetAsync("", TestContext.CancellationToken);
 	}
 
 	[TestMethod]
@@ -109,7 +109,7 @@ public class ControllerTest
 		Controller<Account> accountController = new(_mockConnection);
 
 		// Get accounts again to test for double entitycontrollers
-		_ = accountController.Get(string.Empty);
+		_ = accountController.Get("");
 	}
 
 	[TestMethod]
@@ -119,7 +119,7 @@ public class ControllerTest
 		Controller<Account> accountController = new(_mockConnection);
 
 		// Get accounts again to test for double entitycontrollers
-		_ = await accountController.GetAsync(string.Empty, TestContext.CancellationToken);
+		_ = await accountController.GetAsync("", TestContext.CancellationToken);
 	}
 
 	[TestMethod]
@@ -143,7 +143,7 @@ public class ControllerTest
 	public void Controller_Update_WithEntity_Succeeds()
 	{
 		Controller<Account> accountController = new(_mockConnection);
-		var testAccount = accountController.GetEntity("dummyGUID", string.Empty);
+		var testAccount = accountController.GetEntity("dummyGUID", "");
 		Assert.IsTrue(accountController.Update(testAccount));
 	}
 
@@ -152,7 +152,7 @@ public class ControllerTest
 	public async Task Controller_Update_WithEntity_SucceedsAsync()
 	{
 		Controller<Account> accountController = new(_mockConnection);
-		var testAccount = await accountController.GetEntityAsync("dummyGUID", string.Empty, TestContext.CancellationToken);
+		var testAccount = await accountController.GetEntityAsync("dummyGUID", "", TestContext.CancellationToken);
 		Assert.IsTrue(await accountController.UpdateAsync(testAccount, TestContext.CancellationToken));
 	}
 
@@ -162,7 +162,7 @@ public class ControllerTest
 	{
 		// Test if controller registrates linked entities
 		IApiConnector conn = new ApiConnectorControllerMock();
-		ControllerList controllerList = new(conn, string.Empty);
+		ControllerList controllerList = new(conn, "");
 
 		var salesinvoicecontroller = (Controller<SalesInvoice>)controllerList.GetController<SalesInvoice>();
 		var invoicelines = (Controller<SalesInvoiceLine>)controllerList.GetController<SalesInvoiceLine>();
@@ -180,7 +180,7 @@ public class ControllerTest
 	{
 		// Test if controller registrates linked entities
 		IApiConnector conn = new ApiConnectorControllerMock();
-		ControllerList controllerList = new(conn, string.Empty);
+		ControllerList controllerList = new(conn, "");
 
 		var salesinvoicecontroller = (Controller<SalesInvoice>)controllerList.GetController<SalesInvoice>();
 		var invoicelines = (Controller<SalesInvoiceLine>)controllerList.GetController<SalesInvoiceLine>();

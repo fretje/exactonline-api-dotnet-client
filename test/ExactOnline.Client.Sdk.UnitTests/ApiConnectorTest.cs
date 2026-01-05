@@ -37,10 +37,10 @@ public class ApiConnectorTest
 	[TestMethod]
 	[TestCategory("Unit Test")]
 	public void ApiConnector_DoDeleteRequest_With_EmptyValues_Fails() =>
-		Assert.Throws<BadRequestException>(() => _connector.DoDeleteRequest(string.Empty));
+		Assert.Throws<BadRequestException>(() => _connector.DoDeleteRequest(""));
 
 	[TestMethod]
 	[TestCategory("Unit Test")]
 	public Task ApiConnector_DoDeleteRequest_With_EmptyValues_FailsAsync() =>
-		Assert.ThrowsAsync<BadRequestException>(() => _connector.DoDeleteRequestAsync(string.Empty, default));
+		Assert.ThrowsAsync<BadRequestException>(() => _connector.DoDeleteRequestAsync("", default));
 }

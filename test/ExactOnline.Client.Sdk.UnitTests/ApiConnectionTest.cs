@@ -30,7 +30,7 @@ public class ApiConnectionTest
 	[TestCategory("Unit Test")]
 	[TestMethod]
 	public void ApiConnection_Constructor_InitializeWithEmptyValues_Fails() =>
-		Assert.Throws<ArgumentException>(() => new ApiConnection(null!, string.Empty));
+		Assert.Throws<ArgumentException>(() => new ApiConnection(null!, ""));
 
 	[TestCategory("Unit Test")]
 	[TestMethod]
@@ -40,51 +40,51 @@ public class ApiConnectionTest
 	[TestCategory("Unit Test")]
 	[TestMethod]
 	public void ApiConnection_Constructor_CreateWithEmptyEndpoint_Fails() =>
-		Assert.Throws<ArgumentException>(() => new ApiConnection(_connector, string.Empty));
+		Assert.Throws<ArgumentException>(() => new ApiConnection(_connector, ""));
 
 	[TestCategory("Unit Test")]
 	[TestMethod]
 	public void ApiConnection_Constructor_InitializeWithEmptyEndpoint_Fails() =>
-		Assert.Throws<ArgumentException>(() => new ApiConnection(null!, string.Empty));
+		Assert.Throws<ArgumentException>(() => new ApiConnection(null!, ""));
 
 	[TestCategory("Unit Test")]
 	[TestMethod]
 	public void ApiConnection_GetEntityWithGuidSpecified_Succeeds() =>
-		_conn.GetEntity("ID", "3c634e79-c4fe-44d2-9765-00b30573c2de", string.Empty);
+		_conn.GetEntity("ID", "3c634e79-c4fe-44d2-9765-00b30573c2de", "");
 
 	[TestCategory("Unit Test")]
 	[TestMethod]
 	public Task ApiConnection_GetEntityWithGuidSpecified_SucceedsAsync() =>
-		_conn.GetEntityAsync("ID", "3c634e79-c4fe-44d2-9765-00b30573c2de", string.Empty, TestContext.CancellationToken);
+		_conn.GetEntityAsync("ID", "3c634e79-c4fe-44d2-9765-00b30573c2de", "", TestContext.CancellationToken);
 
 	[TestCategory("Unit Test")]
 	[TestMethod]
 	public void ApiConnection_GetEntity_WithoutGuidSpecified_Fails() =>
-		Assert.Throws<Exception>(() => _conn.GetEntity("ID", string.Empty, string.Empty));
+		Assert.Throws<Exception>(() => _conn.GetEntity("ID", "", ""));
 
 	[TestMethod]
 	public Task ApiConnection_GetEntity_WithoutGuidSpecified_FailsAsync() =>
-		Assert.ThrowsAsync<Exception>(() => _conn.GetEntityAsync("ID", string.Empty, string.Empty, TestContext.CancellationToken));
+		Assert.ThrowsAsync<Exception>(() => _conn.GetEntityAsync("ID", "", "", TestContext.CancellationToken));
 
 	[TestCategory("Unit Test")]
 	[TestMethod]
 	public void ApiConnection_GetEntity_WithoutKeyNameSpecified_Fails() =>
-		Assert.Throws<Exception>(() => _conn.GetEntity(string.Empty, "3c634e79-c4fe-44d2-9765-00b30573c2de", string.Empty));
+		Assert.Throws<Exception>(() => _conn.GetEntity("", "3c634e79-c4fe-44d2-9765-00b30573c2de", ""));
 
 	[TestCategory("Unit Test")]
 	[TestMethod]
 	public Task ApiConnection_GetEntity_WithoutKeyNameSpecified_FailsAsync() =>
-		Assert.ThrowsAsync<Exception>(() => _conn.GetEntityAsync(string.Empty, "3c634e79-c4fe-44d2-9765-00b30573c2de", string.Empty, TestContext.CancellationToken));
+		Assert.ThrowsAsync<Exception>(() => _conn.GetEntityAsync("", "3c634e79-c4fe-44d2-9765-00b30573c2de", "", TestContext.CancellationToken));
 
 	[TestCategory("Unit Test")]
 	[TestMethod]
 	public void ApiConnection_GetEntity_WithoutKeynameAndGuidSpecified_Fails() =>
-		Assert.Throws<Exception>(() => _conn.GetEntity(string.Empty, string.Empty, string.Empty));
+		Assert.Throws<Exception>(() => _conn.GetEntity("", "", ""));
 
 	[TestCategory("Unit Test")]
 	[TestMethod]
 	public Task ApiConnection_GetEntity_WithoutKeynameAndGuidSpecified_FailsAsync() =>
-		Assert.ThrowsAsync<Exception>(() => _conn.GetEntityAsync(string.Empty, string.Empty, string.Empty, TestContext.CancellationToken));
+		Assert.ThrowsAsync<Exception>(() => _conn.GetEntityAsync("", "", "", TestContext.CancellationToken));
 
 	[TestCategory("Unit Test")]
 	[TestMethod]

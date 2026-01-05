@@ -83,7 +83,7 @@ public class ExactOnlineQueryTest
 			new ExactOnlineQuery<Account>(_controllerMock)
 				.Select(["Code", "Name"])
 				.Where("Name+eq+'Test Testname'")
-				.And(string.Empty)
+				.And("")
 				.Get());
 
 	[TestMethod]
@@ -93,7 +93,7 @@ public class ExactOnlineQueryTest
 			await new ExactOnlineQuery<Account>(_controllerMock)
 				.Select(["Code", "Name"])
 				.Where("Name+eq+'Test Testname'")
-				.And(string.Empty)
+				.And("")
 				.GetAsync(ct: TestContext.CancellationToken));
 
 	[TestMethod]
@@ -181,12 +181,12 @@ public class ExactOnlineQueryTest
 	[TestMethod]
 	[TestCategory("Unit Test")]
 	public void ExactOnlineQuery_GetEntity_WithoutIdentifier_Fails() =>
-		Assert.Throws<ArgumentException>(() => new ExactOnlineQuery<Account>(_acccountController).GetEntity(string.Empty));
+		Assert.Throws<ArgumentException>(() => new ExactOnlineQuery<Account>(_acccountController).GetEntity(""));
 
 	[TestMethod]
 	[TestCategory("Unit Test")]
 	public Task ExactOnlineQuery_GetEntity_WithoutIdentifier_FailsAsync() =>
-		Assert.ThrowsAsync<ArgumentException>(() => new ExactOnlineQuery<Account>(_acccountController).GetEntityAsync(string.Empty, TestContext.CancellationToken));
+		Assert.ThrowsAsync<ArgumentException>(() => new ExactOnlineQuery<Account>(_acccountController).GetEntityAsync("", TestContext.CancellationToken));
 
 	[TestMethod]
 	[TestCategory("Unit Test")]
@@ -262,7 +262,7 @@ public class ExactOnlineQueryTest
 	public void ExactOnlineQuery_Where_WithEmptyString_Fails() =>
 		Assert.Throws<ArgumentException>(() =>
 			new ExactOnlineQuery<Account>(_controllerMock)
-				.Where(string.Empty)
+				.Where("")
 				.Get());
 
 	[TestMethod]
@@ -270,7 +270,7 @@ public class ExactOnlineQueryTest
 	public async Task ExactOnlineQuery_Where_WithEmptyString_FailsAsync() =>
 		await Assert.ThrowsAsync<ArgumentException>(() =>
 			new ExactOnlineQuery<Account>(_controllerMock)
-				.Where(string.Empty)
+				.Where("")
 				.GetAsync(ct: TestContext.CancellationToken));
 
 	[TestMethod]

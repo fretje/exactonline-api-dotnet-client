@@ -16,7 +16,7 @@ public class GetCollectionOfAccountsInJsonFormat
 		ApiConnection conn = new(toc.GetApiConnector(), TestObjectsCreator.UriCrmAccount(await toc.GetCurrentDivisionAsync(TestContext.CancellationToken)));
 
 		SimpleController c = new(conn);
-		var accounts = c.GetDynamic(string.Empty);
+		var accounts = c.GetDynamic("");
 
 		// Test if list has entities (easy test, because actual entity count isn't known)
 		if (accounts.Count < 1)

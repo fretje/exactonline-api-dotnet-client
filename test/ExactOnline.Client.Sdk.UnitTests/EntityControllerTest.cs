@@ -16,7 +16,7 @@ public class EntityControllerTest
 	{
 		ApiConnectionEntityControllerMock controllerMock = new();
 		ApiConnectorMock apiConnectorMock = new();
-		ControllerList controllerList = new(apiConnectorMock, string.Empty);
+		ControllerList controllerList = new(apiConnectorMock, "");
 
 		var controller = (Controller<SalesInvoice>)controllerList.GetController<SalesInvoice>();
 		SalesInvoice invoice = new() { Description = "New Description" };
@@ -40,7 +40,7 @@ public class EntityControllerTest
 	{
 		ApiConnectionEntityControllerMock controllerMock = new();
 		ApiConnectorMock apiConnectorMock = new();
-		ControllerList controllerList = new(apiConnectorMock, string.Empty);
+		ControllerList controllerList = new(apiConnectorMock, "");
 
 		var controller = (Controller<SalesInvoice>)controllerList.GetController<SalesInvoice>();
 		SalesInvoice invoice = new() { Description = "New Description" };
@@ -64,7 +64,7 @@ public class EntityControllerTest
 	{
 		ApiConnectionEntityControllerMock controllerMock = new();
 		ApiConnectorMock apiConnectorMock = new();
-		ControllerList controllerList = new(apiConnectorMock, string.Empty);
+		ControllerList controllerList = new(apiConnectorMock, "");
 
 		SalesInvoice invoice = new() { Description = "New Description" };
 		SalesInvoiceLine line = new() { Description = "InvoiceLine" };
@@ -89,7 +89,7 @@ public class EntityControllerTest
 	{
 		ApiConnectionEntityControllerMock controllerMock = new();
 		ApiConnectorMock apiConnectorMock = new();
-		ControllerList controllerList = new(apiConnectorMock, string.Empty);
+		ControllerList controllerList = new(apiConnectorMock, "");
 
 		SalesInvoice invoice = new() { Description = "New Description" };
 		SalesInvoiceLine line = new() { Description = "InvoiceLine" };
@@ -114,7 +114,7 @@ public class EntityControllerTest
 	{
 		ApiConnectionEntityControllerMock controllerMock = new();
 		ApiConnectorMock apiConnectorMock = new();
-		ControllerList controllerList = new(apiConnectorMock, string.Empty);
+		ControllerList controllerList = new(apiConnectorMock, "");
 
 		SalesInvoice invoice = new() { Description = "New Description" };
 		SalesInvoiceLine line = new() { Description = "Invoice Line" };
@@ -137,7 +137,7 @@ public class EntityControllerTest
 	{
 		ApiConnectionEntityControllerMock controllerMock = new();
 		ApiConnectorMock apiConnectorMock = new();
-		ControllerList controllerList = new(apiConnectorMock, string.Empty);
+		ControllerList controllerList = new(apiConnectorMock, "");
 
 		SalesInvoice invoice = new() { Description = "New Description" };
 		SalesInvoiceLine line = new() { Description = "Invoice Line" };
@@ -160,7 +160,7 @@ public class EntityControllerTest
 	{
 		ApiConnectionEntityControllerMock controllerMock = new();
 		ApiConnectorMock apiConnectorMock = new();
-		ControllerList controllerList = new(apiConnectorMock, string.Empty);
+		ControllerList controllerList = new(apiConnectorMock, "");
 
 		SalesInvoice invoice = new() { Description = "New Description" };
 		SalesInvoiceLine line = new() { Description = "InvoiceLine" };
@@ -185,7 +185,7 @@ public class EntityControllerTest
 	{
 		ApiConnectionEntityControllerMock controllerMock = new();
 		ApiConnectorMock apiConnectorMock = new();
-		ControllerList controllerList = new(apiConnectorMock, string.Empty);
+		ControllerList controllerList = new(apiConnectorMock, "");
 
 		SalesInvoice invoice = new() { Description = "New Description" };
 		SalesInvoiceLine line = new() { Description = "InvoiceLine" };

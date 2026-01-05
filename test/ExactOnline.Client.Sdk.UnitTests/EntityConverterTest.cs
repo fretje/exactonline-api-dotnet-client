@@ -37,7 +37,7 @@ public class EntityConverterTest
 	[TestMethod]
 	public void EntityConverter_ConvertJsonToObjectList_WithEmptyJson_Fails()
 	{
-		var accounts = EntityConverter.ConvertJsonArrayToObjectList<Account>(string.Empty);
+		var accounts = EntityConverter.ConvertJsonArrayToObjectList<Account>("");
 		Assert.IsNull(accounts);
 	}
 

@@ -21,7 +21,7 @@ public class GetApiResponseAfterGetCall
 		TestObjectsCreator toc = new();
 		ApiConnection conn = new(toc.GetApiConnector(), TestObjectsCreator.UriCrmAccount(await toc.GetCurrentDivisionAsync(TestContext.CancellationToken)));
 
-		var result = conn.Get(string.Empty);
+		var result = conn.Get("");
 		if (string.IsNullOrEmpty(result))
 		{
 			throw new Exception("Return from API was empty");

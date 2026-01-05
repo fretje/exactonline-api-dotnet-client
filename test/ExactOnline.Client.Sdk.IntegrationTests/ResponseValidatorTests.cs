@@ -14,7 +14,7 @@ public class ResponseValidatorTests
 		var conn = toc.GetApiConnector();
 		var currentDivision = await toc.GetCurrentDivisionAsync(TestContext.CancellationToken);
 
-		var response = conn.DoGetRequest(TestObjectsCreator.UriGlAccount(currentDivision), string.Empty);
+		var response = conn.DoGetRequest(TestObjectsCreator.UriGlAccount(currentDivision), "");
 
 		if (!response.Contains("\"d\"") || !response.Contains("\"results\""))
 		{
