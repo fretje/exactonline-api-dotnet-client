@@ -72,7 +72,7 @@ public class ExactOnlineQuery<T>(IController<T> controller)
 	/// Specify the fields to get from the API
 	/// </summary>
 	/// <param name="properties">The properties to select</param>
-	public ExactOnlineQuery<T> Select(params Expression<Func<T, object>>[] properties) =>
+	public ExactOnlineQuery<T> Select(params Expression<Func<T, object?>>[] properties) =>
 		Select(fields: properties.Select(x => TransformExpressionToODataFormat(x.Body)).ToArray());
 
 	/// <summary>
