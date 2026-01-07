@@ -2,7 +2,9 @@ name: Build, test, pack and push to nuget on version update
 
 on:
   push:
+    branches: [master]
   pull_request:
+    branches: [master]
   workflow_dispatch:
 
 jobs:
