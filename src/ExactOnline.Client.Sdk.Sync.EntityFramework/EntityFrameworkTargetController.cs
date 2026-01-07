@@ -3,14 +3,11 @@ using System.Linq.Dynamic.Core;
 
 namespace ExactOnline.Client.Sdk.Sync.EntityFramework;
 
-public class EntityFrameworkTargetController<TModel, TId>
-	: SyncTargetControllerBase<TModel>
+public class EntityFrameworkTargetController<TModel, TId>(string nameOrConnectionString)
+	: SyncTargetControllerBase<TModel>()
 	where TModel : class
 {
-	private readonly string _nameOrConnectionString;
-
-	public EntityFrameworkTargetController(string nameOrConnectionString)
-		: base() => _nameOrConnectionString = nameOrConnectionString;
+	private readonly string _nameOrConnectionString = nameOrConnectionString;
 
 	public override long GetMaxTimestamp()
 	{

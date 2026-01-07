@@ -2,12 +2,9 @@
 
 namespace ExactOnline.Client.Sdk.Sync.EntityFramework;
 
-public class EntityFrameworkTarget : SyncTargetBase
+public class EntityFrameworkTarget(string? nameOrConnectionString = null) : SyncTargetBase
 {
-	private readonly string? _nameOrConnectionString;
-
-	public EntityFrameworkTarget(string? nameOrConnectionString = null) =>
-		_nameOrConnectionString = nameOrConnectionString;
+	private readonly string? _nameOrConnectionString = nameOrConnectionString;
 
 	public void InitializeDatabase(bool force)
 	{

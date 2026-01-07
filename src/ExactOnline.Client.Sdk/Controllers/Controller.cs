@@ -31,7 +31,7 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 
 		// Find unique value of entity
 		var enumerable = attributes as IList<Attribute> ?? [.. attributes];
-		if (!enumerable.Any())
+		if (enumerable.Count == 0)
 		{
 			throw new Exception("Cannot find 'DataServiceKey' field. This entity cannot be managed by the Controller");
 		}

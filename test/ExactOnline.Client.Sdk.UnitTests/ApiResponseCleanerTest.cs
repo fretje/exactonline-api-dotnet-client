@@ -64,12 +64,12 @@ public class ApiResponseCleanerTest
 	public void ApiResponseCleaner_GetSkipToken_WithValidSkipToken_ReturnsToken()
 	{
 		const string response = """
-		                        {
-		                        	"d": {
-		                        		"__next": "https://start.exactonline.nl/api/v1/1234/salesorder/SalesOrders?$skiptoken=abcdefg"
-		                        	}
-		                        }
-		                        """;
+		    {
+		        "d": {
+		            "__next": "https://start.exactonline.nl/api/v1/1234/salesorder/SalesOrders?$skiptoken=abcdefg"
+		        }
+		    }
+		    """;
 		var token = ApiResponseCleaner.GetSkipToken(response);
 		Assert.AreEqual("abcdefg", token);
 	}
@@ -79,12 +79,12 @@ public class ApiResponseCleanerTest
 	public void ApiResponseCleaner_GetSkipToken_WithoutSkipToken_ReturnsNull()
 	{
 		const string response = """
-		                        {
-		                        	"d": {
-		                        		"__next": "https://start.exactonline.nl/api/v1/1234/salesorder/SalesOrders"
-		                        	}
-		                        }
-		                        """;
+		    {
+		        "d": {
+		            "__next": "https://start.exactonline.nl/api/v1/1234/salesorder/SalesOrders"
+		        }
+		    }
+		    """;
 		var token = ApiResponseCleaner.GetSkipToken(response);
 		Assert.IsNull(token);
 	}
@@ -94,12 +94,12 @@ public class ApiResponseCleanerTest
 	public void ApiResponseCleaner_GetSkipToken_WithoutNextKey_ReturnsEmptyString()
 	{
 		const string response = """
-		                        {
-		                        	"d": {
-		                        		"SomeOtherKey": "value"
-		                        	}
-		                        }
-		                        """;
+		    {
+		        "d": {
+		            "SomeOtherKey": "value"
+		        }
+		    }
+		    """;
 		var token = ApiResponseCleaner.GetSkipToken(response);
 		Assert.IsNull(token);
 	}

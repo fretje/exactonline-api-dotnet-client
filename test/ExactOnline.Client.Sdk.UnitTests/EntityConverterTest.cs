@@ -285,21 +285,13 @@ public class EntityConverterTest
 
 	[TestCategory("Unit Test")]
 	[TestMethod]
-	public void EntityConverter_ConvertJsonToObjectWithNull_ReturnsNull()
-	{
-		var action = () => EntityConverter.ConvertJsonToObject<SalesInvoice>(null!);
-
-		Assert.ThrowsExactly<IncorrectJsonException>(action);
-	}
+	public void EntityConverter_ConvertJsonToObject_WithNull_Fails() =>
+		Assert.Throws<IncorrectJsonException>(() => EntityConverter.ConvertJsonToObject<SalesInvoice>(null!));
 
 	[TestCategory("Unit Test")]
 	[TestMethod]
-	public void EntityConverter_ConvertJsonToObjectWithInvalidJson_ThrowsException()
-	{
-		var action = () => EntityConverter.ConvertJsonToObject<SalesInvoice>("invalid json");
-
-		Assert.Throws<IncorrectJsonException>(action);
-	}
+	public void EntityConverter_ConvertJsonToObject_WithInvalidJson_Fails() =>
+		Assert.Throws<IncorrectJsonException>(() => EntityConverter.ConvertJsonToObject<SalesInvoice>("invalid json"));
 
 	[TestCategory("Unit Test")]
 	[TestMethod]

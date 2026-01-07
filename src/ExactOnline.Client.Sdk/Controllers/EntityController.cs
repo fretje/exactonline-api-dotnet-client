@@ -82,7 +82,7 @@ public class EntityController(object entity, string keyName, string identifier, 
 
 		if (string.IsNullOrEmpty(json))
 		{
-			//Nothing to update
+			// Nothing to update
 			return true;
 		}
 
@@ -109,7 +109,7 @@ public class EntityController(object entity, string keyName, string identifier, 
 
 		if (string.IsNullOrEmpty(json))
 		{
-			//Nothing to update
+			// Nothing to update
 			return true;
 		}
 

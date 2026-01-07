@@ -1,8 +1,6 @@
 namespace ExactOnline.Client.Models;
 
-public sealed class SDKFieldType : Attribute
+public sealed class SDKFieldType(FieldType fieldType) : Attribute
 {
-	public FieldType TypeOfField { get; set; }
-
-	public SDKFieldType(FieldType fieldType) => TypeOfField = fieldType;
+	public FieldType TypeOfField { get; } = fieldType;
 }

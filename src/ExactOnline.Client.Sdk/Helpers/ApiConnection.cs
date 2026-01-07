@@ -75,13 +75,15 @@ public class ApiConnection : IApiConnection
 	/// Perform a GET (Read) request on the API
 	/// </summary>
 	/// <returns>Stream</returns>
-	public Stream GetFile() => _connector.DoGetFileRequest(EndpointUrl());
+	public Stream GetFile() =>
+		_connector.DoGetFileRequest(EndpointUrl());
 
 	/// <summary>
 	/// Perform a GET (Read) request on the API
 	/// </summary>
 	/// <returns>Stream</returns>
-	public Task<Stream> GetFileAsync(CancellationToken ct = default) => _connector.DoGetFileRequestAsync(EndpointUrl(), ct);
+	public Task<Stream> GetFileAsync(CancellationToken ct = default) =>
+		_connector.DoGetFileRequestAsync(EndpointUrl(), ct);
 
 	/// <summary>
 	/// Performs a GET (Read) request on the API for one specific entity

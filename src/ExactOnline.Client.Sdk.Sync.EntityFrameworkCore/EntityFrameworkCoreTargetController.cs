@@ -3,14 +3,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore;
 
-public class EntityFrameworkCoreTargetController<TModel, TId>
-	: SyncTargetControllerBase<TModel>
+public class EntityFrameworkCoreTargetController<TModel, TId>(string nameOrConnectionString)
+	: SyncTargetControllerBase<TModel>()
 	where TModel : class
 {
-	private readonly string _nameOrConnectionString;
-
-	public EntityFrameworkCoreTargetController(string nameOrConnectionString)
-		: base() => _nameOrConnectionString = nameOrConnectionString;
+	private readonly string _nameOrConnectionString = nameOrConnectionString;
 
 	public override long GetMaxTimestamp()
 	{

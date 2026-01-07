@@ -3,12 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore;
 
-public class EntityFrameworkCoreTarget : SyncTargetBase
+public class EntityFrameworkCoreTarget(string connectionString) : SyncTargetBase
 {
-	private readonly string _connectionString;
-
-	public EntityFrameworkCoreTarget(string connectionString) =>
-		_connectionString = connectionString;
+	private readonly string _connectionString = connectionString;
 
 	public async Task InitializeDatabaseAsync(CancellationToken ct)
 	{

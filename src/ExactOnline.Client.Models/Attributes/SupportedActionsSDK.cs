@@ -2,34 +2,22 @@ using System.Reflection;
 
 namespace ExactOnline.Client.Models;
 
-public sealed class SupportedActionsSDK : Attribute
+public sealed class SupportedActionsSDK(
+	bool canCreate,
+	bool canRead,
+	bool canUpdate,
+	bool canDelete,
+	bool canBulkRead = false,
+	bool allowsEmptySelect = false) : Attribute
 {
-	public bool CanCreate { get; private set; }
-	public bool CanRead { get; private set; }
-	public bool CanUpdate { get; private set; }
-	public bool CanDelete { get; private set; }
+	public bool CanCreate { get; } = canCreate;
+	public bool CanRead { get; } = canRead;
+	public bool CanUpdate { get; } = canUpdate;
+	public bool CanDelete { get; } = canDelete;
 
-	public bool CanBulkRead { get; private set; }
+	public bool CanBulkRead { get; } = canBulkRead;
 
-	public bool AllowsEmptySelect { get; private set; }
-
-	public SupportedActionsSDK(
-		bool canCreate,
-		bool canRead,
-		bool canUpdate,
-		bool canDelete,
-		bool canBulkRead = false,
-		bool allowsEmptySelect = false)
-	{
-		CanCreate = canCreate;
-		CanRead = canRead;
-		CanUpdate = canUpdate;
-		CanDelete = canDelete;
-
-		CanBulkRead = canBulkRead;
-
-		AllowsEmptySelect = allowsEmptySelect;
-	}
+	public bool AllowsEmptySelect { get; } = allowsEmptySelect;
 
 	public static SupportedActionsSDK GetByType(Type type)
 	{

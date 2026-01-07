@@ -15,7 +15,7 @@ public class ApiConnectorTest
 	[TestInitialize]
 	public void Setup()
 	{
-		_connector = new ApiConnector(GetAccessToken, new HttpClient(), ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
+		_connector = new(GetAccessToken, new HttpClient(), ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
 		_connector.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
 	}
 
