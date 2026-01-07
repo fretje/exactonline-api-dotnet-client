@@ -13,13 +13,7 @@ namespace WebApplication.Controllers;
 
 public class HomeController : Controller
 {
-	private TestApp testApp;
-
-	public HomeController()
-	{
-		var path = Path.Combine(Server.MapPath("~"), @"..\..\testapp.config");
-		testApp = new TestApp(path);
-	}
+	private TestApp TestApp => field ??= new(Path.Combine(Server.MapPath("~"), @"..\..\testapp.config"));
 
 	// The authorizer is stored in the session state, so as long as that lives the user won't have to log in again.
 	// For the Authorization to live longer than that, you can store the refresh token in safe storage (using the RefresTokenUpdated event)
@@ -31,8 +25,8 @@ public class HomeController : Controller
 			if (Session["Authorizer"] is not ExactOnlineAuthorizer authorizer)
 			{
 				// To make this work set the authorisation properties of your test app in the testapp.config.
-				authorizer = new(testApp.ClientId, testApp.ClientSecret, testApp.CallbackUrl,
-					testApp.BaseUrl, ExactOnlineTest.AccessToken, ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessTokenExpiresAt);
+				authorizer = new(TestApp.ClientId, TestApp.ClientSecret, TestApp.CallbackUrl,
+					TestApp.BaseUrl, ExactOnlineTest.AccessToken, ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessTokenExpiresAt);
 				authorizer.TokensChanged += (_, e) =>
 					(ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessToken, ExactOnlineTest.AccessTokenExpiresAt) =
 					(e.NewRefreshToken, e.NewAccessToken, e.NewExpiresAt);
@@ -51,7 +45,7 @@ public class HomeController : Controller
 		}
 
         // When we get here, that means the authorizer is authorized and we can use its GetAccessTokenAsync method for the exactOnlineclient
-        ExactOnlineClient client = new(testApp.BaseUrl, Authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
+        ExactOnlineClient client = new(TestApp.BaseUrl, Authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
 		client.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
 		await client.InitializeDivisionAsync();
 
