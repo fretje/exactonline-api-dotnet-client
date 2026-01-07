@@ -6,23 +6,40 @@
 /// </summary>
 public class TestApp
 {
+	public string BaseUrl { get; set; }
 	public string ClientId { get; set; }
 	public string ClientSecret { get; set; }
 	public Uri CallbackUrl { get; set; }
+	public string CustomDescriptionLanguage { get; set; }
 
 	/// <summary>
 	/// The application details are read from file testapp.config.
-	/// testapp.config should consist of 3 lines containing client id, secret and callback url:
+	/// testapp.config should consist of 3 lines containing client id, secret and callback url
+	/// Or additionally 2 lines containing base url and custom description language.
+	/// Example:
 	/// 00000000-0000-0000-0000-000000000000
 	/// secret
 	/// http://foo.bar
+	/// https://start.exactonline.be
+	/// nl-BE
 	/// </summary>
 	public TestApp(string path = @"..\..\..\..\..\testapp.config")
 	{
-		var details = File.ReadAllLines(path);
+		if (!File.Exists(path))
+		{
+			throw new FileNotFoundException("Please create the testapp.config file in the root of the project. See testapp.config.example for an example.");
+		}
 
-		ClientId = details[0];
-		ClientSecret = details[1];
-		CallbackUrl = new Uri(details[2]);
+		string[] details = File.ReadAllLines(path);
+		ClientId = GetSetting(details, 0, "00000000-0000-0000-0000-000000000000");
+		ClientSecret = GetSetting(details, 1, "secret");
+		CallbackUrl = new Uri(GetSetting(details, 2, "http://foo.bar"));
+		BaseUrl = GetSetting(details, 3, "https://start.exactonline.be");
+		CustomDescriptionLanguage = GetSetting(details, 4, "nl-BE");
+	}
+
+	private static string GetSetting(string[] details, int index, string defaultValue)
+	{
+		return index < details.Length ? details[index] : defaultValue;
 	}
 }

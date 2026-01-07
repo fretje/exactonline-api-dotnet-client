@@ -4,9 +4,6 @@ namespace ExactOnline.Client.Sdk.Test.Infrastructure;
 
 public static class ExactOnlineTest
 {
-	public static string Url => "https://start.exactonline.be";
-	public static string CustomDescriptionLanguage => "nl-BE";
-
 	private static readonly string _refreshTokenCacheFile = @"c:\temp\refreshTokenCache";
 	private static readonly string _accessTokenCacheFile = @"c:\temp\accessTokenCache";
 	private static readonly string _accessTokenExpiresAtCacheFile = @"c:\temp\accessTokenExpiresAtCache";
