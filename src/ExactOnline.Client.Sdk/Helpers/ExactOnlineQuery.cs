@@ -79,9 +79,9 @@ public class ExactOnlineQuery<T>(IController<T> controller)
 	/// Specify the field(s) to get from the API
 	/// </summary>
 	/// <param name="fields">The field(s) to get</param>
-	public ExactOnlineQuery<T> Select(params string[]? fields)
+	public ExactOnlineQuery<T> Select(params string[] fields)
 	{
-		if (fields?.Length > 0)
+		if (fields.Length > 0)
 		{
 			var select = string.Join(",", fields);
 
@@ -103,7 +103,7 @@ public class ExactOnlineQuery<T>(IController<T> controller)
 	/// <param name="top"></param>
 	public ExactOnlineQuery<T> Top(int top)
 	{
-		_top = string.Format("$top={0}", top);
+		_top = $"$top={top}";
 		return this;
 	}
 
@@ -113,7 +113,7 @@ public class ExactOnlineQuery<T>(IController<T> controller)
 	/// <param name="skip"></param>
 	public ExactOnlineQuery<T> Skip(int skip)
 	{
-		_skip = string.Format("$skip={0}", skip);
+		_skip = $"$skip={skip}";
 		return this;
 	}
 
@@ -136,11 +136,11 @@ public class ExactOnlineQuery<T>(IController<T> controller)
 
 			if (string.IsNullOrEmpty(_orderby))
 			{
-				_orderby = "$orderby=" + orderbyclause;
+				_orderby = $"$orderby={orderbyclause}";
 			}
 			else
 			{
-				_orderby += ',' + orderbyclause;
+				_orderby += $",{orderbyclause}";
 			}
 		}
 		return this;
@@ -152,7 +152,7 @@ public class ExactOnlineQuery<T>(IController<T> controller)
 	public ExactOnlineQuery<T> Expand(string expand)
 	{
 		_controller.RegistrateLinkedEntityField(expand);
-		_expand = "$expand=" + expand;
+		_expand = $"$expand={expand}";
 		return this;
 	}
 
@@ -214,7 +214,7 @@ public class ExactOnlineQuery<T>(IController<T> controller)
 	{
 		if (!string.IsNullOrEmpty(skipToken))
 		{
-			_skipToken = string.Format("$skiptoken={0}", skipToken);
+			_skipToken = $"$skiptoken={skipToken}";
 		}
 	}
 
@@ -331,45 +331,31 @@ public class ExactOnlineQuery<T>(IController<T> controller)
 	/// </summary>
 	private string TransformExpressionToODataFormat(Expression e)
 	{
-		MemberExpression? me = null;
-
-		if (e is MemberExpression)
+		if (e is MemberExpression m)
 		{
-			me = e as MemberExpression;
+			return m.Member.Name;
 		}
-		else if (e is UnaryExpression ue)
-		{
-			me = ue.Operand as MemberExpression;
-		}
-
-		if (me != null)
+		if (e is UnaryExpression { Operand: MemberExpression me })
 		{
 			return me.Member.Name;
 		}
-
-		List<string> listArguments = [];
-
 		if (e is not MethodCallExpression mce)
 		{
 			throw new ArgumentException($"Invalid expression '{e}': Lambda expression should resolve a property on model type '{nameof(T)}' (with optional extension method calls).", nameof(e));
 		}
 
-		foreach (var argument in mce.Arguments)
+		List<string> argList = [];
+		foreach (var argument in mce.Arguments.OfType<ConstantExpression>())
 		{
-			if (argument is ConstantExpression ce
-				&& ToODataParameter(ce.Value) is { } odataParameter)
+			if (ToODataParameter(argument.Value) is { } odataParameter)
 			{
-				listArguments.Add(odataParameter);
+				argList.Add(odataParameter);
 			}
 		}
 
-		string? arguments = null;
-		if (listArguments.Count > 0)
-		{
-			arguments = "," + string.Join(",", listArguments);
-		}
+		string? args = argList.Count > 0 ? $",{string.Join(",", argList)}" : null;
 
-		return $"{mce.Method.Name.ToLower()}({TransformExpressionToODataFormat(mce.Object)}{arguments})";
+		return $"{mce.Method.Name.ToLower()}({TransformExpressionToODataFormat(mce.Object)}{args})";
 	}
 
 	/// <summary>
@@ -377,23 +363,21 @@ public class ExactOnlineQuery<T>(IController<T> controller)
 	/// </summary>
 	private static string? ToODataParameter(object? value)
 	{
-		string? _value = null;
-
-		if (value != null)
+		if (value is null)
 		{
-			var type = value.GetType();
-			type = Nullable.GetUnderlyingType(type) ?? type;
-
-			_value = type == typeof(string) || type == typeof(char) ? $"'{value}'"
-				: type == typeof(Guid) ? $"guid'{value}'"
-				: type == typeof(DateTime) ? $"datetime'{value:o}'"
-				: type == typeof(bool) ? value.ToString().ToLower()
-				: type.IsEnum ? $"{value:D}" // need the numerical value of enums, not the name!
-				: type == typeof(long) || type == typeof(ulong) ? $"{value}L" // longs need an "L" attached
-				: value.ToString();
+			return null;
 		}
 
-		return _value;
+		var type = value.GetType();
+		type = Nullable.GetUnderlyingType(type) ?? type;
+
+		return type == typeof(string) || type == typeof(char) ? $"'{value}'"
+			: type == typeof(Guid) ? $"guid'{value}'"
+			: type == typeof(DateTime) ? $"datetime'{value:o}'"
+			: type == typeof(bool) ? value.ToString().ToLower()
+			: type.IsEnum ? $"{value:D}" // need the numerical value of enums, not the name!
+			: type == typeof(long) || type == typeof(ulong) ? $"{value}L" // longs need an "L" attached
+			: value.ToString();
 	}
 
 	/// <summary>
@@ -405,9 +389,9 @@ public class ExactOnlineQuery<T>(IController<T> controller)
 
 		if (!string.IsNullOrEmpty(_where))
 		{
-			if (_and != null && _and.Count > 0)
+			if (_and.Count > 0)
 			{
-				_where += string.Format("+and+{0}", string.Join("+and+", _and));
+				_where += $"+and+{string.Join("+and+", _and)}";
 			}
 			queryParts.Add(_where!);
 		}
