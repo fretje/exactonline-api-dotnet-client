@@ -111,7 +111,7 @@ public class ExactOnlineClient
 
 	private void CheckInitialized()
 	{
-		if (Division == 0 || _controllers is null)
+		if (Division is 0 || _controllers is null)
 		{
 			throw new InvalidOperationException("Please call InitializeDivisionAsync first or supply a valid division in the constructor.");
 		}
@@ -124,8 +124,8 @@ public class ExactOnlineClient
 			return Division;
 		}
 
-		var currentMe = await CurrentMeAsync(ct).ConfigureAwait(false);
-		if (currentMe != null)
+		if (await CurrentMeAsync(ct).ConfigureAwait(false)
+			is { } currentMe)
 		{
 			Division = currentMe.CurrentDivision;
 			return Division;
@@ -134,12 +134,12 @@ public class ExactOnlineClient
 		throw new Exception("Cannot get division. Please specify division explicitly via the constructor.");
 	}
 
-	private async Task<Me> CurrentMeAsync(CancellationToken ct)
+	private async Task<Me?> CurrentMeAsync(CancellationToken ct)
 	{
 		ApiConnection conn = new(_apiConnector, ExactOnlineApiUrl + "current/Me");
 		var response = await conn.GetAsync("$select=CurrentDivision", ct).ConfigureAwait(false);
 		response = ApiResponseCleaner.GetJsonArray(response);
 		var currentMe = EntityConverter.ConvertJsonArrayToObjectList<Me>(response);
-		return currentMe.FirstOrDefault();
+		return currentMe?.FirstOrDefault();
 	}
 }

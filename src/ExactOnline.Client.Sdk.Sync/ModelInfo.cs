@@ -69,7 +69,7 @@ public class ModelInfo
 	public string? IdentifierName => _identifierName.Value;
 	public TId? IdentifierValue<TModel, TId>(TModel entity)
 	{
-		if (IdentifierName == null)
+		if (IdentifierName is null)
 		{
 			return default;
 		}
@@ -101,7 +101,7 @@ public class ModelInfo
 		_timestampCastedToNullableLambda.Value as Expression<Func<TModel, long?>> ?? throw new InvalidOperationException("Timestamp casted to nullable lambda is not set.");
 
 	public static string ModifiedName => "Modified";
-	public bool HasModifiedProperty => _modifiedLambda.Value != null;
+	public bool HasModifiedProperty => _modifiedLambda.Value is { };
 	public Expression<Func<TModel, DateTime?>> ModifiedLambda<TModel>() =>
 		_modifiedLambda.Value as Expression<Func<TModel, DateTime?>> ?? throw new InvalidOperationException("Modified lambda is not set.");
 
@@ -147,7 +147,7 @@ public class ModelInfo
 
 	private Type? GetIdentifierType()
 	{
-		if (IdentifierName == null)
+		if (IdentifierName is null)
 		{
 			return null;
 		}
@@ -167,7 +167,7 @@ public class ModelInfo
 	// Generates an expression for "entity => entity.propertyName" or "entity => new { entity.propertyName1, entity.propertyName2 }" when dealing with a composite id
 	private LambdaExpression? LambdaForProperty(string? propertyName)
 	{
-		if (propertyName == null)
+		if (propertyName is null)
 		{
 			return null;
 		}
@@ -177,7 +177,7 @@ public class ModelInfo
 		if (propNames.Length == 1)
 		{
 			var propertyInfo = _modelType.GetProperty(propertyName);
-			if (propertyInfo == null)
+			if (propertyInfo is null)
 			{
 				return null;
 			}
@@ -199,16 +199,16 @@ public class ModelInfo
 	// Generates an expression for "entity => (TProperty?) entity.propertyName" when the property is not nullable, otherwise "entity => entity.propertyName"
 	private LambdaExpression? LambdaForPropertyCastedToNullable(string? propertyName)
 	{
-		if (propertyName == null)
+		if (propertyName is null)
 		{
 			return null;
 		}
 		var propertyInfo = _modelType.GetProperty(propertyName);
-		if (propertyInfo == null)
+		if (propertyInfo is null)
 		{
 			return null;
 		}
-		if (!propertyInfo.PropertyType.IsValueType || Nullable.GetUnderlyingType(propertyInfo.PropertyType) != null)
+		if (!propertyInfo.PropertyType.IsValueType || Nullable.GetUnderlyingType(propertyInfo.PropertyType) is { })
 		{
 			// Property is already nullable, no need to cast
 			return LambdaForProperty(propertyName);

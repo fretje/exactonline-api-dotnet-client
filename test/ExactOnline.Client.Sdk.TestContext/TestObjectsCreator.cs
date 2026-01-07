@@ -40,7 +40,7 @@ public class TestObjectsCreator
 
 	public async Task<ExactOnlineClient> GetClientAsync(CancellationToken ct = default)
 	{
-		if (_client == null)
+		if (_client is null)
 		{
 			_client = new(ExactOnlineUrl, GetOAuthAuthenticationToken, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, TestApp.CustomDescriptionLanguage);
 			_client.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
@@ -53,12 +53,12 @@ public class TestObjectsCreator
 
 	public async Task<int> GetCurrentDivisionAsync(CancellationToken ct = default)
 	{
-		if (_client == null)
+		if (_client is null)
 		{
 			await GetClientAsync(ct).ConfigureAwait(false);
 		}
 
-		if (_client != null)
+		if (_client is { })
 		{
 			return _client.Division;
 		}

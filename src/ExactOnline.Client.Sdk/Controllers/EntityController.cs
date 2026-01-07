@@ -52,7 +52,7 @@ public class EntityController(object entity, string keyName, string identifier, 
 		foreach (var property in writableProperties)
 		{
 			var value = property.GetValue(entity);
-			if (value != null && value.GetType().IsGenericType && value is IEnumerable enumerable)
+			if (value is IEnumerable enumerable && value.GetType().IsGenericType)
 			{
 				var elementType = value.GetType().GetGenericArguments()[0];
 				var listType = typeof(List<>).MakeGenericType(elementType);

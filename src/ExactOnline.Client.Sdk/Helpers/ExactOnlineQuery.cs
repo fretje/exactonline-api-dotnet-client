@@ -282,7 +282,7 @@ public class ExactOnlineQuery<T>(IController<T> controller)
 	/// Updates the specified entity
 	/// </summary>
 	public bool Update(T entity) =>
-		entity == null
+		entity is null
 			? throw new ArgumentException("Update entity: Entity cannot be null")
 			: _controller.Update(entity);
 
@@ -290,7 +290,7 @@ public class ExactOnlineQuery<T>(IController<T> controller)
 	/// Updates the specified entity
 	/// </summary>
 	public Task<bool> UpdateAsync(T entity, CancellationToken ct = default) =>
-		entity == null
+		entity is null
 			? throw new ArgumentException("Update entity: Entity cannot be null")
 			: _controller.UpdateAsync(entity, ct);
 
@@ -298,7 +298,7 @@ public class ExactOnlineQuery<T>(IController<T> controller)
 	/// Deletes the specified entity
 	/// </summary>
 	public bool Delete(T entity) =>
-		entity == null
+		entity is null
 			? throw new ArgumentException("Delete entity: Entity cannot be null")
 			: _controller.Delete(entity);
 
@@ -306,7 +306,7 @@ public class ExactOnlineQuery<T>(IController<T> controller)
 	/// Deletes the specified entity
 	/// </summary>
 	public Task<bool> DeleteAsync(T entity, CancellationToken ct = default) =>
-		entity == null
+		entity is null
 			? throw new ArgumentException("Delete entity: Entity cannot be null")
 			: _controller.DeleteAsync(entity, ct);
 
@@ -314,7 +314,7 @@ public class ExactOnlineQuery<T>(IController<T> controller)
 	/// Inserts the specified entity into Exact Online
 	/// </summary>
 	public bool Insert(ref T entity) =>
-		entity == null
+		entity is null
 			? throw new ArgumentException("Insert entity: Entity cannot be null")
 			: _controller.Create(ref entity);
 
@@ -322,7 +322,7 @@ public class ExactOnlineQuery<T>(IController<T> controller)
 	/// Inserts the specified entity into Exact Online
 	/// </summary>
 	public Task<T> InsertAsync(T entity, CancellationToken ct = default) =>
-		entity == null
+		entity is null
 			? throw new ArgumentException("Insert entity: Entity cannot be null")
 			: _controller.CreateAsync(entity, ct);
 

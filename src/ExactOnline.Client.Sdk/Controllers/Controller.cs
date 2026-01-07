@@ -31,7 +31,7 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 
 		// Find unique value of entity
 		var enumerable = attributes as IList<Attribute> ?? [.. attributes];
-		if (enumerable.Count == 0)
+		if (enumerable.Count is 0)
 		{
 			throw new Exception("Cannot find 'DataServiceKey' field. This entity cannot be managed by the Controller");
 		}
@@ -317,7 +317,7 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 	/// <returns>True if succeeded</returns>
 	public bool Update(T entity)
 	{
-		if (entity == null)
+		if (entity is null)
 		{
 			throw new ArgumentException("Controller Update: Entity cannot be null");
 		}
@@ -348,7 +348,7 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 	/// <returns>True if succeeded</returns>
 	public Task<bool> UpdateAsync(T entity, CancellationToken ct = default)
 	{
-		if (entity == null)
+		if (entity is null)
 		{
 			throw new ArgumentException("Controller Update: Entity cannot be null");
 		}
@@ -381,7 +381,7 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 	/// <returns>True if succeeded</returns>
 	public bool Delete(T entity)
 	{
-		if (entity == null)
+		if (entity is null)
 		{
 			throw new ArgumentException("Controller Delete: Entity cannot be null");
 		}
@@ -419,7 +419,7 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 	/// <returns>True if succeeded</returns>
 	public async Task<bool> DeleteAsync(T entity, CancellationToken ct = default)
 	{
-		if (entity == null)
+		if (entity is null)
 		{
 			throw new ArgumentException("Controller Delete: Entity cannot be null");
 		}
@@ -469,7 +469,7 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 	/// </summary>
 	public void AddEntitiesToManagedEntitiesCollection(IEnumerable<object> entities)
 	{
-		foreach (var entity in entities.Where(e => GetIdentifierValue(e) != null))
+		foreach (var entity in entities.Where(e => GetIdentifierValue(e) is { }))
 		{
 			AddEntityToManagedEntitiesCollection(entity);
 		}
@@ -504,7 +504,7 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 			{
 				foreach (var linkedEntity in (IEnumerable)field)
 				{
-					if (_getEntityManager != null)
+					if (_getEntityManager is { })
 					{
 						var controller = _getEntityManager(linkedEntity.GetType());
 						controller.AddEntityToManagedEntitiesCollection(linkedEntity);

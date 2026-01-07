@@ -20,7 +20,7 @@ public class ApiConnection : IApiConnection
 	/// <param name="baseUrl">The base url of the API (leave empty if included in the endpoint, but it's mandatory for connections to sync/bulk endpoints)</param>
 	public ApiConnection(IApiConnector conn, string endPoint, string? baseUrl = null)
 	{
-		if (conn != null && !string.IsNullOrEmpty(endPoint))
+		if (conn is { } && !string.IsNullOrEmpty(endPoint))
 		{
 			_connector = conn;
 			_endPoint = endPoint;

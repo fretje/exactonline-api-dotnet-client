@@ -33,7 +33,7 @@ public class ControllerList(IApiConnector connector, string baseurl)
 		var controller = (Controller<T>)_controllers[typename];
 
 		// If not exists: create
-		if (controller == null)
+		if (controller is null)
 		{
 			ApiConnection connection =
 				typename == typeof(Client.Models.Current.Me).FullName

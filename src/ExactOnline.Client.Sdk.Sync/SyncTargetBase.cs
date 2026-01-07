@@ -16,7 +16,7 @@ public abstract class SyncTargetBase : ISyncTarget
 	{
 		if (!controllerType.ContainsGenericParameters ||
 			controllerType.GetTypeInfo().GenericTypeParameters.Length != 1 ||
-			controllerType.GetConstructors().FirstOrDefault(c => ConstructorTakesArgs(c, controllerArgs)) == null)
+			controllerType.GetConstructors().FirstOrDefault(c => ConstructorTakesArgs(c, controllerArgs)) is null)
 		{
 			throw new Exception("Must provide an open generic type with 1 type parameters (TModel) and a constructor that takes the provided controllerArgs.");
 		}
@@ -35,7 +35,7 @@ public abstract class SyncTargetBase : ISyncTarget
 	}
 
 	protected virtual ISyncTargetController<TModel> CreateControllerFor<TModel>() =>
-		_controllerType == null
+		_controllerType is null
 			? throw new Exception("Must override CreateControllerFor<TModel> method, or provide a correct controllerType in the constructor.")
 			: (ISyncTargetController<TModel>)Activator.CreateInstance(
 				  _controllerType.MakeGenericType(typeof(TModel)), _controllerArgs);
@@ -51,8 +51,8 @@ public abstract class SyncTargetBase : ISyncTarget
 		{
 			var parameterType = parameters[i].ParameterType;
 			var arg = args[i];
-			if (arg == null && parameterType.IsValueType && Nullable.GetUnderlyingType(parameterType) == null ||
-				arg != null && !parameterType.IsAssignableFrom(arg.GetType()))
+			if (arg is null && parameterType.IsValueType && Nullable.GetUnderlyingType(parameterType) is null ||
+				arg is { } && !parameterType.IsAssignableFrom(arg.GetType()))
 			{
 				return false;
 			}

@@ -64,7 +64,7 @@ public class ExactOnlineJsonConverter : JsonConverter
 			var fieldValue = field.GetValue(value);
 			fieldValue = CheckDateFormat(fieldValue);
 
-			if (fieldValue != null && fieldValue.GetType().IsGenericType && fieldValue is IEnumerable enumerable)
+			if (fieldValue is IEnumerable enumerable && fieldValue.GetType().IsGenericType)
 			{
 				// Write property value for linked entities
 				WriteLinkedEntities(writer, fieldName, enumerable);
@@ -127,7 +127,7 @@ public class ExactOnlineJsonConverter : JsonConverter
 			foreach (var entity in collection)
 			{
 				var entityController = _getEntityControllerFunc(entity);
-				if (entityController == null || entityController.IsUpdated(entity))
+				if (entityController is null || entityController.IsUpdated(entity))
 				{
 					returnValue = true;
 				}

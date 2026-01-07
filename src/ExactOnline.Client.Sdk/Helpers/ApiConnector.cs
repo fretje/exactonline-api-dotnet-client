@@ -175,7 +175,7 @@ public partial class ApiConnector(Func<CancellationToken, Task<string>> accessTo
 
 	private async Task<HttpRequestMessage> CreateWebRequestAsync(string url, string? querystring, HttpMethod method, string? acceptContentType = "application/json", CancellationToken ct = default)
 	{
-		if (_minutelyRemaining == 0)
+		if (_minutelyRemaining is 0)
 		{
 			var minutelyWaitTime = GetMinutelyWaitTime();
 			LogWaitingForRateLimit(_log, minutelyWaitTime);
