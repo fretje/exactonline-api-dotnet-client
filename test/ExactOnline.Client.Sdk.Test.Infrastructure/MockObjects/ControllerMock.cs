@@ -41,7 +41,12 @@ public sealed class ControllerMock<T> : IController<T>
 	bool IController<T>.Delete(T entity) => true;
 	Task<bool> IController<T>.DeleteAsync(T entity, CancellationToken ct) => Task.FromResult((this as IController<T>).Delete(entity));
 
-	public int Count(string query) => 0;
+	public int Count(string query)
+	{
+		ODataQuery = query;
+		return 0;
+	}
+
 	public Task<int> CountAsync(string query, CancellationToken ct) => Task.FromResult(Count(query));
 
 	public bool IsManagedEntity(T entity) => true;

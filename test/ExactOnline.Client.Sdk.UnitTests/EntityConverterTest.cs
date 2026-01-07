@@ -224,15 +224,18 @@ public class EntityConverterTest
 	[TestMethod]
 	public void EntityConverter_ConvertJsonToDynamicObjectCollection_Succeeds()
 	{
-		var json = JsonFileReader.GetJsonFromFile("Response_Json_Array_GLAccount.txt");
-		json = ApiResponseCleaner.GetJsonArray(json);
+		var json = JsonFileReader.GetJsonFromFile("Json_Array_GLAccount.txt");
 
 		var list = EntityConverter.ConvertJsonToDynamicObjectList(json);
 		if (list.Count < 2)
 		{
-			throw new AssertFailedException("The list list doesn't contain two entities");
+			throw new AssertFailedException("The list doesn't contain two entities");
 		}
+		string balanceType = list[0].BalanceType;
+		Assert.AreEqual("W", balanceType);
 
+		list[0].BalanceType = "X";
+		Assert.AreEqual("X", (string)list[0].BalanceType);
 	}
 
 	[TestCategory("Unit Test")]
@@ -255,7 +258,7 @@ public class EntityConverterTest
 	[TestMethod]
 	public void EntityConverter_ConvertLinkedEntityJsonArrayToObjects_Succeeds()
 	{
-		var json = ApiResponseCleaner.GetJsonArray(JsonFileReader.GetJsonFromFile("Response_Json_Array_SalesInvoice_WithLinkedEntities.txt"));
+		var json = JsonFileReader.GetJsonFromFile("Json_Array_SalesInvoice_WithLinkedEntities.txt");
 		var invoices = EntityConverter.ConvertJsonArrayToObjectList<SalesInvoice>(json);
 
 		Assert.IsNotNull(invoices);
@@ -278,6 +281,24 @@ public class EntityConverterTest
 		Assert.IsNotNull(invoice);
 		Assert.IsNotNull(lines);
 		Assert.IsNotEmpty(lines);
+	}
+
+	[TestCategory("Unit Test")]
+	[TestMethod]
+	public void EntityConverter_ConvertJsonToObjectWithNull_ReturnsNull()
+	{
+		var action = () => EntityConverter.ConvertJsonToObject<SalesInvoice>(null!);
+
+		Assert.ThrowsExactly<IncorrectJsonException>(action);
+	}
+
+	[TestCategory("Unit Test")]
+	[TestMethod]
+	public void EntityConverter_ConvertJsonToObjectWithInvalidJson_ThrowsException()
+	{
+		var action = () => EntityConverter.ConvertJsonToObject<SalesInvoice>("invalid json");
+
+		Assert.Throws<IncorrectJsonException>(action);
 	}
 
 	[TestCategory("Unit Test")]
@@ -337,8 +358,6 @@ public class EntityConverterTest
 
 		const string expected = "{\"SalesInvoiceLines\": [{\"Description\": \"ChangedNewInvoiceForEntityWithCollection\"}]}";
 		Assert.AreEqual(expected, json);
-
-		throw new NotImplementedException();
 	}
 
 	[TestCategory("Unit Test")]

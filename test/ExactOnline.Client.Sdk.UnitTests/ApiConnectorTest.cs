@@ -8,31 +8,31 @@ namespace ExactOnline.Client.Sdk.UnitTests;
 [TestClass]
 public class ApiConnectorTest
 {
-	ApiConnector _connector = default!;
+	private ApiConnector _connector = null!;
 
 	private static Task<string> GetAccessToken(CancellationToken ct) => Task.FromResult("accessToken");
 
 	[TestInitialize]
 	public void Setup()
 	{
-		_connector = new(GetAccessToken, new HttpClient(), ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, ExactOnlineTest.CustomDescriptionLanguage);
+		_connector = new ApiConnector(GetAccessToken, new HttpClient(), ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
 		_connector.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
 	}
 
 	[TestMethod]
 	[TestCategory("Unit Test")]
 	public void ApiConnector_Constructor_WithoutDelegate_Fails() =>
-		Assert.Throws<ArgumentNullException>(() => new ApiConnector(null!, null!, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, ExactOnlineTest.CustomDescriptionLanguage));
+		Assert.Throws<ArgumentNullException>(() => new ApiConnector(null!, null!, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime));
 
 	[TestMethod]
 	[TestCategory("Unit Test")]
 	public void ApiConnector_Constructor_WithoutHttpClient_Fails() =>
-		Assert.Throws<ArgumentNullException>(() => new ApiConnector(GetAccessToken, null!, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, ExactOnlineTest.CustomDescriptionLanguage));
+		Assert.Throws<ArgumentNullException>(() => new ApiConnector(GetAccessToken, null!, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime));
 
 	[TestMethod]
 	[TestCategory("Unit Test")]
 	public void ApiConnector_Constructor_WithDelegateAndHttpClient_Succeeds() =>
-		_ = new ApiConnector(GetAccessToken, new(), ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, ExactOnlineTest.CustomDescriptionLanguage);
+		_ = new ApiConnector(GetAccessToken, new(), ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
 
 	[TestMethod]
 	[TestCategory("Unit Test")]
@@ -42,5 +42,5 @@ public class ApiConnectorTest
 	[TestMethod]
 	[TestCategory("Unit Test")]
 	public Task ApiConnector_DoDeleteRequest_With_EmptyValues_FailsAsync() =>
-		Assert.ThrowsAsync<BadRequestException>(() => _connector.DoDeleteRequestAsync("", default));
+		Assert.ThrowsAsync<BadRequestException>(() => _connector.DoDeleteRequestAsync("", CancellationToken.None));
 }

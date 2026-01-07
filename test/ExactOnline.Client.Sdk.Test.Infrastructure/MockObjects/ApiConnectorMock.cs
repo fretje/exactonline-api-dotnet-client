@@ -22,6 +22,15 @@ public class ApiConnectorMock : IApiConnector
 	public string DoDeleteRequest(string endpoint) => "";
 	public Task<string> DoDeleteRequestAsync(string endpoint, CancellationToken ct) => Task.FromResult(DoDeleteRequest(endpoint));
 
-	public string DoCleanRequest(string endpoint, string? oDataQuery) => "";
+	public string DoCleanRequest(string endpoint, string? oDataQuery)
+	{
+		if (endpoint.EndsWith("/$count"))
+		{
+			return "42";
+		}
+
+		return "";
+	}
+
 	public Task<string> DoCleanRequestAsync(string endpoint, string? oDataQuery, CancellationToken ct) => Task.FromResult(DoCleanRequest(endpoint, oDataQuery));
 }

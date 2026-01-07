@@ -17,7 +17,7 @@ namespace ExactOnline.Client.Sdk.Helpers;
 /// </remarks>
 /// <param name="accessTokenFunc">Delegate that provides a valid oAuth Access Token</param>
 /// <param name="client">The ExactOnlineClient this connector is associated with</param>
-public partial class ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc, HttpClient httpClient, int minutelyRemaining, DateTime minutelyResetTime, string? customDescriptionLanguage, ILogger? log = null) : IApiConnector
+public partial class ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc, HttpClient httpClient, int minutelyRemaining, DateTime minutelyResetTime, string? customDescriptionLanguage = null, ILogger? log = null) : IApiConnector
 {
 	private readonly Func<CancellationToken, Task<string>> _accessTokenFunc = accessTokenFunc ?? throw new ArgumentNullException(nameof(accessTokenFunc));
 	private readonly HttpClient _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));

@@ -1,45 +1,50 @@
-﻿using ExactOnline.Client.Models.CRM;
-using ExactOnline.Client.OAuth2.WinForms;
+﻿using ExactOnline.Client.OAuth2.WinForms;
 using ExactOnline.Client.Sdk.Controllers;
 using ExactOnline.Client.Sdk.Test.Infrastructure;
 
-namespace WinFormsApplication;
+namespace WinFormsApplicationCore;
 
 public partial class MainForm : Form
 {
+	private readonly ExactOnlineWinFormsAuthorizer _authorizer;
+	private readonly ExactOnlineClient _client;
+
 	public MainForm()
 	{
 		InitializeComponent();
+
+		countItemsButton.Click += (_, _) => CountItemsAsync();
+
+        // To make this work set the authorisation properties of your test app in the testapp.config.
+        TestApp testApp = new();
+
+		_authorizer = new(testApp.ClientId, testApp.ClientSecret, testApp.CallbackUrl, testApp.BaseUrl, ExactOnlineTest.AccessToken, ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessTokenExpiresAt);
+		_authorizer.TokensChanged += (_, e) => (ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessToken, ExactOnlineTest.AccessTokenExpiresAt) = (e.NewRefreshToken, e.NewAccessToken, e.NewExpiresAt);
+
+		_client = new(testApp.BaseUrl, _authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
+		_client.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
+	}
+
+	private async void CountItemsAsync()
+	{
+		var count = await _client
+			.For<ExactOnline.Client.Models.Logistics.Item>()
+			.CountAsync();
+
+		outputTextBox.AppendText($"Total items: {count}{Environment.NewLine}");
 	}
 
 	private async void MainForm_Load(object sender, EventArgs e)
 	{
-		// To make this work set the authorisation properties of your test app in the testapp.config.
-		TestApp testApp = new();
-
-		ExactOnlineWinFormsAuthorizer authorizer = new(testApp.ClientId, testApp.ClientSecret, testApp.CallbackUrl, ExactOnlineTest.Url, ExactOnlineTest.AccessToken, ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessTokenExpiresAt);
-		authorizer.TokensChanged += (_, e) => (ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessToken, ExactOnlineTest.AccessTokenExpiresAt) = (e.NewRefreshToken, e.NewAccessToken, e.NewExpiresAt);
-
 		try
 		{
-			ExactOnlineClient client = new(ExactOnlineTest.Url, authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
-			client.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
-			await client.InitializeDivisionAsync();
+			await _client.InitializeDivisionAsync();
 
-			// Get the Code and Name of a random account in the administration.
-			string[] fields = ["Code", "Name"];
-			var account = (await client.For<Account>().Top(1).Select(fields).GetAsync()).List.FirstOrDefault();
-			MessageBox.Show(account?.Name);
-
-			// Get transaction lines for a specific entry number.
-			//var transactionlines = await client.For<TransactionLine>()
-			//	.Select(ModelInfo.For<TransactionLine>().FieldNames())
-			//	.Where(t => t.EntryNumber, 22010134, OperatorEnum.Eq)
-			//	.GetAsync();
+			initializingLabel.Text = $"Exact Online initialized for division {_client.Division}";
 		}
 		catch (Exception ex)
 		{
-			MessageBox.Show(ex.ToString(), ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+			outputTextBox.AppendText($"Error initializing Exact Online: {ex.Message}{Environment.NewLine}");
 		}
 	}
 }

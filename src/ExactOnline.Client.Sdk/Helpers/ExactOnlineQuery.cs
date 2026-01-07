@@ -72,7 +72,7 @@ public class ExactOnlineQuery<T>(IController<T> controller)
 	/// Specify the fields to get from the API
 	/// </summary>
 	/// <param name="properties">The properties to select</param>
-	public ExactOnlineQuery<T> Select(params Expression<Func<T, object>>[] properties) =>
+	public ExactOnlineQuery<T> Select(params Expression<Func<T, object?>>[] properties) =>
 		Select(fields: [.. properties.Select(x => TransformExpressionToODataFormat(x.Body))]);
 
 	/// <summary>
@@ -121,7 +121,7 @@ public class ExactOnlineQuery<T>(IController<T> controller)
 	/// Specify the field to order by
 	/// </summary>
 	/// <param name="orderby"></param>
-	public ExactOnlineQuery<T> OrderBy(Expression<Func<T, object>> orderby) =>
+	public ExactOnlineQuery<T> OrderBy(Expression<Func<T, object?>> orderby) =>
 		OrderBy(TransformExpressionToODataFormat(orderby.Body));
 
 	/// <summary>
@@ -130,7 +130,7 @@ public class ExactOnlineQuery<T>(IController<T> controller)
 	/// <param name="orderby"></param>
 	public ExactOnlineQuery<T> OrderBy(params string[] orderby)
 	{
-		if (orderby != null && orderby.Length > 0)
+		if (orderby.Length > 0)
 		{
 			var orderbyclause = string.Join(",", orderby);
 

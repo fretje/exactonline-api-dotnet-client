@@ -20,12 +20,12 @@ public partial class MainForm : Form
 		// To make this work set the authorisation properties of your test app in the testapp.config.
 		TestApp testApp = new(@"..\..\..\..\testapp.config");
 
-		ExactOnlineWinFormsAuthorizer authorizer = new(testApp.ClientId, testApp.ClientSecret, testApp.CallbackUrl, ExactOnlineTest.Url, ExactOnlineTest.AccessToken, ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessTokenExpiresAt);
+        ExactOnlineWinFormsAuthorizer authorizer = new(testApp.ClientId, testApp.ClientSecret, testApp.CallbackUrl, testApp.BaseUrl, ExactOnlineTest.AccessToken, ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessTokenExpiresAt);
 		authorizer.TokensChanged += (_, e) => (ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessToken, ExactOnlineTest.AccessTokenExpiresAt) = (e.NewRefreshToken, e.NewAccessToken, e.NewExpiresAt);
 
 		try
 		{
-			ExactOnlineClient client = new(ExactOnlineTest.Url, authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
+            ExactOnlineClient client = new(testApp.BaseUrl, authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
 			client.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
 			await client.InitializeDivisionAsync();
 

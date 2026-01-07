@@ -49,6 +49,22 @@ public class ApiConnectionTest
 
 	[TestCategory("Unit Test")]
 	[TestMethod]
+	public void ApiConnection_Count_Succeeds()
+	{
+		var result = _conn.Count("$filter=Name+eq+'Test Testname'+and+Code+eq+'123'+and+Code+eq+'456'");
+		Assert.AreEqual(42, result);
+	}
+
+	[TestCategory("Unit Test")]
+	[TestMethod]
+	public async Task ApiConnection_CountAsync_Succeeds()
+	{
+		var result = await _conn.CountAsync("$filter=Name+eq+'Test Testname'+and+Code+eq+'123'+and+Code+eq+'456'");
+		Assert.AreEqual(42, result);
+	}
+
+	[TestCategory("Unit Test")]
+	[TestMethod]
 	public void ApiConnection_GetEntityWithGuidSpecified_Succeeds() =>
 		_conn.GetEntity("ID", "3c634e79-c4fe-44d2-9765-00b30573c2de", "");
 
@@ -85,6 +101,24 @@ public class ApiConnectionTest
 	[TestMethod]
 	public Task ApiConnection_GetEntity_WithoutKeynameAndGuidSpecified_FailsAsync() =>
 		Assert.ThrowsAsync<Exception>(() => _conn.GetEntityAsync("", "", "", TestContext.CancellationToken));
+
+	[TestCategory("Unit Test")]
+	[TestMethod]
+	public void ApiConnection_GetFile_SucceedsAsync()
+	{
+		var result = _conn.GetFile();
+		Assert.IsNotNull(result);
+		Assert.AreEqual(Stream.Null, result);
+	}
+
+	[TestCategory("Unit Test")]
+	[TestMethod]
+	public async Task ApiConnection_GetFileAsync_SucceedsAsync()
+	{
+		var result = await _conn.GetFileAsync(TestContext.CancellationToken);
+		Assert.IsNotNull(result);
+		Assert.AreEqual(Stream.Null, result);
+	}
 
 	[TestCategory("Unit Test")]
 	[TestMethod]

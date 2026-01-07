@@ -40,6 +40,61 @@ public class ExactOnlineQueryTest
 
 	[TestMethod]
 	[TestCategory("Unit Test")]
+	public async Task ExactOnlineQuery_TestOrderBy_SucceedsAsync()
+	{
+		await new ExactOnlineQuery<Account>(_controllerMock)
+			.Select(acc => acc.Code, acc => acc.Name)
+			.Where(acc => acc.Name, "Test Testname")
+			.OrderBy("Code", "Name")
+			.GetAsync(ct: TestContext.CancellationToken);
+
+		Assert.AreEqual("$filter=Name+eq+'Test Testname'&$select=Code,Name&$orderby=Code,Name", _controllerMock.ODataQuery);
+	}
+
+	[TestMethod]
+	[TestCategory("Unit Test")]
+	public async Task ExactOnlineQuery_Test_Multiple_OrderBy_SucceedsAsync()
+	{
+		await new ExactOnlineQuery<Account>(_controllerMock)
+			.Select(acc => acc.Code, acc => acc.Name)
+			.Where(acc => acc.Name, "Test Testname")
+			.OrderBy("Code")
+			.OrderBy("Name")
+			.GetAsync(ct: TestContext.CancellationToken);
+
+		Assert.AreEqual("$filter=Name+eq+'Test Testname'&$select=Code,Name&$orderby=Code,Name", _controllerMock.ODataQuery);
+	}
+
+	[TestMethod]
+	[TestCategory("Unit Test")]
+	public async Task ExactOnlineQuery_Test_Multiple_OrderByWithFunc_SucceedsAsync()
+	{
+		await new ExactOnlineQuery<Account>(_controllerMock)
+			.Select(acc => acc.Code, acc => acc.Name)
+			.Where(acc => acc.Name, "Test Testname")
+			.OrderBy(acc => acc.Code)
+			.OrderBy(acc => acc.Name)
+			.GetAsync(ct: TestContext.CancellationToken);
+
+		Assert.AreEqual("$filter=Name+eq+'Test Testname'&$select=Code,Name&$orderby=Code,Name", _controllerMock.ODataQuery);
+	}
+
+	[TestMethod]
+	[TestCategory("Unit Test")]
+	public async Task ExactOnlineQuery_TestWhereWithFunc_SucceedsAsync()
+	{
+		await new ExactOnlineQuery<Account>(_controllerMock)
+			.Select(["Code", "Name"])
+			.Where(acc => acc.Name, "Test Testname")
+			.And(acc => acc.Code, "123")
+			.And(acc => acc.Code, "456")
+			.GetAsync(ct: TestContext.CancellationToken);
+
+		Assert.AreEqual("$filter=Name+eq+'Test Testname'+and+Code+eq+'123'+and+Code+eq+'456'&$select=Code,Name", _controllerMock.ODataQuery);
+	}
+
+	[TestMethod]
+	[TestCategory("Unit Test")]
 	public async Task ExactOnlineQuery_TestAnd_WithCorrectString_SucceedsAsync()
 	{
 		await new ExactOnlineQuery<Account>(_controllerMock)
@@ -291,6 +346,33 @@ public class ExactOnlineQueryTest
 		const string expected = "$select=Description";
 		var query = _controllerMock.ODataQuery;
 		Assert.AreEqual(expected, query);
+	}
+
+
+	[TestMethod]
+	[TestCategory("Unit Test")]
+	public void ExactOnlineQuery_MultipleSelect_WithFunc_Succeeds()
+	{
+		var query = new ExactOnlineQuery<Account>(_controllerMock)
+			.Select(acc => acc.Name, acc => acc.AddressLine1);
+		_ = query.Get();
+
+		const string expected = "$select=Name,AddressLine1";
+		var result = _controllerMock.ODataQuery;
+		Assert.AreEqual(expected, result);
+	}
+
+	[TestMethod]
+	[TestCategory("Unit Test")]
+	public async Task ExactOnlineQuery_MultipleSelect_WithFunc_SucceedsAsync()
+	{
+		var query = new ExactOnlineQuery<Account>(_controllerMock)
+			.Select(acc => acc.Name, acc => acc.AddressLine1);
+		_ = await query.GetAsync(ct: TestContext.CancellationToken);
+
+		const string expected = "$select=Name,AddressLine1";
+		var result = _controllerMock.ODataQuery;
+		Assert.AreEqual(expected, result);
 	}
 
 	[TestMethod]
