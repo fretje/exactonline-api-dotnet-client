@@ -2,6 +2,7 @@
 using ExactOnline.Client.Sdk.Helpers;
 using ExactOnline.Client.Sdk.Models;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace ExactOnline.Client.Sdk.Controllers;
 
@@ -21,7 +22,7 @@ public class ExactOnlineClient
 
 	public EolResponseHeader EolResponseHeader => _apiConnector.EolResponseHeader;
 
-	public ILogger? Log { get; }
+	public ILogger Log { get; }
 
 	public event EventHandler<MinutelyChangedEventArgs> MinutelyChanged
 	{
@@ -54,6 +55,7 @@ public class ExactOnlineClient
 
 		ExactOnlineApiUrl = exactOnlineUrl + "api/v1/";
 
+		log ??= NullLogger.Instance;
 		_apiConnector = new(accesstokenFunc, httpClient ?? new(), minutelyRemaining, minutelyResetTime, customDescriptionLanguage, log);
 
 		Division = division;
