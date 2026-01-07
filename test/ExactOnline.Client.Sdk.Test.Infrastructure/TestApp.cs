@@ -25,12 +25,12 @@ public class TestApp
 	/// </summary>
 	public TestApp(string path = @"..\..\..\..\..\testapp.config")
 	{
-		var details = Array.Empty<string>();
-		if (File.Exists(path))
+		if (!File.Exists(path))
 		{
-			details = File.ReadAllLines(path);
+			throw new FileNotFoundException("Please create the testapp.config file in the root of the project. See testapp.config.example for an example.");
 		}
 
+		string[] details = File.ReadAllLines(path);
 		ClientId = GetSetting(details, 0, "00000000-0000-0000-0000-000000000000");
 		ClientSecret = GetSetting(details, 1, "secret");
 		CallbackUrl = new Uri(GetSetting(details, 2, "http://foo.bar"));

@@ -35,7 +35,7 @@ jobs:
         run: msbuild ExactOnline.Client.Sdk.sln /t:pack /p:Configuration=Release
 
       - name: Run unit tests
-        run: dotnet test test/ExactOnline.Client.Sdk.UnitTests/ --no-restore -p:TestTfmsInParallel=false -p:CollectCoverage=true -p:CoverletOutputFormat=opencover -p:CoverletOutput=out/.coverage/
+        run: dotnet test test/ExactOnline.Client.Sdk.UnitTests/ --no-restore -p:CollectCoverage=true -p:CoverletOutputFormat=opencover -p:CoverletOutput=out/.coverage/
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5

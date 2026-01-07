@@ -9,32 +9,31 @@ namespace ExactOnline.Client.Sdk.UnitTests;
 public class ApiConnectorTest
 {
 	private ApiConnector _connector = null!;
-	private TestApp _testApp = null!;
+	private const string CustomDescriptionLanguage = "nl-BE";
 
 	private static Task<string> GetAccessToken(CancellationToken ct) => Task.FromResult("accessToken");
 
 	[TestInitialize]
 	public void Setup()
 	{
-		_testApp = new TestApp();
-		_connector = new ApiConnector(GetAccessToken, new HttpClient(), ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, _testApp.CustomDescriptionLanguage);
+		_connector = new ApiConnector(GetAccessToken, new HttpClient(), ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, CustomDescriptionLanguage);
 		_connector.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
 	}
 
 	[TestMethod]
 	[TestCategory("Unit Test")]
 	public void ApiConnector_Constructor_WithoutDelegate_Fails() =>
-		Assert.Throws<ArgumentNullException>(() => new ApiConnector(null!, null!, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, _testApp.CustomDescriptionLanguage));
+		Assert.Throws<ArgumentNullException>(() => new ApiConnector(null!, null!, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, CustomDescriptionLanguage));
 
 	[TestMethod]
 	[TestCategory("Unit Test")]
 	public void ApiConnector_Constructor_WithoutHttpClient_Fails() =>
-		Assert.Throws<ArgumentNullException>(() => new ApiConnector(GetAccessToken, null!, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, _testApp.CustomDescriptionLanguage));
+		Assert.Throws<ArgumentNullException>(() => new ApiConnector(GetAccessToken, null!, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, CustomDescriptionLanguage));
 
 	[TestMethod]
 	[TestCategory("Unit Test")]
 	public void ApiConnector_Constructor_WithDelegateAndHttpClient_Succeeds() =>
-		_ = new ApiConnector(GetAccessToken, new HttpClient(), ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, _testApp.CustomDescriptionLanguage);
+		_ = new ApiConnector(GetAccessToken, new HttpClient(), ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, CustomDescriptionLanguage);
 
 	[TestMethod]
 	[TestCategory("Unit Test")]
