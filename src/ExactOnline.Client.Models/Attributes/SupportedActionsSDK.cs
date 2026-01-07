@@ -19,10 +19,7 @@ public sealed class SupportedActionsSDK(
 
 	public bool AllowsEmptySelect { get; } = allowsEmptySelect;
 
-	public static SupportedActionsSDK GetByType(Type type)
-	{
-		var actions = type.GetCustomAttribute<SupportedActionsSDK>();
-		actions ??= new(false, false, false, false);
-		return actions;
-	}
+	public static SupportedActionsSDK GetByType(Type type) =>
+		type.GetCustomAttribute<SupportedActionsSDK>()
+			?? new(false, false, false, false);
 }
