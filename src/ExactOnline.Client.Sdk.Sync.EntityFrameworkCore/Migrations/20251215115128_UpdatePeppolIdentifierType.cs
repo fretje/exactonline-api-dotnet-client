@@ -8,7 +8,8 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
     public partial class UpdatePeppolIdentifierType : Migration
     {
 		/// <inheritdoc />
-		protected override void Up(MigrationBuilder migrationBuilder) => migrationBuilder.AlterColumn<int>(
+		protected override void Up(MigrationBuilder migrationBuilder) =>
+			migrationBuilder.AlterColumn<int>(
 				name: "PeppolIdentifierType",
 				table: "Account",
 				type: "int",
@@ -18,7 +19,8 @@ namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 				oldDefaultValue: 0);
 
 		/// <inheritdoc />
-		protected override void Down(MigrationBuilder migrationBuilder) => migrationBuilder.AlterColumn<int>(
+		protected override void Down(MigrationBuilder migrationBuilder) =>
+			migrationBuilder.AlterColumn<int>(
 				name: "PeppolIdentifierType",
 				table: "Account",
 				type: "int",

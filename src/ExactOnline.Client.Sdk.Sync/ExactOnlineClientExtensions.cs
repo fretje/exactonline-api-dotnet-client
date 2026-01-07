@@ -13,7 +13,7 @@ public static class ExactOnlineClientExtensions
 			.GetMethods(BindingFlags.Public | BindingFlags.Static)
 			.Single(m => m.Name == methodName && m.GetGenericArguments().Length == 1);
 
-	public static SyncResult SynchronizeWith(this ExactOnlineClient client, ISyncTarget syncTarget, Type modelType, params string[]? fields) =>
+	public static SyncResult SynchronizeWith(this ExactOnlineClient client, ISyncTarget syncTarget, Type modelType, params string[] fields) =>
 		InvokeMethod<SyncResult>(_synchronizeWithMethod, modelType, client, syncTarget, fields);
 
 	public static Task<SyncResult> SynchronizeWithAsync(this ExactOnlineClient client, ISyncTarget syncTarget, Type modelType, string[]? fields = null, Action<int, int>? reportProgress = null, CancellationToken ct = default) =>
@@ -25,7 +25,7 @@ public static class ExactOnlineClientExtensions
 			.MakeGenericMethod(modelType)
 			.Invoke(null, parameters);
 
-	public static SyncResult SynchronizeWith<TModel>(this ExactOnlineClient client, ISyncTarget syncTarget, params string[]? fields)
+	public static SyncResult SynchronizeWith<TModel>(this ExactOnlineClient client, ISyncTarget syncTarget, params string[] fields)
 		where TModel : class =>
 		client.For<TModel>().Select(fields).SynchronizeWith(syncTarget, client, fields);
 

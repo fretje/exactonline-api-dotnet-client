@@ -38,8 +38,6 @@ public class TestApp
 		CustomDescriptionLanguage = GetSetting(details, 4, "nl-BE");
 	}
 
-	private static string GetSetting(string[] details, int index, string defaultValue)
-	{
-		return index < details.Length ? details[index] : defaultValue;
-	}
+	private static string GetSetting(string[] details, int index, string defaultValue) =>
+		index < details.Length ? details[index] : defaultValue;
 }
