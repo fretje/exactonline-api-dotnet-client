@@ -9,7 +9,7 @@ public class EntityFrameworkCoreTarget(string connectionString) : SyncTargetBase
 
 	public async Task InitializeDatabaseAsync(CancellationToken ct)
 	{
-		EntityFrameworkCoreDbContext db = new(new DbContextOptionsBuilder().UseSqlServer(_connectionString).Options);
+		using EntityFrameworkCoreDbContext db = new(new DbContextOptionsBuilder().UseSqlServer(_connectionString).Options);
 		await db.Database.MigrateAsync(ct).ConfigureAwait(false);
 	}
 
