@@ -4,9 +4,9 @@
 
 namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore.Migrations
 {
-    /// <inheritdoc />
-    public partial class UpdatePeppolIdentifierType : Migration
-    {
+	/// <inheritdoc />
+	public partial class UpdatePeppolIdentifierType : Migration
+	{
 		/// <inheritdoc />
 		protected override void Up(MigrationBuilder migrationBuilder) =>
 			migrationBuilder.AlterColumn<int>(
