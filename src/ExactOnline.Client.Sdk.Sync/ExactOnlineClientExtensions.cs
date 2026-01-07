@@ -31,5 +31,5 @@ public static class ExactOnlineClientExtensions
 
 	public static Task<SyncResult> SynchronizeWithAsync<TModel>(this ExactOnlineClient client, ISyncTarget syncTarget, string[]? fields = null, Action<int, int>? reportProgress = null, CancellationToken ct = default)
 		where TModel : class =>
-		client.For<TModel>().Select(fields).SynchronizeWithAsync(syncTarget, client, fields, reportProgress, ct);
+		client.For<TModel>().Select(fields ?? []).SynchronizeWithAsync(syncTarget, client, fields, reportProgress, ct);
 }
