@@ -269,8 +269,7 @@ public partial class ApiConnector(Func<CancellationToken, Task<string>> accessTo
 	private async Task ThrowSpecificExceptionAsync(HttpResponseMessage response)
 	{
 		var statusCode = response.StatusCode;
-		var messageFromServer = await new StreamReader(await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
-			.ReadToEndAsync().ConfigureAwait(false);
+		var messageFromServer = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 		
 		LogRequestFailed(_log, response.ReasonPhrase);
 		LogMessageFromServer(_log, messageFromServer);
