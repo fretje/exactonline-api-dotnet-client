@@ -80,7 +80,7 @@ public class EntityControllerTest
 
 		entityController.Update(invoice);
 		var data = controllerMock.Data;
-		Assert.AreEqual(@"{""Description"":""Description2"",""SalesInvoiceLines"":[{""Description"":""InvoiceLine2""}]}", data);
+		Assert.AreEqual("""{"Description":"Description2","SalesInvoiceLines":[{"Description":"InvoiceLine2"}]}""", data);
 	}
 
 	[TestMethod]
@@ -105,7 +105,7 @@ public class EntityControllerTest
 
 		await entityController.UpdateAsync(invoice, TestContext.CancellationToken);
 		var data = controllerMock.Data;
-		Assert.AreEqual(@"{""Description"":""Description2"",""SalesInvoiceLines"":[{""Description"":""InvoiceLine2""}]}", data);
+		Assert.AreEqual("""{"Description":"Description2","SalesInvoiceLines":[{"Description":"InvoiceLine2"}]}""", data);
 	}
 
 	[TestMethod]

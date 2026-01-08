@@ -134,7 +134,7 @@ public class EntityConverterTest
 	public void EntityConverter_ConvertDynamicObjectToJson_WithCorrectDynamicObject_Succeeds()
 	{
 		dynamic account = new { code = "123", description = "Test" };
-		const string jsonValue = @"{""code"":""123"",""description"":""Test""}";
+		const string jsonValue = """{"code":"123","description":"Test"}""";
 
 		string json = EntityConverter.ConvertDynamicObjectToJson(account);
 		Assert.AreEqual(jsonValue, json);
@@ -145,7 +145,7 @@ public class EntityConverterTest
 	public void EntityConverter_ConvertDynamicObjectToJson_WithEmptyDynamicObject_Succeeds()
 	{
 		dynamic account = new { };
-		const string jsonValue = @"{""code"":""123"",""description"":""Test""}";
+		const string jsonValue = """{"code":"123","description":"Test"}""";
 
 		string json = EntityConverter.ConvertDynamicObjectToJson(account);
 		Assert.AreNotEqual(jsonValue, json);
@@ -160,7 +160,7 @@ public class EntityConverterTest
 		{
 			BankAccountName = "value"
 		};
-		const string jsonValue = @"{""BankAccount"":""value""}";
+		const string jsonValue = """{"BankAccount":"value"}""";
 
 		var json = EntityConverter.ConvertObjectToJson(new BankAccount(), bankaccount, null);
 		Assert.AreEqual(jsonValue, json);
