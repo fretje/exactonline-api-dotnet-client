@@ -135,8 +135,7 @@ public static class ApiResponseCleaner
 			}
 			else if (entry.Value is JObject subObject
 				&& subObject.TryGetValue("results", out var subResults)
-				&& subResults is JArray subArray
-				
+				&& subResults is JArray subArray				
 				&& GetJsonFromArray(subArray) is { Length: > 0 } subJson) // Create linked entities json
 			{
 				json.Append('"').Append(entry.Key).Append("\":");
