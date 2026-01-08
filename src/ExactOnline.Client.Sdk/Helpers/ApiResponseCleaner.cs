@@ -117,7 +117,6 @@ public static class ApiResponseCleaner
 	private static string GetJsonFromObject(JObject jObject)
 	{
 		StringBuilder json = new("{");
-
 		foreach (var entry in jObject)
 		{
 			if (entry.Value is JValue jValue)
@@ -134,25 +133,19 @@ public static class ApiResponseCleaner
 				}
 				json.Append(',');
 			}
-			else if (entry.Value is JObject subcollection
-				&& subcollection.TryGetValue("results", out var resultsToken)
-				&& resultsToken is JArray results)
+			else if (entry.Value is JObject subObject
+				&& subObject.TryGetValue("results", out var subResults)
+				&& subResults is JArray subArray
+				
+				&& GetJsonFromArray(subArray) is { Length: > 0 } subJson) // Create linked entities json
 			{
-				// Create linked entities json
-				var subjson = GetJsonFromArray(results);
-
-				if (subjson.Length > 0)
-				{
-					json.Append('"').Append(entry.Key).Append("\":");
-					json.Append(subjson);
-					json.Append(',');
-				}
+				json.Append('"').Append(entry.Key).Append("\":");
+				json.Append(subJson);
+				json.Append(',');
 			}
 		}
-
-		json.Remove(json.Length - 1, 1); // Remove last comma
+		json.Length -= 1; // Remove last comma
 		json.Append('}');
-
 		return json.ToString();
 	}
 

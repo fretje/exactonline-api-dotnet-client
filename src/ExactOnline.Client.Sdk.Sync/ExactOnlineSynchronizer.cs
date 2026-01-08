@@ -13,8 +13,8 @@ public static class ExactOnlineSynchronizer
 	private static bool SupportsModelType(Type type)
 	{
 		var modelInfo = ModelInfo.For(type);
-		return (modelInfo.SupportsRead || modelInfo.SupportsBulk || modelInfo.SupportsSync) &&
-			modelInfo.IdentifierName is { } && // We only support entities that have an identifier
-			type != typeof(Client.Models.Logistics.StockPosition); // StockPosition is a function
+		return (modelInfo.SupportsRead || modelInfo.SupportsBulk || modelInfo.SupportsSync)
+			&& modelInfo.IdentifierName is { } // We only support entities that have an identifier
+			&& type != typeof(Client.Models.Logistics.StockPosition); // StockPosition is a function
 	}
 }

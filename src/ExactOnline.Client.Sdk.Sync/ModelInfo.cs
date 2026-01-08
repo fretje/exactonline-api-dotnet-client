@@ -109,18 +109,18 @@ public class ModelInfo
 	public string[] FieldNames(bool forSync = false) => [.. Fields(forSync).Select(f => f.Name)];
 
 	public bool HasDeletedEntityType =>
-		_modelType == typeof(Client.Models.CRM.Account) ||
-		_modelType == typeof(Client.Models.CRM.Address) ||
-		_modelType == typeof(Client.Models.CRM.Contact) ||
-		_modelType == typeof(Client.Models.CRM.Quotation) ||
-		_modelType == typeof(Client.Models.Documents.Document) ||
-		_modelType == typeof(Client.Models.Documents.DocumentAttachment) ||
-		_modelType == typeof(Client.Models.Financial.GLAccount) ||
-		_modelType == typeof(Client.Models.FinancialTransaction.TransactionLine) ||
-		_modelType == typeof(Client.Models.Logistics.SalesItemPrice) ||
-		_modelType == typeof(Client.Models.Logistics.Item) ||
-		_modelType == typeof(Client.Models.SalesOrder.SalesOrder) ||
-		_modelType == typeof(Client.Models.SalesInvoice.SalesInvoice);
+		_modelType == typeof(Client.Models.CRM.Account)
+		|| _modelType == typeof(Client.Models.CRM.Address)
+		|| _modelType == typeof(Client.Models.CRM.Contact)
+		|| _modelType == typeof(Client.Models.CRM.Quotation)
+		|| _modelType == typeof(Client.Models.Documents.Document)
+		|| _modelType == typeof(Client.Models.Documents.DocumentAttachment)
+		|| _modelType == typeof(Client.Models.Financial.GLAccount)
+		|| _modelType == typeof(Client.Models.FinancialTransaction.TransactionLine)
+		|| _modelType == typeof(Client.Models.Logistics.SalesItemPrice)
+		|| _modelType == typeof(Client.Models.Logistics.Item)
+		|| _modelType == typeof(Client.Models.SalesOrder.SalesOrder)
+		|| _modelType == typeof(Client.Models.SalesInvoice.SalesInvoice);
 	public EntityType DeletedEntityType =>
 		_modelType == typeof(Client.Models.CRM.Account) ? EntityType.Accounts
 		: _modelType == typeof(Client.Models.CRM.Address) ? EntityType.Addresses
@@ -218,26 +218,26 @@ public class ModelInfo
 	}
 
 	private FieldInfo[] GetFields() =>
-		[.. from p in _modelType.GetProperties()
-			where p.PropertyType == typeof(string) || !typeof(IEnumerable).IsAssignableFrom(p.PropertyType)
-			let fieldName = p.GetCustomAttribute<JsonPropertyAttribute>()?.PropertyName ?? p.Name
+		[.. from property in _modelType.GetProperties()
+			where property.PropertyType == typeof(string) || !typeof(IEnumerable).IsAssignableFrom(property.PropertyType)
+			let fieldName = property.GetCustomAttribute<JsonPropertyAttribute>()?.PropertyName ?? property.Name
 			select new FieldInfo(
 				fieldName,
-				p,
+				property,
 				IdentifierName?.Split(',')?.Any(idName => idName == fieldName) ?? false)];
 
 	private FieldInfo[] FieldsForSync() =>
 		[.. _fields.Value.Where(field =>
-			!(_modelType == typeof(Client.Models.Manufacturing.ShopOrderMaterialPlanDetail) &&
-					field.Name == "Calculator" ||
-			  _modelType == typeof(Client.Models.CRM.Quotation) &&
-					field.Name == "QuotationLines" ||
-			  _modelType == typeof(Client.Models.SalesInvoice.SalesInvoice) &&
-					field.Name == "SalesInvoiceLines" ||
-			  _modelType == typeof(Client.Models.SalesOrder.GoodsDelivery) &&
-					field.Name == "GoodsDeliveryLines" ||
-			  _modelType == typeof(Client.Models.SalesOrder.SalesOrder) &&
-					field.Name == "SalesOrderLines" ||
-			  _modelType == typeof(Client.Models.SalesOrder.SalesOrderLine) &&
-					(field.Name == "QuantityDelivered" || field.Name == "QuantityInvoiced" || field.Name == "Margin")))];
+			!((_modelType == typeof(Client.Models.Manufacturing.ShopOrderMaterialPlanDetail)
+				&& field.Name == "Calculator")
+			|| (_modelType == typeof(Client.Models.CRM.Quotation)
+				&& field.Name == "QuotationLines")
+			|| (_modelType == typeof(Client.Models.SalesInvoice.SalesInvoice)
+				&& field.Name == "SalesInvoiceLines")
+			|| (_modelType == typeof(Client.Models.SalesOrder.GoodsDelivery)
+				&& field.Name == "GoodsDeliveryLines")
+			|| (_modelType == typeof(Client.Models.SalesOrder.SalesOrder)
+				&& field.Name == "SalesOrderLines")
+			|| (_modelType == typeof(Client.Models.SalesOrder.SalesOrderLine)
+				&& (field.Name == "QuantityDelivered" || field.Name == "QuantityInvoiced" || field.Name == "Margin"))))];
 }

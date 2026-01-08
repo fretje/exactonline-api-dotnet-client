@@ -51,8 +51,8 @@ public abstract class SyncTargetBase : ISyncTarget
 		{
 			var parameterType = parameters[i].ParameterType;
 			var arg = args[i];
-			if (arg is null && parameterType.IsValueType && Nullable.GetUnderlyingType(parameterType) is null ||
-				arg is { } && !parameterType.IsAssignableFrom(arg.GetType()))
+			if ((arg is null && parameterType.IsValueType && Nullable.GetUnderlyingType(parameterType) is null)
+				|| (arg is { } && !parameterType.IsAssignableFrom(arg.GetType())))
 			{
 				return false;
 			}

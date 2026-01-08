@@ -125,9 +125,9 @@ public class ExactOnlineClient
 		}
 
 		if (await CurrentMeAsync(ct).ConfigureAwait(false)
-			is { } currentMe)
+			is { CurrentDivision: int division })
 		{
-			Division = currentMe.CurrentDivision;
+			Division = division;
 			return Division;
 		}
 
