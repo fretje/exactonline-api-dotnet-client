@@ -15,7 +15,7 @@ public class RobustEndpoints
 	[TestInitialize]
 	public async Task InitializeSharedTestObjects()
 	{
-		_toc = new TestObjectsCreator();
+		_toc = new();
 		_currentDivision = (await _toc.GetClientAsync()).Division;
 	}
 
@@ -23,7 +23,7 @@ public class RobustEndpoints
 	[TestCategory("User Acceptance Tests")]
 	public async Task TestWithoutDivision()
 	{
-		var client = new ExactOnlineClient(TestObjectsCreator.ExactOnlineUrl, TestObjectsCreator.GetOAuthAuthenticationToken, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
+		ExactOnlineClient client = new(TestObjectsCreator.ExactOnlineUrl, TestObjectsCreator.GetOAuthAuthenticationToken, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
 		client.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
 		await client.InitializeDivisionAsync(TestContext.CancellationToken);
 		client.For<Account>().Select("Code").Get();
@@ -33,7 +33,7 @@ public class RobustEndpoints
 	[TestCategory("User Acceptance Tests")]
 	public void TestWithDivision()
 	{
-		var client = new ExactOnlineClient(TestObjectsCreator.ExactOnlineUrl, _currentDivision, TestObjectsCreator.GetOAuthAuthenticationToken, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
+		ExactOnlineClient client = new(TestObjectsCreator.ExactOnlineUrl, _currentDivision, TestObjectsCreator.GetOAuthAuthenticationToken, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
 		client.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
 		client.For<Account>().Select("Code").Get();
 	}
@@ -42,7 +42,7 @@ public class RobustEndpoints
 	[TestCategory("User Acceptance Tests")]
 	public void TestWithSlash()
 	{
-		var client = new ExactOnlineClient($"{TestObjectsCreator.ExactOnlineUrl}/", _currentDivision, TestObjectsCreator.GetOAuthAuthenticationToken, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
+		ExactOnlineClient client = new($"{TestObjectsCreator.ExactOnlineUrl}/", _currentDivision, TestObjectsCreator.GetOAuthAuthenticationToken, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime);
 		client.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
 		client.For<Account>().Select("Code").Get();
 	}

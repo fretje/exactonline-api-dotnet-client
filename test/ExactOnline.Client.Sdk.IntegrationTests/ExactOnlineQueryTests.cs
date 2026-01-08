@@ -19,7 +19,7 @@ public class ExactOnlineQueryTests
 			.Select("Code")
 			.Get();
 
-		if (accounts.Count == 0)
+		if (accounts.Count is 0)
 		{
 			throw new Exception("The collection of Account entities is empty");
 		}
@@ -36,7 +36,7 @@ public class ExactOnlineQueryTests
 			.Where($"Description+eq+'{TestObjectsCreator.SpecificGLAccountDescription}'")
 			.Get();
 
-		if (accounts.Count == 0)
+		if (accounts.Count is 0)
 		{
 			throw new Exception("The collection of Account entities is empty");
 		}
@@ -54,7 +54,7 @@ public class ExactOnlineQueryTests
 			.And($"Code+eq+'{TestObjectsCreator.SpecificGLAccountCode}'")
 			.Get();
 
-		if (accounts.Count == 0)
+		if (accounts.Count is 0)
 		{
 			throw new Exception("The collection of Account entities is empty");
 		}

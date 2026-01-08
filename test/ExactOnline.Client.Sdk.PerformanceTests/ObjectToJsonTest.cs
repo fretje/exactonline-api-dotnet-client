@@ -32,28 +32,28 @@ public class ObjectToJsonTest
 		for (var i = 0; i < 100; i++)
 		{
 			// Create Object
-			var newInvoice = new SalesInvoice
+			SalesInvoice newInvoice = new()
 			{
 				Currency = "EUR",
-				OrderDate = new DateTime(2012, 10, 26),
-				InvoiceTo = new Guid("3734121e-1544-4b77-9ae2-7203e9bd6046"),
+				OrderDate = new(2012, 10, 26),
+				InvoiceTo = new("3734121e-1544-4b77-9ae2-7203e9bd6046"),
 				Journal = "50",
-				OrderedBy = new Guid("3734121e-1544-4b77-9ae2-7203e9bd6046"),
+				OrderedBy = new("3734121e-1544-4b77-9ae2-7203e9bd6046"),
 				Description = "New invoice for Entity With Collection"
 			};
 
-			var newInvoiceLine = new SalesInvoiceLine
+			SalesInvoiceLine newInvoiceLine = new()
 			{
 				Description = "New invoice line for Entity With Collection",
-				Item = new Guid("4f68481a-7a2c-4fbc-a3a0-0c494df3fa0d")
+				Item = new("4f68481a-7a2c-4fbc-a3a0-0c494df3fa0d")
 			};
 
-			var invoicelines = new List<SalesInvoiceLine> { newInvoiceLine };
+			List<SalesInvoiceLine> invoicelines = [newInvoiceLine];
 			newInvoice.SalesInvoiceLines = invoicelines;
 
 			// Set Mock Connection and Create object
-			var controllerMock = new ApiConnectionEntityControllerMock();
-			var controller = new Controller<SalesInvoice>(controllerMock);
+			ApiConnectionEntityControllerMock controllerMock = new();
+			Controller<SalesInvoice> controller = new(controllerMock);
 			controller.Create(ref newInvoice);
 		}
 	}
@@ -63,19 +63,19 @@ public class ObjectToJsonTest
 		for (var i = 0; i < 100; i++)
 		{
 			// Create Object
-			var newInvoice = new SalesInvoice
+			SalesInvoice newInvoice = new()
 			{
 				Currency = "EUR",
-				OrderDate = new DateTime(2012, 10, 26),
-				InvoiceTo = new Guid("3734121e-1544-4b77-9ae2-7203e9bd6046"),
+				OrderDate = new(2012, 10, 26),
+				InvoiceTo = new("3734121e-1544-4b77-9ae2-7203e9bd6046"),
 				Journal = "50",
-				OrderedBy = new Guid("3734121e-1544-4b77-9ae2-7203e9bd6046"),
+				OrderedBy = new("3734121e-1544-4b77-9ae2-7203e9bd6046"),
 				Description = "New invoice for Entity With Collection"
 			};
 
 			// Set Mock Connection and Create object
-			var controllerMock = new ApiConnectionEntityControllerMock();
-			var controller = new Controller<SalesInvoice>(controllerMock);
+			ApiConnectionEntityControllerMock controllerMock = new();
+			Controller<SalesInvoice> controller = new(controllerMock);
 			controller.Create(ref newInvoice);
 		}
 	}

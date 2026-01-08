@@ -9,7 +9,7 @@ public class ExactOnlineWinFormsAuthorizer(string clientId, string clientSecret,
 		{
 			var authorizationUri = await GetLoginLinkUriAsync(ct: ct);
 
-			var loginDialog = new LoginForm(new(authorizationUri), new(Configuration.RedirectUri));
+			LoginForm loginDialog = new(new(authorizationUri), new(Configuration.RedirectUri));
 
 			loginDialog.ShowDialog();
 

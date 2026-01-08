@@ -33,16 +33,16 @@ public class ControllerList(IApiConnector connector, string baseurl)
 		var controller = (Controller<T>)_controllers[typename];
 
 		// If not exists: create
-		if (controller == null)
+		if (controller is null)
 		{
-			var connection =
+			ApiConnection connection =
 				typename == typeof(Client.Models.Current.Me).FullName
-					? new ApiConnection(_connector, "system/Me", _baseUrl)
+					? new(_connector, "system/Me", _baseUrl)
 					: _services.TryGetValue(typename, out string value)
-						? new ApiConnection(_connector, value, _baseUrl)
+						? new(_connector, value, _baseUrl)
 						: throw new InvalidOperationException("Specified entity is not known in Exact Online. Please check the reference documentation");
 
-			controller = new Controller<T>(connection, GetEntityManager);
+			controller = new(connection, GetEntityManager);
 
 			_controllers.Add(typename, controller);
 		}

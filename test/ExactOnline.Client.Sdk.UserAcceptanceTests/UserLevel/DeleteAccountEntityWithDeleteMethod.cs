@@ -14,7 +14,7 @@ public class DeleteAccountEntityWithDeleteMethod
 		var client = await new TestObjectsCreator().GetClientAsync(TestContext.CancellationToken);
 
 		// Create new account
-		var newAccount = new Account { Name = "Test account" };
+		Account newAccount = new() { Name = "Test account" };
 
 		if (client.For<Account>().Insert(ref newAccount))
 		{

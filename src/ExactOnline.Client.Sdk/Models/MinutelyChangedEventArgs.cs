@@ -1,10 +1,7 @@
 ﻿namespace ExactOnline.Client.Sdk.Models;
 
-public class MinutelyChangedEventArgs : EventArgs
+public class MinutelyChangedEventArgs(int newRemaining, DateTime newResetTime) : EventArgs
 {
-	public MinutelyChangedEventArgs(int newRemaining, DateTime newResetTime) =>
-		(NewRemaining, NewResetTime) = (newRemaining, newResetTime);
-
-	public int NewRemaining { get; }
-	public DateTime NewResetTime { get; }
+	public int NewRemaining { get; } = newRemaining;
+	public DateTime NewResetTime { get; } = newResetTime;
 }

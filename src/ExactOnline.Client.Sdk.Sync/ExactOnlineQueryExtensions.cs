@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ExactOnline.Client.Sdk.Sync;
 
-public static class ExactOnlineQueryExtensions
+public static partial class ExactOnlineQueryExtensions
 {
 	public static SyncResult SynchronizeWith<TModel>(this ExactOnlineQuery<TModel> query, ISyncTarget syncTarget, ExactOnlineClient client, string[]? fields = null)
 		where TModel : class
@@ -15,9 +15,9 @@ public static class ExactOnlineQueryExtensions
 		var modelInfo = ModelInfo.For<TModel>();
 		var endpointType = GetEndpointType(modelInfo);
 		var targetController = syncTarget.ControllerFor<TModel>();
-		var result = new SyncResult(typeof(TModel), endpointType);
+		SyncResult result = new(typeof(TModel), endpointType);
 		var maxTimestamp = 0L;
-		var maxModified = default(DateTime?);
+		DateTime? maxModified = null;
 
 		if (endpointType == EndpointTypeEnum.Sync)
 		{
@@ -69,7 +69,7 @@ public static class ExactOnlineQueryExtensions
 			}
 		}
 
-		client.Log?.LogInformation("ExactOnline Sdk: {SyncResult}", result);
+		LogSyncResult(client.Log, result);
 
 		return result;
 	}
@@ -80,9 +80,9 @@ public static class ExactOnlineQueryExtensions
 		var modelInfo = ModelInfo.For<TModel>();
 		var endpointType = GetEndpointType(modelInfo);
 		var targetController = syncTarget.ControllerFor<TModel>();
-		var result = new SyncResult(typeof(TModel), endpointType);
+		SyncResult result = new(typeof(TModel), endpointType);
 		var maxTimestamp = 0L;
-		var maxModified = default(DateTime?);
+		DateTime? maxModified = null;
 
 		if (endpointType == EndpointTypeEnum.Sync)
 		{
@@ -145,7 +145,7 @@ public static class ExactOnlineQueryExtensions
 			}
 		}
 
-		client.Log?.LogInformation("ExactOnline Sdk: {SyncResult}", result);
+		LogSyncResult(client.Log, result);
 
 		return result;
 	}
@@ -207,5 +207,8 @@ public static class ExactOnlineQueryExtensions
 			.Select("EntityKey");
 
 	private static Guid[] ToEntityKeyArray(this IList<Deleted> deleted) =>
-		deleted.Select(d => d.EntityKey).ToArray();
+		[.. deleted.Select(d => d.EntityKey)];
+
+	[LoggerMessage(EventId = 100, Level = LogLevel.Information, Message = "ExactOnline Sdk: {SyncResult}")]
+	private static partial void LogSyncResult(ILogger logger, SyncResult syncResult);
 }

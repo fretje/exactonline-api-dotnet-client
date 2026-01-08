@@ -3,18 +3,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore;
 
-public class EntityFrameworkCoreTargetController<TModel, TId>
-	: SyncTargetControllerBase<TModel>
+public class EntityFrameworkCoreTargetController<TModel, TId>(string nameOrConnectionString)
+	: SyncTargetControllerBase<TModel>()
 	where TModel : class
 {
-	private readonly string _nameOrConnectionString;
-
-	public EntityFrameworkCoreTargetController(string nameOrConnectionString)
-		: base() => _nameOrConnectionString = nameOrConnectionString;
+	private readonly string _nameOrConnectionString = nameOrConnectionString;
 
 	public override long GetMaxTimestamp()
 	{
-		using var db = new EntityFrameworkCoreDbContext(new DbContextOptionsBuilder().UseSqlServer(_nameOrConnectionString).Options);
+		using EntityFrameworkCoreDbContext db = new(new DbContextOptionsBuilder().UseSqlServer(_nameOrConnectionString).Options);
 
 		return db.Set<TModel>()
 			.Select(ModelInfo.TimestampCastedToNullableLambda<TModel>())
@@ -23,7 +20,7 @@ public class EntityFrameworkCoreTargetController<TModel, TId>
 	
 	public override async Task<long> GetMaxTimestampAsync(CancellationToken ct)
 	{
-		using var db = new EntityFrameworkCoreDbContext(new DbContextOptionsBuilder().UseSqlServer(_nameOrConnectionString).Options);
+		using EntityFrameworkCoreDbContext db = new(new DbContextOptionsBuilder().UseSqlServer(_nameOrConnectionString).Options);
 
 		return await db.Set<TModel>()
 			.Select(ModelInfo.TimestampCastedToNullableLambda<TModel>())
@@ -32,7 +29,7 @@ public class EntityFrameworkCoreTargetController<TModel, TId>
 
 	public override DateTime? GetMaxModified()
 	{
-		using var db = new EntityFrameworkCoreDbContext(new DbContextOptionsBuilder().UseSqlServer(_nameOrConnectionString).Options);
+		using EntityFrameworkCoreDbContext db = new(new DbContextOptionsBuilder().UseSqlServer(_nameOrConnectionString).Options);
 
 		return db.Set<TModel>()
 			.Select(ModelInfo.ModifiedLambda<TModel>())
@@ -41,7 +38,7 @@ public class EntityFrameworkCoreTargetController<TModel, TId>
 
 	public override async Task<DateTime?> GetMaxModifiedAsync(CancellationToken ct)
 	{
-		using var db = new EntityFrameworkCoreDbContext(new DbContextOptionsBuilder().UseSqlServer(_nameOrConnectionString).Options);
+		using EntityFrameworkCoreDbContext db = new(new DbContextOptionsBuilder().UseSqlServer(_nameOrConnectionString).Options);
 
 		return await db.Set<TModel>()
 			.Select(ModelInfo.ModifiedLambda<TModel>())
@@ -50,7 +47,7 @@ public class EntityFrameworkCoreTargetController<TModel, TId>
 
 	public override int CreateOrUpdateEntities(List<TModel> entities, string[] fields)
 	{
-		using var db = new EntityFrameworkCoreDbContext(new DbContextOptionsBuilder().UseSqlServer(_nameOrConnectionString).Options);
+		using EntityFrameworkCoreDbContext db = new(new DbContextOptionsBuilder().UseSqlServer(_nameOrConnectionString).Options);
 
 		CreateOrUpdateEntities(entities, db, GetExistingIds());
 
@@ -59,7 +56,7 @@ public class EntityFrameworkCoreTargetController<TModel, TId>
 
 	public override async Task<int> CreateOrUpdateEntitiesAsync(List<TModel> entities, string[] fields, CancellationToken ct)
 	{
-		using var db = new EntityFrameworkCoreDbContext(new DbContextOptionsBuilder().UseSqlServer(_nameOrConnectionString).Options);
+		using EntityFrameworkCoreDbContext db = new(new DbContextOptionsBuilder().UseSqlServer(_nameOrConnectionString).Options);
 
 		CreateOrUpdateEntities(entities, db, await GetExistingIdsAsync(ct).ConfigureAwait(false));
 
@@ -68,14 +65,14 @@ public class EntityFrameworkCoreTargetController<TModel, TId>
 
 	private TId[] GetExistingIds()
 	{
-		using var db = new EntityFrameworkCoreDbContext(new DbContextOptionsBuilder().UseSqlServer(_nameOrConnectionString).Options);
+		using EntityFrameworkCoreDbContext db = new(new DbContextOptionsBuilder().UseSqlServer(_nameOrConnectionString).Options);
 
 		return [.. db.Set<TModel>().Select(ModelInfo.IdentifierLambda<TModel, TId>())];
 	}
 
 	private async Task<TId[]> GetExistingIdsAsync(CancellationToken ct)
 	{
-		using var db = new EntityFrameworkCoreDbContext(new DbContextOptionsBuilder().UseSqlServer(_nameOrConnectionString).Options);
+		using EntityFrameworkCoreDbContext db = new(new DbContextOptionsBuilder().UseSqlServer(_nameOrConnectionString).Options);
 
 		return await db.Set<TModel>()
 			.Select(ModelInfo.IdentifierLambda<TModel, TId>())
@@ -93,7 +90,7 @@ public class EntityFrameworkCoreTargetController<TModel, TId>
 
 	public override int DeleteEntities(Guid[] deleted)
 	{
-		using var db = new EntityFrameworkCoreDbContext(new DbContextOptionsBuilder().UseSqlServer(_nameOrConnectionString).Options);
+		using EntityFrameworkCoreDbContext db = new(new DbContextOptionsBuilder().UseSqlServer(_nameOrConnectionString).Options);
 
 		DeleteEntities(deleted, db);
 
@@ -102,7 +99,7 @@ public class EntityFrameworkCoreTargetController<TModel, TId>
 
 	public override async Task<int> DeleteEntitiesAsync(Guid[] deleted, CancellationToken ct)
 	{
-		using var db = new EntityFrameworkCoreDbContext(new DbContextOptionsBuilder().UseSqlServer(_nameOrConnectionString).Options);
+		using EntityFrameworkCoreDbContext db = new(new DbContextOptionsBuilder().UseSqlServer(_nameOrConnectionString).Options);
 
 		DeleteEntities(deleted, db);
 

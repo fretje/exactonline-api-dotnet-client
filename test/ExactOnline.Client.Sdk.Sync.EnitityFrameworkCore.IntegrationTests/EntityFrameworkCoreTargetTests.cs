@@ -10,7 +10,7 @@ public class EntityFrameworkCoreTargetTests
 	public async Task ShouldInitializeDatabase()
 	{
 		var connectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=ExactOnlineClientSdkSyncTest;Integrated Security=True";
-		var sut = new EntityFrameworkCoreTarget(connectionString);
+		EntityFrameworkCoreTarget sut = new(connectionString);
 
 		await sut.InitializeDatabaseAsync(Xunit.TestContext.Current.CancellationToken);
 
@@ -21,7 +21,7 @@ public class EntityFrameworkCoreTargetTests
 	public async Task ShouldSynchronizeTable()
 	{
 		var connectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=ExactOnlineClientSdkSyncTest;Integrated Security=True";
-		var target = new EntityFrameworkCoreTarget(connectionString);
+		EntityFrameworkCoreTarget target = new(connectionString);
 		await target.InitializeDatabaseAsync(default);
 
 		var client = await new TestObjectsCreator().GetClientAsync();

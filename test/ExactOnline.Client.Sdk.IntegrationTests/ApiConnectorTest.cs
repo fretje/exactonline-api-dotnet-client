@@ -15,7 +15,7 @@ public class ApiConnectorTest
 	[TestInitialize]
 	public async Task Setup()
 	{
-		_toc = new TestObjectsCreator();
+		_toc = new();
 		_currentDivision = await _toc.GetCurrentDivisionAsync();
 	}
 
@@ -27,7 +27,7 @@ public class ApiConnectorTest
 	public void DoRequest_DoNormalRequest_Succeeds()
 	{
 		var connector = _toc.GetApiConnector();
-		connector.DoGetRequest(TestObjectsCreator.UriGlAccount(_currentDivision), string.Empty);
+		connector.DoGetRequest(TestObjectsCreator.UriGlAccount(_currentDivision), "");
 	}
 
 	/// <summary>
@@ -38,7 +38,7 @@ public class ApiConnectorTest
 	public void DoGetRequest_WithoutEndpoint_ThrowsExcepion()
 	{
 		var connector = _toc.GetApiConnector();
-		Assert.Throws<BadRequestException>(() => connector.DoGetRequest(null!, string.Empty));
+		Assert.Throws<BadRequestException>(() => connector.DoGetRequest(null!, ""));
 	}
 
 	/// <summary>
@@ -49,7 +49,7 @@ public class ApiConnectorTest
 	public void DoGetRequest_WithWrongDivisionNumber_ThrowsException()
 	{
 		var connector = _toc.GetApiConnector();
-		Assert.Throws<ForbiddenException>(() => connector.DoGetRequest(TestObjectsCreator.UriCrmAccount(999), string.Empty));
+		Assert.Throws<ForbiddenException>(() => connector.DoGetRequest(TestObjectsCreator.UriCrmAccount(999), ""));
 	}
 
 	[TestMethod]

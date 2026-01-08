@@ -21,7 +21,7 @@ public class ApiCallTest
 	[TestInitialize()]
 	public async Task Setup()
 	{
-		_toc = new TestObjectsCreator();
+		_toc = new();
 		_currentDivision = await _toc.GetCurrentDivisionAsync();
 		_conn = _toc.GetApiConnector();
 	}
@@ -92,7 +92,7 @@ public class ApiCallTest
 	{
 		for (var i = 0; i < 10; i++)
 		{
-			_conn.DoGetRequest(TestObjectsCreator.UriGlAccount(_currentDivision), string.Empty);
+			_conn.DoGetRequest(TestObjectsCreator.UriGlAccount(_currentDivision), "");
 		}
 	}
 

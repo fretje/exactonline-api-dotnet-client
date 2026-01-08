@@ -12,7 +12,7 @@ public class JsonFileReader
 		var text = "";
 		try
 		{
-			using var sr = new StreamReader(filepath);
+			using StreamReader sr = new(filepath);
 			text = sr.ReadToEnd();
 		}
 		catch (Exception e)
@@ -26,9 +26,9 @@ public class JsonFileReader
 	public static string GetJsonFromFileWithoutWhiteSpace(string filename)
 	{
 		var text = GetJsonFromFile(filename);
-		text = text.Replace(" ", string.Empty);
-		text = text.Replace("\n", string.Empty);
-		text = text.Replace("\r", string.Empty);
+		text = text.Replace(" ", "");
+		text = text.Replace("\n", "");
+		text = text.Replace("\r", "");
 		return text;
 	}
 }

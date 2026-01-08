@@ -28,7 +28,7 @@ public class ModelInfo
 	{
 		if (_modelInfos[modelType] is not ModelInfo modelInfo)
 		{
-			modelInfo = new ModelInfo(modelType);
+			modelInfo = new(modelType);
 			_modelInfos.Add(modelType, modelInfo);
 		}
 		return modelInfo;
@@ -48,15 +48,15 @@ public class ModelInfo
 	public ModelInfo(Type modelType)
 	{
 		_modelType = modelType;
-		_supportedActions = new Lazy<SupportedActionsSDK>(() => SupportedActionsSDK.GetByType(modelType));
-		_supportsSync = new Lazy<bool>(() => modelType.IsSubclassOf(typeof(SupportsSync)));
-		_identifierName = new Lazy<string?>(() => GetIdentifierName());
-		_identifierType = new Lazy<Type?>(() => GetIdentifierType());
-		_identifierLambda = new Lazy<LambdaExpression?>(() => LambdaForProperty(IdentifierName));
-		_timestampLambda = new Lazy<LambdaExpression?>(() => LambdaForProperty(TimestampName));
-		_timestampCastedToNullableLambda = new Lazy<LambdaExpression?>(() => LambdaForPropertyCastedToNullable(TimestampName));
-		_modifiedLambda = new Lazy<LambdaExpression?>(() => LambdaForPropertyCastedToNullable(ModifiedName));
-		_fields = new Lazy<FieldInfo[]>(() => GetFields());
+		_supportedActions = new(() => SupportedActionsSDK.GetByType(modelType));
+		_supportsSync = new(() => modelType.IsSubclassOf(typeof(SupportsSync)));
+		_identifierName = new(GetIdentifierName);
+		_identifierType = new(GetIdentifierType);
+		_identifierLambda = new(() => LambdaForProperty(IdentifierName));
+		_timestampLambda = new(() => LambdaForProperty(TimestampName));
+		_timestampCastedToNullableLambda = new(() => LambdaForPropertyCastedToNullable(TimestampName));
+		_modifiedLambda = new(() => LambdaForPropertyCastedToNullable(ModifiedName));
+		_fields = new(GetFields);
 	}
 
 	public bool SupportsCreate => _supportedActions.Value.CanCreate;
@@ -69,7 +69,7 @@ public class ModelInfo
 	public string? IdentifierName => _identifierName.Value;
 	public TId? IdentifierValue<TModel, TId>(TModel entity)
 	{
-		if (IdentifierName == null)
+		if (IdentifierName is null)
 		{
 			return default;
 		}
@@ -101,26 +101,26 @@ public class ModelInfo
 		_timestampCastedToNullableLambda.Value as Expression<Func<TModel, long?>> ?? throw new InvalidOperationException("Timestamp casted to nullable lambda is not set.");
 
 	public static string ModifiedName => "Modified";
-	public bool HasModifiedProperty => _modifiedLambda.Value != null;
+	public bool HasModifiedProperty => _modifiedLambda.Value is { };
 	public Expression<Func<TModel, DateTime?>> ModifiedLambda<TModel>() =>
 		_modifiedLambda.Value as Expression<Func<TModel, DateTime?>> ?? throw new InvalidOperationException("Modified lambda is not set.");
 
-	public FieldInfo[] Fields(bool forSync = false) => forSync ? FieldsForSync() : _fields.Value.Where(f => f.Name != "Timestamp").ToArray();
-	public string[] FieldNames(bool forSync = false) => Fields(forSync).Select(f => f.Name).ToArray();
+	public FieldInfo[] Fields(bool forSync = false) => forSync ? FieldsForSync() : [.. _fields.Value.Where(f => f.Name != "Timestamp")];
+	public string[] FieldNames(bool forSync = false) => [.. Fields(forSync).Select(f => f.Name)];
 
 	public bool HasDeletedEntityType =>
-		_modelType == typeof(Client.Models.CRM.Account) ||
-		_modelType == typeof(Client.Models.CRM.Address) ||
-		_modelType == typeof(Client.Models.CRM.Contact) ||
-		_modelType == typeof(Client.Models.CRM.Quotation) ||
-		_modelType == typeof(Client.Models.Documents.Document) ||
-		_modelType == typeof(Client.Models.Documents.DocumentAttachment) ||
-		_modelType == typeof(Client.Models.Financial.GLAccount) ||
-		_modelType == typeof(Client.Models.FinancialTransaction.TransactionLine) ||
-		_modelType == typeof(Client.Models.Logistics.SalesItemPrice) ||
-		_modelType == typeof(Client.Models.Logistics.Item) ||
-		_modelType == typeof(Client.Models.SalesOrder.SalesOrder) ||
-		_modelType == typeof(Client.Models.SalesInvoice.SalesInvoice);
+		_modelType == typeof(Client.Models.CRM.Account)
+		|| _modelType == typeof(Client.Models.CRM.Address)
+		|| _modelType == typeof(Client.Models.CRM.Contact)
+		|| _modelType == typeof(Client.Models.CRM.Quotation)
+		|| _modelType == typeof(Client.Models.Documents.Document)
+		|| _modelType == typeof(Client.Models.Documents.DocumentAttachment)
+		|| _modelType == typeof(Client.Models.Financial.GLAccount)
+		|| _modelType == typeof(Client.Models.FinancialTransaction.TransactionLine)
+		|| _modelType == typeof(Client.Models.Logistics.SalesItemPrice)
+		|| _modelType == typeof(Client.Models.Logistics.Item)
+		|| _modelType == typeof(Client.Models.SalesOrder.SalesOrder)
+		|| _modelType == typeof(Client.Models.SalesInvoice.SalesInvoice);
 	public EntityType DeletedEntityType =>
 		_modelType == typeof(Client.Models.CRM.Account) ? EntityType.Accounts
 		: _modelType == typeof(Client.Models.CRM.Address) ? EntityType.Addresses
@@ -147,7 +147,7 @@ public class ModelInfo
 
 	private Type? GetIdentifierType()
 	{
-		if (IdentifierName == null)
+		if (IdentifierName is null)
 		{
 			return null;
 		}
@@ -159,16 +159,15 @@ public class ModelInfo
 
 	private Type GetCompositeIdType(string[] idNames) =>
 		DynamicClassFactory.CreateType(
-			idNames
+			[.. idNames
 				.Select(name =>
-					new DynamicProperty(name, _modelType.GetProperty(name).PropertyType))
-				.ToArray(),
+					new DynamicProperty(name, _modelType.GetProperty(name).PropertyType))],
 			false);
 
 	// Generates an expression for "entity => entity.propertyName" or "entity => new { entity.propertyName1, entity.propertyName2 }" when dealing with a composite id
 	private LambdaExpression? LambdaForProperty(string? propertyName)
 	{
-		if (propertyName == null)
+		if (propertyName is null)
 		{
 			return null;
 		}
@@ -178,7 +177,7 @@ public class ModelInfo
 		if (propNames.Length == 1)
 		{
 			var propertyInfo = _modelType.GetProperty(propertyName);
-			if (propertyInfo == null)
+			if (propertyInfo is null)
 			{
 				return null;
 			}
@@ -200,16 +199,16 @@ public class ModelInfo
 	// Generates an expression for "entity => (TProperty?) entity.propertyName" when the property is not nullable, otherwise "entity => entity.propertyName"
 	private LambdaExpression? LambdaForPropertyCastedToNullable(string? propertyName)
 	{
-		if (propertyName == null)
+		if (propertyName is null)
 		{
 			return null;
 		}
 		var propertyInfo = _modelType.GetProperty(propertyName);
-		if (propertyInfo == null)
+		if (propertyInfo is null)
 		{
 			return null;
 		}
-		if (!propertyInfo.PropertyType.IsValueType || Nullable.GetUnderlyingType(propertyInfo.PropertyType) != null)
+		if (!propertyInfo.PropertyType.IsValueType || Nullable.GetUnderlyingType(propertyInfo.PropertyType) is { })
 		{
 			// Property is already nullable, no need to cast
 			return LambdaForProperty(propertyName);
@@ -219,27 +218,26 @@ public class ModelInfo
 	}
 
 	private FieldInfo[] GetFields() =>
-		(from p in _modelType.GetProperties()
-		 where p.PropertyType == typeof(string) || !typeof(IEnumerable).IsAssignableFrom(p.PropertyType)
-		 let fieldName = p.GetCustomAttribute<JsonPropertyAttribute>()?.PropertyName ?? p.Name
-		 select new FieldInfo(
-			 fieldName,
-			 p,
-			 IdentifierName?.Split(',')?.Any(idName => idName == fieldName) ?? false))
-		.ToArray();
+		[.. from property in _modelType.GetProperties()
+			where property.PropertyType == typeof(string) || !typeof(IEnumerable).IsAssignableFrom(property.PropertyType)
+			let fieldName = property.GetCustomAttribute<JsonPropertyAttribute>()?.PropertyName ?? property.Name
+			select new FieldInfo(
+				fieldName,
+				property,
+				IdentifierName?.Split(',')?.Any(idName => idName == fieldName) ?? false)];
 
 	private FieldInfo[] FieldsForSync() =>
-		_fields.Value.Where(field =>
-			!(_modelType == typeof(Client.Models.Manufacturing.ShopOrderMaterialPlanDetail) &&
-					field.Name == "Calculator" ||
-			  _modelType == typeof(Client.Models.CRM.Quotation) &&
-					field.Name == "QuotationLines" ||
-			  _modelType == typeof(Client.Models.SalesInvoice.SalesInvoice) &&
-					field.Name == "SalesInvoiceLines" ||
-			  _modelType == typeof(Client.Models.SalesOrder.GoodsDelivery) &&
-					field.Name == "GoodsDeliveryLines" ||
-			  _modelType == typeof(Client.Models.SalesOrder.SalesOrder) &&
-					field.Name == "SalesOrderLines" ||
-			  _modelType == typeof(Client.Models.SalesOrder.SalesOrderLine) &&
-					(field.Name == "QuantityDelivered" || field.Name == "QuantityInvoiced" || field.Name == "Margin"))).ToArray();
+		[.. _fields.Value.Where(field =>
+			!((_modelType == typeof(Client.Models.Manufacturing.ShopOrderMaterialPlanDetail)
+				&& field.Name == "Calculator")
+			|| (_modelType == typeof(Client.Models.CRM.Quotation)
+				&& field.Name == "QuotationLines")
+			|| (_modelType == typeof(Client.Models.SalesInvoice.SalesInvoice)
+				&& field.Name == "SalesInvoiceLines")
+			|| (_modelType == typeof(Client.Models.SalesOrder.GoodsDelivery)
+				&& field.Name == "GoodsDeliveryLines")
+			|| (_modelType == typeof(Client.Models.SalesOrder.SalesOrder)
+				&& field.Name == "SalesOrderLines")
+			|| (_modelType == typeof(Client.Models.SalesOrder.SalesOrderLine)
+				&& (field.Name == "QuantityDelivered" || field.Name == "QuantityInvoiced" || field.Name == "Margin"))))];
 }

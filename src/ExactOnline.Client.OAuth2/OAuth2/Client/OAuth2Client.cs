@@ -188,7 +188,7 @@ public abstract class OAuth2Client : IClient
 		var client = _factory.CreateClient(AccessTokenServiceEndpoint);
 		var request = _factory.CreateRequest(AccessTokenServiceEndpoint, Method.Post);
 
-		BeforeGetAccessToken(new BeforeAfterRequestArgs
+		BeforeGetAccessToken(new()
 		{
 			Client = client,
 			Request = request,
