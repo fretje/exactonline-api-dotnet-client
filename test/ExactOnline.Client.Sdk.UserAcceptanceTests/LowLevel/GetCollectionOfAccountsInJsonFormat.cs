@@ -12,11 +12,11 @@ public class GetCollectionOfAccountsInJsonFormat
 	[TestMethod]
 	public async Task GetCollectionOfAccountsInJsonFormat_Succeeds()
 	{
-		var toc = new TestObjectsCreator();
-		var conn = new ApiConnection(toc.GetApiConnector(), TestObjectsCreator.UriCrmAccount(await toc.GetCurrentDivisionAsync(TestContext.CancellationToken)));
+		TestObjectsCreator toc = new();
+		ApiConnection conn = new(toc.GetApiConnector(), TestObjectsCreator.UriCrmAccount(await toc.GetCurrentDivisionAsync(TestContext.CancellationToken)));
 
-		var c = new SimpleController(conn);
-		var accounts = c.GetDynamic(string.Empty);
+		SimpleController c = new(conn);
+		var accounts = c.GetDynamic("");
 
 		// Test if list has entities (easy test, because actual entity count isn't known)
 		if (accounts.Count < 1)

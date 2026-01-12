@@ -1,10 +1,10 @@
 ﻿using System.Net;
-using System.Net.Http.Headers;
 using System.Text;
 using ExactOnline.Client.Sdk.Exceptions;
 using ExactOnline.Client.Sdk.Interfaces;
 using ExactOnline.Client.Sdk.Models;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Newtonsoft.Json;
 
 namespace ExactOnline.Client.Sdk.Helpers;
@@ -17,12 +17,12 @@ namespace ExactOnline.Client.Sdk.Helpers;
 /// </remarks>
 /// <param name="accessTokenFunc">Delegate that provides a valid oAuth Access Token</param>
 /// <param name="client">The ExactOnlineClient this connector is associated with</param>
-public class ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc, HttpClient httpClient, int minutelyRemaining, DateTime minutelyResetTime, string? customDescriptionLanguage, ILogger? log = null) : IApiConnector
+public partial class ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc, HttpClient httpClient, int minutelyRemaining, DateTime minutelyResetTime, string? customDescriptionLanguage = null, ILogger? log = null) : IApiConnector
 {
 	private readonly Func<CancellationToken, Task<string>> _accessTokenFunc = accessTokenFunc ?? throw new ArgumentNullException(nameof(accessTokenFunc));
 	private readonly HttpClient _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
 	private readonly string? _customDescriptionLanguage = customDescriptionLanguage;
-	private readonly ILogger? _log = log;
+	private readonly ILogger _log = log ?? NullLogger.Instance;
 
 	private int _minutelyRemaining = minutelyRemaining;
 	private DateTime _minutelyResetTime = minutelyResetTime;
@@ -164,13 +164,10 @@ public class ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc,
 			request.Content = new StringContent(data, Encoding.UTF8, "application/json");
 		}
 
-		if (_log is not null)
+		LogExecutingRequest(_log, method, request.RequestUri);
+		if (!string.IsNullOrEmpty(data))
 		{
-			_log.LogInformation("ExactOnline Sdk: Executing Request: {Method} {Url}", method, request.RequestUri);
-			if (!string.IsNullOrEmpty(data))
-			{
-				_log.LogDebug("ExactOnline Sdk: Request Data: {Data}", data);
-			}
+			LogRequestData(_log, data!);
 		}
 
 		return request;
@@ -178,10 +175,10 @@ public class ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc,
 
 	private async Task<HttpRequestMessage> CreateWebRequestAsync(string url, string? querystring, HttpMethod method, string? acceptContentType = "application/json", CancellationToken ct = default)
 	{
-		if (_minutelyRemaining == 0)
+		if (_minutelyRemaining is 0)
 		{
 			var minutelyWaitTime = GetMinutelyWaitTime();
-			_log?.LogInformation("ExactOnline Sdk: WAITING {MinutelyWaitTime} to respect minutely rate limit.", minutelyWaitTime);
+			LogWaitingForRateLimit(_log, minutelyWaitTime);
 			await Task.Delay(minutelyWaitTime, ct).ConfigureAwait(false);
 		}
 
@@ -190,13 +187,13 @@ public class ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc,
 			url += "?" + querystring;
 		}
 
-		var request = new HttpRequestMessage(method, url);
+		HttpRequestMessage request = new(method, url);
 
 		// request.ServicePoint.Expect100Continue = false;
 
 		if (!string.IsNullOrEmpty(acceptContentType))
 		{
-			request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(acceptContentType));
+			request.Headers.Accept.Add(new(acceptContentType));
 		}
 
 		if (!string.IsNullOrEmpty(_customDescriptionLanguage))
@@ -204,43 +201,37 @@ public class ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc,
 			request.Headers.Add("CustomDescriptionLanguage", _customDescriptionLanguage);
 		}
 
-		request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", await _accessTokenFunc(ct).ConfigureAwait(false));
+		request.Headers.Authorization = new("Bearer", await _accessTokenFunc(ct).ConfigureAwait(false));
 
 		return request;
 	}
 
 	private string GetResponse(HttpRequestMessage request)
 	{
-		var responseValue = string.Empty;
+		var responseValue = "";
 
 		using (var responseStream = GetResponseStream(request))
 		{
-			if (responseStream != null)
-			{
-				using var reader = new StreamReader(responseStream);
-				responseValue = reader.ReadToEnd();
-			}
+			using StreamReader reader = new(responseStream);
+			responseValue = reader.ReadToEnd();
 		}
 
-		_log?.LogTrace("ExactOnline Sdk: Response Body: {Response}", responseValue);
+		LogResponseBody(_log, responseValue);
 
 		return responseValue;
 	}
 
 	private async Task<string> GetResponseAsync(HttpRequestMessage request, CancellationToken ct)
 	{
-		var responseValue = string.Empty;
+		var responseValue = "";
 
 		using (var responseStream = await GetResponseStreamAsync(request, ct).ConfigureAwait(false))
 		{
-			if (responseStream != null)
-			{
-				using var reader = new StreamReader(responseStream);
-				responseValue = await reader.ReadToEndAsync().ConfigureAwait(false);
-			}
+			using StreamReader reader = new(responseStream);
+			responseValue = await reader.ReadToEndAsync().ConfigureAwait(false);
 		}
 
-		_log?.LogTrace("ExactOnline Sdk: Response Body: {Response}", responseValue);
+		LogResponseBody(_log, responseValue);
 
 		return responseValue;
 	}
@@ -249,7 +240,7 @@ public class ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc,
 	{
 		// Get response. If this fails: Throw the correct Exception (for testability)
 		var response = _httpClient.SendAsync(request).GetAwaiter().GetResult();
-		SetEolResponseHeaders(response);
+		SetEolResponseHeader(response);
 		if (!response.IsSuccessStatusCode)
 		{
 			ThrowSpecificExceptionAsync(response).GetAwaiter().GetResult();
@@ -261,7 +252,7 @@ public class ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc,
 	{
 		// Get response. If this fails: Throw the correct Exception (for testability)
 		var response = await _httpClient.SendAsync(request, ct).ConfigureAwait(false);
-		SetEolResponseHeaders(response);
+		SetEolResponseHeader(response);
 		if (!response.IsSuccessStatusCode)
 		{
 			await ThrowSpecificExceptionAsync(response).ConfigureAwait(false);
@@ -278,12 +269,10 @@ public class ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc,
 	private async Task ThrowSpecificExceptionAsync(HttpResponseMessage response)
 	{
 		var statusCode = response.StatusCode;
-		var messageFromServer = new StreamReader(await response.Content.ReadAsStreamAsync().ConfigureAwait(false)).ReadToEnd();
-		if (_log is not null)
-		{
-			_log.LogError("ExactOnline Sdk: Request Failed: {Response}", response.ReasonPhrase);
-			_log.LogError("ExactOnline Sdk: Message from Server: {MessageFromServer}", messageFromServer);
-		}
+		var messageFromServer = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+		
+		LogRequestFailed(_log, response.ReasonPhrase);
+		LogMessageFromServer(_log, messageFromServer);
 
 		var messageError = default(ServerMessage);
 		try
@@ -319,49 +308,67 @@ public class ApiConnector(Func<CancellationToken, Task<string>> accessTokenFunc,
 		}
 	}
 
-	private void SetEolResponseHeaders(HttpResponseMessage response)
+	private void SetEolResponseHeader(HttpResponseMessage response)
 	{
-		if (response != null)
+		EolResponseHeader = new()
 		{
-			EolResponseHeader = new EolResponseHeader
+			RateLimit = new()
 			{
-				RateLimit = new RateLimit
-				{
-					Limit = response.Headers.TryGetValues("X-RateLimit-Limit", out var limitHeaders) && limitHeaders.Any() ? limitHeaders.First().ToNullableInt() : null,
-					Remaining = response.Headers.TryGetValues("X-RateLimit-Remaining", out var remainingHeaders) && remainingHeaders.Any() ? remainingHeaders.First().ToNullableInt() : null,
-					Reset = response.Headers.TryGetValues("X-RateLimit-Reset", out var resetHeaders) && resetHeaders.Any() ? resetHeaders.First().ToNullableLong() : null,
-					MinutelyLimit = response.Headers.TryGetValues("X-RateLimit-Minutely-Limit", out var minutelyLimitHeaders) && minutelyLimitHeaders.Any() ? minutelyLimitHeaders.First().ToNullableInt() : null,
-					MinutelyRemaining = response.Headers.TryGetValues("X-RateLimit-Minutely-Remaining", out var mitutelyRemainingHeaders) && mitutelyRemainingHeaders.Any() ? mitutelyRemainingHeaders.First().ToNullableInt() : null,
-					MinutelyReset = response.Headers.TryGetValues("X-RateLimit-Minutely-Reset", out var minutelyResetHeaders) && minutelyResetHeaders.Any() ? minutelyResetHeaders.First().ToNullableLong() : null
-				}
-			};
-
-			_log?.LogDebug("""
-				ExactOnline Sdk: Response Headers: 
-					X-RateLimit-Limit: {RateLimitLimit}
-					X-RateLimit-Remaining: {RateLimitRemaining}
-					X-RateLimit-Reset: {RateLimitResetDate}
-					X-RateLimit-Minutely-Limit: {RateLimitMinutelyLimit}
-					X-RateLimit-Minutely-Remaining: {RateLimitMinutelyRemaining}
-					X-RateLimit-Minutely-Reset: {RateLimitMinutelyResetDate}
-				""",
-				EolResponseHeader.RateLimit.Limit, EolResponseHeader.RateLimit.Remaining, EolResponseHeader.RateLimit.ResetDate,
-				EolResponseHeader.RateLimit.MinutelyLimit, EolResponseHeader.RateLimit.MinutelyRemaining, EolResponseHeader.RateLimit.MinutelyResetDate);
-
-			if (EolResponseHeader.RateLimit.MinutelyLimit is int minutelyLimit &&
-				EolResponseHeader.RateLimit.MinutelyRemaining is int minutelyRemaining)
-			{
-				if (_minutelyRemaining == -1 || minutelyRemaining == minutelyLimit - 1) // this means this is the first call of a 1 minute window
-				{
-					_minutelyResetTime = DateTime.Now + TimeSpan.FromMinutes(1); // set the reset time to one minute from now
-				}
-				_minutelyRemaining = minutelyRemaining;
-
-				OnMinutelyChanged();
+				Limit = response.Headers.TryGetValues("X-RateLimit-Limit", out var limitHeaders) && limitHeaders.Any() ? limitHeaders.First().ToNullableInt() : null,
+				Remaining = response.Headers.TryGetValues("X-RateLimit-Remaining", out var remainingHeaders) && remainingHeaders.Any() ? remainingHeaders.First().ToNullableInt() : null,
+				Reset = response.Headers.TryGetValues("X-RateLimit-Reset", out var resetHeaders) && resetHeaders.Any() ? resetHeaders.First().ToNullableLong() : null,
+				MinutelyLimit = response.Headers.TryGetValues("X-RateLimit-Minutely-Limit", out var minutelyLimitHeaders) && minutelyLimitHeaders.Any() ? minutelyLimitHeaders.First().ToNullableInt() : null,
+				MinutelyRemaining = response.Headers.TryGetValues("X-RateLimit-Minutely-Remaining", out var mitutelyRemainingHeaders) && mitutelyRemainingHeaders.Any() ? mitutelyRemainingHeaders.First().ToNullableInt() : null,
+				MinutelyReset = response.Headers.TryGetValues("X-RateLimit-Minutely-Reset", out var minutelyResetHeaders) && minutelyResetHeaders.Any() ? minutelyResetHeaders.First().ToNullableLong() : null
 			}
+		};
+
+		LogResponseHeaders(_log,
+			EolResponseHeader.RateLimit.Limit, EolResponseHeader.RateLimit.Remaining, EolResponseHeader.RateLimit.ResetDate,
+			EolResponseHeader.RateLimit.MinutelyLimit, EolResponseHeader.RateLimit.MinutelyRemaining, EolResponseHeader.RateLimit.MinutelyResetDate);
+
+		if (EolResponseHeader.RateLimit.MinutelyLimit is int minutelyLimit &&
+			EolResponseHeader.RateLimit.MinutelyRemaining is int minutelyRemaining)
+		{
+			if (_minutelyRemaining == -1 || minutelyRemaining == minutelyLimit - 1) // this means this is the first call of a 1 minute window
+			{
+				_minutelyResetTime = DateTime.Now + TimeSpan.FromMinutes(1); // set the reset time to one minute from now
+			}
+			_minutelyRemaining = minutelyRemaining;
+
+			OnMinutelyChanged();
 		}
 	}
 
 	private void OnMinutelyChanged() =>
-		MinutelyChanged?.Invoke(this, new MinutelyChangedEventArgs(_minutelyRemaining, _minutelyResetTime));
+		MinutelyChanged?.Invoke(this, new(_minutelyRemaining, _minutelyResetTime));
+
+	[LoggerMessage(EventId = 1, Level = LogLevel.Information, Message = "ExactOnline Sdk: Executing Request: {Method} {Url}")]
+	private static partial void LogExecutingRequest(ILogger logger, HttpMethod method, Uri? url);
+
+	[LoggerMessage(EventId = 2, Level = LogLevel.Debug, Message = "ExactOnline Sdk: Request Data: {Data}")]
+	private static partial void LogRequestData(ILogger logger, string data);
+
+	[LoggerMessage(EventId = 3, Level = LogLevel.Information, Message = "ExactOnline Sdk: WAITING {MinutelyWaitTime} to respect minutely rate limit.")]
+	private static partial void LogWaitingForRateLimit(ILogger logger, TimeSpan minutelyWaitTime);
+
+	[LoggerMessage(EventId = 4, Level = LogLevel.Trace, Message = "ExactOnline Sdk: Response Body: {Response}")]
+	private static partial void LogResponseBody(ILogger logger, string response);
+
+	[LoggerMessage(EventId = 5, Level = LogLevel.Error, Message = "ExactOnline Sdk: Request Failed: {Response}")]
+	private static partial void LogRequestFailed(ILogger logger, string? response);
+
+	[LoggerMessage(EventId = 6, Level = LogLevel.Error, Message = "ExactOnline Sdk: Message from Server: {MessageFromServer}")]
+	private static partial void LogMessageFromServer(ILogger logger, string messageFromServer);
+
+	[LoggerMessage(EventId = 7, Level = LogLevel.Debug, Message = """
+		ExactOnline Sdk: Response Headers: 
+			X-RateLimit-Limit: {RateLimitLimit}
+			X-RateLimit-Remaining: {RateLimitRemaining}
+			X-RateLimit-Reset: {RateLimitResetDate}
+			X-RateLimit-Minutely-Limit: {RateLimitMinutelyLimit}
+			X-RateLimit-Minutely-Remaining: {RateLimitMinutelyRemaining}
+			X-RateLimit-Minutely-Reset: {RateLimitMinutelyResetDate}
+		""")]
+	private static partial void LogResponseHeaders(ILogger logger, int? rateLimitLimit, int? rateLimitRemaining, DateTimeOffset? rateLimitResetDate, int? rateLimitMinutelyLimit, int? rateLimitMinutelyRemaining, DateTimeOffset? rateLimitMinutelyResetDate);
 }

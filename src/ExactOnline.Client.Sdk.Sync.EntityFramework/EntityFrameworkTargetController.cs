@@ -3,18 +3,15 @@ using System.Linq.Dynamic.Core;
 
 namespace ExactOnline.Client.Sdk.Sync.EntityFramework;
 
-public class EntityFrameworkTargetController<TModel, TId>
-	: SyncTargetControllerBase<TModel>
+public class EntityFrameworkTargetController<TModel, TId>(string nameOrConnectionString)
+	: SyncTargetControllerBase<TModel>()
 	where TModel : class
 {
-	private readonly string _nameOrConnectionString;
-
-	public EntityFrameworkTargetController(string nameOrConnectionString)
-		: base() => _nameOrConnectionString = nameOrConnectionString;
+	private readonly string _nameOrConnectionString = nameOrConnectionString;
 
 	public override long GetMaxTimestamp()
 	{
-		using var db = new EntityFrameworkDbContext(_nameOrConnectionString);
+		using EntityFrameworkDbContext db = new(_nameOrConnectionString);
 		return db.Set<TModel>()
 			.Select(ModelInfo.TimestampCastedToNullableLambda<TModel>())
 			.Max() ?? 0;
@@ -22,7 +19,7 @@ public class EntityFrameworkTargetController<TModel, TId>
 
 	public override async Task<long> GetMaxTimestampAsync(CancellationToken ct)
 	{
-		using var db = new EntityFrameworkDbContext(_nameOrConnectionString);
+		using EntityFrameworkDbContext db = new(_nameOrConnectionString);
 		return await db.Set<TModel>()
 			.Select(ModelInfo.TimestampCastedToNullableLambda<TModel>())
 			.MaxAsync(ct).ConfigureAwait(false) ?? 0;
@@ -30,7 +27,7 @@ public class EntityFrameworkTargetController<TModel, TId>
 
 	public override DateTime? GetMaxModified()
 	{
-		using var db = new EntityFrameworkDbContext(_nameOrConnectionString);
+		using EntityFrameworkDbContext db = new(_nameOrConnectionString);
 		return db.Set<TModel>()
 			.Select(ModelInfo.ModifiedLambda<TModel>())
 			.Max();
@@ -38,7 +35,7 @@ public class EntityFrameworkTargetController<TModel, TId>
 
 	public override async Task<DateTime?> GetMaxModifiedAsync(CancellationToken ct)
 	{
-		using var db = new EntityFrameworkDbContext(_nameOrConnectionString);
+		using EntityFrameworkDbContext db = new(_nameOrConnectionString);
 		return await db.Set<TModel>()
 			.Select(ModelInfo.ModifiedLambda<TModel>())
 			.MaxAsync(ct).ConfigureAwait(false);
@@ -46,27 +43,27 @@ public class EntityFrameworkTargetController<TModel, TId>
 
 	public override int CreateOrUpdateEntities(List<TModel> entities, string[] fields)
 	{
-		using var db = new EntityFrameworkDbContext(_nameOrConnectionString);
+		using EntityFrameworkDbContext db = new(_nameOrConnectionString);
 		CreateOrUpdateEntities(entities, db, GetExistingIds());
 		return db.SaveChanges();
 	}
 
 	public override async Task<int> CreateOrUpdateEntitiesAsync(List<TModel> entities, string[] fields, CancellationToken ct)
 	{
-		using var db = new EntityFrameworkDbContext(_nameOrConnectionString);
+		using EntityFrameworkDbContext db = new(_nameOrConnectionString);
 		CreateOrUpdateEntities(entities, db, await GetExistingIdsAsync(ct).ConfigureAwait(false));
 		return await db.SaveChangesAsync(ct).ConfigureAwait(false);
 	}
 
 	private TId[] GetExistingIds()
 	{
-		using var db = new EntityFrameworkDbContext(_nameOrConnectionString);
+		using EntityFrameworkDbContext db = new(_nameOrConnectionString);
 		return [.. db.Set<TModel>().Select(ModelInfo.IdentifierLambda<TModel, TId>())];
 	}
 
 	private async Task<TId[]> GetExistingIdsAsync(CancellationToken ct)
 	{
-		using var db = new EntityFrameworkDbContext(_nameOrConnectionString);
+		using EntityFrameworkDbContext db = new(_nameOrConnectionString);
 		return await db.Set<TModel>()
 			.Select(ModelInfo.IdentifierLambda<TModel, TId>())
 			.ToArrayAsync(ct).ConfigureAwait(false);
@@ -83,14 +80,14 @@ public class EntityFrameworkTargetController<TModel, TId>
 
 	public override int DeleteEntities(Guid[] deleted)
 	{
-		using var db = new EntityFrameworkDbContext(_nameOrConnectionString);
+		using EntityFrameworkDbContext db = new(_nameOrConnectionString);
 		DeleteEntities(deleted, db);
 		return db.SaveChanges();
 	}
 
 	public override async Task<int> DeleteEntitiesAsync(Guid[] deleted, CancellationToken ct)
 	{
-		using var db = new EntityFrameworkDbContext(_nameOrConnectionString);
+		using EntityFrameworkDbContext db = new(_nameOrConnectionString);
 		DeleteEntities(deleted, db);
 		return await db.SaveChangesAsync(ct).ConfigureAwait(false);
 	}

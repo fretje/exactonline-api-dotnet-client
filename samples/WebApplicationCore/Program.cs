@@ -18,9 +18,9 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
-var testApp = new TestApp(@"..\..\testapp.config");
+TestApp testApp = new(@"..\..\testapp.config");
 
-var authorizer = new ExactOnlineAuthorizer(testApp.ClientId.ToString(), testApp.ClientSecret, testApp.CallbackUrl,
+ExactOnlineAuthorizer authorizer = new(testApp.ClientId.ToString(), testApp.ClientSecret, testApp.CallbackUrl,
 	testApp.BaseUrl, ExactOnlineTest.AccessToken, ExactOnlineTest.RefreshToken, ExactOnlineTest.AccessTokenExpiresAt);
 
 authorizer.TokensChanged += (_, e) =>
@@ -34,12 +34,12 @@ app.MapGet("/", async (ILogger<Program> logger, CancellationToken ct) =>
 		return Results.Redirect(await authorizer.GetLoginLinkUriAsync(ct: ct));
 	}
 
-	var client = new ExactOnlineClient(testApp.BaseUrl, authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, testApp.CustomDescriptionLanguage, logger);
+    ExactOnlineClient client = new(testApp.BaseUrl, authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, testApp.CustomDescriptionLanguage, logger);
 	client.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
 	await client.InitializeDivisionAsync(ct);
 
 	// Get the Code and Name of a random account in the administration.
-	var fields = new[] { "Code", "Name" };
+	string[] fields = ["Code", "Name"];
 	var account = (await client.For<Account>().Top(1).Select(fields).GetAsync(ct: ct)).List.First();
 	Debug.WriteLine(string.Format("Account {0} - {1}", account.Code?.TrimStart(), account.Name));
 	Debug.WriteLine(string.Format("X-RateLimit-Limit:  {0} - X-RateLimit-Remaining: {1} - X-RateLimit-Reset: {2}",
@@ -62,9 +62,9 @@ app.MapGet("/sync", async (ILogger<Program> logger, CancellationToken ct) =>
 		return Results.Redirect(await authorizer.GetLoginLinkUriAsync("/sync", ct: ct));
 	}
 
-	var client = new ExactOnlineClient(testApp.BaseUrl, authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, testApp.CustomDescriptionLanguage, logger);
+    ExactOnlineClient client = new(testApp.BaseUrl, authorizer.GetAccessTokenAsync, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, testApp.CustomDescriptionLanguage, logger);
 	client.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
-	await client.InitializeDivisionAsync();
+	await client.InitializeDivisionAsync(ct);
 
 	// How to use SynchronizeWith functionality
 
@@ -72,7 +72,7 @@ app.MapGet("/sync", async (ILogger<Program> logger, CancellationToken ct) =>
 	// SyncTargetBase and SyncTargetControllerBase. See the example EntityFrameworkTarget and its Controller to get started.
 	// EntityFrameworkTarget will automatically create a database on localdb.
 	// Or you can also supply a connectionstring in the constructor for more control.
-	var efTarget = new EntityFrameworkCoreTarget("Data Source=(localdb)\\mssqllocaldb;Initial Catalog=ExactOnlineClientSdkSyncTest;Integrated Security=True;MultipleActiveResultSets=True");
+	EntityFrameworkCoreTarget efTarget = new("Data Source=(localdb)\\mssqllocaldb;Initial Catalog=ExactOnlineClientSdkSyncTest;Integrated Security=True;MultipleActiveResultSets=True");
 
 	// Make sure the database is initialized!
 	await efTarget.InitializeDatabaseAsync(ct);

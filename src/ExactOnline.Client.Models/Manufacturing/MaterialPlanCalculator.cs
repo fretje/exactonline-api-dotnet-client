@@ -4,28 +4,28 @@
 	{
 		/// <summary>Fixed calculator</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
-		public FixedCalculator FixedCalculator { get; set; } = new FixedCalculator();
+		public FixedCalculator FixedCalculator { get; set; } = new();
 		/// <summary>Materials per piece calculator</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
-		public MaterialsPerPieceCalculator MaterialsPerPieceCalculator { get; set; } = new MaterialsPerPieceCalculator();
+		public MaterialsPerPieceCalculator MaterialsPerPieceCalculator { get; set; } = new();
 		/// <summary>Pieces per material calculator</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
-		public PiecesPerMaterialCalculator PiecesPerMaterialCalculator { get; set; } = new PiecesPerMaterialCalculator();
+		public PiecesPerMaterialCalculator PiecesPerMaterialCalculator { get; set; } = new();
 		/// <summary>Bar calculator</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
-		public BarCalculator BarCalculator { get; set; } = new BarCalculator();
+		public BarCalculator BarCalculator { get; set; } = new();
 		/// <summary>Sheet calculator</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
-		public SheetCalculator SheetCalculator { get; set; } = new SheetCalculator();
+		public SheetCalculator SheetCalculator { get; set; } = new();
 		/// <summary>Coil wire length calculator</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
-		public CoilWireLengthCalculator CoilWireLengthCalculator { get; set; } = new CoilWireLengthCalculator();
+		public CoilWireLengthCalculator CoilWireLengthCalculator { get; set; } = new();
 		/// <summary>Coil wire weight calculator</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
-		public CoilWireWeightCalculator CoilWireWeightCalculator { get; set; } = new CoilWireWeightCalculator();
+		public CoilWireWeightCalculator CoilWireWeightCalculator { get; set; } = new();
 		/// <summary>Volume calculator</summary>
 		[SDKFieldType(FieldType.ReadOnly)]
-		public VolumeCalculator VolumeCalculator { get; set; } = new VolumeCalculator();
+		public VolumeCalculator VolumeCalculator { get; set; } = new();
 	}
 
 	public class FixedCalculator

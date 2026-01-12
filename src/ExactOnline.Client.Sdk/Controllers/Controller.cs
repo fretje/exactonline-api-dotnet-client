@@ -26,11 +26,12 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 		_getEntityManager = getEntityManager;
 
 		// Set keyname of the entity (name of the field that is used to identify)
-		var attributes = Attribute.GetCustomAttributes(typeof(T)).Where(x => x.GetType() == typeof(DataServiceKey)).Select(a => a); //DataServiceKey
+		var attributes = Attribute.GetCustomAttributes(typeof(T))
+			.Where(x => x.GetType() == typeof(DataServiceKey)); //DataServiceKey
 
 		// Find unique value of entity
-		var enumerable = attributes as IList<Attribute> ?? attributes.ToList();
-		if (!enumerable.Any())
+		var enumerable = attributes as IList<Attribute> ?? [.. attributes];
+		if (enumerable.Count is 0)
 		{
 			throw new Exception("Cannot find 'DataServiceKey' field. This entity cannot be managed by the Controller");
 		}
@@ -127,7 +128,7 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 
 		var entities = ParseGetResponse(response, out var skipToken);
 
-		return new Models.ApiList<T>(entities, skipToken);
+		return new(entities, skipToken);
 	}
 
 	private static void CheckValidEndpointType(EndpointTypeEnum endpointType)
@@ -316,7 +317,7 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 	/// <returns>True if succeeded</returns>
 	public bool Update(T entity)
 	{
-		if (entity == null)
+		if (entity is null)
 		{
 			throw new ArgumentException("Controller Update: Entity cannot be null");
 		}
@@ -347,7 +348,7 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 	/// <returns>True if succeeded</returns>
 	public Task<bool> UpdateAsync(T entity, CancellationToken ct = default)
 	{
-		if (entity == null)
+		if (entity is null)
 		{
 			throw new ArgumentException("Controller Update: Entity cannot be null");
 		}
@@ -380,7 +381,7 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 	/// <returns>True if succeeded</returns>
 	public bool Delete(T entity)
 	{
-		if (entity == null)
+		if (entity is null)
 		{
 			throw new ArgumentException("Controller Delete: Entity cannot be null");
 		}
@@ -418,7 +419,7 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 	/// <returns>True if succeeded</returns>
 	public async Task<bool> DeleteAsync(T entity, CancellationToken ct = default)
 	{
-		if (entity == null)
+		if (entity is null)
 		{
 			throw new ArgumentException("Controller Delete: Entity cannot be null");
 		}
@@ -458,10 +459,8 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 	/// </summary>
 	/// <returns>Identifier value of the entity. Null if the indicated keyname is set to null or is not found.</returns>
 	public string? GetIdentifierValue(object entity) =>
-		_keyname == null
+		_keyname is null || _keyname.Contains(",") // Currently the SDK doesn't support entities with a compound key.
 			? null
-			: _keyname.Contains(",")
-			? null // throw new Exception("Currently the SDK doesn't support entities with a compound key.") // why throw an exception if it only disables the auto change tracking?
 			: entity.GetType().GetProperty(_keyname).GetValue(entity)?.ToString();
 
 	/// <summary>
@@ -470,7 +469,7 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 	/// </summary>
 	public void AddEntitiesToManagedEntitiesCollection(IEnumerable<object> entities)
 	{
-		foreach (var entity in entities.Where(e => GetIdentifierValue(e) != null))
+		foreach (var entity in entities.Where(e => GetIdentifierValue(e) is { }))
 		{
 			AddEntityToManagedEntitiesCollection(entity);
 		}
@@ -486,7 +485,7 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 
 		if (!_entityControllers.ContainsKey(entityIdentifier))
 		{
-			var newController = new EntityController(entity, _keyname!, entityIdentifier, _conn, GetEntityController);
+			EntityController newController = new(entity, _keyname!, entityIdentifier, _conn, GetEntityController);
 			_entityControllers.Add(entityIdentifier, newController);
 
 			returnValue = true;
@@ -505,7 +504,7 @@ public class Controller<T> : IController<T>, IEntityManager where T : class
 			{
 				foreach (var linkedEntity in (IEnumerable)field)
 				{
-					if (_getEntityManager != null)
+					if (_getEntityManager is { })
 					{
 						var controller = _getEntityManager(linkedEntity.GetType());
 						controller.AddEntityToManagedEntitiesCollection(linkedEntity);

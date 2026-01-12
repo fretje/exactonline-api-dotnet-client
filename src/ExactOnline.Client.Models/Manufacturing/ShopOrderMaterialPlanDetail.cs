@@ -8,7 +8,7 @@ public class ShopOrderMaterialPlanDetail
 	public byte? Backflush { get; set; }
 	/// <summary>The calculator associated with this material plan</summary>
 	[SDKFieldType(FieldType.ReadOnly)]
-	public MaterialPlanCalculator Calculator { get; set; } = new MaterialPlanCalculator();
+	public MaterialPlanCalculator Calculator { get; set; } = new();
 	/// <summary>Calculator type</summary>
 	public int? CalculatorType { get; set; }
 	/// <summary>Creation date</summary>

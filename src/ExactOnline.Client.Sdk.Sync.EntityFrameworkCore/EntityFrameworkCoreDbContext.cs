@@ -21,13 +21,8 @@ using Task = ExactOnline.Client.Models.Activities.Task;
 
 namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore;
 
-public class EntityFrameworkCoreDbContext : DbContext
+public class EntityFrameworkCoreDbContext(DbContextOptions options) : DbContext(options)
 {
-	public EntityFrameworkCoreDbContext(DbContextOptions options)
-		: base(options)
-	{
-	}
-
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
 		foreach (var type in EntityFrameworkCoreTarget.SupportedModelTypes)

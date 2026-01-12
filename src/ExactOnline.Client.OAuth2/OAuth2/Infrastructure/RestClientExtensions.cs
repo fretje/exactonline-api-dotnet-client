@@ -8,8 +8,8 @@ public static class RestClientExtensions
 {
 	static RestResponse VerifyResponse(RestResponse response)
 	{
-		if (string.IsNullOrWhiteSpace(response.Content) ||
-			(response.StatusCode != HttpStatusCode.OK && response.StatusCode != HttpStatusCode.Created))
+		if (string.IsNullOrWhiteSpace(response.Content)
+			|| (response.StatusCode != HttpStatusCode.OK && response.StatusCode != HttpStatusCode.Created))
 		{
 			throw new UnexpectedResponseException(response);
 		}

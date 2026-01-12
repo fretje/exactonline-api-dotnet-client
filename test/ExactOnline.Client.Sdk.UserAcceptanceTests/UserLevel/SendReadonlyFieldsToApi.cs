@@ -19,12 +19,12 @@ public class SendReadonlyFieldsToApiTest
 
 		account.Name = "Test account name2";
 		account.Created = DateTime.Now;
-		account.Creator = new Guid("c20a5590-c605-4f59-8fbb-112ee142bc59");
+		account.Creator = new("c20a5590-c605-4f59-8fbb-112ee142bc59");
 		account.CreatorFullName = "Edward Jackson";
 		account.ID = originalId;
 		account.LogoThumbnailUrl = "www.google.nl";
 		account.Modified = DateTime.Now;
-		account.Modifier = new Guid("c20a5590-c605-4f59-8fbb-112ee142bc59");
+		account.Modifier = new("c20a5590-c605-4f59-8fbb-112ee142bc59");
 		account.ModifierFullName = "Test";
 		account.ClassificationDescription = "Test";
 		account.CostcenterDescription = "Test";

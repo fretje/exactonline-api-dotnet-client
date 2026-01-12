@@ -45,11 +45,10 @@ public class ExactOnlineJsonConverter : JsonConverter
 		}
 
 		var writeableFields = GetWriteableFields(value);
-		var guidsToSkip = writeableFields.Where(x => x.GetValue(value) is Guid guid
-								&& guid == Guid.Empty).ToArray();
+		PropertyInfo[] guidsToSkip = [.. writeableFields.Where(x => x.GetValue(value) is Guid guid && guid == Guid.Empty)];
 
 		// Remove the fields to skip from the writeable fields
-		writeableFields = writeableFields.Except(writeableFields.Join(guidsToSkip, e => e.GetValue(value), m => m.GetValue(value), (e, m) => e)).ToArray();
+		writeableFields = [.. writeableFields.Except(writeableFields.Join(guidsToSkip, e => e.GetValue(value), m => m.GetValue(value), (e, m) => e))];
 		if (writeableFields.Length < 1)
 		{
 			return;
@@ -65,7 +64,7 @@ public class ExactOnlineJsonConverter : JsonConverter
 			var fieldValue = field.GetValue(value);
 			fieldValue = CheckDateFormat(fieldValue);
 
-			if (fieldValue != null && fieldValue.GetType().IsGenericType && fieldValue is IEnumerable enumerable)
+			if (fieldValue is IEnumerable enumerable && fieldValue.GetType().IsGenericType)
 			{
 				// Write property value for linked entities
 				WriteLinkedEntities(writer, fieldName, enumerable);
@@ -87,9 +86,9 @@ public class ExactOnlineJsonConverter : JsonConverter
 		if (_createUpdateJson)
 		{
 			var updatedfields = GetUpdatedFields(writeableFields, value); // If Json for update: Get only updated fields
-			writeableFields = (from f in writeableFields
-							   join up in updatedfields on f.Name equals up.Name
-							   select f).ToArray();
+			writeableFields = [.. from f in writeableFields
+								  join up in updatedfields on f.Name equals up.Name
+								  select f];
 		}
 
 		return writeableFields;
@@ -106,7 +105,7 @@ public class ExactOnlineJsonConverter : JsonConverter
 	private PropertyInfo[] GetUpdatedFields(PropertyInfo[] writeableFields, object value)
 	{
 		// Check if this is an object where only the json for updated fields have to be created
-		writeableFields = value.GetType().GetProperties().Where(property => IsUpdatedField(value, property)).ToArray();
+		writeableFields = [.. value.GetType().GetProperties().Where(property => IsUpdatedField(value, property))];
 		return writeableFields;
 	}
 
@@ -128,7 +127,7 @@ public class ExactOnlineJsonConverter : JsonConverter
 			foreach (var entity in collection)
 			{
 				var entityController = _getEntityControllerFunc(entity);
-				if (entityController == null || entityController.IsUpdated(entity))
+				if (entityController is null || entityController.IsUpdated(entity))
 				{
 					returnValue = true;
 				}
@@ -186,18 +185,18 @@ public class ExactOnlineJsonConverter : JsonConverter
 			if (_getEntityControllerFunc!(entity) is { } entityController)
 			{
 				// Entity is an existing entity. Create JsonConverter for updating an existing entity
-				converter = new ExactOnlineJsonConverter(entityController.OriginalEntity, _getEntityControllerFunc);
+				converter = new(entityController.OriginalEntity, _getEntityControllerFunc);
 			}
 			else
 			{
 				// Entity is a new entity. Create JsonConverter for sending only changed fields
 				var emptyEntity = Activator.CreateInstance(entity.GetType());
-				converter = new ExactOnlineJsonConverter(emptyEntity, _getEntityControllerFunc);
+				converter = new(emptyEntity, _getEntityControllerFunc);
 			}
 		}
 		else
 		{
-			converter = new ExactOnlineJsonConverter();
+			converter = new();
 		}
 
 		return converter;

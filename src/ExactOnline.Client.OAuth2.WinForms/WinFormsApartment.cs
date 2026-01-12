@@ -22,12 +22,12 @@ public sealed class WinFormsApartment : IDisposable
 	/// <summary>MessageLoopApartment constructor</summary>
 	public WinFormsApartment(Func<Form> createForm)
 	{
-		var schedulerTcs = new TaskCompletionSource<TaskScheduler>();
+		TaskCompletionSource<TaskScheduler> schedulerTcs = new();
 
-		var threadEndTcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+		TaskCompletionSource<bool> threadEndTcs = new(TaskCreationOptions.RunContinuationsAsynchronously);
 
 		// start an STA thread and gets a task scheduler
-		_thread = new Thread(_ =>
+		_thread = new(_ =>
 		{
 			try
 			{
@@ -90,7 +90,7 @@ public sealed class WinFormsApartment : IDisposable
 			if (!_completion.IsCompleted)
 			{
 				// execute Application.ExitThread() on the STA thread
-				var terminatorTask = Run(() => Application.ExitThread());
+				var terminatorTask = Run(Application.ExitThread);
 
 				s_debugTaskRef.Target = terminatorTask; // TODO: it's here for debugging leaks
 

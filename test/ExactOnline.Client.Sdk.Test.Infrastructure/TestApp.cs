@@ -33,13 +33,11 @@ public class TestApp
 		string[] details = File.ReadAllLines(path);
 		ClientId = GetSetting(details, 0, "00000000-0000-0000-0000-000000000000");
 		ClientSecret = GetSetting(details, 1, "secret");
-		CallbackUrl = new Uri(GetSetting(details, 2, "http://foo.bar"));
+		CallbackUrl = new(GetSetting(details, 2, "http://foo.bar"));
 		BaseUrl = GetSetting(details, 3, "https://start.exactonline.be");
 		CustomDescriptionLanguage = GetSetting(details, 4, "nl-BE");
 	}
 
-	private static string GetSetting(string[] details, int index, string defaultValue)
-	{
-		return index < details.Length ? details[index] : defaultValue;
-	}
+	private static string GetSetting(string[] details, int index, string defaultValue) =>
+		index < details.Length ? details[index] : defaultValue;
 }

@@ -15,8 +15,8 @@ public class ManipulateDataUsingRestCalls
 	[TestInitialize]
 	public async Task Setup()
 	{
-		var toc = new TestObjectsCreator();
-		_conn = new ApiConnection(toc.GetApiConnector(), TestObjectsCreator.UriGlAccount(await toc.GetCurrentDivisionAsync()));
+		TestObjectsCreator toc = new();
+		_conn = new(toc.GetApiConnector(), TestObjectsCreator.UriGlAccount(await toc.GetCurrentDivisionAsync()));
 	}
 
 	[TestMethod]
@@ -31,7 +31,7 @@ public class ManipulateDataUsingRestCalls
 	private void PostData()
 	{
 		// Create new entity
-		const string data = @"{ ""Code"":""SDKTest123456789"", ""Description"":""UAT GLAcount""}";
+		const string data = """{"Code":"SDKTest123456789", "Description":"UAT GLAcount"}""";
 		if (_conn.Post(data).Contains("error"))
 		{
 			throw new Exception("GLAccount entity could not be created");
@@ -46,7 +46,7 @@ public class ManipulateDataUsingRestCalls
 		dynamic dresponse = EntityConverter.ConvertJsonToDynamicObjectList(response);
 		string id = dresponse[0].ID;
 
-		_conn.Put("ID", id, @"{""Description"":""UAT GLAccount""}");
+		_conn.Put("ID", id, """{"Description":"UAT GLAccount"}""");
 	}
 
 	private void DeleteData()

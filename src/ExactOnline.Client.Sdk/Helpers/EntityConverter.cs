@@ -91,6 +91,8 @@ public static class EntityConverter
 		}
 	}
 
+	private static readonly JsonSerializerSettings _jsonSerializerSettings = new() { NullValueHandling = NullValueHandling.Ignore };
+
 	/// <summary>
 	/// Convert Json Array To Object List
 	/// </summary>
@@ -101,7 +103,7 @@ public static class EntityConverter
 	{
 		try
 		{
-			return JsonConvert.DeserializeObject<List<T>>(json, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore });
+			return JsonConvert.DeserializeObject<List<T>>(json, _jsonSerializerSettings);
 		}
 		catch (Exception)
 		{

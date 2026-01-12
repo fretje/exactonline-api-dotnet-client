@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Text;
 using System.Text.RegularExpressions;
 using ExactOnline.Client.Sdk.Exceptions;
 using Newtonsoft.Json;
@@ -11,6 +12,8 @@ namespace ExactOnline.Client.Sdk.Helpers;
 /// </summary>
 public static class ApiResponseCleaner
 {
+	private static readonly JsonSerializerSettings _settings = new() { DateFormatHandling = DateFormatHandling.MicrosoftDateFormat };
+
 	/// <summary>
 	/// Fetch Json Object (Json within ['d'] name/value pair) from response
 	/// </summary>
@@ -23,7 +26,7 @@ public static class ApiResponseCleaner
 
 		try
 		{
-			var jtoken = JsonConvert.DeserializeObject<JToken>(response, new JsonSerializerSettings { DateFormatHandling = DateFormatHandling.MicrosoftDateFormat });
+			var jtoken = JsonConvert.DeserializeObject<JToken>(response, _settings);
 			if (jtoken?["d"] is not JObject jobject)
 			{
 				throw new Exception("No 'd' property found in response");
@@ -47,15 +50,15 @@ public static class ApiResponseCleaner
 		string? token = null;
 		try
 		{
-			var jtoken = JsonConvert.DeserializeObject<JToken>(response, new JsonSerializerSettings { DateFormatHandling = DateFormatHandling.MicrosoftDateFormat });
+			var jtoken = JsonConvert.DeserializeObject<JToken>(response, _settings);
 			if (jtoken?["d"] is JObject dObject)
 			{
-				if (dObject.ContainsKey("__next"))
+				if (dObject.TryGetValue("__next", out var nextToken))
 				{
-					var next = dObject["__next"]!.ToString();
+					var next = nextToken.ToString();
 
 					// Skiptoken has format "$skiptoken=xyz" in the url and we want to extract xyz.
-					var match = Regex.Match(next ?? "", @"\$skiptoken=([^&#]*)");
+					var match = Regex.Match(next, @"\$skiptoken=([^&#]*)");
 
 					// Extract the skip token
 					token = match.Success ? match.Groups[1].Value : null;
@@ -83,7 +86,7 @@ public static class ApiResponseCleaner
 		try
 		{
 			var results = default(JArray);
-			var jtoken = JsonConvert.DeserializeObject(response, new JsonSerializerSettings { DateFormatHandling = DateFormatHandling.MicrosoftDateFormat }) as JToken;
+			var jtoken = JsonConvert.DeserializeObject(response, _settings) as JToken;
 			if (jtoken?["d"] is JObject dObject && dObject["results"] is JArray resultsArray)
 			{
 				results = resultsArray;
@@ -113,47 +116,41 @@ public static class ApiResponseCleaner
 	/// </summary>
 	private static string GetJsonFromObject(JObject jObject)
 	{
-		var json = "{";
-
+		StringBuilder json = new("{");
 		foreach (var entry in jObject)
 		{
 			if (entry.Value is JValue jValue)
 			{
 				// Entry is of type keyvaluepair
-				json += "\"" + entry.Key + "\":";
-				if (jValue.Value == null)
+				json.Append('"').Append(entry.Key).Append("\":");
+				if (jValue.Value is null)
 				{
-					json += "null";
+					json.Append("null");
 				}
 				else
 				{
-					json += JsonConvert.ToString(jValue.Value);
+					json.Append(JsonConvert.ToString(jValue.Value));
 				}
-				json += ",";
+				json.Append(',');
 			}
-			else if (entry.Value is JObject subcollection && subcollection.ContainsKey("results") && subcollection["results"] is JArray results)
+			else if (entry.Value is JObject subObject
+				&& subObject.TryGetValue("results", out var subResults)
+				&& subResults is JArray subArray				
+				&& GetJsonFromArray(subArray) is { Length: > 0 } subJson) // Create linked entities json
 			{
-				// Create linked entities json
-				var subjson = GetJsonFromArray(results);
-
-				if (subjson.Length > 0)
-				{
-					json += "\"" + entry.Key + "\":";
-					json += subjson;
-					json += ",";
-				}
+				json.Append('"').Append(entry.Key).Append("\":");
+				json.Append(subJson);
+				json.Append(',');
 			}
 		}
-
-		json = json.Remove(json.Length - 1, 1); // Remove last comma
-		json += "}";
-
-		return json;
+		json.Length -= 1; // Remove last comma
+		json.Append('}');
+		return json.ToString();
 	}
 
 	private static string GetJsonFromArray(JArray results)
 	{
-		var json = "[";
+		StringBuilder json = new("[");
 		if (results.Count > 0)
 		{
 			foreach (var entity in results)
@@ -162,12 +159,12 @@ public static class ApiResponseCleaner
 				{
 					throw new IncorrectJsonException("Entity in results is not a JObject");	
 				}
-				json += GetJsonFromObject(jobject) + ",";
+				json.Append(GetJsonFromObject(jobject)).Append(',');
 			}
 
-			json = json.Remove(json.Length - 1, 1); // Remove last comma
+			json.Length -= 1; // Remove last comma
 		}
-		json += "]";
-		return json;
+		json.Append(']');
+		return json.ToString();
 	}
 }

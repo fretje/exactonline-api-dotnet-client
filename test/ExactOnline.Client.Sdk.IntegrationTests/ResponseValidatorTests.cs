@@ -10,11 +10,11 @@ public class ResponseValidatorTests
 	// Tests if the API returns '"d"' and 'results' tags. If not, the controllers will not work correctly
 	public async Task Test_ResponseHasCorrectTags_Succeeds()
 	{
-		var toc = new TestObjectsCreator();
+		TestObjectsCreator toc = new();
 		var conn = toc.GetApiConnector();
 		var currentDivision = await toc.GetCurrentDivisionAsync(TestContext.CancellationToken);
 
-		var response = conn.DoGetRequest(TestObjectsCreator.UriGlAccount(currentDivision), string.Empty);
+		var response = conn.DoGetRequest(TestObjectsCreator.UriGlAccount(currentDivision), "");
 
 		if (!response.Contains("\"d\"") || !response.Contains("\"results\""))
 		{

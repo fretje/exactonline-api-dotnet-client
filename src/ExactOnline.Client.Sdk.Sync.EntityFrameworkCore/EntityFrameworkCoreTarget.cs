@@ -3,17 +3,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ExactOnline.Client.Sdk.Sync.EntityFrameworkCore;
 
-public class EntityFrameworkCoreTarget : SyncTargetBase
+public class EntityFrameworkCoreTarget(string connectionString) : SyncTargetBase
 {
-	private readonly string _connectionString;
-
-	public EntityFrameworkCoreTarget(string connectionString) =>
-		_connectionString = connectionString;
+	private readonly string _connectionString = connectionString;
 
 	public async Task InitializeDatabaseAsync(CancellationToken ct)
 	{
-		using var db = new EntityFrameworkCoreDbContext(new DbContextOptionsBuilder().UseSqlServer(_connectionString).Options);
-		await db.Database.MigrateAsync(ct);
+		using EntityFrameworkCoreDbContext db = new(new DbContextOptionsBuilder().UseSqlServer(_connectionString).Options);
+		await db.Database.MigrateAsync(ct).ConfigureAwait(false);
 	}
 
 	protected override ISyncTargetController<TModel> CreateControllerFor<TModel>() =>
@@ -25,15 +22,14 @@ public class EntityFrameworkCoreTarget : SyncTargetBase
 
 	private static readonly Lazy<Type[]> _supportedModelTypes =
 		new(() =>
-			ExactOnlineSynchronizer.SupportedModelTypes
+			[.. ExactOnlineSynchronizer.SupportedModelTypes
 				.Where(type =>
 					// We already have a Document entity under Models.Documents
-					type != typeof(Client.Models.CRM.Document) &&
+					type != typeof(Client.Models.CRM.Document)
 					// We already have a TimeTransaction entity under Models.Project
-					type != typeof(Client.Models.Manufacturing.TimeTransaction) &&
+					&& type != typeof(Client.Models.Manufacturing.TimeTransaction)
 					// We already have a Division entity under Models.SystemBase
-					type != typeof(Client.Models.HRM.Division))
-				.ToArray());
+					&& type != typeof(Client.Models.HRM.Division))]);
 
 	public static Type[] SupportedModelTypes => _supportedModelTypes.Value;
 }
