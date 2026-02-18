@@ -32,6 +32,7 @@ public class ExactOnlineAuthorizer(
 	private readonly string _baseUrl = baseUrl;
 
 	public event EventHandler<TokensChangedEventArgs>? TokensChanged;
+	public event Func<TokensChangedEventArgs, Task>? TokensChangedAsync;
 
 	public virtual async Task<bool> IsAuthorizationNeededAsync(CancellationToken ct)
 	{
@@ -89,4 +90,15 @@ public class ExactOnlineAuthorizer(
 
 	protected override void OnAfterTokensChanged() =>
 		TokensChanged?.Invoke(this, new(RefreshToken, AccessToken, ExpiresAt));
+
+	protected override async Task OnAfterTokensChangedAsync()
+	{
+		if (TokensChangedAsync is { } handlers)
+		{
+			TokensChangedEventArgs args = new(RefreshToken, AccessToken, ExpiresAt);
+			await Task.WhenAll(handlers.GetInvocationList()
+				.Cast<Func<TokensChangedEventArgs, Task>>()
+				.Select(handler => handler(args))).ConfigureAwait(false);
+		}
+	}
 }

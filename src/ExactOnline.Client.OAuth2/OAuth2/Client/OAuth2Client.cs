@@ -211,11 +211,14 @@ public abstract class OAuth2Client : IClient
 			ExpiresAt = DateTime.Now.AddSeconds(expiresIn - 5); // subtract 5 seconds to be sure the token isn't expired before the next call is executed
 
 		OnAfterTokensChanged();
+		await OnAfterTokensChangedAsync().ConfigureAwait(false);
 	}
 
 	protected virtual void OnAfterTokensChanged()
 	{
 	}
+
+	protected virtual Task OnAfterTokensChangedAsync() => Task.CompletedTask;
 
 	protected virtual string? ParseTokenResponse(string? content, string key)
 	{
