@@ -6,85 +6,6 @@ using ExactOnline.Client.Sdk.Helpers;
 
 namespace ExactOnline.Client.Sdk.Sync;
 
-// ---------------------------------------------------------------------------
-// Support types
-// ---------------------------------------------------------------------------
-
-/// <summary>Progress snapshot reported during a <see cref="SyncOperation{TModel}"/> run.</summary>
-/// <remarks>Initializes a new snapshot with the cumulative counters at a given page.</remarks>
-public readonly struct SyncProgress(int recordsRead, int recordsInsertedOrUpdated, int recordsDeletedRead, int recordsDeleted, int pageIndex)
-{
-	/// <summary>Total rows read from the upsert feed so far.</summary>
-	public int RecordsRead { get; } = recordsRead;
-
-	/// <summary>Total rows the upsert callback reported as persisted so far.</summary>
-	public int RecordsInsertedOrUpdated { get; } = recordsInsertedOrUpdated;
-
-	/// <summary>Total keys read from the deletion feed so far.</summary>
-	public int RecordsDeletedRead { get; } = recordsDeletedRead;
-
-	/// <summary>Total rows the deletion callback reported as removed so far.</summary>
-	public int RecordsDeleted { get; } = recordsDeleted;
-	/// <summary>0-based counter of the page that produced this snapshot.</summary>
-	public int PageIndex { get; } = pageIndex;
-
-	/// <inheritdoc />
-	public override string ToString() =>
-		$"page={PageIndex} read={RecordsRead} upserted={RecordsInsertedOrUpdated} deletedRead={RecordsDeletedRead} deleted={RecordsDeleted}";
-}
-
-/// <summary>Context passed to the per-page upsert handler.</summary>
-public sealed class SyncPageContext<TModel>
-{
-	/// <summary>Deduplicated entities ready to persist (after <c>FilterDoubles</c> for sync-feed endpoints).</summary>
-	public required IReadOnlyList<TModel> Entities { get; init; }
-	/// <summary>Original page as returned by the API — useful if you need the raw sync-feed history.</summary>
-	public required IReadOnlyList<TModel> RawEntities { get; init; }
-	/// <summary>0-based page counter within the run.</summary>
-	public required int PageIndex { get; init; }
-	/// <summary>Skiptoken for the next page (null on the last page).</summary>
-	public string? SkipToken { get; init; }
-	/// <summary>Watermark the run started from (<c>Timestamp</c>).</summary>
-	public required long MaxTimestamp { get; init; }
-	/// <summary>Watermark the run started from (<c>Modified</c>).</summary>
-	public DateTime? MaxModified { get; init; }
-	/// <summary>Final list of selected fields (identifier/timestamp/modified added automatically).</summary>
-	public required string[] Fields { get; init; }
-	/// <summary>Chosen endpoint: <c>Sync</c>, <c>Bulk</c> or <c>Single</c>.</summary>
-	public required EndpointTypeEnum EndpointType { get; init; }
-	/// <summary>Cancellation token for the run.</summary>
-	public required CancellationToken CancellationToken { get; init; }
-}
-
-/// <summary>Context passed to the per-page delete handler.</summary>
-public sealed class DeletedPageContext
-{
-	/// <summary>Initializes a delete-page context.</summary>
-	public DeletedPageContext(Guid[] entityKeys, int pageIndex, string? skipToken, long maxTimestamp, CancellationToken cancellationToken)
-	{
-		EntityKeys = entityKeys;
-		PageIndex = pageIndex;
-		SkipToken = skipToken;
-		MaxTimestamp = maxTimestamp;
-		CancellationToken = cancellationToken;
-	}
-
-	/// <summary>Entity keys reported as deleted on this page.</summary>
-	public Guid[] EntityKeys { get; }
-	/// <summary>0-based page counter within the delete loop.</summary>
-	public int PageIndex { get; }
-	/// <summary>Skiptoken for the next delete page (<see langword="null"/> on the last page).</summary>
-	public string? SkipToken { get; }
-	/// <summary>Watermark the run started from (<c>Timestamp</c>).</summary>
-	public long MaxTimestamp { get; }
-	/// <summary>Cancellation token for the run.</summary>
-	public CancellationToken CancellationToken { get; }
-}
-
-// ---------------------------------------------------------------------------
-// Fluent entry point
-// ---------------------------------------------------------------------------
-
 /// <summary>Non-generic entry point so callers don't have to repeat the model type parameter.</summary>
 public static class SyncOperation
 {
@@ -92,10 +13,6 @@ public static class SyncOperation
 	public static SyncOperation<TModel> For<TModel>(ExactOnlineClient client)
 		where TModel : class => new(client);
 }
-
-// ---------------------------------------------------------------------------
-// The operation
-// ---------------------------------------------------------------------------
 
 /// <summary>
 /// Orchestrates a sync of a single <typeparamref name="TModel"/> from Exact Online. Configure the stages you
