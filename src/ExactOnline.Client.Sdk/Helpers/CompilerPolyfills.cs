@@ -3,13 +3,18 @@
 // `init` accessors, `required` members and `[SetsRequiredMembers]`, but netstandard2.0
 // does not ship them.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace System.Runtime.CompilerServices
 {
+	[ExcludeFromCodeCoverage]
 	internal static class IsExternalInit { }
 
+	[ExcludeFromCodeCoverage]
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, Inherited = false)]
 	internal sealed class RequiredMemberAttribute : Attribute { }
 
+	[ExcludeFromCodeCoverage]
 	[AttributeUsage(AttributeTargets.All, AllowMultiple = true, Inherited = false)]
 	internal sealed class CompilerFeatureRequiredAttribute(string featureName) : Attribute
 	{
@@ -23,6 +28,7 @@ namespace System.Runtime.CompilerServices
 
 namespace System.Diagnostics.CodeAnalysis
 {
+	[ExcludeFromCodeCoverage]
 	[AttributeUsage(AttributeTargets.Constructor, Inherited = false)]
 	internal sealed class SetsRequiredMembersAttribute : Attribute { }
 }
