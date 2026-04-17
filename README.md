@@ -131,7 +131,143 @@ To delete a record you need to provide the entity object to the “Delete” met
 var deleted = client.For<Document>().Delete(document);
 ```
 
-<h4>8.	Exceptions</h4>
+<h4>8.	Synchronization</h4>
+
+The `ExactOnline.Client.Sdk.Sync` package adds full-entity synchronization on top of the core SDK. It transparently picks the best available endpoint per entity type (`/sync` when supported, otherwise `/bulk`, otherwise the standard single endpoint), pages through all results, deduplicates sync-feed doubles, tracks a watermark (`Timestamp` or `Modified`), and — for entities that support it — applies deletions from the `/sync/Deleted` feed.
+
+There are two ways to drive a sync:
+
+1. **`ISyncTarget` / `ISyncTargetController<TModel>`** — a simple "sink" contract when all you want to do is read entities and write them to somewhere.
+2. **`SyncOperation<TModel>`** — a configurable orchestrator with per-page delegates, giving full control over watermarks, page handling, and deletions without implementing the full controller contract.
+
+<h5>8.1. Sync target approach</h5>
+
+Implement `ISyncTargetController<TModel>` (or derive from `SyncTargetControllerBase<TModel>`) for each entity you want to sync, and expose them via an `ISyncTarget` (or `SyncTargetBase`). The SDK takes care of pagination, deduplication, and the `Deleted` feed.
+
+```csharp
+public class MySyncTarget : SyncTargetBase
+{
+    protected override ISyncTargetController<TModel> CreateControllerFor<TModel>() =>
+        new MyController<TModel>(/* connection, dbContext, ... */);
+}
+
+// Run the sync for a single entity type
+var result = await client
+    .For<Account>()
+    .SynchronizeWithAsync(new MySyncTarget(), client, fields: ["Name", "Code"], ct: ct);
+
+Console.WriteLine(result); // SyncResult.ToString() reports records read / upserted / deleted
+
+// Or sync everything the SDK knows how to sync
+foreach (var modelType in ExactOnlineSynchronizer.SupportedModelTypes)
+{
+    await client.SynchronizeWithAsync(new MySyncTarget(), modelType, ct: ct);
+}
+```
+
+Ready-made EF / EF Core targets are provided in `ExactOnline.Client.Sdk.Sync.EntityFramework` and `ExactOnline.Client.Sdk.Sync.EntityFrameworkCore`.
+
+<h5>8.2. SyncOperation approach</h5>
+
+When you need per-page context (page index, skiptoken, raw entities before dedup, running totals) or you don't want to implement `ISyncTargetController<TModel>` just to plug in some custom logic, use `SyncOperation<TModel>` directly. The operation exposes a fluent builder — each `With*` / `On*` / `ReportProgress` call configures one stage and returns the same instance.
+
+```csharp
+var result = await SyncOperation.For<Account>(client)
+    .WithFields("Name", "Code")
+
+    // Return the highest Timestamp you have stored locally. Called once at the start of the run.
+    .WithMaxTimestamp(ct => LoadWatermarkAsync(ct))
+
+    // Optional: for non-sync endpoints on models that expose a Modified field.
+    .WithMaxModified(ct => Task.FromResult<DateTime?>(null))
+
+    // Called once per page. Return the number of records actually inserted or updated.
+    .OnPage(async page =>
+    {
+        Console.WriteLine($"Page {page.PageIndex} ({page.Entities.Count} entities), skiptoken={page.SkipToken}");
+        return await UpsertAsync(page.Entities, page.Fields, page.CancellationToken);
+    })
+
+    // Called once per page of deleted keys. Return the number actually deleted.
+    .OnDeletedPage(dp => DeleteAsync(dp.EntityKeys, dp.CancellationToken))
+
+    // Optional: called after each page with a cumulative progress snapshot.
+    .ReportProgress(p => Console.WriteLine(
+        $"  read={p.RecordsRead}, upserted={p.RecordsInsertedOrUpdated}, " +
+        $"deletedRead={p.RecordsDeletedRead}, deleted={p.RecordsDeleted}"))
+
+    .RunAsync(ct);
+```
+
+`SyncPageContext<TModel>` gives you everything the loop knows about the current page:
+
+| Property | Description |
+|---|---|
+| `Entities` | Deduplicated entities ready to persist (after `FilterDoubles` for sync-feed endpoints). |
+| `RawEntities` | The original page as returned by the API — useful if you need the raw sync-feed history. |
+| `PageIndex` | 0-based page counter within the run. |
+| `SkipToken` | Skiptoken for the *next* page (null on the last page). |
+| `MaxTimestamp` / `MaxModified` | Watermark the run started from. |
+| `Fields` | Final list of selected fields (identifier/timestamp/modified added automatically). |
+| `EndpointType` | `Sync`, `Bulk`, or `Single` — picked automatically per entity. |
+| `CancellationToken` | The token passed to `RunAsync`. |
+
+`DeletedPageContext` exposes the same shape for `OnDeletedPage` (`EntityKeys`, `PageIndex`, `SkipToken`, `MaxTimestamp`, `CancellationToken`).
+
+Any stage you omit is simply skipped — e.g. leave out `.OnDeletedPage(...)` if you don't care about deletions, or `.WithMaxTimestamp(...)` for a full reload from `Timestamp = 0`. A `SyncOperation<TModel>` is single-use; create a new one for each run.
+
+<h5>8.3. Example: sync Accounts into a local store</h5>
+
+The snippet below is a complete, runnable example that pulls `Account` changes into a simple in-memory store and deletes rows the API reports as removed. Swap the store for EF/Dapper/whatever you actually persist to.
+
+```csharp
+using ExactOnline.Client.Models.CRM;
+using ExactOnline.Client.Sdk.Controllers;
+using ExactOnline.Client.Sdk.Sync;
+
+var client = new ExactOnlineClient(
+    exactOnlineUrl: "https://start.exactonline.nl/",
+    division: 123456,
+    accesstokenFunc: ct => accessTokenProvider.GetAsync(ct));
+
+// Pretend this is your local database
+var accounts = new Dictionary<Guid, Account>();
+var watermark = 0L;
+
+var result = await SyncOperation.For<Account>(client)
+    .WithFields("Name", "Code", "Email", "Country")
+
+    .WithMaxTimestamp(_ => Task.FromResult(watermark))
+
+    .OnPage(page =>
+    {
+        foreach (var a in page.Entities)
+        {
+            accounts[a.ID] = a;
+            if (a.Timestamp > watermark) watermark = a.Timestamp;
+        }
+        return Task.FromResult(page.Entities.Count);
+    })
+
+    .OnDeletedPage(dp =>
+    {
+        var removed = 0;
+        foreach (var key in dp.EntityKeys)
+        {
+            if (accounts.Remove(key)) removed++;
+        }
+        return Task.FromResult(removed);
+    })
+
+    .ReportProgress(p => Console.WriteLine($"page {p.PageIndex}: +{p.RecordsInsertedOrUpdated} / -{p.RecordsDeleted}"))
+
+    .RunAsync(CancellationToken.None);
+
+Console.WriteLine(result);
+// store `watermark` somewhere durable so the next run only fetches changes since this one
+```
+
+<h4>9.	Exceptions</h4>
 <table>
 <tr><td><b>Exception</b></td>		<td><b>Description</b></td></tr>
 <tr><td>UnauthorizedException</td>	<td>When access token is null or invalid while making a request</td></tr>
