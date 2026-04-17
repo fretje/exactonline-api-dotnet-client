@@ -16,4 +16,8 @@
 		<ProjectReference Include="..\ExactOnline.Client.Models\ExactOnline.Client.Models.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<InternalsVisibleTo Include="ExactOnline.Client.Sdk.Sync" />
+	</ItemGroup>
+
 </Project>
