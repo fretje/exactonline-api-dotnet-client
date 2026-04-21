@@ -198,3 +198,6 @@ ILLink/
 # built nuget packages
 src/*.nupkg
 src/*.snupkg
+
+# Claude Code local settings
+.claude/settings.local.json
