@@ -12,6 +12,13 @@ public static class SyncOperation
 	/// <summary>Creates a <see cref="SyncOperation{TModel}"/> for the given Exact Online client.</summary>
 	public static SyncOperation<TModel> For<TModel>(ExactOnlineClient client)
 		where TModel : class => new(client);
+
+	/// <summary>
+	/// Creates a <see cref="SyncOperation{TModel}"/> that runs against an existing <paramref name="query"/>,
+	/// preserving any caller-applied <c>Select</c>, <c>Where</c>, expands, or ordering.
+	/// </summary>
+	public static SyncOperation<TModel> For<TModel>(ExactOnlineClient client, ExactOnlineQuery<TModel> query)
+		where TModel : class => new(client, query);
 }
 
 /// <summary>
@@ -37,19 +44,26 @@ public sealed class SyncOperation<TModel> where TModel : class
 	/// is single-use — <see cref="RunAsync"/> throws if called more than once.
 	/// </summary>
 	public SyncOperation(ExactOnlineClient client)
+		: this(client, (client ?? throw new ArgumentNullException(nameof(client))).For<TModel>())
+	{
+	}
+
+	/// <summary>
+	/// Creates a new sync operation bound to <paramref name="client"/> and running against the
+	/// supplied <paramref name="query"/>. Any <c>Select</c>, <c>Where</c>, expands, or ordering
+	/// already applied to the query are preserved; identifier and watermark fields/filters are
+	/// added on top when <see cref="RunAsync"/> is called. The returned instance is single-use.
+	/// </summary>
+	public SyncOperation(ExactOnlineClient client, ExactOnlineQuery<TModel> query)
 	{
 		_client = client ?? throw new ArgumentNullException(nameof(client));
-		_query = client.For<TModel>();
+		_query = query ?? throw new ArgumentNullException(nameof(query));
 	}
 
 	/// <summary>Fields to include in <c>$select</c>. Identifier and timestamp/modified fields are added automatically.</summary>
 	public SyncOperation<TModel> WithFields(params string[] fields)
 	{
 		_fields = fields ?? [];
-		if (_fields.Length > 0)
-		{
-			_query.Select(_fields);
-		}
 		return this;
 	}
 
@@ -116,6 +130,11 @@ public sealed class SyncOperation<TModel> where TModel : class
 		else if (modelInfo.HasModifiedProperty && _getMaxModified is { })
 		{
 			maxModified = await _getMaxModified(ct).ConfigureAwait(false);
+		}
+
+		if (_fields.Length > 0)
+		{
+			_query.Select(_fields);
 		}
 
 		var fieldsList = _fields.ToList();

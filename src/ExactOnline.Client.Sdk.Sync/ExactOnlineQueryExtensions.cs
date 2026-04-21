@@ -83,7 +83,7 @@ public static partial class ExactOnlineQueryExtensions
 		// keys accumulated across pages — implementers may wrap it in a single transaction.
 		var accumulatedDeletedKeys = new List<Guid>();
 
-		var operation = SyncOperation.For<TModel>(client)
+		var operation = SyncOperation.For(client, query)
 			.WithFields(fields ?? [])
 			.WithMaxTimestamp(targetController.GetMaxTimestampAsync)
 			.WithMaxModified(targetController.GetMaxModifiedAsync)
