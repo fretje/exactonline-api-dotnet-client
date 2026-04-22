@@ -83,8 +83,7 @@ public class ExactOnlineClient
 	public ExactOnlineQuery<T> For<T>() where T : class
 	{
 		CheckInitialized();
-		var controller = _controllers!.GetController<T>();
-		return new(controller);
+		return new(_controllers!.GetController<T>(), this);
 	}
 
 	/// <summary>

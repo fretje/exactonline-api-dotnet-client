@@ -154,7 +154,8 @@ public class MySyncTarget : SyncTargetBase
 // Run the sync for a single entity type
 var result = await client
     .For<Account>()
-    .SynchronizeWithAsync(new MySyncTarget(), client, fields: ["Name", "Code"], ct: ct);
+    .Select("Name", "Code")
+    .SynchronizeWithAsync(new MySyncTarget(), ct: ct);
 
 Console.WriteLine(result); // SyncResult.ToString() reports records read / upserted / deleted
 
@@ -169,30 +170,31 @@ Ready-made EF / EF Core targets are provided in `ExactOnline.Client.Sdk.Sync.Ent
 
 <h5>8.2. SyncOperation approach</h5>
 
-When you need per-page context (page index, skiptoken, raw entities before dedup, running totals) or you don't want to implement `ISyncTargetController<TModel>` just to plug in some custom logic, use `SyncOperation<TModel>` directly. The operation exposes a fluent builder — each `With*` / `On*` / `ReportProgress` call configures one stage and returns the same instance.
+When you need per-page context (page index, skiptoken, raw entities before dedup, running totals) or you don't want to implement `ISyncTargetController<TModel>` just to plug in some custom logic, chain `.Synchronize()` onto a `client.For<T>()` query. The operation exposes a fluent builder — each `On*` call configures one stage and returns the same instance.
 
 ```csharp
-var result = await SyncOperation.For<Account>(client)
-    .WithFields("Name", "Code")
+var result = await client.For<Account>()
+    .Select("Name", "Code")
+    .Synchronize()
 
     // Return the highest Timestamp you have stored locally. Called once at the start of the run.
-    .WithMaxTimestamp(ct => LoadWatermarkAsync(ct))
+    .OnGetMaxTimestamp(ct => LoadWatermarkAsync(ct))
 
     // Optional: for non-sync endpoints on models that expose a Modified field.
-    .WithMaxModified(ct => Task.FromResult<DateTime?>(null))
+    .OnGetMaxModified(ct => Task.FromResult<DateTime?>(null))
 
     // Called once per page. Return the number of records actually inserted or updated.
-    .OnPage(async page =>
+    .OnChangedEntities(async page =>
     {
         Console.WriteLine($"Page {page.PageIndex} ({page.Entities.Count} entities), skiptoken={page.SkipToken}");
         return await UpsertAsync(page.Entities, page.Fields, page.CancellationToken);
     })
 
     // Called once per page of deleted keys. Return the number actually deleted.
-    .OnDeletedPage(dp => DeleteAsync(dp.EntityKeys, dp.CancellationToken))
+    .OnDeletedEntities(dp => DeleteAsync(dp.EntityKeys, dp.CancellationToken))
 
     // Optional: called after each page with a cumulative progress snapshot.
-    .ReportProgress(p => Console.WriteLine(
+    .OnProgress(p => Console.WriteLine(
         $"  read={p.RecordsRead}, upserted={p.RecordsInsertedOrUpdated}, " +
         $"deletedRead={p.RecordsDeletedRead}, deleted={p.RecordsDeleted}"))
 
@@ -212,9 +214,9 @@ var result = await SyncOperation.For<Account>(client)
 | `EndpointType` | `Sync`, `Bulk`, or `Single` — picked automatically per entity. |
 | `CancellationToken` | The token passed to `RunAsync`. |
 
-`DeletedPageContext` exposes the same shape for `OnDeletedPage` (`EntityKeys`, `PageIndex`, `SkipToken`, `MaxTimestamp`, `CancellationToken`).
+`DeletedPageContext` exposes the same shape for `OnDeletedEntities` (`EntityKeys`, `PageIndex`, `SkipToken`, `MaxTimestamp`, `CancellationToken`).
 
-Any stage you omit is simply skipped — e.g. leave out `.OnDeletedPage(...)` if you don't care about deletions, or `.WithMaxTimestamp(...)` for a full reload from `Timestamp = 0`. A `SyncOperation<TModel>` is single-use; create a new one for each run.
+Any stage you omit is simply skipped — e.g. leave out `.OnDeletedEntities(...)` if you don't care about deletions, or `.OnGetMaxTimestamp(...)` for a full reload from `Timestamp = 0`. A `SyncOperation<TModel>` is single-use; create a new one for each run.
 
 <h5>8.3. Example: sync Accounts into a local store</h5>
 
@@ -234,12 +236,13 @@ var client = new ExactOnlineClient(
 var accounts = new Dictionary<Guid, Account>();
 var watermark = 0L;
 
-var result = await SyncOperation.For<Account>(client)
-    .WithFields("Name", "Code", "Email", "Country")
+var result = await client.For<Account>()
+    .Select("Name", "Code", "Email", "Country")
+    .Synchronize()
 
-    .WithMaxTimestamp(_ => Task.FromResult(watermark))
+    .OnGetMaxTimestamp(_ => Task.FromResult(watermark))
 
-    .OnPage(page =>
+    .OnChangedEntities(page =>
     {
         foreach (var a in page.Entities)
         {
@@ -249,7 +252,7 @@ var result = await SyncOperation.For<Account>(client)
         return Task.FromResult(page.Entities.Count);
     })
 
-    .OnDeletedPage(dp =>
+    .OnDeletedEntities(dp =>
     {
         var removed = 0;
         foreach (var key in dp.EntityKeys)
@@ -259,7 +262,7 @@ var result = await SyncOperation.For<Account>(client)
         return Task.FromResult(removed);
     })
 
-    .ReportProgress(p => Console.WriteLine($"page {p.PageIndex}: +{p.RecordsInsertedOrUpdated} / -{p.RecordsDeleted}"))
+    .OnProgress(p => Console.WriteLine($"page {p.PageIndex}: +{p.RecordsInsertedOrUpdated} / -{p.RecordsDeleted}"))
 
     .RunAsync(CancellationToken.None);
 

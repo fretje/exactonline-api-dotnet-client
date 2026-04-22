@@ -27,9 +27,16 @@ public static class ExactOnlineClientExtensions
 
 	public static SyncResult SynchronizeWith<TModel>(this ExactOnlineClient client, ISyncTarget syncTarget, params string[] fields)
 		where TModel : class =>
-		client.For<TModel>().Select(fields).SynchronizeWith(syncTarget, client, fields);
+		client.For<TModel>().Select(fields).SynchronizeWith(syncTarget, fields);
 
 	public static Task<SyncResult> SynchronizeWithAsync<TModel>(this ExactOnlineClient client, ISyncTarget syncTarget, string[]? fields = null, Action<int, int>? reportProgress = null, CancellationToken ct = default)
-		where TModel : class =>
-		client.For<TModel>().SynchronizeWithAsync(syncTarget, client, fields, reportProgress, ct);
+		where TModel : class
+	{
+		var query = client.For<TModel>();
+		if (fields is { Length: > 0 })
+		{
+			query.Select(fields);
+		}
+		return query.SynchronizeWithAsync(syncTarget, reportProgress, ct);
+	}
 }

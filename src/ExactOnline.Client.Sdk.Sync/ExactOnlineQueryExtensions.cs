@@ -9,9 +9,29 @@ namespace ExactOnline.Client.Sdk.Sync;
 
 public static partial class ExactOnlineQueryExtensions
 {
-	public static SyncResult SynchronizeWith<TModel>(this ExactOnlineQuery<TModel> query, ISyncTarget syncTarget, ExactOnlineClient client, string[]? fields = null)
+	/// <summary>
+	/// Chains a <see cref="SyncOperation{TModel}"/> onto the current query, inheriting its
+	/// <c>Select</c>, <c>Where</c>, and <c>Expand</c> state. The query must come from
+	/// <see cref="ExactOnlineClient.For{T}"/> (so the sync knows which client to ask for the
+	/// <c>Deleted</c> feed); a query built directly with <c>new ExactOnlineQuery&lt;T&gt;(...)</c>
+	/// has no associated client and will throw.
+	/// </summary>
+	public static SyncOperation<TModel> Synchronize<TModel>(this ExactOnlineQuery<TModel> query)
 		where TModel : class
 	{
+		if (query is null) throw new ArgumentNullException(nameof(query));
+		if (query.Client is null)
+		{
+			throw new InvalidOperationException(
+				$"{nameof(Synchronize)} requires an {nameof(ExactOnlineQuery<TModel>)} created via {nameof(ExactOnlineClient)}.{nameof(ExactOnlineClient.For)}<T>(); the provided query has no associated client.");
+		}
+		return new SyncOperation<TModel>(query);
+	}
+
+	public static SyncResult SynchronizeWith<TModel>(this ExactOnlineQuery<TModel> query, ISyncTarget syncTarget, string[]? fields = null)
+		where TModel : class
+	{
+		var client = query.Client ?? throw ClientRequired(nameof(SynchronizeWith));
 		var modelInfo = ModelInfo.For<TModel>();
 		var endpointType = GetEndpointType(modelInfo);
 		var targetController = syncTarget.ControllerFor<TModel>();
@@ -74,7 +94,7 @@ public static partial class ExactOnlineQueryExtensions
 		return result;
 	}
 
-	public static async Task<SyncResult> SynchronizeWithAsync<TModel>(this ExactOnlineQuery<TModel> query, ISyncTarget syncTarget, ExactOnlineClient client, string[]? fields = null, Action<int, int>? reportProgress = null, CancellationToken ct = default)
+	public static async Task<SyncResult> SynchronizeWithAsync<TModel>(this ExactOnlineQuery<TModel> query, ISyncTarget syncTarget, Action<int, int>? reportProgress = null, CancellationToken ct = default)
 		where TModel : class
 	{
 		var targetController = syncTarget.ControllerFor<TModel>();
@@ -83,13 +103,12 @@ public static partial class ExactOnlineQueryExtensions
 		// keys accumulated across pages — implementers may wrap it in a single transaction.
 		var accumulatedDeletedKeys = new List<Guid>();
 
-		var operation = SyncOperation.For(client, query)
-			.WithFields(fields ?? [])
-			.WithMaxTimestamp(targetController.GetMaxTimestampAsync)
-			.WithMaxModified(targetController.GetMaxModifiedAsync)
-			.OnPage(page => targetController.CreateOrUpdateEntitiesAsync(
+		var operation = query.Synchronize()
+			.OnGetMaxTimestamp(targetController.GetMaxTimestampAsync)
+			.OnGetMaxModified(targetController.GetMaxModifiedAsync)
+			.OnChangedEntities(page => targetController.CreateOrUpdateEntitiesAsync(
 				[.. page.Entities], page.Fields, page.CancellationToken))
-			.OnDeletedPage(deletedPage =>
+			.OnDeletedEntities(deletedPage =>
 			{
 				accumulatedDeletedKeys.AddRange(deletedPage.EntityKeys);
 				return Task.FromResult(0);
@@ -97,7 +116,7 @@ public static partial class ExactOnlineQueryExtensions
 
 		if (reportProgress is { })
 		{
-			operation.ReportProgress(p => reportProgress(p.RecordsRead, p.RecordsInsertedOrUpdated));
+			operation.OnProgress(p => reportProgress(p.RecordsRead, p.RecordsInsertedOrUpdated));
 		}
 
 		var result = await operation.RunAsync(ct).ConfigureAwait(false);
@@ -108,13 +127,16 @@ public static partial class ExactOnlineQueryExtensions
 				.DeleteEntitiesAsync([.. accumulatedDeletedKeys], ct).ConfigureAwait(false);
 		}
 
-		if (client.Log is { } log)
+		if (query.Client?.Log is { } log)
 		{
 			LogSyncResult(log, result);
 		}
 
 		return result;
 	}
+
+	internal static InvalidOperationException ClientRequired(string apiName) => new(
+		$"{apiName} requires an {nameof(ExactOnlineQuery<object>)} created via {nameof(ExactOnlineClient)}.{nameof(ExactOnlineClient.For)}<T>(); the provided query has no associated client.");
 
 	// Sync results can contain duplicate entries for the same unique key.
 	// Here we take only the last change into account and filter out all the previous ones.
@@ -142,7 +164,7 @@ public static partial class ExactOnlineQueryExtensions
 				fields.Add(item);
 			}
 		}
-		
+
 		if (endpointType == EndpointTypeEnum.Sync)
 		{
 			if (!fields.Contains(ModelInfo.TimestampName))

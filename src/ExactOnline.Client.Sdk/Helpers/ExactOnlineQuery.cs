@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Linq.Expressions;
 using ExactOnline.Client.Models;
+using ExactOnline.Client.Sdk.Controllers;
 using ExactOnline.Client.Sdk.Enums;
 using ExactOnline.Client.Sdk.Interfaces;
 
@@ -9,11 +10,11 @@ namespace ExactOnline.Client.Sdk.Helpers;
 /// <summary>
 /// Creates a new instance of ExactOnlineQuery
 /// </summary>
-public class ExactOnlineQuery<T>(IController<T> controller)
+public class ExactOnlineQuery<T>
 {
-	private readonly IController<T> _controller = controller ?? throw new ArgumentNullException(nameof(controller));
+	private readonly IController<T> _controller;
 
-	private string? _select;
+	internal string? _select;
 	private readonly List<string> _and = [];
 	private string? _skip;
 	private string? _expand;
@@ -21,6 +22,23 @@ public class ExactOnlineQuery<T>(IController<T> controller)
 	private string? _orderby;
 	private string? _where;
 	private string? _skipToken;
+
+	/// <summary>
+	/// The client that constructed this query, if any. Populated when the query comes from
+	/// <see cref="ExactOnlineClient.For{T}"/>; null when callers new-up a query directly (e.g. in tests).
+	/// The Sync extensions need this to run the deleted-entity sub-query.
+	/// </summary>
+	internal ExactOnlineClient? Client { get; }
+
+	public ExactOnlineQuery(IController<T> controller) : this(controller, null)
+	{
+	}
+
+	internal ExactOnlineQuery(IController<T> controller, ExactOnlineClient? client)
+	{
+		_controller = controller ?? throw new ArgumentNullException(nameof(controller));
+		Client = client;
+	}
 
 	/// <summary>
 	/// Creates a 'where' clause for the query
@@ -202,8 +220,9 @@ public class ExactOnlineQuery<T>(IController<T> controller)
 	/// <summary>
 	/// Returns a List of entities using the specified query.
 	/// </summary>
-	/// <param name="skipToken">The variable to store the skiptoken in</param>
+	/// <param name="skiptoken">The variable to store the skiptoken in</param>
 	/// <param name="endpointType">Which endpoint type to use.</param>
+	/// <param name="ct">The cancellation token</param>
 	public Task<Models.ApiList<T>> GetAsync(string? skiptoken = null, EndpointTypeEnum endpointType = EndpointTypeEnum.Single, CancellationToken ct = default)
 	{
 		AddSkipToken(skiptoken);

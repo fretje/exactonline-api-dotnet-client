@@ -6,106 +6,73 @@ using ExactOnline.Client.Sdk.Helpers;
 
 namespace ExactOnline.Client.Sdk.Sync;
 
-/// <summary>Non-generic entry point so callers don't have to repeat the model type parameter.</summary>
-public static class SyncOperation
-{
-	/// <summary>Creates a <see cref="SyncOperation{TModel}"/> for the given Exact Online client.</summary>
-	public static SyncOperation<TModel> For<TModel>(ExactOnlineClient client)
-		where TModel : class => new(client);
-
-	/// <summary>
-	/// Creates a <see cref="SyncOperation{TModel}"/> that runs against an existing <paramref name="query"/>,
-	/// preserving any caller-applied <c>Select</c>, <c>Where</c>, expands, or ordering.
-	/// </summary>
-	public static SyncOperation<TModel> For<TModel>(ExactOnlineClient client, ExactOnlineQuery<TModel> query)
-		where TModel : class => new(client, query);
-}
-
 /// <summary>
-/// Orchestrates a sync of a single <typeparamref name="TModel"/> from Exact Online. Configure the stages you
-/// need (watermark, upsert, deletion, progress) via the fluent <c>With*</c>/<c>On*</c>/<c>ReportProgress</c>
-/// methods and finish with <see cref="RunAsync"/>.
+/// Orchestrates a sync of a single <typeparamref name="TModel"/> from Exact Online. Chained off
+/// a query via <see cref="ExactOnlineQueryExtensions.Synchronize{TModel}"/>; configure the
+/// watermark, upsert, deletion, and progress callbacks fluently and finish with <see cref="RunAsync"/>.
 /// </summary>
 public sealed class SyncOperation<TModel> where TModel : class
 {
-	private readonly ExactOnlineClient _client;
 	private readonly ExactOnlineQuery<TModel> _query;
+	private readonly ExactOnlineClient _client;
 
 	private bool _hasRun;
-	private string[] _fields = [];
 	private Func<CancellationToken, Task<long>>? _getMaxTimestamp;
 	private Func<CancellationToken, Task<DateTime?>>? _getMaxModified;
-	private Func<SyncPageContext<TModel>, Task<int>>? _onPage;
-	private Func<DeletedPageContext, Task<int>>? _onDeletedPage;
+	private Func<SyncPageContext<TModel>, Task<int>>? _createOrUpdate;
+	private Func<DeletedPageContext, Task<int>>? _delete;
 	private Action<SyncProgress>? _progress;
 
 	/// <summary>
-	/// Creates a new sync operation bound to <paramref name="client"/>. The returned instance
-	/// is single-use — <see cref="RunAsync"/> throws if called more than once.
+	/// Creates a sync operation for <paramref name="query"/>. The query must have an associated
+	/// <see cref="ExactOnlineClient"/> (i.e. have been created via <c>client.For&lt;T&gt;()</c>).
+	/// The operation is single-use.
 	/// </summary>
-	public SyncOperation(ExactOnlineClient client)
-		: this(client, (client ?? throw new ArgumentNullException(nameof(client))).For<TModel>())
+	public SyncOperation(ExactOnlineQuery<TModel> query)
 	{
-	}
-
-	/// <summary>
-	/// Creates a new sync operation bound to <paramref name="client"/> and running against the
-	/// supplied <paramref name="query"/>. Any <c>Select</c>, <c>Where</c>, expands, or ordering
-	/// already applied to the query are preserved; identifier and watermark fields/filters are
-	/// added on top when <see cref="RunAsync"/> is called. The returned instance is single-use.
-	/// </summary>
-	public SyncOperation(ExactOnlineClient client, ExactOnlineQuery<TModel> query)
-	{
-		_client = client ?? throw new ArgumentNullException(nameof(client));
 		_query = query ?? throw new ArgumentNullException(nameof(query));
-	}
-
-	/// <summary>Fields to include in <c>$select</c>. Identifier and timestamp/modified fields are added automatically.</summary>
-	public SyncOperation<TModel> WithFields(params string[] fields)
-	{
-		_fields = fields ?? [];
-		return this;
+		_client = query.Client ?? throw ExactOnlineQueryExtensions.ClientRequired(nameof(SyncOperation<TModel>));
 	}
 
 	/// <summary>Supply the highest already-known <c>Timestamp</c>. Invoked once at the start of the run (sync endpoint only).</summary>
-	public SyncOperation<TModel> WithMaxTimestamp(Func<CancellationToken, Task<long>> getMaxTimestampAsync)
+	public SyncOperation<TModel> OnGetMaxTimestamp(Func<CancellationToken, Task<long>> getMaxTimestampAsync)
 	{
 		_getMaxTimestamp = getMaxTimestampAsync ?? throw new ArgumentNullException(nameof(getMaxTimestampAsync));
 		return this;
 	}
 
 	/// <summary>Supply the highest already-known <c>Modified</c>. Invoked once at the start of the run for non-sync endpoints on models with a <c>Modified</c> property.</summary>
-	public SyncOperation<TModel> WithMaxModified(Func<CancellationToken, Task<DateTime?>> getMaxModifiedAsync)
+	public SyncOperation<TModel> OnGetMaxModified(Func<CancellationToken, Task<DateTime?>> getMaxModifiedAsync)
 	{
 		_getMaxModified = getMaxModifiedAsync ?? throw new ArgumentNullException(nameof(getMaxModifiedAsync));
 		return this;
 	}
 
 	/// <summary>Handle a single page of entities. Return the number of records actually inserted or updated.</summary>
-	public SyncOperation<TModel> OnPage(Func<SyncPageContext<TModel>, Task<int>> onPageAsync)
+	public SyncOperation<TModel> OnChangedEntities(Func<SyncPageContext<TModel>, Task<int>> onChangedAsync)
 	{
-		_onPage = onPageAsync ?? throw new ArgumentNullException(nameof(onPageAsync));
+		_createOrUpdate = onChangedAsync ?? throw new ArgumentNullException(nameof(onChangedAsync));
 		return this;
 	}
 
 	/// <summary>Handle a single page of deleted entity keys. Return the number of records actually deleted.</summary>
-	public SyncOperation<TModel> OnDeletedPage(Func<DeletedPageContext, Task<int>> onDeletedPageAsync)
+	public SyncOperation<TModel> OnDeletedEntities(Func<DeletedPageContext, Task<int>> onDeletedAsync)
 	{
-		_onDeletedPage = onDeletedPageAsync ?? throw new ArgumentNullException(nameof(onDeletedPageAsync));
+		_delete = onDeletedAsync ?? throw new ArgumentNullException(nameof(onDeletedAsync));
 		return this;
 	}
 
 	/// <summary>Observe cumulative progress after each page (upsert and delete).</summary>
-	public SyncOperation<TModel> ReportProgress(Action<SyncProgress> reportProgress)
+	public SyncOperation<TModel> OnProgress(Action<SyncProgress> onProgress)
 	{
-		_progress = reportProgress ?? throw new ArgumentNullException(nameof(reportProgress));
+		_progress = onProgress ?? throw new ArgumentNullException(nameof(onProgress));
 		return this;
 	}
 
 	/// <summary>
 	/// Executes the configured sync: pulls upsert pages, optionally a deletion page, and reports
 	/// progress. Throws <see cref="InvalidOperationException"/> if called more than once on the
-	/// same instance — <see cref="PrepareForSync"/> mutates the underlying query, and a second
+	/// same instance — <c>PrepareForSync</c> mutates the underlying query, and a second
 	/// run would stack projections and watermark filters from the first.
 	/// </summary>
 	public async Task<SyncResult> RunAsync(CancellationToken ct = default)
@@ -118,7 +85,7 @@ public sealed class SyncOperation<TModel> where TModel : class
 		_hasRun = true;
 
 		var modelInfo = ModelInfo.For<TModel>();
-		var endpointType = GetEndpointType(modelInfo);
+		var endpointType = ExactOnlineQueryExtensions.GetEndpointType(modelInfo);
 		var result = new SyncResult(typeof(TModel), endpointType);
 		var maxTimestamp = 0L;
 		var maxModified = default(DateTime?);
@@ -132,13 +99,8 @@ public sealed class SyncOperation<TModel> where TModel : class
 			maxModified = await _getMaxModified(ct).ConfigureAwait(false);
 		}
 
-		if (_fields.Length > 0)
-		{
-			_query.Select(_fields);
-		}
-
-		var fieldsList = _fields.ToList();
-		PrepareForSync(_query, modelInfo, fieldsList, endpointType, maxTimestamp, maxModified);
+		var fieldsList = ExtractSelectedFields(_query);
+		_query.PrepareForSync(modelInfo, fieldsList, endpointType, maxTimestamp, maxModified);
 		var fieldsArray = fieldsList.ToArray();
 
 		await RunUpsertLoopAsync(modelInfo, endpointType, fieldsArray, maxTimestamp, maxModified, result, ct)
@@ -188,7 +150,7 @@ public sealed class SyncOperation<TModel> where TModel : class
 					.ConfigureAwait(false);
 			}
 
-			if (entities.Count > 0 && _onPage is { })
+			if (entities.Count > 0 && _createOrUpdate is { })
 			{
 				var context = new SyncPageContext<TModel>
 				{
@@ -203,7 +165,7 @@ public sealed class SyncOperation<TModel> where TModel : class
 					CancellationToken = ct,
 				};
 
-				result.RecordsInsertedOrUpdated += await _onPage(context).ConfigureAwait(false);
+				result.RecordsInsertedOrUpdated += await _createOrUpdate(context).ConfigureAwait(false);
 			}
 
 			_progress?.Invoke(Snapshot(result, pageIndex));
@@ -214,7 +176,7 @@ public sealed class SyncOperation<TModel> where TModel : class
 
 	private async Task RunDeleteLoopAsync(ModelInfo modelInfo, long maxTimestamp, SyncResult result, CancellationToken ct)
 	{
-		var deletedQuery = DeletedFor(_client, modelInfo.DeletedEntityType, maxTimestamp);
+		var deletedQuery = _client.DeletedFor(modelInfo.DeletedEntityType, maxTimestamp);
 		string? skiptoken = null;
 		var pageIndex = 0;
 		do
@@ -223,11 +185,11 @@ public sealed class SyncOperation<TModel> where TModel : class
 
 			var apiList = await deletedQuery.GetAsync(skiptoken, EndpointTypeEnum.Single, ct).ConfigureAwait(false);
 			skiptoken = apiList.SkipToken;
-			var keys = ToEntityKeyArray(apiList.List);
+			var keys = apiList.List.ToEntityKeyArray();
 
 			result.RecordsDeletedRead += keys.Length;
 
-			if (keys.Length > 0 && _onDeletedPage is { })
+			if (keys.Length > 0 && _delete is { })
 			{
 				var context = new DeletedPageContext(
 					entityKeys: keys,
@@ -236,7 +198,7 @@ public sealed class SyncOperation<TModel> where TModel : class
 					maxTimestamp: maxTimestamp,
 					cancellationToken: ct);
 
-				result.RecordsDeleted += await _onDeletedPage(context).ConfigureAwait(false);
+				result.RecordsDeleted += await _delete(context).ConfigureAwait(false);
 			}
 
 			_progress?.Invoke(Snapshot(result, pageIndex));
@@ -248,56 +210,20 @@ public sealed class SyncOperation<TModel> where TModel : class
 	private static SyncProgress Snapshot(SyncResult r, int pageIndex) =>
 		new(r.RecordsRead, r.RecordsInsertedOrUpdated, r.RecordsDeletedRead, r.RecordsDeleted, pageIndex);
 
-	// -----------------------------------------------------------------------
-	// Inlined helpers — previously internal on ExactOnlineQueryExtensions.
-	// These are all the pieces that let this file stand on its own.
-	// -----------------------------------------------------------------------
-
-	private static EndpointTypeEnum GetEndpointType(ModelInfo modelInfo)
+	// Read back the fields the caller already projected via Select(...) on the query — PrepareForSync
+	// will append identifier/timestamp/modified fields to this list so the OnChangedEntities
+	// callback receives the full projected set.
+	private static List<string> ExtractSelectedFields(ExactOnlineQuery<TModel> query)
 	{
-		if (modelInfo.SupportsSync) return EndpointTypeEnum.Sync;
-		if (modelInfo.SupportsBulk) return EndpointTypeEnum.Bulk;
-		return EndpointTypeEnum.Single;
-	}
-
-	// Make sure the query selects identifier + timestamp/modified, and apply the watermark filter.
-	// Also mirrors the field additions back into the caller's fields list so the upsert handler sees them.
-	private static void PrepareForSync(
-		ExactOnlineQuery<TModel> query,
-		ModelInfo modelInfo,
-		List<string> fields,
-		EndpointTypeEnum endpointType,
-		long maxTimestamp,
-		DateTime? maxModified)
-	{
-		var identifierParts = SplitAndTrim(modelInfo.IdentifierName);
-		foreach (var item in identifierParts.Where(i => !fields.Contains(i)))
+		const string selectPrefix = "$select=";
+		if (query._select is null || !query._select.StartsWith(selectPrefix, StringComparison.Ordinal))
 		{
-			query.Select(item);
-			fields.Add(item);
+			return [];
 		}
-
-		if (endpointType == EndpointTypeEnum.Sync)
-		{
-			if (!fields.Contains(ModelInfo.TimestampName))
-			{
-				query.Select(ModelInfo.TimestampName);
-				fields.Add(ModelInfo.TimestampName);
-			}
-			query.Where(modelInfo.TimestampLambda<TModel>(), maxTimestamp, OperatorEnum.Gt);
-		}
-		else if (modelInfo.HasModifiedProperty)
-		{
-			if (!fields.Contains(ModelInfo.ModifiedName))
-			{
-				query.Select(ModelInfo.ModifiedName);
-				fields.Add(ModelInfo.ModifiedName);
-			}
-			if (maxModified.HasValue)
-			{
-				query.Where(modelInfo.ModifiedLambda<TModel>(), maxModified, OperatorEnum.Gt);
-			}
-		}
+		return [.. query._select.Substring(selectPrefix.Length)
+			.Split(',')
+			.Select(s => s.Trim())
+			.Where(s => s.Length > 0)];
 	}
 
 	// Sync-feed pages can contain duplicate rows for the same key. Keep only the last change per identifier.
@@ -319,13 +245,4 @@ public sealed class SyncOperation<TModel> where TModel : class
 			.Select(p => p.Trim())
 			.Where(p => p.Length > 0)
 			.ToArray() ?? [];
-
-	private static ExactOnlineQuery<Deleted> DeletedFor(ExactOnlineClient client, EntityType deletedEntityType, long maxTimestamp) =>
-		client.For<Deleted>()
-			.Where(d => d.Timestamp, maxTimestamp, OperatorEnum.Gt)
-			.And(d => d.EntityType, deletedEntityType, OperatorEnum.Eq)
-			.Select("EntityKey");
-
-	private static Guid[] ToEntityKeyArray(IList<Deleted> deleted) =>
-		[.. deleted.Select(d => d.EntityKey)];
 }

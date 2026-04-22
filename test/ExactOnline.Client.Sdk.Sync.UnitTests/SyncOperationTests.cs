@@ -10,92 +10,81 @@ public class SyncOperationTests
 	private static ExactOnlineClient CreateClient() =>
 		new("https://example.com/", division: 1, accesstokenFunc: _ => Task.FromResult("token"));
 
+	private static SyncOperation<Account> CreateOperation() =>
+		CreateClient().For<Account>().Synchronize();
+
 	[TestMethod]
 	[TestCategory("Unit Test")]
-	public void Ctor_NullClient_Throws() =>
+	public void Ctor_NullQuery_Throws() =>
 		Assert.Throws<ArgumentNullException>(() => new SyncOperation<Account>(null!));
 
 	[TestMethod]
 	[TestCategory("Unit Test")]
-	public void For_ReturnsOperationBoundToClient()
+	public void Synchronize_ReturnsOperationBoundToClient()
 	{
-		var client = CreateClient();
-
-		var op = SyncOperation.For<Account>(client);
+		var op = CreateOperation();
 
 		Assert.IsNotNull(op);
 	}
 
 	[TestMethod]
 	[TestCategory("Unit Test")]
-	public void WithMaxTimestamp_NullDelegate_Throws()
+	public void OnGetMaxTimestamp_NullDelegate_Throws()
 	{
-		var op = SyncOperation.For<Account>(CreateClient());
+		var op = CreateOperation();
 
-		Assert.Throws<ArgumentNullException>(() => op.WithMaxTimestamp(null!));
+		Assert.Throws<ArgumentNullException>(() => op.OnGetMaxTimestamp(null!));
 	}
 
 	[TestMethod]
 	[TestCategory("Unit Test")]
-	public void WithMaxModified_NullDelegate_Throws()
+	public void OnGetMaxModified_NullDelegate_Throws()
 	{
-		var op = SyncOperation.For<Account>(CreateClient());
+		var op = CreateOperation();
 
-		Assert.Throws<ArgumentNullException>(() => op.WithMaxModified(null!));
+		Assert.Throws<ArgumentNullException>(() => op.OnGetMaxModified(null!));
 	}
 
 	[TestMethod]
 	[TestCategory("Unit Test")]
-	public void OnPage_NullDelegate_Throws()
+	public void OnChangedEntities_NullDelegate_Throws()
 	{
-		var op = SyncOperation.For<Account>(CreateClient());
+		var op = CreateOperation();
 
-		Assert.Throws<ArgumentNullException>(() => op.OnPage(null!));
+		Assert.Throws<ArgumentNullException>(() => op.OnChangedEntities(null!));
 	}
 
 	[TestMethod]
 	[TestCategory("Unit Test")]
-	public void OnDeletedPage_NullDelegate_Throws()
+	public void OnDeletedEntities_NullDelegate_Throws()
 	{
-		var op = SyncOperation.For<Account>(CreateClient());
+		var op = CreateOperation();
 
-		Assert.Throws<ArgumentNullException>(() => op.OnDeletedPage(null!));
+		Assert.Throws<ArgumentNullException>(() => op.OnDeletedEntities(null!));
 	}
 
 	[TestMethod]
 	[TestCategory("Unit Test")]
-	public void ReportProgress_NullDelegate_Throws()
+	public void OnProgress_NullDelegate_Throws()
 	{
-		var op = SyncOperation.For<Account>(CreateClient());
+		var op = CreateOperation();
 
-		Assert.Throws<ArgumentNullException>(() => op.ReportProgress(null!));
+		Assert.Throws<ArgumentNullException>(() => op.OnProgress(null!));
 	}
 
 	[TestMethod]
 	[TestCategory("Unit Test")]
 	public void FluentChain_ReturnsSameInstance()
 	{
-		var op = SyncOperation.For<Account>(CreateClient());
+		var op = CreateOperation();
 
 		var after = op
-			.WithFields("Code")
-			.WithMaxTimestamp(_ => Task.FromResult(0L))
-			.WithMaxModified(_ => Task.FromResult<DateTime?>(null))
-			.OnPage(_ => Task.FromResult(0))
-			.OnDeletedPage(_ => Task.FromResult(0))
-			.ReportProgress(_ => { });
+			.OnGetMaxTimestamp(_ => Task.FromResult(0L))
+			.OnGetMaxModified(_ => Task.FromResult<DateTime?>(null))
+			.OnChangedEntities(_ => Task.FromResult(0))
+			.OnDeletedEntities(_ => Task.FromResult(0))
+			.OnProgress(_ => { });
 
 		Assert.AreSame(op, after);
-	}
-
-	[TestMethod]
-	[TestCategory("Unit Test")]
-	public void WithFields_NullArray_TreatedAsEmpty()
-	{
-		var op = SyncOperation.For<Account>(CreateClient());
-
-		var same = op.WithFields(null!);
-
-		Assert.AreSame(op, same);
 	}
 }
