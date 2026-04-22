@@ -68,7 +68,7 @@ internal class Program
 			await client.For<Account>()
 				.Select(fields)
 				.Where(a => a.StartDate, new(2000, 1, 1), OperatorEnum.Gt)
-				.SynchronizeWithAsync(efTarget, client, fields);
+				.SynchronizeWithAsync(efTarget);
 
 			// There's also an override that takes a type in case you want to run the synchronization dynamically (for a given modeltype)
 			// E.g. use the following code to synchronize all supported modeltypes

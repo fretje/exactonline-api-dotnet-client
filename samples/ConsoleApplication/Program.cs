@@ -67,7 +67,7 @@ internal class Program
 			client.For<Account>()
 				.Select("AddressLine1", "AddressLine2", "AddressLine3")
 				.Where(a => a.StartDate, new(2000, 1, 1), OperatorEnum.Gt)
-				.SynchronizeWith(efTarget, client);
+				.SynchronizeWith(efTarget);
 
 			// There's also an override that takes a type in case you want to run the synchronization dynamically (for a given modeltype)
 			// E.g. use the following code to synchronize all supported modeltypes

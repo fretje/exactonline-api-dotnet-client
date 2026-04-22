@@ -44,7 +44,7 @@ public class TestObjectsCreator
 		{
 			_client = new(ExactOnlineUrl, GetOAuthAuthenticationToken, null, ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime, TestApp.CustomDescriptionLanguage);
 			_client.MinutelyChanged += (_, e) => (ExactOnlineTest.MinutelyRemaining, ExactOnlineTest.MinutelyResetTime) = (e.NewRemaining, e.NewResetTime);
-			await _client.InitializeDivisionAsync(ct).ConfigureAwait(false);
+			await _client.InitializeDivisionAsync(ct);
 		}
 		return _client;
 	}
@@ -55,7 +55,7 @@ public class TestObjectsCreator
 	{
 		if (_client is null)
 		{
-			await GetClientAsync(ct).ConfigureAwait(false);
+			await GetClientAsync(ct);
 		}
 
 		if (_client is { })
